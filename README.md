@@ -108,7 +108,28 @@ function MyApp() {
 ## インストール
 
 ```bash
-npm install tanuki-ui react react-use
+# npm
+npm install tanuki-ui
+
+# yarn
+yarn add tanuki-ui
+
+# pnpm
+pnpm add tanuki-ui
+
+# bun
+bun add tanuki-ui
+```
+
+### ピア依存関係
+
+```json
+{
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}
 ```
 
 ## 使用方法
@@ -217,9 +238,36 @@ import { Button, Input } from 'tanuki-ui';
 />
 ```
 
+## ブラウザサポート
+
+- Chrome/Edge 90+
+- Firefox 88+
+- Safari 14+
+- モバイルブラウザ（iOS Safari, Chrome for Android）
+
+## バンドルサイズ
+
+| パッケージ | サイズ (minified + gzipped) |
+|----------|---------------------------|
+| Core Components | ~45KB |
+| Layouts | ~12KB |
+| Node Editor | ~85KB |
+| Themes (各) | ~3-5KB |
+
+## パフォーマンス
+
+- React.memo による最適化
+- CSS Modules によるスタイル分離
+- 遅延読み込み対応
+- Tree-shaking 対応
+
 ## ライセンス
 
 MIT
+
+## 貢献
+
+プルリクエストを歓迎します。大きな変更の場合は、まず issue を開いて変更内容について議論してください。
 
 ## 開発
 
@@ -235,4 +283,32 @@ npm run build
 
 # 型チェック
 npm run typecheck
+
+# テスト実行
+npm test
+
+# リント
+npm run lint
+```
+
+## プロジェクト構成
+
+```
+tanuki-ui/
+├── src/
+│   ├── bars/          # ツールバー、タブバー
+│   ├── blocks/        # アイコン、テキストブロック
+│   ├── controls/      # 操作系コンポーネント
+│   ├── dialogs/       # ダイアログ、モーダル
+│   ├── elements/      # HTML基本要素
+│   ├── extended/      # 拡張コンポーネント
+│   │   └── node-editor/  # ノードエディター
+│   ├── form/          # フォーム要素
+│   ├── hooks/         # カスタムフック
+│   ├── layouts/       # レイアウトコンポーネント
+│   ├── navigations/   # ナビゲーション
+│   └── themes/        # テーマ関連
+├── public/
+│   └── styles/        # プリセットテーマ
+└── docs/              # ドキュメント
 ```
