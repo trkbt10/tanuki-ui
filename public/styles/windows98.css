@@ -1,0 +1,369 @@
+/**
+ * Windows 98 Theme for Tanuki UI
+ * Recreates the classic Windows 98 interface with 3D beveled controls, retro typography, and nostalgic aesthetics
+ */
+
+body {
+  /* Font Rendering - Force pixelated/jaggy fonts for authenticity */
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  font-smooth: never;
+  text-rendering: optimizeSpeed;
+  /* Base Colors - Classic Windows 98 */
+  --textColor: rgba(0, 0, 0, 1);
+  --accentColor: rgba(0, 0, 128, 1); /* Classic Windows Blue */
+  --cautionColor: rgba(255, 0, 0, 1); /* Classic Windows Red */
+  --windowBackgroundColor: rgba(192, 192, 192, 1); /* Classic Windows Gray */
+  --dividerColor: rgba(128, 128, 128, 1);
+
+  /* Typography System - Classic Windows Fonts */
+  --themeDefaultFontFamily: "MS Sans Serif", "Tahoma", "Arial", sans-serif;
+  --themeControlFontFamily: "MS Sans Serif", "Tahoma", "Arial", sans-serif;
+  --themeLabelFontFamily: "MS Sans Serif", "Tahoma", "Arial", sans-serif;
+
+  /* Text Font Definitions */
+  --textFont: 400 11px var(--themeDefaultFontFamily);
+  --labelFont: 400 11px var(--themeLabelFontFamily);
+  --titleFont: 700 12px var(--themeDefaultFontFamily);
+  --subtitleFont: 400 11px var(--themeDefaultFontFamily);
+  --captionFont: 400 8px var(--themeDefaultFontFamily);
+
+  /* Text Color Hierarchy */
+  --labelColor: rgba(0, 0, 0, 1);
+  --secondaryLabelColor: rgba(64, 64, 64, 1);
+  --tertiaryLabelColor: rgba(128, 128, 128, 1);
+  --quaternaryLabelColor: rgba(192, 192, 192, 1);
+
+  /* Windows 98 System Colors */
+  --systemBlueColor: rgba(0, 0, 128, 1);
+  --systemGreenColor: rgba(0, 128, 0, 1);
+  --systemRedColor: rgba(255, 0, 0, 1);
+  --systemOrangeColor: rgba(255, 165, 0, 1);
+  --systemYellowColor: rgba(255, 255, 0, 1);
+  --systemPurpleColor: rgba(128, 0, 128, 1);
+  --systemPinkColor: rgba(255, 192, 203, 1);
+  --systemTealColor: rgba(0, 128, 128, 1);
+  --systemIndigoColor: rgba(75, 0, 130, 1);
+  --systemBrownColor: rgba(165, 42, 42, 1);
+  --systemGrayColor: rgba(128, 128, 128, 1);
+
+  /* Background Colors */
+  --backgroundColor: rgba(192, 192, 192, 1); /* Control background */
+  --secondaryBackgroundColor: rgba(212, 208, 200, 1); /* Dialog background */
+  --tertiaryBackgroundColor: rgba(255, 255, 255, 1); /* Text input background */
+
+  /* Border and Separator Colors */
+  --separatorColor: rgba(128, 128, 128, 1);
+  --opaqueSeparatorColor: rgba(128, 128, 128, 1);
+  --linkColor: rgba(0, 0, 255, 1); /* Classic hyperlink blue */
+  --placeholderTextColor: rgba(128, 128, 128, 1);
+
+  /* Window Properties */
+  --windowBackdropFilter: none;
+  --windowBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1),
+    inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1);
+  --windowBorderRadius: 0;
+  --windowPadding: 8px;
+
+  /* Primary Controls - Raised 3D Effect */
+  --controlBackground--primary: rgba(0, 0, 128, 1);
+  --controlTextColor--primary: rgba(255, 255, 255, 1);
+  --controlHoverBackground--primary: rgba(16, 16, 144, 1);
+  --controlFocusBackground--primary: rgba(0, 0, 112, 1);
+  --controlBoxShadow--primary: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1),
+    inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1);
+
+  /* Secondary Controls - Classic Button Style */
+  --controlBackground--secondary: rgba(192, 192, 192, 1);
+  --controlTextColor--secondary: rgba(0, 0, 0, 1);
+  --controlHoverBackground--secondary: rgba(192, 192, 192, 1);
+  --controlFocusBackground--secondary: rgba(192, 192, 192, 1);
+  --controlBoxShadow--secondary: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1),
+    inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1);
+
+  /* Pressed Button State */
+  --controlBoxShadow--pressed: inset 1px 1px 0 rgba(0, 0, 0, 1), inset -1px -1px 0 rgba(223, 223, 223, 1),
+    inset 2px 2px 0 rgba(128, 128, 128, 1), inset -2px -2px 0 rgba(255, 255, 255, 1);
+
+  /* Input Elements */
+  --inputPadding: 2px 4px;
+  --inputFont: var(--textFont);
+  --inputBorder: none;
+  --inputBorderRadius: 0;
+  --inputBackground: rgba(255, 255, 255, 1);
+  --inputBoxShadow: inset 1px 1px 0 rgba(0, 0, 0, 1), inset -1px -1px 0 rgba(223, 223, 223, 1),
+    inset 2px 2px 0 rgba(128, 128, 128, 1), inset -2px -2px 0 rgba(255, 255, 255, 1);
+  --inputFocusBorder: none;
+  --inputFocusBoxShadow: inset 1px 1px 0 rgba(0, 0, 0, 1), inset -1px -1px 0 rgba(223, 223, 223, 1),
+    inset 2px 2px 0 rgba(128, 128, 128, 1), inset -2px -2px 0 rgba(255, 255, 255, 1), 0 0 0 1px rgba(0, 0, 0, 1);
+
+  /* Dialog Styles */
+  --dialogBackground: rgba(192, 192, 192, 1);
+  --dialogBorderRadius: 0;
+  --dialogBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1),
+    inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1), 2px 2px 4px rgba(0, 0, 0, 0.5);
+  --dialogBackdrop: rgba(0, 0, 0, 0.25);
+  --dialogPadding: 8px;
+
+  /* Title Bar Styles */
+  --titleBarBackground: linear-gradient(90deg, rgba(0, 0, 128, 1) 0%, rgba(16, 132, 208, 1) 100%);
+  --titleBarInactiveBackground: rgba(128, 128, 128, 1);
+  --titleBarTextColor: rgba(255, 255, 255, 1);
+  --titleBarHeight: 18px;
+  --titleBarFont: 700 11px var(--themeDefaultFontFamily);
+  --titleBarPadding: 2px 4px;
+
+  /* Table Styles */
+  --tableHeaderBackground: rgba(192, 192, 192, 1);
+  --tableHeaderFont: 700 11px var(--themeDefaultFontFamily);
+  --tableCellPadding: 2px 4px;
+  --tableBorder: 1px solid rgba(128, 128, 128, 1);
+  --tableHoverBackground: rgba(0, 0, 128, 1);
+  --tableHoverTextColor: rgba(255, 255, 255, 1);
+
+  /* Toolbar Styles */
+  --toolbarBackground: rgba(192, 192, 192, 1);
+  --toolbarHeight: 26px;
+  --toolbarPadding: 2px 4px;
+  --toolbarBorder: none;
+  --toolbarBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1),
+    inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1);
+
+  /* Tab Styles */
+  --tabHeight: 20px;
+  --tabPadding: 2px 8px;
+  --tabFont: var(--textFont);
+  --tabActiveColor: rgba(0, 0, 0, 1);
+  --tabInactiveColor: rgba(0, 0, 0, 1);
+  --tabHoverBackground: rgba(192, 192, 192, 1);
+  --tabActiveBackground: rgba(192, 192, 192, 1);
+  --tabInactiveBackground: rgba(192, 192, 192, 1);
+  --tabBorderRadius: 0;
+  --tabActiveBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1),
+    inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1);
+  --tabInactiveBoxShadow: inset -1px -1px 0 rgba(128, 128, 128, 1), inset 1px 1px 0 rgba(255, 255, 255, 1);
+
+  /* Sidebar Styles */
+  --sidebarBackground: rgba(192, 192, 192, 1);
+  --sidebarWidth: 150px;
+  --sidebarBorder: 1px solid rgba(128, 128, 128, 1);
+  --sidebarItemPadding: 2px 4px;
+  --sidebarItemHeight: 16px;
+  --sidebarItemFont: var(--textFont);
+  --sidebarItemHoverBackground: rgba(0, 0, 128, 1);
+  --sidebarItemHoverColor: rgba(255, 255, 255, 1);
+  --sidebarItemActiveBackground: rgba(0, 0, 128, 1);
+  --sidebarItemActiveColor: rgba(255, 255, 255, 1);
+
+  /* Panel Styles */
+  --panelBackground: rgba(192, 192, 192, 1);
+  --panelBorder: 1px solid rgba(128, 128, 128, 1);
+  --panelHeaderBackground: rgba(192, 192, 192, 1);
+  --panelHeaderHeight: 20px;
+  --panelHeaderFont: 700 11px var(--themeDefaultFontFamily);
+  --panelHeaderPadding: 2px 4px;
+  --panelHeaderBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1),
+    inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1);
+
+  /* Contextual Menu */
+  --contextualMenuBackground: rgba(192, 192, 192, 1);
+  --contextualMenuBorder: 1px solid rgba(0, 0, 0, 1);
+  --contextualMenuBorderRadius: 0;
+  --contextualMenuBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1),
+    inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1), 2px 2px 4px rgba(0, 0, 0, 0.5);
+  --contextualMenuPadding: 2px;
+  --contextualMenuItemPadding: 4px 8px;
+  --contextualMenuItemFont: var(--textFont);
+  --contextualMenuItemHoverBackground: rgba(0, 0, 128, 1);
+  --contextualMenuItemHoverColor: rgba(255, 255, 255, 1);
+  --contextualMenuSeparatorColor: rgba(128, 128, 128, 1);
+  --contextualMenuSeparatorHeight: 1px;
+
+  /* Resizer */
+  --resizerColor: rgba(128, 128, 128, 1);
+  --resizerHoverColor: rgba(0, 0, 0, 1);
+  --resizerActiveColor: rgba(0, 0, 0, 1);
+  --resizerSize: 2px;
+  --resizerBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1);
+
+  /* Progress and Meter */
+  --progressBackground: rgba(255, 255, 255, 1);
+  --progressForeground: rgba(0, 0, 128, 1);
+  --progressBorderRadius: 0;
+  --progressHeight: 16px;
+  --progressBoxShadow: inset 1px 1px 0 rgba(0, 0, 0, 1), inset -1px -1px 0 rgba(223, 223, 223, 1),
+    inset 2px 2px 0 rgba(128, 128, 128, 1), inset -2px -2px 0 rgba(255, 255, 255, 1);
+
+  /* Selection Colors */
+  --selectionBackground: rgba(0, 0, 128, 1);
+  --selectionColor: rgba(255, 255, 255, 1);
+
+  /* Focus Ring */
+  --focusRingColor: rgba(0, 0, 0, 1);
+  --focusRingWidth: 1px;
+  --focusRingOffset: 1px;
+  --focusRingStyle: dotted;
+
+  /* Scrollbar Styles */
+  --scrollbarTrackBackground: rgba(192, 192, 192, 1);
+  --scrollbarThumbBackground: rgba(192, 192, 192, 1);
+  --scrollbarThumbHoverBackground: rgba(160, 160, 160, 1);
+  --scrollbarWidth: 16px;
+  --scrollbarThumbBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1),
+    inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1);
+  --scrollbarButtonBackground: rgba(192, 192, 192, 1);
+  --scrollbarButtonBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1),
+    inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1);
+
+  /* Checkbox and Radio Styles */
+  --checkboxSize: 13px;
+  --checkboxBackground: rgba(255, 255, 255, 1);
+  --checkboxBorder: 1px solid rgba(0, 0, 0, 1);
+  --checkboxBoxShadow: inset 1px 1px 0 rgba(128, 128, 128, 1), inset -1px -1px 0 rgba(255, 255, 255, 1);
+  --checkboxCheckedBackground: rgba(255, 255, 255, 1);
+  --checkboxCheckmarkColor: rgba(0, 0, 0, 1);
+
+  /* Disabled State */
+  --disabledTextColor: rgba(128, 128, 128, 1);
+  --disabledBackground: rgba(192, 192, 192, 1);
+  --disabledBorder: rgba(128, 128, 128, 1);
+
+  /* Desktop Wallpaper Style Background */
+  --desktopBackground: rgba(0, 128, 128, 1); /* Classic teal desktop */
+
+  /* Status Bar */
+  --statusBarBackground: rgba(192, 192, 192, 1);
+  --statusBarHeight: 22px;
+  --statusBarFont: var(--textFont);
+  --statusBarBorder: 1px solid rgba(128, 128, 128, 1);
+  --statusBarBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1);
+
+  /* Menu Bar */
+  --menuBarBackground: rgba(192, 192, 192, 1);
+  --menuBarHeight: 20px;
+  --menuBarFont: var(--textFont);
+  --menuBarItemPadding: 4px 8px;
+  --menuBarItemHoverBackground: rgba(0, 0, 128, 1);
+  --menuBarItemHoverColor: rgba(255, 255, 255, 1);
+
+  /* Gradients - Classic Windows 98 Style */
+  --primaryGradient: linear-gradient(90deg, rgba(0, 0, 128, 1) 0%, rgba(16, 132, 208, 1) 100%);
+  --titleBarGradient: linear-gradient(90deg, rgba(0, 0, 128, 1) 0%, rgba(16, 132, 208, 1) 100%);
+  --buttonGradient: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(192, 192, 192, 1) 100%);
+
+  /* Toolbar/Bar Items Variables */
+  --barItemsFontFamily: var(--themeDefaultFontFamily);
+  --barItemsTextColor: rgba(0, 0, 0, 1);
+  --barItemsLabelTextColor: rgba(0, 0, 0, 1);
+  --barItemsDisabledLabelTextColor: rgba(128, 128, 128, 1);
+  --barItemsDisabledLabelBackgroundColor: rgba(192, 192, 192, 1);
+  --barItemsBorderRadius: 0;
+  --barItemsControlMarkerBorderRadius: 0;
+  --barItemsControlPlaceholderTextColor: rgba(128, 128, 128, 1);
+  --barItemsControlMarkerBackgroundColor: rgba(255, 255, 255, 1);
+  --barItemsControlsBorder: 1px solid rgba(128, 128, 128, 1);
+  --barItemsSegmentControlBackground: rgba(192, 192, 192, 1);
+  --barItemsHoverSegmentControlBackground: rgba(160, 160, 160, 1);
+  --barItemsActiveSegmentControlBackground: rgba(0, 0, 128, 1);
+  --barItemsAccentColor: rgba(0, 0, 128, 1);
+
+  /* Scroll Bar Variables */
+  --scrollBarBackgroundColor: rgba(192, 192, 192, 1);
+  --scrollBarThumbColor: rgba(192, 192, 192, 1);
+  --activeScrollBarThumbColor: rgba(160, 160, 160, 1);
+
+  /* Advanced Control States */
+  --controlActiveBackground: rgba(0, 0, 96, 1);
+  --controlActiveTextColor: rgba(255, 255, 255, 1);
+  --controlHoverBackground: rgba(160, 160, 160, 1);
+  --controlHoverTextColor: rgba(0, 0, 0, 1);
+  --controlDisabledBackground: rgba(192, 192, 192, 1);
+  --controlDisabledTextColor: rgba(128, 128, 128, 1);
+
+  /* Advanced Table Variables */
+  --tableBackgroundColor: rgba(255, 255, 255, 1);
+  --tableBorderColor: rgba(128, 128, 128, 1);
+  --tableHeaderTextColor: rgba(0, 0, 0, 1);
+  --tableHeaderBackgroundColor: rgba(192, 192, 192, 1);
+  --tableHeaderBorderColor: rgba(128, 128, 128, 1);
+  --tableRowTextColor: rgba(0, 0, 0, 1);
+  --tableRowBackgroundColor: rgba(255, 255, 255, 1);
+  --tableRowBorderColor: rgba(192, 192, 192, 1);
+  --tableRowAlternateTextColor: rgba(0, 0, 0, 1);
+  --tableRowAlternateBackgroundColor: rgba(240, 240, 240, 1);
+  --tableRowAlternateBorderColor: rgba(192, 192, 192, 1);
+
+  /* Advanced Color Variables */
+  --selectedTextColor: rgba(255, 255, 255, 1);
+  --textBackgroundColor: rgba(255, 255, 255, 1);
+  --selectedTextBackgroundColor: rgba(0, 0, 128, 1);
+  --keyboardFocusIndicatorColor: rgba(0, 0, 0, 1);
+  --unemphasizedSelectedTextColor: rgba(0, 0, 0, 1);
+  --unemphasizedSelectedTextBackgroundColor: rgba(212, 212, 212, 1);
+  --selectedContentBackgroundColor: rgba(0, 0, 128, 1);
+  --unemphasizedSelectedContentBackgroundColor: rgba(212, 212, 212, 1);
+  --selectedMenuItemTextColor: rgba(255, 255, 255, 1);
+  --gridColor: rgba(128, 128, 128, 1);
+  --headerTextColor: rgba(0, 0, 0, 1);
+  --controlColor: rgba(0, 0, 0, 1);
+  --selectedControlColor: rgba(255, 255, 255, 1);
+  --selectedControlTextColor: rgba(0, 0, 0, 1);
+  --alternateSelectedControlTextColor: rgba(255, 255, 255, 1);
+  --scrubberTexturedBackgroundColor: rgba(192, 192, 192, 1);
+  --windowFrameTextColor: rgba(0, 0, 0, 1);
+  --underPageBackgroundColor: rgba(255, 255, 255, 1);
+  --findHighlightColor: rgba(255, 255, 0, 1);
+  --highlightColor: rgba(0, 0, 128, 1);
+  --shadowColor: rgba(0, 0, 0, 0.5);
+
+  /* App Layout Variables */
+  --appMainToolbarHeight: 26px;
+  --appMainToolbarFloatingBackground: rgba(192, 192, 192, 1);
+  --scrolledAppMainToolbarBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1);
+  --appMainToolbarBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1);
+
+  /* Segment Control Variables */
+  --segmentControlBackgroundColor: rgba(192, 192, 192, 1);
+  --segmentControlPadding: 2px;
+  --segmentControlSegmentPadding: 4px 8px;
+  --segmentControlBoxShadow: inset 1px 1px 0 rgba(128, 128, 128, 1), inset -1px -1px 0 rgba(255, 255, 255, 1);
+  --segmentControlBackground: rgba(192, 192, 192, 1);
+  --segmentControlBorderRadius: 0;
+  --segmentControlIndicatorBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1);
+
+  /* SelectBox Variables */
+  --selectBoxSplitButtonWidth: 16px;
+  --selectBoxSplitButtonBorderColor: rgba(128, 128, 128, 1);
+  --selectBoxSplitButtonBorderWidth: 1px;
+  --selectBoxSplitButtonBackground: rgba(192, 192, 192, 1);
+
+  /* Window Controls */
+  --windowCloseButtonBackground: rgba(192, 192, 192, 1);
+  --windowExpandButtonBackground: rgba(192, 192, 192, 1);
+  --windowFullscreenButtonBackground: rgba(192, 192, 192, 1);
+  --windowButtonBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1),
+    inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1);
+
+  /* Animation Timing - Minimal animations for authenticity */
+  --animationDuration: 0ms;
+  --animationEasing: linear;
+}
+
+/* Apply jaggy font rendering to all text elements */
+* {
+  -webkit-font-smoothing: none !important;
+  -moz-osx-font-smoothing: unset !important;
+  font-smooth: never !important;
+  text-rendering: optimizeSpeed !important;
+}
+
+/* Additional CSS to ensure bitmap-style fonts on all platforms */
+@media screen {
+  * {
+    font-variant-ligatures: none;
+    font-feature-settings:
+      "liga" 0,
+      "kern" 0;
+    font-kerning: none;
+  }
+}

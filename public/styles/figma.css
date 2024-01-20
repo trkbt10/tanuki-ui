@@ -1,0 +1,289 @@
+/**
+ * Figma Theme for Tanuki UI
+ * Recreates Figma's modern design system with clean typography, subtle shadows, and professional aesthetics
+ */
+
+/* Import Inter font from Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+body {
+  /* Base Colors */
+  --textColor: rgba(0, 0, 0, 1);
+  --accentColor: rgba(24, 160, 251, 1); /* Figma Blue */
+  --cautionColor: rgba(255, 95, 87, 1); /* Figma Red */
+  --windowBackgroundColor: rgba(255, 255, 255, 1);
+  --dividerColor: rgba(0, 0, 0, 0.1);
+
+  /* Typography System - Inter Font Family */
+  --themeDefaultFontFamily: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --themeControlFontFamily: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --themeLabelFontFamily: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+
+  /* Text Font Definitions */
+  --textFont: 400 13px var(--themeDefaultFontFamily);
+  --labelFont: 500 11px var(--themeLabelFontFamily);
+  --titleFont: 600 16px var(--themeDefaultFontFamily);
+  --subtitleFont: 500 14px var(--themeDefaultFontFamily);
+  --captionFont: 400 11px var(--themeDefaultFontFamily);
+
+  /* Text Color Hierarchy */
+  --labelColor: rgba(0, 0, 0, 0.9);
+  --secondaryLabelColor: rgba(0, 0, 0, 0.6);
+  --tertiaryLabelColor: rgba(0, 0, 0, 0.4);
+  --quaternaryLabelColor: rgba(0, 0, 0, 0.2);
+
+  /* Figma System Colors */
+  --systemBlueColor: rgba(24, 160, 251, 1);
+  --systemGreenColor: rgba(26, 207, 135, 1);
+  --systemRedColor: rgba(255, 95, 87, 1);
+  --systemOrangeColor: rgba(255, 135, 67, 1);
+  --systemYellowColor: rgba(255, 209, 102, 1);
+  --systemPurpleColor: rgba(138, 123, 244, 1);
+  --systemPinkColor: rgba(255, 101, 163, 1);
+  --systemTealColor: rgba(90, 200, 245, 1);
+  --systemIndigoColor: rgba(94, 92, 230, 1);
+  --systemBrownColor: rgba(172, 142, 104, 1);
+  --systemGrayColor: rgba(142, 142, 147, 1);
+
+  /* Background Colors */
+  --backgroundColor: rgba(248, 249, 250, 1);
+  --secondaryBackgroundColor: rgba(242, 243, 245, 1);
+  --tertiaryBackgroundColor: rgba(255, 255, 255, 1);
+
+  /* Border and Separator Colors */
+  --separatorColor: rgba(0, 0, 0, 0.08);
+  --opaqueSeparatorColor: rgba(198, 198, 200, 1);
+  --linkColor: rgba(24, 160, 251, 1);
+  --placeholderTextColor: rgba(0, 0, 0, 0.25);
+
+  /* Window Properties */
+  --windowBackdropFilter: blur(8px);
+  --windowBoxShadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --windowBorderRadius: 8px;
+  --windowPadding: 24px;
+
+  /* Primary Controls */
+  --controlBackground--primary: rgba(24, 160, 251, 1);
+  --controlTextColor--primary: rgba(255, 255, 255, 1);
+  --controlHoverBackground--primary: rgba(21, 144, 226, 1);
+  --controlFocusBackground--primary: rgba(18, 128, 201, 1);
+  --controlBoxShadow--primary: 0 2px 8px rgba(24, 160, 251, 0.3);
+
+  /* Secondary Controls */
+  --controlBackground--secondary: rgba(255, 255, 255, 1);
+  --controlTextColor--secondary: rgba(0, 0, 0, 0.8);
+  --controlHoverBackground--secondary: rgba(248, 249, 250, 1);
+  --controlFocusBackground--secondary: rgba(242, 243, 245, 1);
+  --controlBoxShadow--secondary: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.08);
+
+  /* Input Elements */
+  --inputPadding: 8px 12px;
+  --inputFont: var(--textFont);
+  --inputBorder: 1px solid rgba(0, 0, 0, 0.1);
+  --inputBorderRadius: 6px;
+  --inputBackground: rgba(255, 255, 255, 1);
+  --inputBoxShadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --inputFocusBorder: 1px solid rgba(24, 160, 251, 1);
+  --inputFocusBoxShadow: 0 0 0 3px rgba(24, 160, 251, 0.1);
+
+  /* Dialog Styles */
+  --dialogBackground: rgba(255, 255, 255, 1);
+  --dialogBorderRadius: 12px;
+  --dialogBoxShadow: 0 16px 64px rgba(0, 0, 0, 0.15);
+  --dialogBackdrop: rgba(0, 0, 0, 0.6);
+  --dialogPadding: 24px;
+
+  /* Table Styles */
+  --tableHeaderBackground: rgba(248, 249, 250, 1);
+  --tableHeaderFont: 500 12px var(--themeDefaultFontFamily);
+  --tableCellPadding: 12px 16px;
+  --tableBorder: 1px solid rgba(0, 0, 0, 0.08);
+  --tableHoverBackground: rgba(248, 249, 250, 0.8);
+
+  /* Toolbar Styles */
+  --toolbarBackground: rgba(255, 255, 255, 1);
+  --toolbarHeight: 48px;
+  --toolbarPadding: 0 16px;
+  --toolbarBorder: 1px solid rgba(0, 0, 0, 0.08);
+  --toolbarBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+  /* Tab Styles */
+  --tabHeight: 36px;
+  --tabPadding: 0 16px;
+  --tabFont: 500 13px var(--themeDefaultFontFamily);
+  --tabActiveColor: rgba(24, 160, 251, 1);
+  --tabInactiveColor: rgba(0, 0, 0, 0.6);
+  --tabHoverBackground: rgba(0, 0, 0, 0.04);
+  --tabActiveBackground: rgba(24, 160, 251, 0.1);
+  --tabBorderRadius: 6px;
+
+  /* Sidebar Styles */
+  --sidebarBackground: rgba(250, 251, 252, 1);
+  --sidebarWidth: 240px;
+  --sidebarBorder: 1px solid rgba(0, 0, 0, 0.08);
+  --sidebarItemPadding: 8px 16px;
+  --sidebarItemHeight: 32px;
+  --sidebarItemFont: var(--textFont);
+  --sidebarItemHoverBackground: rgba(0, 0, 0, 0.04);
+  --sidebarItemActiveBackground: rgba(24, 160, 251, 0.1);
+  --sidebarItemActiveColor: rgba(24, 160, 251, 1);
+
+  /* Panel Styles */
+  --panelBackground: rgba(255, 255, 255, 1);
+  --panelBorder: 1px solid rgba(0, 0, 0, 0.08);
+  --panelHeaderBackground: rgba(248, 249, 250, 1);
+  --panelHeaderHeight: 44px;
+  --panelHeaderFont: 500 13px var(--themeDefaultFontFamily);
+  --panelHeaderPadding: 0 16px;
+
+  /* Contextual Menu */
+  --contextualMenuBackground: rgba(255, 255, 255, 1);
+  --contextualMenuBorder: 1px solid rgba(0, 0, 0, 0.1);
+  --contextualMenuBorderRadius: 8px;
+  --contextualMenuBoxShadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --contextualMenuPadding: 8px;
+  --contextualMenuItemPadding: 8px 12px;
+  --contextualMenuItemFont: var(--textFont);
+  --contextualMenuItemHoverBackground: rgba(24, 160, 251, 0.1);
+  --contextualMenuItemHoverColor: rgba(24, 160, 251, 1);
+
+  /* Resizer */
+  --resizerColor: rgba(0, 0, 0, 0.15);
+  --resizerHoverColor: rgba(24, 160, 251, 0.6);
+  --resizerActiveColor: rgba(24, 160, 251, 1);
+  --resizerSize: 1px;
+
+  /* Progress and Meter */
+  --progressBackground: rgba(0, 0, 0, 0.1);
+  --progressForeground: rgba(24, 160, 251, 1);
+  --progressBorderRadius: 4px;
+  --progressHeight: 6px;
+
+  /* Selection Colors */
+  --selectionBackground: rgba(24, 160, 251, 0.2);
+  --selectionColor: rgba(0, 0, 0, 0.9);
+
+  /* Focus Ring */
+  --focusRingColor: rgba(24, 160, 251, 0.6);
+  --focusRingWidth: 2px;
+  --focusRingOffset: 2px;
+
+  /* Gradients */
+  --primaryGradient: linear-gradient(135deg, rgba(24, 160, 251, 1) 0%, rgba(94, 92, 230, 1) 100%);
+  --backgroundGradient: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(248, 249, 250, 1) 100%);
+
+  /* Animation Timing */
+  --animationDuration: 150ms;
+  --animationEasing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  body {
+    /* Base Colors - Dark */
+    --textColor: rgba(255, 255, 255, 1);
+    --windowBackgroundColor: rgba(28, 28, 30, 1);
+    --dividerColor: rgba(255, 255, 255, 0.1);
+
+    /* Text Color Hierarchy - Dark */
+    --labelColor: rgba(255, 255, 255, 0.9);
+    --secondaryLabelColor: rgba(255, 255, 255, 0.6);
+    --tertiaryLabelColor: rgba(255, 255, 255, 0.4);
+    --quaternaryLabelColor: rgba(255, 255, 255, 0.2);
+
+    /* Background Colors - Dark */
+    --backgroundColor: rgba(20, 20, 22, 1);
+    --secondaryBackgroundColor: rgba(28, 28, 30, 1);
+    --tertiaryBackgroundColor: rgba(36, 36, 38, 1);
+
+    /* Border and Separator Colors - Dark */
+    --separatorColor: rgba(255, 255, 255, 0.08);
+    --opaqueSeparatorColor: rgba(56, 56, 60, 1);
+    --placeholderTextColor: rgba(255, 255, 255, 0.25);
+
+    /* Secondary Controls - Dark */
+    --controlBackground--secondary: rgba(36, 36, 38, 1);
+    --controlTextColor--secondary: rgba(255, 255, 255, 0.8);
+    --controlHoverBackground--secondary: rgba(44, 44, 46, 1);
+    --controlFocusBackground--secondary: rgba(48, 48, 50, 1);
+    --controlBoxShadow--secondary: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.08);
+
+    /* Input Elements - Dark */
+    --inputBorder: 1px solid rgba(255, 255, 255, 0.1);
+    --inputBackground: rgba(36, 36, 38, 1);
+    --inputBoxShadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+
+    /* Dialog Styles - Dark */
+    --dialogBackground: rgba(36, 36, 38, 1);
+    --dialogBoxShadow: 0 16px 64px rgba(0, 0, 0, 0.4);
+    --dialogBackdrop: rgba(0, 0, 0, 0.8);
+
+    /* Table Styles - Dark */
+    --tableHeaderBackground: rgba(28, 28, 30, 1);
+    --tableBorder: 1px solid rgba(255, 255, 255, 0.08);
+    --tableHoverBackground: rgba(44, 44, 46, 0.8);
+
+    /* Toolbar Styles - Dark */
+    --toolbarBackground: rgba(36, 36, 38, 1);
+    --toolbarBorder: 1px solid rgba(255, 255, 255, 0.08);
+    --toolbarBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+    /* Tab Styles - Dark */
+    --tabInactiveColor: rgba(255, 255, 255, 0.6);
+    --tabHoverBackground: rgba(255, 255, 255, 0.04);
+
+    /* Sidebar Styles - Dark */
+    --sidebarBackground: rgba(24, 24, 26, 1);
+    --sidebarBorder: 1px solid rgba(255, 255, 255, 0.08);
+    --sidebarItemHoverBackground: rgba(255, 255, 255, 0.04);
+
+    /* Panel Styles - Dark */
+    --panelBackground: rgba(36, 36, 38, 1);
+    --panelBorder: 1px solid rgba(255, 255, 255, 0.08);
+    --panelHeaderBackground: rgba(28, 28, 30, 1);
+
+    /* Contextual Menu - Dark */
+    --contextualMenuBackground: rgba(36, 36, 38, 1);
+    --contextualMenuBorder: 1px solid rgba(255, 255, 255, 0.1);
+    --contextualMenuBoxShadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+
+    /* Resizer - Dark */
+    --resizerColor: rgba(255, 255, 255, 0.15);
+
+    /* Progress and Meter - Dark */
+    --progressBackground: rgba(255, 255, 255, 0.1);
+
+    /* Selection Colors - Dark */
+    --selectionBackground: rgba(24, 160, 251, 0.3);
+    --selectionColor: rgba(255, 255, 255, 0.9);
+
+    /* Gradients - Dark */
+    --backgroundGradient: linear-gradient(180deg, rgba(28, 28, 30, 1) 0%, rgba(20, 20, 22, 1) 100%);
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  body {
+    --inputBorder: 2px solid rgba(0, 0, 0, 0.8);
+    --controlBoxShadow--secondary: 0 0 0 2px rgba(0, 0, 0, 0.8);
+    --focusRingWidth: 3px;
+    --separatorColor: rgba(0, 0, 0, 0.3);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    body {
+      --inputBorder: 2px solid rgba(255, 255, 255, 0.8);
+      --controlBoxShadow--secondary: 0 0 0 2px rgba(255, 255, 255, 0.8);
+      --separatorColor: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  body {
+    --animationDuration: 0ms;
+    --windowBackdropFilter: none;
+  }
+}

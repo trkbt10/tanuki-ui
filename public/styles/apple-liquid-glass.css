@@ -1,0 +1,247 @@
+body {
+  /* Fonts */
+  --themeDefaultFontFamily: "SF Pro Text", "SF Pro Icons", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Helvetica",
+    "Arial", sans-serif;
+  --themeControlFontFamily: "SF Pro Text", "SF Pro Icons", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Helvetica",
+    "Arial", sans-serif;
+  --themeUtilityWindowTitleFont: normal normal 400 1.3em/1.4142 "Lucida Grande", sans-serif;
+  --themeLabelFontFamily: -apple-system, "San Francisco", BlinkMacSystemFont, "Sanfransisco", "Open Sans", "Helvetica Neue",
+    sans-serif;
+  --themeSystemFont: normal normal 400 11px/1.6 "Lucida Grande", sans-serif;
+  --textFont: normal normal 400 13px/1.230769 var(--themeLabelFontFamily);
+
+  /* Base Colors - Liquid Glass Theme */
+  --textColor: rgba(0, 0, 0, 0.9);
+  --accentColor: rgba(0, 122, 255, 1);
+  --cautionColor: rgba(255, 59, 48, 1);
+  accent-color: var(--accentColor);
+
+  /* Liquid Glass Window */
+  --windowBackgroundColor: rgba(255, 255, 255, 0.6);
+  --windowBackdropFilter: blur(20px);
+  --windowBoxShadow: 0 0 0 2px rgba(255, 255, 255, 0.6), 0 16px 32px rgba(0, 0, 0, 0.12);
+
+  /* Liquid Glass Text Colors */
+  --labelColor: rgba(0, 0, 0, 0.85);
+  --secondaryLabelColor: rgba(0, 0, 0, 0.6);
+  --tertiaryLabelColor: rgba(0, 0, 0, 0.4);
+  --quaternaryLabelColor: rgba(0, 0, 0, 0.2);
+  --placeholderTextColor: rgba(0, 0, 0, 0.5);
+  --selectedTextColor: rgba(0, 0, 0, 1);
+  --textBackgroundColor: rgba(255, 255, 255, 0.8);
+  --selectedTextBackgroundColor: rgba(0, 122, 255, 0.3);
+  --keyboardFocusIndicatorColor: rgba(0, 122, 255, 0.4);
+  --unemphasizedSelectedTextColor: rgba(0, 0, 0, 0.8);
+  --unemphasizedSelectedTextBackgroundColor: rgba(255, 255, 255, 0.3);
+  --linkColor: rgba(0, 122, 255, 1);
+  --separatorColor: rgba(0, 0, 0, 0.2);
+  --selectedContentBackgroundColor: rgba(0, 122, 255, 0.6);
+  --unemphasizedSelectedContentBackgroundColor: rgba(255, 255, 255, 0.4);
+  --selectedMenuItemTextColor: rgba(255, 255, 255, 1);
+  --gridColor: rgba(0, 0, 0, 0.2);
+  --headerTextColor: rgba(0, 0, 0, 0.85);
+
+  /* Liquid Glass Controls */
+  --controlAccentColor: rgba(0, 122, 255, 1);
+  --controlColor: rgba(255, 255, 255, 0.6);
+  --controlTextColor: rgba(0, 0, 0, 0.85);
+  --disabledControlTextColor: rgba(0, 0, 0, 0.3);
+  --selectedControlColor: rgba(0, 122, 255, 0.3);
+  --selectedControlTextColor: rgba(0, 0, 0, 1);
+  --alternateSelectedControlTextColor: rgba(255, 255, 255, 1);
+  --scrubberTexturedBackgroundColor: rgba(255, 255, 255, 0.8);
+  --windowFrameTextColor: rgba(0, 0, 0, 0.85);
+  --underPageBackgroundColor: rgba(0, 0, 0, 0.1);
+  --findHighlightColor: rgba(255, 255, 0, 0.6);
+  --highlightColor: rgba(255, 255, 255, 0.8);
+  --shadowColor: rgba(0, 0, 0, 0.3);
+
+  /* System Colors with Glass Effect */
+  --systemBrownColor: rgba(162, 132, 94, 0.8);
+  --systemGrayColor: rgba(142, 142, 147, 0.8);
+  --systemGreenColor: rgba(40, 205, 65, 0.8);
+  --systemIndigoColor: rgba(88, 86, 214, 0.8);
+  --systemOrangeColor: rgba(255, 149, 0, 0.8);
+  --systemPinkColor: rgba(255, 45, 85, 0.8);
+  --systemPurpleColor: rgba(175, 82, 222, 0.8);
+  --systemRedColor: rgba(255, 59, 48, 0.8);
+  --systemTealColor: rgba(85, 190, 240, 0.8);
+  --systemYellowColor: rgba(255, 204, 0, 0.8);
+  --systemBlueColor: rgba(0, 122, 255, 0.8);
+
+  /* Window Controls */
+  --windowCloseButtonBackground: rgba(255, 59, 48, 0.8);
+  --windowExpandButtonBackground: rgba(255, 204, 0, 0.8);
+  --windowFullscreenButtonBackground: rgba(40, 205, 65, 0.8);
+  --windowButtonBoxShadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+  /* Scrollbar */
+  --scrollBarBackgroundColor: rgba(255, 255, 255, 0.1);
+  --scrollBarThumbColor: rgba(255, 255, 255, 0.3);
+  --activeScrollBarThumbColor: rgba(255, 255, 255, 0.5);
+
+  /* Table */
+  --tableBackgroundColor: rgba(255, 255, 255, 0.05);
+  --tableBorderColor: rgba(255, 255, 255, 0.2);
+  --tableHeaderTextColor: rgba(255, 255, 255, 0.9);
+  --tableHeaderBackgroundColor: rgba(255, 255, 255, 0.08);
+  --tableHeaderBorderColor: rgba(255, 255, 255, 0.15);
+  --tableRowTextColor: rgba(255, 255, 255, 0.85);
+  --tableRowBackgroundColor: rgba(255, 255, 255, 0.03);
+  --tableRowBorderColor: rgba(255, 255, 255, 0.1);
+  --tableRowAlternateTextColor: rgba(255, 255, 255, 0.8);
+  --tableRowAlternateBackgroundColor: rgba(255, 255, 255, 0.06);
+  --tableRowAlternateBorderColor: rgba(255, 255, 255, 0.12);
+
+  /* Dialog */
+  --dialogBackground: rgba(255, 255, 255, 0.08);
+  --dialogBoxShadow: 0 0 0 2px rgba(255, 255, 255, 0.6), 0 32px 64px rgba(0, 0, 0, 0.2);
+
+  /* Controls */
+  --controlBoxShadow: 0 0 0 1px rgba(255, 255, 255, 0.2), 0 4px 16px rgba(0, 0, 0, 0.1);
+  --controlFocusBoxShadow: 0 0 0 2px rgba(0, 122, 255, 0.4), 0 4px 16px rgba(0, 0, 0, 0.15);
+  --controlTextFont: normal normal 400 13px/1.230769 var(--themeControlFontFamily);
+  --controlBorderRadius: 4px;
+  --controlPadding: 1px 8px 2px 8px;
+  --controlTextLetterSpacing: -0.5px;
+  --controlBackground: rgba(255, 255, 255, 0.6);
+
+  /* Button Primary */
+  --controlBoxShadow--primary: 0 0 0 2px rgba(0, 122, 255, 0.4), 0 8px 32px rgba(0, 122, 255, 0.2);
+  --controlBackground--primary: rgba(0, 122, 255, 0.6);
+  --controlTextColor--primary: rgba(255, 255, 255, 1);
+  --controlHoverTextColor--primary: rgba(255, 255, 255, 1);
+  --controlHoverBackground--primary: rgba(0, 122, 255, 0.7);
+  --controlFocusBackground--primary: rgba(0, 122, 255, 0.8);
+  --controlFocusTextColor--primary: rgba(255, 255, 255, 1);
+
+  /* Button Secondary */
+  --controlBoxShadow--secondary: 0 0 0 1px rgba(255, 255, 255, 0.5), 0 4px 16px rgba(0, 0, 0, 0.1);
+  --controlBackground--secondary: rgba(255, 255, 255, 0.6);
+  --controlTextColor--secondary: rgba(0, 0, 0, 0.85);
+
+  /* Input */
+  --inputPadding: 2px 7.5px 2.4px;
+  --inputBoxShadow: 0 0 0 1px rgba(255, 255, 255, 0.2), 0 4px 16px rgba(0, 0, 0, 0.1);
+  --inputBorder: 1px solid rgba(255, 255, 255, 0.15);
+  --inputFont: normal normal 400 13px/1.230769 var(--themeControlFontFamily);
+
+  --selectBoxSplitButtonWidth: 20px;
+  --selectBoxSplitButtonBorderColor: rgba(0, 0, 0, 0.2);
+  --selectBoxSplitButtonBorderWidth: 1px;
+
+  /* Checkbox */
+  --checkboxSize: 14px;
+
+  /* Toolbar */
+  --barItemsFontFamily: var(--themeLabelFontFamily);
+  --barItemsTextColor: rgba(0, 0, 0, 0.85);
+  --barItemsLabelTextColor: rgba(0, 0, 0, 0.6);
+  --barItemsDisabledLabelTextColor: rgba(0, 0, 0, 0.3);
+  --barItemsDisabledLabelBackgroundColor: rgba(0, 0, 0, 0.05);
+  --barItemsBorderRadius: 6px;
+  --barItemsControlMarkerBorderRadius: 4px;
+  --barItemsControlPlaceholderTextColor: rgba(0, 0, 0, 0.5);
+  --barItemsControlMarkerBackgroundColor: rgba(0, 0, 0, 0.1);
+  --barItemsControlsBorder: 1px solid rgba(0, 0, 0, 0.15);
+  --barItemsSegmentControlBackground: rgba(255, 255, 255, 0.6);
+  --barItemsHoverSegmentControlBackground: rgba(255, 255, 255, 0.7);
+  --barItemsActiveSegmentControlBackground: rgba(255, 255, 255, 0.8);
+  --segmentControlBackgroundColor: rgba(255, 255, 255, 0.9);
+  --sidebarListItemFont: normal normal 400 13px/1.230769 var(--themeDefaultFontFamily);
+  --sidebarListItemBorderRadius: 5px;
+  --selectedSidebarListItemBackground: rgba(0, 0, 0, 0.1);
+  --selectedSidebarListItemMarker: none;
+
+  --appMainToolbarFloatingBackground: rgba(255, 255, 255, 0.6);
+
+  /* Tab item */
+  --tabBarBackground: rgba(255, 255, 255, 0.4);
+  --tabBarBoxShadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  --tabItemHeight: 48px;
+  --tabItemTextColor: rgba(0, 0, 0, 0.6);
+  --tabItemBoxShadow: none;
+  --tabItemIconSize: 20px;
+  --tabItemFont: normal normal 11px/1.333333 var(--themeLabelFontFamily);
+  --tabBarLayout: center;
+  --tabItemBackground-selected: rgba(255, 255, 255, 0.8);
+  --tabItemBoxShadow-selected: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  --tabItemTextColor-selected: var(--accentColor);
+  --tabItemFont-selected: var(--tabItemFont);
+
+  --scrolledAppMainToolbarBoxShadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 8px 32px rgba(0, 0, 0, 0.15);
+
+  --appMainToolbarHeight: 52px;
+
+  /* Liquid Glass Filter Design Tokens */
+  --controlBackgroundFilter: url(#liquid-glass-filter);
+  --windowBackgroundFilter: url(#liquid-glass-filter);
+  --dialogBackgroundFilter: url(#liquid-glass-filter);
+  --segmentBackgroundFilter: url(#liquid-glass-filter);
+
+  /* SegmentControl */
+  --segmentControlPadding: 2px;
+  --segmentControlSegmentPadding: 1px 8px;
+  --segmentControlBoxShadow: 0 0 0 1px rgba(255, 255, 255, 0.15), inset 0 0 8px rgba(0, 0, 0, 0.1);
+  --segmentControlBackground: rgba(255, 255, 255, 0.6);
+  --segmentControlBorderRadius: 0.5rem;
+  --segmentControlIndicatorBoxShadow: 0 0 0 1px rgba(255, 255, 255, 0.3), 0 4px 16px rgba(0, 0, 0, 0.2);
+
+  /* Elevations */
+  --windowLevelElevation: 128;
+  --dialogLevelElevation: 128;
+  --popupLevelElevation: 32;
+  --tooltipLevelElevation: 16;
+  --cardLevelElevation: 8;
+  --controlsLevelElevation: 2;
+  --layerLevelElevation: 1;
+  --hoverLevelElevation: 2;
+  --activeLevelElevation: 1;
+}
+
+/* Scrollbar with liquid glass effect */
+body ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+
+body ::-webkit-scrollbar-corner {
+  background: transparent;
+  user-select: none;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+  backdrop-filter: blur(10px);
+}
+
+body ::-webkit-scrollbar-track {
+  background: transparent;
+  transition: background 0.3s ease;
+}
+
+body *:hover > ::-webkit-scrollbar-thumb {
+  background: var(--scrollBarThumbColor);
+  transition: background 0.3s ease;
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: var(--activeScrollBarThumbColor);
+}
+
+/* Global liquid glass effect styles */
+
+.liquid-glass-element {
+  backdrop-filter: var(--windowBackdropFilter);
+  -webkit-backdrop-filter: var(--windowBackdropFilter);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.liquid-glass-element:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.8),
+    0 20px 40px rgba(0, 0, 0, 0.16);
+}

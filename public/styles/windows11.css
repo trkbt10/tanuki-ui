@@ -1,0 +1,198 @@
+body {
+  font-feature-settings: "rclt" off;
+  /* Colors */
+  --textColor: rgba(0, 0, 0, 0.847059);
+  --accentColor: rgb(0, 95, 184);
+  accent-color: var(--accentColor);
+  --cautionColor: rgba(255, 59, 48, 1);
+
+  --windowBackgroundColor: rgba(255, 255, 255, 1);
+  --labelColor: rgba(0, 0, 0, 0.847059);
+  --secondaryLabelColor: rgba(0, 0, 0, 0.498039);
+  --tertiaryLabelColor: rgba(0, 0, 0, 0.258824);
+  --quaternaryLabelColor: rgba(0, 0, 0, 0.098039);
+  --textColor: rgba(0, 0, 0, 1);
+  --placeholderTextColor: rgba(0, 0, 0, 0.247059);
+  --selectedTextColor: rgba(0, 0, 0, 1);
+  --textBackgroundColor: rgba(255, 255, 255, 1);
+  --selectedTextBackgroundColor: rgba(179, 215, 255, 1);
+  --keyboardFocusIndicatorColor: rgba(0, 103, 244, 0.247059);
+  --unemphasizedSelectedTextColor: rgba(0, 0, 0, 1);
+  --unemphasizedSelectedTextBackgroundColor: rgba(220, 220, 220, 1);
+  --linkColor: rgba(0, 104, 218, 1);
+  --separatorColor: rgba(0, 0, 0, 0.384466667);
+  --selectedContentBackgroundColor: rgba(0, 99, 225, 1);
+  --unemphasizedSelectedContentBackgroundColor: rgba(220, 220, 220, 1);
+  --selectedMenuItemTextColor: rgba(255, 255, 255, 1);
+  --gridColor: rgba(230, 230, 230, 1);
+  --headerTextColor: rgba(0, 0, 0, 0.847059);
+  --controlAccentColor: rgba(0, 122, 255, 1);
+  --controlColor: rgba(255, 255, 255, 1);
+  --controlTextColor: rgba(0, 0, 0, 0.847059);
+  --disabledControlTextColor: rgba(0, 0, 0, 0.247059);
+  --selectedControlColor: rgba(179, 215, 255, 1);
+  --selectedControlTextColor: rgba(0, 0, 0, 0.847059);
+  --alternateSelectedControlTextColor: rgba(255, 255, 255, 1);
+  --scrubberTexturedBackgroundColor: rgba(255, 255, 255, 1);
+  --windowFrameTextColor: rgba(0, 0, 0, 0.847059);
+  --underPageBackgroundColor: rgba(150, 150, 150, 0.898039);
+  --findHighlightColor: rgba(255, 255, 0, 1);
+  --highlightColor: rgba(255, 255, 255, 1);
+  --shadowColor: rgba(0, 0, 0, 1);
+  --systemBrownColor: rgba(162, 132, 94, 1);
+  --systemGrayColor: rgba(142, 142, 147, 1);
+  --systemGreenColor: rgba(40, 205, 65, 1);
+  --systemIndigoColor: rgba(88, 86, 214, 1);
+  --systemOrangeColor: rgba(255, 149, 0, 1);
+  --systemPinkColor: rgba(255, 45, 85, 1);
+  --systemPurpleColor: rgba(175, 82, 222, 1);
+  --systemRedColor: rgba(255, 59, 48, 1);
+  --systemTealColor: rgba(85, 190, 240, 1);
+  --systemYellowColor: rgba(255, 204, 0, 1);
+  --systemBlueColor: rgba(0, 122, 255, 1);
+
+  /* Fonts */
+  --themeDefaultFontFamily: "Seoge UI", "Helvetica", "Helvetica Neue", sans-serif;
+  --themeControlFontFamily: var(--themeDefaultFontFamily);
+
+  --textFont: normal normal 14px/1.428571 var(--themeDefaultFontFamily);
+
+  --themeLabelFontFamily: "Seoge UI", sans-serif;
+  /* Control */
+  --controlFocusBoxShadow: 0px 0px 0px 2px rgba(0, 0, 0, 0.4);
+  --controlBackground: linear-gradient(0deg, rgba(255, 255, 255, 0.08) 96%, rgba(255, 255, 255, 0.4) 100%),
+    rgba(255, 255, 255, 0.7);
+  --controlHoverBackground: rgba(249, 249, 249, 0.5);
+  --controlTextColor: rgba(0, 0, 0, 0.895);
+
+  --controlAccentColor: rgb(0, 95, 184);
+  --controlBoxShadow: 0px -1px 0px 0px rgba(0, 0, 0, 0.2) inset, 0px 0px 0px 1px rgba(0, 0, 0, 0.1) inset;
+
+  --controlTextFont: normal normal 14px/1.428571 var(--themeDefaultFontFamily);
+  --controlBorderRadius: 3.5px;
+  --controlPadding: 7px 20px 5px;
+  --controlTextLetterSpacing: 0;
+
+  --controlBackground--primary: linear-gradient(0deg, rgba(255, 255, 255, 0.08) 96%, rgba(255, 255, 255, 0.4) 100%),
+    var(--accentColor);
+  --controlTextColor--primary: #ffffff;
+  --controlBoxShadow--primary: 0px -1px 0px 0px #001a68 inset;
+  --controlHoverBackground--primary: rgba(0, 95, 184, 0.9);
+
+  /* Input */
+  --inputPadding: 6.5px 12px 5px;
+  --inputFont: normal normal 12px/1.333333 var(--themeDefaultFontFamily);
+  --inputBoxShadow: 0px -1px 0px 0px rgba(0, 0, 0, 0.2) inset, 0px 0px 0px 1px rgba(0, 0, 0, 0.1) inset;
+  --inputBorder: 0 solid rgba(0, 0, 0, 0);
+
+  /* SelectBox */
+  --selectBoxSplitButtonWidth: 35px;
+  --selectBoxSplitButtonBorderColor: rgba(0, 0, 0, 0.1);
+  --selectBoxSplitButtonBorderWidth: 0 0 0 1px;
+  --selectBoxSplitButtonBackground: url("data:image/svg+xml,%0A%3Csvg width='11px' height='6px' viewBox='0 0 11 6' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg transform='translate(-335.000000, -18.000000)' fill='%23979797' fill-rule='nonzero'%3E%3Cpath d='M341.220389,16.4009439 L338.228099,20.3270079 C337.919774,20.701572 337.933435,21.2544913 338.212281,21.6504853 L341.229066,25.6097674 C341.56071,26.0641705 342.199152,26.1259883 342.62545,25.7728435 L342.734694,25.655705 C343.067483,25.2484009 343.086604,24.6832129 342.78948,24.2763336 L340.278531,20.9923982 L342.77926,17.7363952 C343.121045,17.2687036 343.063005,16.5887079 342.62545,16.226237 C342.199152,15.8730922 341.56071,15.9349099 341.220389,16.4009439 Z' transform='translate(340.500000, 21.000000) rotate(-90.000000) translate(-340.500000, -21.000000) '%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+
+  /* Check box */
+  --checkboxSize: 20px;
+  /* Toolbar */
+  --barItemsFontFamily: var(--themeDefaultFontFamily);
+  --barItemsTextColor: rgba(0, 0, 0, 0.8956);
+  --barItemsAccentColor: var(--accentColor);
+  --barItemsLabelTextColor: rgba(0, 0, 0, 0.61);
+  --barItemsControlPlaceholderTextColor: rgba(0, 0, 0, 0.61);
+  --barItemsControlMarkerBackgroundColor: transparent;
+  --barItemsDisabledLabelTextColor: rgba(0, 0, 0, 0.61);
+  --barItemsDisabledLabelBackgroundColor: rgba(0, 0, 0, 0.1);
+  --barItemsBorderRadius: 3.5px;
+  --barItemsControlMarkerBorderRadius: 4px;
+  --barItemsControlsBorder: 1px solid transparent;
+  --barItemsHoverSegmentControlBackground: transparent;
+  --barItemsActiveSegmentControlBackground: transparent;
+  --segmentControlBackgroundColor: rgba(255, 255, 255, 1);
+  /* Sidebar */
+  --sidebarListItemFont: normal normal 400 14px/1.428571 var(--themeDefaultFontFamily);
+  --sidebarListItemBorderRadius: 5px;
+  --selectedSidebarListItemBackground: rgba(0, 0, 0, 0.0373);
+  --selectedSidebarListItemMarker: block;
+
+  /* Dialog */
+  --dialogBackground: var(--windowBackgroundColor);
+  --dialogBoxShadow: 0 1.8px 5px 0 rgba(0, 0, 0, 0.4), 0 0 1px 0 rgba(0, 0, 0, 0.55);
+
+  /* Tab item*/
+  --tabBarBackground: inherit;
+  --tabBarBoxShadow: rgba(0, 0, 0, 0);
+  --tabItemHeight: 48px;
+  --tabItemTextColor: rgba(0, 0, 0, 0.54);
+  --tabItemBoxShadow: rgba(0, 0, 0, 0);
+  --tabItemIconSize: 20px;
+  --tabItemFont: normal normal 11px/1.333333 var(--themeLabelFontFamily);
+  --tabBarLayout: center;
+  --tabItemBackground-selected: transparent;
+  --tabItemBoxShadow-selected: rgba(0, 0, 0, 0);
+  --tabItemTextColor-selected: var(--accentColor);
+  --tabItemFont-selected: var(--tabItemFont);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    --windowBackgroundColor: rgba(33, 28, 38, 1);
+    --labelColor: rgba(255, 255, 255, 0.847059);
+    --controlBackgroundColor: rgba(30, 30, 30, 1);
+    --secondaryLabelColor: rgba(255, 255, 255, 0.54902);
+    --tertiaryLabelColor: rgba(255, 255, 255, 0.247059);
+    --quaternaryLabelColor: rgba(255, 255, 255, 0.098039);
+    --textColor: rgba(255, 255, 255, 1);
+    --placeholderTextColor: rgba(255, 255, 255, 0.247059);
+    --selectedTextColor: rgba(255, 255, 255, 1);
+    --textBackgroundColor: rgba(30, 30, 30, 1);
+    --selectedTextBackgroundColor: rgba(63, 99, 139, 1);
+    --keyboardFocusIndicatorColor: rgba(26, 169, 255, 0.298039);
+    --unemphasizedSelectedTextColor: rgba(255, 255, 255, 1);
+    --unemphasizedSelectedTextBackgroundColor: rgba(70, 70, 70, 1);
+    --linkColor: rgba(65, 156, 255, 1);
+    --separatorColor: rgba(255, 255, 255, 0.098039);
+    --selectedContentBackgroundColor: rgba(0, 88, 208, 1);
+    --unemphasizedSelectedContentBackgroundColor: rgba(70, 70, 70, 1);
+    --selectedMenuItemTextColor: rgba(255, 255, 255, 1);
+    --gridColor: rgba(26, 26, 26, 1);
+    --headerTextColor: rgba(255, 255, 255, 1);
+    --controlAccentColor: rgba(0, 122, 255, 1);
+    --controlColor: rgba(255, 255, 255, 0.247059);
+    --controlTextColor: rgba(255, 255, 255, 0.847059);
+    --disabledControlTextColor: rgba(255, 255, 255, 0.247059);
+    --selectedControlColor: rgba(63, 99, 139, 1);
+    --selectedControlTextColor: rgba(255, 255, 255, 0.847059);
+    --alternateSelectedControlTextColor: rgba(255, 255, 255, 1);
+    --scrubberTexturedBackgroundColor: rgba(255, 255, 255, 1);
+    --windowFrameTextColor: rgba(255, 255, 255, 0.847059);
+    --underPageBackgroundColor: rgba(40, 40, 40, 1);
+    --findHighlightColor: rgba(255, 255, 0, 1);
+    --highlightColor: rgba(180, 180, 180, 1);
+    --shadowColor: rgba(0, 0, 0, 1);
+    --systemBrownColor: rgba(172, 142, 104, 1);
+    --systemGrayColor: rgba(152, 152, 157, 1);
+    --systemGreenColor: rgba(50, 215, 75, 1);
+    --systemIndigoColor: rgba(94, 92, 230, 1);
+    --systemOrangeColor: rgba(255, 159, 10, 1);
+    --systemPinkColor: rgba(255, 55, 95, 1);
+    --systemPurpleColor: rgba(191, 90, 242, 1);
+    --systemRedColor: rgba(255, 69, 58, 1);
+    --systemTealColor: rgba(90, 200, 245, 1);
+    --systemYellowColor: rgba(255, 214, 10, 1);
+    --systemBlueColor: rgba(10, 132, 255, 1);
+    /* Table */
+    --tableBackgroundColor: rgba(33, 28, 38, 1);
+    --tableBorderColor: rgba(255, 255, 255, 0.498039);
+    --tableHeaderTextColor: rgba(255, 255, 255, 0.7);
+    --tableHeaderBackgroundColor: rgba(33, 28, 38, 1);
+    --tableHeaderBorderColor: rgba(255, 255, 255, 0.15);
+
+    --tableRowTextColor: rgba(255, 255, 255, 0.9);
+    --tableRowAlternateTextColor: rgba(255, 255, 255, 0.8);
+    --tableRowBackgroundColor: rgba(33, 28, 38, 1);
+    --tableRowBorderColor: rgba(255, 255, 255, 0.498039);
+    --tableRowAlternateTextColor: rgba(255, 255, 255, 0.8);
+    --tableRowAlternateBackgroundColor: rgba(255, 255, 255, 0.04);
+    --tableRowAlternateBorderColor: rgba(255, 255, 255, 0.5);
+  }
+}

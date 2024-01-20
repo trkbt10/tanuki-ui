@@ -1,0 +1,95 @@
+body {
+  font-feature-settings: "rclt" off;
+  --windowLevelElevation: 128;
+  --dialogLevelElevation: 128;
+  --popupLevelElevation: 32;
+  --tooltipLevelElevation: 16;
+  --cardLevelElevation: 8;
+  --controlsLevelElevation: 2;
+  --layerLevelElevation: 1;
+  --hoverLevelElevation: 2;
+  --activeLevelElevation: 1;
+
+  --textFont: "Roboto", sans-serif;
+  --themeLabelFontFamily: "Roboto", sans-serif;
+
+  --textColor: rgb(0, 0, 0);
+  --accentColor: #ff5722;
+  --accentBackgroundTextColor: #ffffff;
+
+  /* Control */
+  --controlDisabledBackground: rgba(0, 0, 0, 0.12);
+  --controlDisabledTextColor: rgba(0, 0, 0, 0.26);
+  --controlActiveBackground: rgba(204, 204, 204, 0.25);
+  --controlActiveTextColor: rgb(255, 255, 255);
+
+  --controlBackground: rgb(224, 224, 224);
+  --controlHoverBackground: linear-gradient(0deg, rgba(0, 0, 0, 0.12) 96%, rgba(0, 0, 0, 0.12) 100%), rgb(224, 224, 224);
+  --controlFocusBoxShadow: 0 0 8px 0 rgba(0, 0, 0, 0.12), 0 8px 8px 0 rgba(0, 0, 0, 0.24);
+  --controlTextColor: rgba(0, 0, 0, 0.895);
+
+  --controlAccentColor: rgb(0, 95, 184);
+  --controlBoxShadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24);
+  --controlTextFont: normal normal 1.4rem/1.428571 var(--textFont);
+  --controlBorderRadius: 0.2rem;
+  --controlPadding: 0.714286rem 1rem 0.642857rem;
+  --controlTextLetterSpacing: 0.005em;
+
+  /* Button Primary */
+  --controlBackground--primary: linear-gradient(0deg, rgba(255, 255, 255, 0.08) 96%, rgba(255, 255, 255, 0.4) 100%),
+    var(--accentColor);
+  --controlTextColor--primary: #ffffff;
+  --controlBoxShadow--primary: 0px -1px 0px 0px #001a68 inset;
+  --controlHoverBackground--primary: rgba(0, 95, 184, 0.9);
+
+  /* Input */
+  --inputPadding: 0.65em 1em 0.5em;
+  --inputFont: normal normal 1.2rem/1.333333 var(--textFont);
+  --inputBoxShadow: 0px -1px 0px 0px rgba(0, 0, 0, 0.2) inset, 0px 0px 0px 1px rgba(0, 0, 0, 0.1) inset;
+  --inputBorder: 0 solid rgba(0, 0, 0, 0);
+
+  /* SelectBox */
+  --selectBoxSplitButtonWidth: 35px;
+  --selectBoxSplitButtonBorderColor: rgba(0, 0, 0, 0.1);
+  --selectBoxSplitButtonBorderWidth: 0 0 0 1px;
+  --selectBoxSplitButtonBackground: url("data:image/svg+xml,%0A%3Csvg width='11px' height='6px' viewBox='0 0 11 6' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cg transform='translate(-335.000000, -18.000000)' fill='%23979797' fill-rule='nonzero'%3E%3Cpath d='M341.220389,16.4009439 L338.228099,20.3270079 C337.919774,20.701572 337.933435,21.2544913 338.212281,21.6504853 L341.229066,25.6097674 C341.56071,26.0641705 342.199152,26.1259883 342.62545,25.7728435 L342.734694,25.655705 C343.067483,25.2484009 343.086604,24.6832129 342.78948,24.2763336 L340.278531,20.9923982 L342.77926,17.7363952 C343.121045,17.2687036 343.063005,16.5887079 342.62545,16.226237 C342.199152,15.8730922 341.56071,15.9349099 341.220389,16.4009439 Z' transform='translate(340.500000, 21.000000) rotate(-90.000000) translate(-340.500000, -21.000000) '%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+
+  /* Check box */
+  --checkboxSize: 20px;
+
+  /* Tab item*/
+  --tabBarBackground: #fafafa;
+  --tabBarBoxShadow: 0 0 8px 0 rgba(0, 0, 0, 0.12), 0 8px 8px 0 rgba(0, 0, 0, 0.24);
+  --tabItemHeight: 48px;
+  --tabItemTextColor: rgba(0, 0, 0, 0.54);
+  --tabItemBoxShadow: rgba(0, 0, 0, 0);
+  --tabItemIconSize: 2.4rem;
+  --tabItemFont: normal normal 1.2rem/1.333333 var(--themeLabelFontFamily);
+
+  --tabItemBackground-selected: transparent;
+  --tabItemBoxShadow-selected: rgba(0, 0, 0, 0);
+  --tabItemTextColor-selected: var(--accentColor);
+  --tabItemFont-selected: normal normal 1.4rem/1.428571 var(--themeLabelFontFamily);
+
+  /* Layouts */
+  --appMainToolbarHeight: 56px;
+
+  --appMainToolbarBoxShadow: 0 0 8px 0 rgba(0, 0, 0, 0.12), 0 8px 8px 0 rgba(0, 0, 0, 0.24);
+  font-family: var(--textFont);
+
+  /* Toolbar */
+  --barItemsFontFamily: var(--textFont);
+  --barItemsTextColor: rgba(0, 0, 0, 0.8956);
+  --barItemsAccentColor: #005fb8;
+  --barItemsLabelTextColor: rgba(0, 0, 0, 0.61);
+  --barItemsControlPlaceholderTextColor: rgba(0, 0, 0, 0.61);
+  --barItemsControlMarkerBackgroundColor: transparent;
+  --barItemsDisabledLabelTextColor: rgba(0, 0, 0, 0.61);
+  --barItemsDisabledLabelBackgroundColor: rgba(0, 0, 0, 0.1);
+  --barItemsBorderRadius: 3.5px;
+  --barItemsControlMarkerBorderRadius: 0.4rem;
+  --barItemsControlsBorder: 1px solid transparent;
+  --barItemsHoverSegmentControlBackground: transparent;
+  --barItemsActiveSegmentControlBackground: transparent;
+  --segmentControlBackgroundColor: rgba(255, 255, 255, 1);
+}
