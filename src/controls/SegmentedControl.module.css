@@ -1,0 +1,71 @@
+.segmentControl {
+  position: relative;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-radius: 0.6rem;
+  background: var(--segmentControlBackground);
+  filter: var(--segmentBackgroundFilter);
+  box-shadow: var(--segmentControlBoxShadow);
+  padding: var(--segmentControlPadding);
+  box-sizing: border-box;
+
+  font-weight: 500;
+}
+
+.segmentButton {
+  position: relative;
+  z-index: 2;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.indicator,
+.segmentButton {
+  white-space: nowrap;
+  transition:
+    0.4s opacity ease,
+    0.4s transform ease;
+  user-select: none;
+  font: var(--textFont);
+  letter-spacing: -0.006154em;
+  border-radius: var(--segmentControlBorderRadius);
+  min-width: 2.5em;
+  padding: var(--segmentControlSegmentPadding);
+  text-align: center;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+}
+
+
+.indicator,
+.segmentButton[data-active="true"] {
+  font-weight: 400;
+}
+
+.segmentButton:hover:active {
+  opacity: 0.5;
+}
+
+.segmentButton[data-active="true"]:active:hover {
+  transform: scale(0.97);
+}
+
+.indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: var(--segmentControlBackgroundColor);
+  z-index: 1;
+  transition: transform 0.2s ease;
+  color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.02);
+  box-shadow: var(--segmentControlIndicatorBoxShadow);
+}
+
+.segmentButton>* {
+  pointer-events: none;
+}

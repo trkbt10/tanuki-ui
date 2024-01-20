@@ -1,0 +1,68 @@
+/* Segment-style tag container */
+.tagSegment {
+  display: inline-flex;
+  align-items: center;
+  background-color: var(--controlBackground--secondary, #e5e7eb);
+  color: var(--controlTextColor--secondary, var(--labelColor, #374151));
+  border-radius: var(--controlBorderRadius, 0.3125em);
+  padding: 0;
+  font-size: 0.8125em;
+  gap: 0;
+  transition: background-color 0.15s ease-in-out;
+  border: 1px solid var(--tertiaryLabelColor, transparent);
+  overflow: hidden;
+}
+
+.tagSegment:hover {
+  background-color: var(--controlHoverBackground--secondary, #d1d5db);
+}
+
+.tagText {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0.1875em 0.375em;
+  line-height: 1.2;
+}
+
+.tagRemove {
+  background: transparent;
+  border: none;
+  border-left: 1px solid var(--tertiaryLabelColor, rgba(0, 0, 0, 0.1));
+  color: var(--tertiaryLabelColor, #6b7280);
+  cursor: pointer;
+  padding: 0.1875em 0.25em;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease-in-out;
+  border-radius: 0;
+}
+
+.tagRemove:hover,
+.tagRemove:active {
+  color: var(--systemRedColor, var(--cautionColor, #dc2626));
+  transform: scale(0.95);
+}
+
+/* Single value display (non-multiple mode) */
+.singleValue {
+  color: var(--labelColor, #374151);
+  font-size: 0.875em;
+  padding: 0.1875em 0.25em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+/* Placeholder text when no tags selected */
+.placeholder {
+  color: var(--quaternaryLabelColor, #9ca3af);
+  font-size: 0.8125em;
+  padding: 0.1875em 0.25em;
+  user-select: none;
+  pointer-events: none;
+}

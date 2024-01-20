@@ -1,0 +1,81 @@
+.selectbox[data-hidden="true"] {
+  display: none;
+}
+
+.selectable {
+  box-sizing: border-box;
+  display: grid;
+  flex-direction: column;
+  font: var(--controlTextFont);
+  color: var(--controlTextColor);
+
+  overflow-y: auto;
+}
+
+.selectableAll {
+  width: 2em;
+}
+
+.selectbox {
+  position: relative;
+  color: var(--controlTextColor);
+  box-sizing: border-box;
+  display: inline-grid;
+  place-items: stretch;
+  border: var(--controlBorder);
+  border-color: var(--controlAccentColor);
+  background: var(--controlBackground);
+  font: var(--controlTextFont);
+  letter-spacing: var(--controlTextLetterSpacing);
+  box-shadow: var(--controlBoxShadow);
+  border-radius: var(--controlBorderRadius);
+  -webkit-font-smoothing: antialiased;
+  content: attr(format);
+  cursor: pointer;
+}
+
+.selectbox select,
+.selectbox input,
+.selectbox span {
+  cursor: inherit;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-appearance: none;
+  background: none;
+  display: block;
+  width: 100%;
+  border: 0;
+  outline: none;
+  box-sizing: border-box;
+  appearance: none;
+  color: inherit;
+  padding: var(--controlPadding);
+  padding-right: var(--selectBoxSplitButtonWidth);
+}
+
+.selectbox span {
+  pointer-events: none;
+}
+
+.selectbox:has(*:focus-visible) {
+  box-shadow: var(--controlFocusBoxShadow);
+  outline: 2px solid var(--accentColor, accentColor);
+}
+
+.mark {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  pointer-events: none;
+  box-sizing: border-box;
+  height: 100%;
+  width: var(--selectBoxSplitButtonWidth, auto);
+  border-color: var(--selectBoxSplitButtonBorderColor, none);
+  border-style: solid;
+  border-width: var(--selectBoxSplitButtonBorderWidth, 0);
+  vertical-align: baseline;
+  pointer-events: none;
+}

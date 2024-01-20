@@ -1,0 +1,9 @@
+.resizer {
+  position: absolute;
+  width: 1em;
+  height: 1em;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  background: transparent;
+  display: block;
+}

@@ -1,0 +1,115 @@
+.control {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: -6px;
+  left: -6px;
+
+  padding: 6px;
+  pointer-events: auto;
+  z-index: 0;
+}
+
+.windowContainer {
+  position: absolute;
+  display: grid;
+  grid-template-rows: 32px 1fr;
+  border-radius: 0.4em;
+  background-color: var(--dialogBackground);
+  filter: var(--windowBackgroundFilter);
+  box-shadow: var(--dialogBoxShadow);
+
+  pointer-events: auto;
+}
+
+.windowContainer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  backdrop-filter: var(--backgroundBackdropFilter);
+  isolation: isolate;
+  filter: var(--windowBackgroundFilter);
+}
+
+.windowContainer > .content {
+  overflow: auto;
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+.title {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  width: 100%;
+
+  align-items: stretch;
+  align-content: center;
+  box-sizing: border-box;
+  padding: 0;
+}
+
+.title[data-layout="ew"] .buttons {
+  left: 0;
+  right: auto;
+}
+
+.label {
+  position: absolute;
+  inset: 0;
+  user-select: none;
+  display: grid;
+  place-items: center;
+}
+
+.buttons {
+  display: flex;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+
+.window {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.button {
+  appearance: none;
+  border: none;
+  background: none;
+
+  margin: 0;
+  padding: 0;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  line-height: 1em;
+  font-size: 1em;
+  box-shadow: var(--windowButtonBoxShadow);
+  user-select: none;
+  color: var(--controlTextColor);
+}
+
+.button[data-variant="close"] {
+  background-color: var(--windowCloseButtonBackground);
+}
+
+.button[data-variant="expand"] {
+  background-color: var(--windowExpandButtonBackground);
+}
+
+.button[data-variant="fullscreen"] {
+  background-color: var(--windowFullscreenButtonBackground);
+}

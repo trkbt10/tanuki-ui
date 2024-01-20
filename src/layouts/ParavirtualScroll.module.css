@@ -1,0 +1,11 @@
+.page {
+  position: relative;
+}
+
+.line {
+  position: absolute;
+}
+
+.ghost {
+  display: block;
+}

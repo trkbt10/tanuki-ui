@@ -1,0 +1,128 @@
+import * as React from "react";
+import { useNodeEditor } from "../contexts/NodeEditorContext";
+import { useEditorActionState } from "../contexts/EditorActionStateContext";
+import type { NodeId, Node } from "../types/core";
+import {
+  updateGroupMembership,
+  getGroupChildren,
+  getGroupDescendants,
+  isValidGroupMove,
+  findContainingGroup,
+} from "../utils/groupUtils";
+
+export interface UseGroupManagementOptions {
+  /** Whether to automatically update group membership when nodes move */
+  autoUpdateMembership?: boolean;
+  /** Debounce delay for membership updates (ms) */
+  membershipUpdateDelay?: number;
+}
+
+export interface UseGroupManagementResult {
+  /** Update group membership for all nodes */
+  updateAllGroupMembership: () => void;
+  /** Check if a node is in a group */
+  isNodeInGroup: (nodeId: NodeId) => boolean;
+  /** Get the parent group of a node */
+  getNodeParentGroup: (nodeId: NodeId) => NodeId | null;
+  /** Get all children of a group */
+  getGroupChildren: (groupId: NodeId) => Node[];
+  /** Get all descendants of a group */
+  getGroupDescendants: (groupId: NodeId) => Node[];
+  /** Move a group with all its children */
+  moveGroupWithChildren: (groupId: NodeId, delta: { x: number; y: number }) => void;
+  /** Check if a group move would be valid */
+  isValidGroupMove: (groupId: NodeId, newPosition: { x: number; y: number }) => boolean;
+}
+
+/**
+ * Hook for managing group relationships and operations
+ */
+export const useGroupManagement = (
+  options: UseGroupManagementOptions = {}
+): UseGroupManagementResult => {
+  const { state, dispatch, actions } = useNodeEditor();
+  const { state: actionState } = useEditorActionState();
+  const {
+    autoUpdateMembership = true,
+    membershipUpdateDelay = 100,
+  } = options;
+
+  // Debounced membership update
+  const updateMembershipTimeoutRef = React.useRef<number | undefined>(undefined);
+  
+  const updateAllGroupMembership = React.useCallback(() => {
+    const updates = updateGroupMembership(state.nodes);
+    if (Object.keys(updates).length > 0) {
+      dispatch(actions.updateGroupMembership(updates));
+    }
+  }, [state.nodes, dispatch, actions]);
+
+  // Auto-update membership when nodes change position (but not during drag)
+  React.useEffect(() => {
+    if (!autoUpdateMembership) return;
+
+    // Clear existing timeout
+    if (updateMembershipTimeoutRef.current) {
+      clearTimeout(updateMembershipTimeoutRef.current);
+    }
+
+    // Only update if we're not currently dragging nodes
+    // This prevents continuous updates during drag operations
+    const isDragging = actionState.dragState !== null;
+
+    if (!isDragging) {
+      // Set new timeout for debounced update
+      updateMembershipTimeoutRef.current = window.setTimeout(() => {
+        updateAllGroupMembership();
+      }, membershipUpdateDelay);
+    }
+
+    return () => {
+      if (updateMembershipTimeoutRef.current) {
+        clearTimeout(updateMembershipTimeoutRef.current);
+      }
+    };
+  }, [state.nodes, autoUpdateMembership, membershipUpdateDelay, updateAllGroupMembership]);
+
+  const isNodeInGroup = React.useCallback((nodeId: NodeId): boolean => {
+    const node = state.nodes[nodeId];
+    return !!(node && node.parentId);
+  }, [state.nodes]);
+
+  const getNodeParentGroup = React.useCallback((nodeId: NodeId): NodeId | null => {
+    const node = state.nodes[nodeId];
+    return node?.parentId || null;
+  }, [state.nodes]);
+
+  const getGroupChildrenNodes = React.useCallback((groupId: NodeId): Node[] => {
+    return getGroupChildren(groupId, state.nodes);
+  }, [state.nodes]);
+
+  const getGroupDescendantNodes = React.useCallback((groupId: NodeId): Node[] => {
+    return getGroupDescendants(groupId, state.nodes);
+  }, [state.nodes]);
+
+  const moveGroupWithChildren = React.useCallback((
+    groupId: NodeId,
+    delta: { x: number; y: number }
+  ) => {
+    dispatch(actions.moveGroupWithChildren(groupId, delta));
+  }, [dispatch, actions]);
+
+  const isValidGroupMoveCheck = React.useCallback((
+    groupId: NodeId,
+    newPosition: { x: number; y: number }
+  ): boolean => {
+    return isValidGroupMove(groupId, newPosition, state.nodes);
+  }, [state.nodes]);
+
+  return {
+    updateAllGroupMembership,
+    isNodeInGroup,
+    getNodeParentGroup,
+    getGroupChildren: getGroupChildrenNodes,
+    getGroupDescendants: getGroupDescendantNodes,
+    moveGroupWithChildren,
+    isValidGroupMove: isValidGroupMoveCheck,
+  };
+};

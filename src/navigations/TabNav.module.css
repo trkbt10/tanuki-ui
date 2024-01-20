@@ -1,0 +1,63 @@
+.tabnav {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+  box-sizing: border-box;
+  padding: 0 0 1px 0;
+  justify-content: space-between;
+  background: rgba(0, 0, 0, 0.06);
+}
+.sortableItem {
+  display: inline-grid;
+  grid-template-columns: 16px auto;
+  align-items: center;
+  flex-grow: 1;
+  box-shadow: 0 -0.1rem 0 0 rgba(0, 0, 0, 0.06) inset;
+  transition: background 0.4s ease;
+  padding: 0 4px;
+}
+.sortableItemControl {
+  display: grid;
+  flex-grow: 1;
+  position: relative;
+}
+.handle {
+  display: grid;
+}
+
+.sortableItem[aria-pressed="true"],
+.sortableItem[aria-selected="true"] {
+  background: rgba(255, 255, 255, 1);
+}
+.sortableItemBody {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 5px 0 4.5px;
+}
+.sortableItem[aria-selected="false"]:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  color: var(--textColor);
+}
+.deleteButton {
+  appearance: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  color: inherit;
+  background: rgba(0, 0, 0, 0);
+}
+.deleteButton:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.sortableItem:hover .deleteButton {
+  opacity: 1;
+}

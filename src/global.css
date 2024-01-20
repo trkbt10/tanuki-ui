@@ -1,0 +1,81 @@
+@import "./themes/animations.css";
+
+@font-face {
+  font-family: system;
+  font-style: normal;
+  font-weight: 300;
+  src: local(".SFNSText-Light"), local(".HelveticaNeueDeskInterface-Light"), local(".LucidaGrandeUI"), local("Ubuntu Light"),
+    local("Segoe UI Light"), local("Roboto-Light"), local("DroidSans"), local("Tahoma");
+}
+
+:root {
+  --windowLevelElevation: 128;
+  --dialogLevelElevation: 128;
+  --popupLevelElevation: 32;
+  --tooltipLevelElevation: 16;
+  --cardLevelElevation: 8;
+  --controlsLevelElevation: 2;
+  --layerLevelElevation: 1;
+  --hoverLevelElevation: 2;
+  --activeLevelElevation: 1;
+
+  --appMainToolbarHeight: 52px;
+  --backgroundBackdropFilter: none;
+
+  /* Filter Design Tokens */
+  --controlBackgroundFilter: none;
+  --windowBackgroundFilter: none;
+  --dialogBackgroundFilter: none;
+  --segmentBackgroundFilter: none;
+  --systemBrownColor: rgba(162, 132, 94, 1);
+  --systemGrayColor: rgba(142, 142, 147, 1);
+  --systemGreenColor: rgba(40, 205, 65, 1);
+  --systemIndigoColor: rgba(88, 86, 214, 1);
+  --systemOrangeColor: rgba(255, 149, 0, 1);
+  --systemPinkColor: rgba(255, 45, 85, 1);
+  --systemPurpleColor: rgba(175, 82, 222, 1);
+  --systemRedColor: rgba(255, 59, 48, 1);
+  --systemTealColor: rgba(85, 190, 240, 1);
+  --systemYellowColor: rgba(255, 204, 0, 1);
+  --systemBlueColor: rgba(0, 122, 255, 1);
+
+  --footerHeight: calc(var(--appMainToolbarHeight, 0px) + env(safe-area-inset-bottom));
+  --headerHeight: calc(var(--appMainToolbarHeight, 0px) + env(safe-area-inset-top));
+  --fullScreenHeight: calc(100dvh + env(safe-area-inset-bottom) + env(safe-area-inset-top));
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  cursor: auto;
+  color: text;
+  overflow-wrap: break-word;
+  -moz-font-feature-settings:
+    "palt" 1,
+    "pkna" 1,
+    "kern";
+  font-feature-settings:
+    "palt" 1,
+    "pkna" 1,
+    "kern";
+  text-rendering: optimizeLegibility;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: var(--windowBackgroundColor);
+  color: var(--textColor);
+  font: var(--textFont);
+  margin: 0;
+}
+
+@media (-webkit-min-device-pixel-ratio: 2),
+  (min--moz-device-pixel-ratio: 2),
+  (min-resolution: 2dppx),
+  only screen and (-webkit-min-device-pixel-ratio: 2) {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}

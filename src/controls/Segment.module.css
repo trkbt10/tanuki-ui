@@ -1,0 +1,5 @@
+.segment {
+  flex-grow: 1;
+  background: transparent;
+  color: var(--controlTextColor);
+}

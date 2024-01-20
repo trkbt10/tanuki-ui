@@ -1,0 +1,57 @@
+.alignmentControls {
+  margin-bottom: 8px;
+}
+
+.alignmentLabel {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #666;
+}
+
+.alignmentGrid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 4px;
+}
+
+.alignmentButton {
+  padding: 0;
+  border: 1px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  width: 100%;
+  height: 24px;
+  min-width: 24px;
+  opacity: 0.7;
+  transition: all 0.15s ease;
+  color: currentColor;
+}
+
+.alignmentButton:hover:not(:disabled) {
+  opacity: 1;
+  border: 1px solid #ddd;
+  background-color: #f8f9fa;
+  color: #0066cc;
+}
+
+.alignmentButton:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: currentColor;
+}
+
+.alignmentButton:disabled:hover {
+  opacity: 0.3;
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: currentColor;
+}

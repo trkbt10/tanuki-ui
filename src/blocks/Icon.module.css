@@ -1,0 +1,14 @@
+.icon {
+  mix-blend-mode: normal;
+  fill: currentColor;
+  fill-rule: nonzero;
+  display: inline-block;
+  font-weight: normal;
+  font-style: normal;
+  speak-as: none;
+  text-decoration: inherit;
+  text-transform: none;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

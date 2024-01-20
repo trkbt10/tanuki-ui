@@ -1,0 +1,31 @@
+@import './common.module.css';
+
+.inputContainer {
+  composes: selectContainer from './common.module.css';
+}
+
+.content {
+  cursor: inherit;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-appearance: none;
+  background: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.1875em;
+  width: 100%;
+  border: 0;
+  outline: none;
+  box-sizing: border-box;
+  appearance: none;
+  color: inherit;
+  padding: var(--controlPadding, 0.1875em);
+  padding-right: var(--selectBoxSplitButtonWidth, 2.5em);
+  pointer-events: none;
+  min-height: 1.25em;
+}
+
+.mark {
+  composes: selectMark from './common.module.css';
+}

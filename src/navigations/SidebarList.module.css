@@ -1,0 +1,140 @@
+.summary {
+  color: var(--tertiaryLabelColor);
+  box-sizing: border-box;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr auto;
+  list-style: none;
+  width: 100%;
+  padding: 0;
+  --summaryMarkerSize: 12px;
+  position: relative;
+}
+
+.summary::-webkit-details-marker,
+.summary::after {
+  display: none;
+}
+
+.summary .marker {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  width: var(--summaryMarkerSize);
+  height: var(--summaryMarkerSize);
+  user-select: none;
+  transition: transform 0.1s ease;
+  transform-origin: center center;
+  transform: translateY(-50%) rotate(-90deg);
+}
+
+.summary .marker > svg {
+  width: var(--summaryMarkerSize);
+  height: var(--summaryMarkerSize);
+}
+
+.details[open] > .summary .marker {
+  transform: translateY(-50%) rotate(0deg);
+}
+
+.details {
+  display: block;
+  padding: 0 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.button {
+  appearance: none;
+  padding: 0.1em 0.8em 0.2em;
+  font: normal normal 400 11px/1.230769 var(--themeLabelFontFamily);
+  color: #000000;
+  text-align: center;
+
+  letter-spacing: -0.05em;
+  border-radius: var(--sidebarListItemBorderRadius);
+  cursor: pointer;
+  display: inline-block;
+
+  color: var(--controlTextColor);
+  background-color: var(--controlBackgroundColor);
+  box-sizing: border-box;
+  border: none;
+}
+
+.sectionTitle {
+  position: relative;
+  font: var(--labelFont);
+  letter-spacing: 0;
+  margin: 0.8rem 0 0 0;
+  padding: 0.5rem var(--summaryMarkerSize) 0.45rem 0.6rem;
+  color: inherit;
+  display: flex;
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+.listItem {
+  position: relative;
+  display: grid;
+  width: 100%;
+  align-items: center;
+  justify-content: stretch;
+  list-style: none;
+  margin: 0;
+}
+
+.listItemLabelArea {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  appearance: none;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+  font: inherit;
+  width: 100%;
+  color: var(--controlTextColor);
+  padding: 6px;
+  box-sizing: border-box;
+  border-radius: var(--sidebarListItemBorderRadius);
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.listItem:active > .listItemLabelArea,
+.listItem[data-selected="true"] > .listItemLabelArea {
+  position: relative;
+  background: var(--selectedSidebarListItemBackground);
+}
+
+.listItemLabel {
+  display: block;
+  font: var(--sidebarListItemFont);
+  letter-spacing: 0;
+  box-sizing: border-box;
+}
+
+.listItem[data-selected="true"]::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  content: "";
+  display: var(--selectedSidebarListItemMarker);
+  height: 16px;
+  width: 3px;
+  background: var(--accentColor);
+  border-radius: 20px;
+}
+
+.listItemChildren {
+  width: 100%;
+  padding: 0.25em 0 0.25em 1em;
+  box-sizing: border-box;
+  display: block;
+}

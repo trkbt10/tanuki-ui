@@ -1,0 +1,229 @@
+/* Context dialog modal - positioned above all other layers */
+.contextDialog {
+  position: fixed;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  /* Dialog is automatically placed in top layer, no z-index needed */
+  max-height: none;
+  max-width: none;
+  overflow: visible;
+}
+
+.contextDialog::backdrop {
+  background: transparent;
+}
+
+.dropdown {
+  position: relative;
+  background-color: var(--dialogBackground, var(--windowBackgroundColor, #ffffff));
+  border: 1px solid var(--tertiaryLabelColor, var(--quaternaryLabelColor, #e5e7eb));
+  border-radius: var(--controlBorderRadius, 0.75em);
+  box-shadow: var(--dialogBoxShadow,
+      0 0.5em 1.5em -0.25em rgba(0, 0, 0, 0.15),
+      0 0.25em 0.75em -0.125em rgba(0, 0, 0, 0.1));
+  max-height: 18em;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* Use Tanuki UI elevation and backdrop effects */
+  backdrop-filter: var(--windowBackdropFilter, blur(20px));
+}
+
+/* Bottom positioned dropdown (default) */
+.dropdownBottom {
+  top: 100%;
+  margin-top: 0.25em;
+  animation: dropdownAppearBottom 0.15s ease-out;
+}
+
+/* Top positioned dropdown (when not enough space below) */
+.dropdownTop {
+  bottom: 100%;
+  margin-bottom: 0.25em;
+  animation: dropdownAppearTop 0.15s ease-out;
+}
+
+@keyframes dropdownAppearBottom {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5em) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes dropdownAppearTop {
+  from {
+    opacity: 0;
+    transform: translateY(0.5em) scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Sticky search header at top of context menu */
+.searchHeader {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--dialogBackground, var(--windowBackgroundColor, #ffffff));
+  border-bottom: 1px solid var(--quaternaryLabelColor, #f3f4f6);
+  padding: 0.5em;
+}
+
+.searchInputContainer {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--tertiaryLabelColor, #d1d5db);
+  border-radius: var(--controlBorderRadius, 0.375em);
+  background-color: var(--inputBackground, var(--windowBackgroundColor, #ffffff));
+  transition: border-color 0.15s ease-in-out;
+  overflow: hidden;
+}
+
+.searchInputContainer:focus-within {
+  border-color: var(--accentColor, #3b82f6);
+  box-shadow: var(--inputFocusBoxShadow, 0 0 0 2px rgba(59, 130, 246, 0.1));
+}
+
+.searchIcon {
+  color: var(--tertiaryLabelColor, #6b7280);
+  flex-shrink: 0;
+  padding: 0.5em 0 0.5em 0.75em;
+  display: flex;
+  align-items: center;
+  width: 14px;
+  height: 14px;
+}
+
+.contextSearchInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  width: 100%;
+  font-family: var(--themeDefaultFontFamily, inherit);
+  font-size: 0.8125em;
+  line-height: 1.2;
+  color: var(--textColor, var(--labelColor, inherit));
+  padding: 0.5em 0.75em 0.5em 0.25em;
+  min-width: 0;
+  /* Allow input to shrink below its content size */
+}
+
+.contextSearchInput::placeholder {
+  color: var(--quaternaryLabelColor, #9ca3af);
+}
+
+.noOptions {
+  padding: 1.5em;
+  text-align: center;
+  color: var(--tertiaryLabelColor, #6b7280);
+  font-size: 0.875em;
+}
+
+.options {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+  flex: 1;
+  max-height: 250px;
+}
+
+.option {
+  border-bottom: 1px solid var(--quaternaryLabelColor, #f3f4f6);
+}
+
+.option:last-child {
+  border-bottom: none;
+}
+
+.option:nth-child(even) {
+  background-color: var(--tableRowAlternateBackgroundColor, transparent);
+}
+
+.optionButton {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.75em;
+  padding: 0.75em 1em;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.875em;
+  color: var(--labelColor, #374151);
+  transition: background-color 0.15s ease-in-out;
+}
+
+.optionButton:hover {
+  background-color: var(--controlHoverBackground, #f9fafb);
+}
+
+.optionCheckbox {
+  font-size: 1em;
+  color: var(--accentColor, #3b82f6);
+  width: 1.125em;
+  height: 1.125em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkboxEmpty {
+  width: 1em;
+  height: 1em;
+  border: 1.5px solid var(--tertiaryLabelColor, #d1d5db);
+  border-radius: var(--controlBorderRadius, 0.25em);
+  background: var(--inputBackground, transparent);
+  transition: border-color 0.15s ease-in-out;
+}
+
+.checkboxEmpty:hover {
+  border-color: var(--accentColor, #3b82f6);
+}
+
+.optionLabel {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Focus states for accessibility */
+.optionButton:focus {
+  outline: 2px solid var(--accentColor, #3b82f6);
+  outline-offset: -2px;
+  background-color: var(--controlHoverBackground, #f9fafb);
+}
+
+.contextSearchInput:focus {
+  outline: none;
+  /* Handled by parent container */
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .dropdown {
+    border-width: 2px;
+  }
+
+  .option {
+    border-bottom-width: 2px;
+  }
+
+  .checkboxEmpty {
+    border-width: 2px;
+  }
+}

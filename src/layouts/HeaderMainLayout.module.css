@@ -1,0 +1,20 @@
+.base {
+  display: grid;
+  place-items: stretch;
+  grid-template-rows: var(--appMainToolbarHeight, 52px) max-content;
+}
+
+.header {
+  display: grid;
+  z-index: 1;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: var(--appMainToolbarHeight, 52px);
+}
+
+.main {
+  display: grid;
+  place-self: stretch;
+  place-items: stretch;
+}

@@ -1,0 +1,56 @@
+/* Common styles for select-like components */
+
+/* Dropdown mark/chevron styles - shared between native select and custom components */
+.selectMark {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 0;
+  display: inline-grid;
+  place-items: center;
+  pointer-events: none;
+  box-sizing: border-box;
+  height: 100%;
+  width: var(--selectBoxSplitButtonWidth, 2.5em);
+  border-color: var(--selectBoxSplitButtonBorderColor, transparent);
+  border-style: solid;
+  border-width: var(--selectBoxSplitButtonBorderWidth, 0);
+  vertical-align: baseline;
+  color: var(--secondaryLabelColor, #6b7280);
+}
+
+/* Base container for select-like components */
+.selectContainer {
+  position: relative;
+  color: var(--controlTextColor);
+  box-sizing: border-box;
+  display: inline-grid;
+  place-items: stretch;
+  border: var(--controlBorder, var(--inputBorder, 1px solid #d1d5db));
+  border-color: var(--controlAccentColor);
+  background: var(--controlBackground, var(--inputBackground, var(--windowBackgroundColor, #ffffff)));
+  font: var(--controlTextFont);
+  letter-spacing: var(--controlTextLetterSpacing);
+  box-shadow: var(--controlBoxShadow);
+  border-radius: var(--controlBorderRadius, 0.375em);
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  min-height: 2em;
+}
+
+.selectContainer:focus-within {
+  box-shadow: var(--controlFocusBoxShadow, var(--inputFocusBoxShadow, 0 0 0 3px rgba(59, 130, 246, 0.1)));
+  outline: 2px solid var(--accentColor, accentColor);
+}
+
+.selectContainer:hover:not([data-disabled="true"]) {
+  border-color: var(--secondaryLabelColor, #9ca3af);
+}
+
+.selectContainer[data-disabled="true"] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: var(--controlDisabledBackground, #f3f4f6);
+  border-color: var(--quaternaryLabelColor, #d1d5db);
+}

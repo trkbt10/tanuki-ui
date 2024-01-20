@@ -1,0 +1,80 @@
+.table {
+  display: table;
+  width: 100%;
+  font: normal normal 400 13px/1.230769 var(--themeLabelFontFamily);
+  letter-spacing: 0.006154em;
+  background: var(--tableBackgroundColor);
+  border-spacing: 0;
+}
+
+.table thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.table thead tr {
+  z-index: 0;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.table thead th {
+  box-sizing: border-box;
+  padding: 0 0.5em;
+
+  text-align: left;
+  font: normal normal 500 11px/1.6 var(--themeLabelFontFamily);
+  letter-spacing: 0;
+  height: 24px;
+  color: var(--tableHeaderTextColor);
+  border-bottom: 1px solid var(--tableHeaderBorderColor);
+}
+
+.table thead th::after {
+  position: absolute;
+  right: 0;
+  z-index: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  height: 1em;
+  display: block;
+  content: "";
+  border-right: 1px solid var(--tableHeaderBorderColor);
+}
+
+.table thead th:last-child::after {
+  border-right: none;
+}
+
+.table thead tr:first-child th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  background: var(--tableHeaderBackgroundColor);
+  backdrop-filter: var(--backgroundBackdropFilter);
+}
+
+.table tbody td {
+  box-sizing: border-box;
+  padding: 0 0.5em;
+  letter-spacing: 0;
+  box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.table tbody tr {
+  color: var(--tableRowTextColor);
+  background: var(--tableRowBackgroundColor);
+}
+
+.table tbody tr:nth-child(2n) {
+  background: var(--tableRowAlternateBackgroundColor);
+  color: var(--tableRowAlternateTextColor);
+}
+
+.table tbody td:last-child {
+  border-right: none;
+}

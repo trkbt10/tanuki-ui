@@ -1,0 +1,169 @@
+::file-selector-button,
+.button {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none;
+  -webkit-font-smoothing: subpixel-antialiased;
+  appearance: none;
+  touch-action: manipulation;
+  background: var(--controlBackground);
+  border-radius: var(--controlBorderRadius);
+  box-shadow: var(--controlBoxShadow);
+  box-sizing: border-box;
+  color: var(--controlTextColor);
+  cursor: pointer;
+  display: inline-block;
+  font: var(--controlTextFont);
+  letter-spacing: var(--controlTextLetterSpacing);
+  padding: var(--controlPadding);
+  text-align: center;
+  transition: box-shadow 0.05s;
+  border: none;
+  pointer-events: auto;
+  position: relative;
+}
+
+.button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  backdrop-filter: var(--backgroundBackdropFilter);
+  isolation: isolate;
+  filter: var(--controlBackgroundFilter);
+}
+
+.button > * {
+  pointer-events: none;
+}
+
+.button:disabled {
+  background-color: var(--controlDisabledBackground);
+  color: var(--disabledControlTextColor);
+}
+
+.button:active {
+  color: var(--controlActiveTextColor);
+  background-color: var(--controlActiveBackground);
+  box-shadow: var(--controlFocusBoxShadow);
+}
+
+.button:focus-visible {
+  border: 1px solid transparent;
+  margin: -1px;
+  box-shadow: var(--controlBoxShadow), var(--controlFocusBoxShadow, transparent);
+}
+
+.button:hover {
+  background: var(--controlHoverBackground);
+}
+
+.button[data-variant~="primary"],
+.button[type="submit"] {
+  border-radius: var(--controlBorderRadius--primary, var(--controlBorderRadius));
+  background: var(--controlBackground--primary);
+  color: var(--controlTextColor--primary);
+  box-shadow: var(--controlBoxShadow--primary, --controlBoxShadow);
+}
+
+.button[data-variant~="primary"]:hover,
+.button[type="submit"]:hover {
+  background: var(--controlHoverBackground--primary);
+  color: var(--controlHoverTextColor--primary);
+}
+
+.button[data-variant~="primary"]:focus-within,
+.button[type="submit"]:focus-within {
+  background: var(--controlFocusBackground--primary);
+  color: var(--controlFocusTextColor--primary);
+}
+
+.button[data-variant~="secondary"] {
+  border-radius: var(--controlBorderRadius--secondary, var(--controlBorderRadius));
+  background: var(--controlBackground--secondary);
+  color: var(--controlTextColor--secondary);
+  box-shadow: var(--controlBoxShadow--secondary, --controlBoxShadow);
+}
+
+.button[data-variant~="secondary"]:hover {
+  background: var(--controlHoverBackground--secondary);
+  color: var(--controlHoverTextColor--secondary);
+}
+
+.button[data-variant~="cta"] {
+  border-radius: var(--controlBorderRadius--cta, var(--controlBorderRadius));
+  background: var(--controlBackground--cta);
+  color: var(--controlTextColor--cta);
+  box-shadow: var(--controlBoxShadow--cta, --controlBoxShadow);
+}
+
+.button[data-variant~="cta"]:hover {
+  background: var(--controlHoverBackground--cta);
+}
+
+.button[data-variant~="toolbar"] {
+  border-color: transparent;
+  background-color: transparent;
+  color: inherit;
+}
+
+.button[data-variant~="small"] {
+  font-size: 8px;
+}
+
+.button[data-variant~="quiet"] {
+  color: background;
+  box-shadow: none;
+  background: none;
+  border-color: transparent;
+  background-color: transparent;
+}
+
+.button[data-variant~="rounded"] {
+  border-radius: 100%;
+  padding: 0;
+}
+
+dialog[data-variant="alert"] .button {
+  appearance: none;
+  padding: 0.384615em 0.5em 0.5384615em;
+  font: normal normal 400 13px/1.230769 var(--themeLabelFontFamily);
+  text-align: center;
+
+  letter-spacing: 0;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  display: inline-block;
+
+  color: var(--controlTextColor);
+  box-sizing: border-box;
+  box-shadow:
+    0 0 0 0 rgba(0, 0, 0, 0.15),
+    0 1px 0 0 rgba(0, 0, 0, 0.05);
+}
+
+dialog[data-variant="alert"] .button {
+  box-shadow:
+    0 0 0 0 rgb(0 0 0 / 15%),
+    0 1px 0 0 rgb(0 0 0 / 5%);
+  background-image: linear-gradient(179deg, rgba(255, 255, 255, 0.17) 0%, rgba(255, 255, 255, 0) 96%);
+}
+
+dialog[data-variant="alert"] .button:active {
+  color: var(--selectedControlTextColor);
+  background-color: var(--unemphasizedSelectedTextBackgroundColor);
+}
+
+dialog[data-variant="alert"] .button[data-variant~="primary"] {
+  box-shadow:
+    0 0 3px 0 rgba(255, 255, 255, 0.12),
+    0 1px 2px 0 rgba(255, 255, 255, 0.12),
+    0 0 1px 0 rgba(255, 255, 255, 0.24);
+  background: var(--accentColor);
+  color: var(--alternateSelectedControlTextColor);
+}
+
+dialog[data-variant="alert"] .button[data-variant~="primary"]:active {
+  background: none;
+  color: var(--selectedControlTextColor);
+}

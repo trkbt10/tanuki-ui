@@ -1,0 +1,57 @@
+.floatingContainer {
+  position: absolute;
+  z-index: 100;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: var(--controlBackground, rgba(255, 255, 255, 0.95));
+  border: 1px solid var(--inputBorder, rgba(0, 0, 0, 0.08));
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(20px);
+  user-select: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+/* Position variants */
+.top {
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bottom {
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.topLeft {
+  top: 16px;
+  left: 16px;
+}
+
+.topRight {
+  top: 16px;
+  right: 16px;
+}
+
+.bottomLeft {
+  bottom: 20px;
+  left: 16px;
+}
+
+.bottomRight {
+  bottom: 20px;
+  right: 16px;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .floatingContainer {
+    background: var(--controlBackground, rgba(30, 30, 30, 0.95));
+    border-color: var(--inputBorder, rgba(255, 255, 255, 0.1));
+  }
+}

@@ -1,0 +1,56 @@
+.columnLayout {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.leftSidebar {
+  flex: 0 0 auto;
+  background: var(--controlBackground, #ffffff);
+  border-right: 1px solid var(--inputBorder, #e0e0e0);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 200px;
+  max-width: 600px;
+}
+
+.rightSidebar {
+  flex: 0 0 auto;
+  background: var(--controlBackground, #ffffff);
+  border-left: 1px solid var(--inputBorder, #e0e0e0);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 200px;
+  max-width: 600px;
+}
+
+.mainContent {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.leftResizer {
+  position: relative;
+  z-index: 10;
+}
+
+.rightResizer {
+  position: relative;
+  z-index: 10;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .leftSidebar,
+  .rightSidebar {
+    background: var(--controlBackground, #2a2a2a);
+    border-color: var(--inputBorder, #444);
+  }
+}

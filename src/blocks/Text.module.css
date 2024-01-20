@@ -1,0 +1,8 @@
+.text {
+  display: inline-block;
+  font: var(--textFont);
+  color: var(--labelColor);
+  letter-spacing: 0;
+  text-align: center;
+  user-select: none;
+}

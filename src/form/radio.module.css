@@ -1,0 +1,46 @@
+.radio {
+  appearance: none;
+  width: var(--checkboxSize);
+  height: var(--checkboxSize);
+  outline: none;
+  display: inline-grid;
+  place-items: center;
+  vertical-align: top;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  transition:
+    background 0.3s,
+    border-color 0.3s,
+    box-shadow 0.2s;
+  box-sizing: border-box;
+  background-color: var(--controlBackground);
+  border: 0.5px solid rgba(0, 0, 0, 0.15);
+  box-shadow:
+    inset 0 1px 2px 0 rgba(0, 0, 0, 0.1),
+    inset 0 0 2px 0 rgba(0, 0, 0, 0.1);
+  border-radius: 2rem;
+}
+.radio::after {
+  opacity: 0;
+  margin: 0;
+  width: 6px;
+  height: 6px;
+  display: block;
+  background: #ffffff;
+  content: "";
+  border-radius: 50%;
+  transition: opacity 0.2s;
+}
+.radio:checked {
+  background: var(--accentColor);
+  box-shadow:
+    0 0 3px 0 rgba(0, 99, 225, 0.12),
+    0 1px 2px 0 rgba(0, 99, 225, 0.12),
+    0 0 1px 0 rgba(0, 99, 225, 0.24);
+  background-image: linear-gradient(179deg, rgba(0, 99, 225, 0) 0%, rgba(0, 99, 225, 0.085) 96%);
+}
+.radio:checked::after {
+  opacity: 1;
+}

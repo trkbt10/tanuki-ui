@@ -1,0 +1,22 @@
+.sortableItem {
+  pointer-events: none;
+  position: relative;
+  display: block;
+  pointer-events: auto;
+}
+
+.sortableItemBody {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.sortableItemHandle {
+  position: absolute;
+  top: 0;
+  left: -0.5em;
+  width: 1em;
+  height: 100%;
+  display: inline-block;
+  cursor: move;
+  z-index: 1;
+}

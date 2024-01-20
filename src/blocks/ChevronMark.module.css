@@ -1,0 +1,33 @@
+.mark {
+  position: relative;
+  right: 0;
+  top: 0;
+  padding: 0;
+  pointer-events: none;
+  box-sizing: border-box;
+
+  border-style: none;
+  vertical-align: baseline;
+  display: inline-grid;
+  align-items: stretch;
+  justify-content: stretch;
+  color: inherit;
+  content: "";
+  transition: transform 0.2s ease-in-out;
+}
+
+.mark[data-direction="up"] {
+  transform: rotate(180deg);
+}
+.mark[data-direction="down"] {
+  transform: rotate(0deg);
+}
+.mark[data-direction="left"] {
+  transform: rotate(90deg);
+}
+.mark[data-direction="right"] {
+  transform: rotate(-90deg);
+}
+.mark svg {
+  vertical-align: top;
+}

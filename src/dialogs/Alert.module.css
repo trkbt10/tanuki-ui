@@ -1,0 +1,37 @@
+.content {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  text-align: center;
+  padding: 16px 20px;
+}
+.content[data-is-loading="true"] > * {
+  opacity: 0.8;
+}
+
+.description {
+  margin: 0;
+  font: normal normal 400 11px/1.272727 var(--themeLabelFontFamily);
+  letter-spacing: 0;
+  white-space: wrap;
+  word-break: break-word;
+}
+
+.title + .description {
+  margin: 10px 0 0;
+}
+
+.buttonGroup {
+  margin: 16px 0 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 100%;
+  gap: 4px;
+}
+.buttonGroup > * {
+  flex-grow: 1;
+}
+.buttonGroup[data-direction="ttb"] {
+  flex-direction: column;
+}

@@ -1,0 +1,13 @@
+.container {
+  position: relative;
+  width: 100%;
+  /* Contain layout to prevent layout shifts */
+  contain: layout style;
+  /* Ensure stacking context for proper z-index behavior */
+  isolation: isolate;
+}
+
+/* Legacy styles for backward compatibility */
+.hiddenInput {
+  display: none;
+}

@@ -1,0 +1,61 @@
+.base {
+  display: block;
+  position: relative;
+  --switchWidth: 40px;
+  --switchHeight: 24px;
+  width: var(--switchWidth);
+  height: var(--switchHeight);
+}
+
+.base:has(.input[data-size="small"]) {
+  --switchWidth: 20px;
+  --switchHeight: 12px;
+}
+
+.toggle {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  box-sizing: border-box;
+  background: var(--disabledControlTextColor);
+  border-radius: var(--switchHeight);
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  transition: background 0.3s ease;
+  user-select: none;
+  pointer-events: none;
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+.knob {
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  cursor: pointer;
+  border-radius: 50%;
+  width: calc(var(--switchHeight) - 1px);
+  height: calc(var(--switchHeight) - 1px);
+  transform: translate(0.5px, -50%);
+
+  background: #ffffff;
+  box-shadow: 0px 0px 2px var(--separatorColor);
+  z-index: 2;
+  transition: 0.3s ease;
+}
+
+.input:checked + .toggle {
+  background: var(--accentColor);
+}
+
+.input:checked + .toggle > .knob {
+  transform: translateX(var(--switchWidth)) translate(-100%, -50%) translateX(-0.5px);
+}

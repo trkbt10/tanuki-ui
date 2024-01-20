@@ -1,0 +1,15 @@
+.toolbarIcon {
+  font-size: 16px;
+}
+
+.toolbarIconText {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.toolbarSeparator {
+  width: 1px;
+  height: 24px;
+  background-color: var(--inputBorder, #e0e0e0);
+  margin: 4px 4px;
+}

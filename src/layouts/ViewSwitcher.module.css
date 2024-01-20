@@ -1,0 +1,99 @@
+.container {
+  position: relative;
+  width: 100vw;
+  max-width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.controls {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: auto;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  background-color: var(--controlBackground, rgba(255, 255, 255, 0.95));
+  border-radius: 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  /* Ensure it never moves */
+  transform: none !important;
+  margin: 0 !important;
+}
+
+.viewsContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: auto;
+  height: 100vh;
+  /* GPU acceleration */
+  transform: translateZ(0);
+  will-change: transform;
+  /* Smooth hardware-accelerated transforms */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Safari edge swipe prevention */
+  touch-action: pan-y;
+  /* Prevent text selection during drag */
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.view {
+  position: relative;
+  flex: none;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* GPU acceleration */
+  transform: translateZ(0);
+  /* Allow text selection within views */
+  user-select: text;
+  -webkit-user-select: text;
+  /* Ensure proper scrolling */
+  -webkit-overflow-scrolling: touch;
+  /* Contain layout for performance */
+  contain: layout style;
+}
+
+/* Ensure controls stay on top during any animation */
+.controls::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  z-index: -1;
+  border-radius: inherit;
+}
+
+/* Accessibility and performance */
+@media (prefers-reduced-motion: reduce) {
+  .viewsContainer {
+    transition: none !important;
+  }
+}
+
+/* Ensure no interference with scrolling */
+.view * {
+  touch-action: auto;
+}
+
+/* For very small screens */
+@media (max-width: 320px) {
+  .controls {
+    padding: 4px 8px;
+  }
+}

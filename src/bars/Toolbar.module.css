@@ -1,0 +1,216 @@
+.input,
+.button {
+  position: relative;
+  appearance: none;
+  font: normal normal 400 13px/1.230769 var(--barItemsFontFamily);
+  letter-spacing: -0.006154em;
+  color: var(--barItemsLabelTextColor);
+  display: inline-flex;
+  box-sizing: border-box;
+  background: transparent;
+  border: var(--barItemsControlsBorder);
+  border-radius: var(--barItemsBorderRadius);
+  align-items: center;
+  justify-items: center;
+}
+
+.input {
+  padding: 5px 8px 5px;
+  color: var(--barItemsTextColor);
+}
+
+.input::placeholder {
+  color: var(--barItemsTextColor);
+}
+
+.input::placeholder {
+  color: var(--barItemsControlPlaceholderTextColor);
+  letter-spacing: 0;
+}
+
+.button:hover {
+  background: var(--barItemsControlMarkerBackgroundColor);
+}
+
+button.button {
+  padding: 3.84615px 6.15385px;
+}
+
+.button[data-variant~="noborder"] {
+  border: none;
+}
+
+.button > select {
+  display: block;
+  appearance: none;
+  font: inherit;
+  color: inherit;
+  border: none;
+  width: 100%;
+  line-height: inherit;
+  background: none;
+  padding: 5px 29px 5px 8px;
+  box-sizing: border-box;
+}
+
+.pullDownMark {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 18px;
+  height: 18px;
+  transform: translateY(-50%);
+  display: inline-grid;
+  place-items: center;
+  pointer-events: none;
+  border-radius: var(--barItemsControlMarkerBorderRadius);
+}
+
+.pullDownMark[data-variant="combobox"] {
+  right: 5px;
+  background: var(--barItemsControlMarkerBackgroundColor);
+}
+
+.label {
+  font: normal normal 400 13px/1.230769 var(--barItemsFontFamily);
+  color: var(--barItemsLabelTextColor);
+  letter-spacing: -0.02em;
+}
+
+.button:disabled + .label {
+  color: var(--barItemsDisabledLabelTextColor);
+  background: var(--barItemsDisabledLabelBackgroundColor);
+}
+
+.pullDown {
+  font-family: var(--barItemsFontFamily);
+  font-size: 6.5px;
+  color: var(--barItemsLabelTextColor);
+  letter-spacing: -0.13px;
+  text-align: center;
+}
+
+.title {
+  display: grid;
+}
+
+.title > strong {
+  display: block;
+  font: normal normal 600 13px/1.230769 var(--barItemsFontFamily);
+  letter-spacing: -0.006154em;
+  color: var(--barItemsTextColor);
+}
+
+.title > small {
+  display: block;
+  font: normal normal 600 11px/1.272727 var(--barItemsFontFamily);
+  letter-spacing: -0.006154em;
+  color: var(--barItemsLabelTextColor);
+  margin: -0.2rem 0 0;
+}
+
+.body {
+  flex-grow: 1;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.body .child + .child {
+  margin-left: 8px;
+}
+
+.separator {
+  align-self: center;
+  background: var(--separatorColor);
+  border-radius: var(--barItemsBorderRadius);
+  width: 0.1rem;
+  height: 1.4rem;
+  border: none;
+}
+
+.input[type="search"] {
+  padding-left: 33px;
+}
+
+.withIcon {
+  position: relative;
+  display: inline-grid;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 33px;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--barItemsLabelTextColor);
+}
+
+.toolbar {
+  box-sizing: border-box;
+  height: var(--appMainToolbarHeight);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  color: var(--headerTextColor);
+  padding: 0 1.7rem;
+  margin: 0;
+  background: var(--appMainToolbarFloatingBackground, transparent);
+  box-shadow: var(--scrolledAppMainToolbarBoxShadow);
+  transition:
+    box-shadow 0.24s ease-out,
+    background 0.24s ease-out;
+  transition-delay: 0.4s, 0;
+}
+
+.segmentControl {
+  align-items: stretch;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 28px;
+  border-radius: var(--barItemsBorderRadius);
+  padding: 1px;
+  box-sizing: border-box;
+}
+
+.segmentControl:hover {
+  background: var(--barItemsHoverSegmentControlBackground);
+}
+
+.segment {
+  display: inline-grid;
+  align-items: center;
+  justify-items: center;
+  user-select: none;
+  flex-grow: 1;
+  font: var(--textFont);
+  letter-spacing: 0.006154em;
+  border-radius: 0.5rem;
+  padding: 1px 0.8rem;
+  text-align: center;
+  color: var(--barItemsLabelTextColor);
+  box-sizing: border-box;
+  border-right: 1px solid transparent;
+}
+
+.segment[data-is-active="true"],
+.segment:active {
+  background: var(--barItemsActiveSegmentControlBackground);
+}
+
+.segment[data-is-active="true"],
+.segment:active {
+  border-radius: 20px;
+  box-shadow: 0 0 0 3px var(--barItemsAccentColor);
+}
+
+.segmentControl .segment:not(:last-of-type) {
+  border-right: 1px solid rgba(0, 0, 0, 0.02);
+}

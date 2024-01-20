@@ -1,0 +1,1719 @@
+/* Base container for the entire node editor */
+.nodeEditorBase {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--windowBackgroundColor, #f5f5f5);
+  user-select: none;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--windowBackgroundColor, #f5f5f5);
+  user-select: none;
+  padding-bottom: 24px;
+  /* Space for status bar */
+  box-sizing: border-box;
+}
+
+.canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-origin: 0 0;
+  cursor: inherit;
+  /* Inherit cursor from parent container */
+}
+
+.canvas.panning {
+  cursor: grabbing;
+}
+
+.canvas.spacePanning {
+  cursor: grab;
+}
+
+.canvas.spacePanning.panning {
+  cursor: grabbing;
+}
+
+.nodes {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  /* Above connections */
+}
+
+.node {
+  position: absolute;
+  background-color: var(--controlBackground, #ffffff);
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  border-radius: .5em;
+  box-shadow: 0 2px .5em rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  min-height: 50px;
+  cursor: move;
+  transition: box-shadow 0.2s;
+}
+
+.node:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.node.locked {
+  opacity: 0.7;
+  cursor: not-allowed;
+  border-color: var(--cautionColor, #ff3b30);
+}
+
+.node.locked:hover {
+  box-shadow: 0 2px .5em rgba(255, 59, 48, 0.2);
+}
+
+.node.selected {
+  border-color: var(--accentColor, #0066cc);
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+
+.node.dragging {
+  opacity: 0.8;
+  cursor: grabbing;
+}
+
+.nodeHeader {
+  position: relative;
+  padding: .5em 12px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  background-color: var(--tableHeaderBackgroundColor, #f0f0f0);
+  border-radius: .5em .5em 0 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.nodeHeader.interactiveDragHandle {
+  cursor: move;
+  background-color: var(--tableHeaderBackgroundColorHover, #e5e5e5);
+  transition: background-color 0.2s ease;
+}
+
+.nodeHeader.interactiveDragHandle:hover {
+  background-color: var(--tableHeaderBackgroundColorActive, #d8d8d8);
+}
+
+.nodeHeader.interactiveDragHandle::before {
+  content: "⋮⋮";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  color: var(--secondaryLabelColor, #999);
+  opacity: 0.6;
+  pointer-events: none;
+  letter-spacing: -2px;
+}
+
+.nodeHeaderInput {
+  width: 100%;
+  padding: 4px .5em;
+  border: 1px solid var(--accentColor, #0066cc);
+  border-radius: 4px;
+  background-color: var(--windowBackgroundColor, #ffffff);
+  font-weight: 500;
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.lockIcon {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 12px;
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.nodeContent {
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.groupNode {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-style: dashed;
+  border-width: 2px;
+  opacity: 0.8;
+}
+
+.groupNode.collapsed .nodeContent {
+  display: none;
+}
+
+.groupCollapsed {
+  text-align: center;
+  color: var(--secondaryLabelColor, #666);
+  font-style: italic;
+}
+
+.groupExpanded {
+  min-height: 100px;
+  color: var(--secondaryLabelColor, #666);
+}
+
+/* Visual style variants */
+.nodeInfo {
+  border-color: var(--systemBlueColor, #0066cc);
+  background-color: rgba(0, 102, 204, 0.05);
+}
+
+.nodeInfo .nodeHeader {
+  background-color: var(--systemBlueColor, #0066cc);
+  color: var(--controlTextColor--primary, #ffffff);
+}
+
+.nodeSuccess {
+  border-color: var(--systemGreenColor, #4caf50);
+  background-color: rgba(76, 175, 80, 0.05);
+}
+
+.nodeSuccess .nodeHeader {
+  background-color: var(--systemGreenColor, #4caf50);
+  color: var(--controlTextColor--primary, #ffffff);
+}
+
+.nodeWarning {
+  border-color: var(--systemOrangeColor, #ff9800);
+  background-color: rgba(255, 152, 0, 0.05);
+}
+
+.nodeWarning .nodeHeader {
+  background-color: var(--systemOrangeColor, #ff9800);
+  color: var(--controlTextColor--primary, #ffffff);
+}
+
+.nodeError {
+  border-color: var(--systemRedColor, #f44336);
+  background-color: rgba(244, 67, 54, 0.05);
+}
+
+.nodeError .nodeHeader {
+  background-color: var(--systemRedColor, #f44336);
+  color: var(--controlTextColor--primary, #ffffff);
+}
+
+.nodeDisabled {
+  border-color: var(--controlDisabledBackground, #e0e0e0);
+  background-color: var(--controlDisabledBackground, #f5f5f5);
+  opacity: 0.6;
+}
+
+.nodeDisabled .nodeHeader {
+  background-color: var(--controlDisabledBackground, #e0e0e0);
+  color: var(--controlDisabledTextColor, #999999);
+}
+
+.nodeDisabled .nodeContent {
+  color: var(--controlDisabledTextColor, #999999);
+}
+
+/* Removed duplicate selectionBox - using selectionBoxOverlay instead */
+
+.toolbar {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  gap: .5em;
+  background-color: var(--controlBackground, #ffffff);
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  border-radius: .5em;
+  padding: .5em;
+  box-shadow: 0 2px .5em rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.toolButton {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.toolButton:hover {
+  background-color: var(--controlHoverBackground, #f5f5f5);
+}
+
+.toolButton:active {
+  background-color: var(--tableHeaderBackgroundColor, #f0f0f0);
+}
+
+.contextMenu {
+  position: absolute;
+  background-color: var(--controlBackground, #ffffff);
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  border-radius: .5em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  min-width: 150px;
+  box-sizing: border-box;
+}
+
+.contextMenuItem {
+  padding: .5em 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  box-sizing: border-box;
+}
+
+.contextMenuItem:hover {
+  background-color: var(--controlHoverBackground, #f5f5f5);
+}
+
+.grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.5;
+}
+
+.inspectorPanel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 280px;
+  height: 100%;
+  background-color: var(--controlBackground, #ffffff);
+  border-left: 1px solid var(--inputBorder, #e0e0e0);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: -2px 0 .5em rgba(0, 0, 0, 0.1);
+}
+
+.inspectorHeader {
+  padding: 16px;
+  font-weight: 600;
+  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  background-color: var(--tableHeaderBackgroundColor, #f0f0f0);
+  box-sizing: border-box;
+}
+
+.inspectorContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.inspectorSection {
+  margin-bottom: 16px;
+}
+
+.inspectorSection label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: var(--secondaryLabelColor, #666);
+}
+
+.inspectorRow {
+  display: flex;
+  gap: .5em;
+}
+
+.inspectorRow input {
+  flex: 1;
+}
+
+.editorWithInspector {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.editorMain {
+  flex: 1;
+  position: relative;
+}
+
+.externalDataInfo {
+  padding: .5em;
+  background-color: var(--controlHoverBackground, #f5f5f5);
+  border-radius: 4px;
+  font-size: 12px;
+  margin-bottom: .5em;
+  box-sizing: border-box;
+}
+
+.externalDataInfo>div {
+  margin-bottom: 4px;
+}
+
+/* Drag guides */
+.dragGuides {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.dragGuide {
+  position: absolute;
+  background-color: var(--accentColor, #0066cc);
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.dragGuideVertical {
+  width: 1px;
+  height: 100%;
+}
+
+.dragGuideHorizontal {
+  width: 100%;
+  height: 1px;
+}
+
+.snapTarget {
+  position: absolute;
+  width: .5em;
+  height: .5em;
+  background-color: var(--accentColor, #0066cc);
+  border-radius: 50%;
+  transform: translate(-4px, -4px);
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.distanceIndicator {
+  position: absolute;
+  pointer-events: none;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1001;
+  box-sizing: border-box;
+}
+
+.distanceLine {
+  position: absolute;
+  border-top: 1px dashed var(--secondaryLabelColor, #666);
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+/* Status Bar */
+.statusBar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 24px;
+  background: var(--controlBackground, #ffffff);
+  border-top: 1px solid var(--inputBorder, #e0e0e0);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  font-size: 11px;
+  color: var(--secondaryLabelColor, #666);
+  z-index: 10;
+  box-sizing: border-box;
+}
+
+.statusSection {
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+}
+
+.statusSection:last-child {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.statusLabel {
+  font-weight: 500;
+  margin-right: 4px;
+}
+
+.statusValue {
+  color: var(--textColor, #000);
+}
+
+.statusMode {
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--accentColor, #007aff);
+  color: var(--controlTextColor--primary, #ffffff);
+  box-sizing: border-box;
+}
+
+/* Port styles */
+.nodePort {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--controlBackground, #ffffff);
+  border: 3px solid red;
+  /* Temporary: make ports visible */
+  cursor: crosshair;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  z-index: 100;
+  /* Increased z-index */
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  /* Add shadow for visibility */
+}
+
+.nodePort:hover {
+  transform: scale(1.2);
+  border-color: var(--accentColor, #0066cc);
+}
+
+.nodePort.portInput {
+  border-color: var(--nodePortInputColor, #66cc00);
+}
+
+.nodePort.portOutput {
+  border-color: var(--nodePortOutputColor, #0099ff);
+}
+
+.portInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: .5em;
+  height: .5em;
+  background-color: var(--inputBorder, #999);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: background-color 0.2s;
+}
+
+.nodePort:hover .portInner {
+  background-color: var(--accentColor, #0066cc);
+}
+
+.nodePort.portInput .portInner {
+  background-color: var(--nodePortInputColor, #66cc00);
+}
+
+.nodePort.portOutput .portInner {
+  background-color: var(--nodePortOutputColor, #0099ff);
+}
+
+.portLabel {
+  position: absolute;
+  white-space: nowrap;
+  font-size: 11px;
+  color: var(--secondaryLabelColor, #666);
+  pointer-events: none;
+  user-select: none;
+}
+
+.portLeft .portLabel {
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: right;
+}
+
+.portRight .portLabel {
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.portTop .portLabel {
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.portBottom .portLabel {
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+/* Connection overlay styles */
+.connections {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  /* Higher than nodes but below floating elements */
+}
+
+.connections svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+  /* SVG container should not block events */
+}
+
+/* Dash animation for drag connections */
+@keyframes dashAnimation {
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+/* Inspector Panel */
+.inspectorPanel {
+  width: 280px;
+  height: 100%;
+  background: var(--controlBackground, #ffffff);
+  border-left: 1px solid var(--inputBorder, #e0e0e0);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.inspectorHeader {
+  padding: 0;
+  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  background: var(--windowBackgroundColor, #f5f5f5);
+  box-sizing: border-box;
+}
+
+.inspectorHeader h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--textColor, #000);
+}
+
+.inspectorTabs {
+  display: flex;
+  gap: .5em;
+  padding: 0;
+}
+
+.inspectorTab {
+  flex: 1;
+  padding: .5em 1em;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--secondaryLabelColor, #666);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.inspectorTab:hover {
+  color: var(--labelColor, #000);
+  background: var(--quaternarySystemFillColor, rgba(0, 0, 0, 0.04));
+}
+
+.inspectorTab.active {
+  color: var(--accentColor, #007AFF);
+  border-bottom-color: var(--accentColor, #007AFF);
+  background: transparent;
+}
+
+.inspectorTab.active:hover {
+  background: var(--quaternarySystemFillColor, rgba(0, 0, 0, 0.04));
+}
+
+.inspectorContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.inspectorSection {
+  margin-bottom: 24px;
+}
+
+.inspectorSection h4 {
+  margin: 0 0 12px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--secondaryLabelColor, #666);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inspectorField {
+  margin-bottom: 12px;
+}
+
+.inspectorField label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--textColor, #000);
+}
+
+.inspectorInput,
+.inspectorTextarea {
+  width: 100%;
+  padding: 6px .5em;
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  border-radius: 4px;
+  font-size: 12px;
+  background: var(--controlBackground, #ffffff);
+  color: var(--textColor, #000);
+  box-sizing: border-box;
+}
+
+.inspectorInput:focus,
+.inspectorTextarea:focus {
+  outline: none;
+  border-color: var(--accentColor, #007aff);
+}
+
+.inspectorTextarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.inspectorPositionInputs {
+  display: flex;
+  gap: .5em;
+}
+
+.inspectorNumberInput {
+  flex: 1;
+  padding: 6px .5em;
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  border-radius: 4px;
+  font-size: 12px;
+  background: var(--controlBackground, #ffffff);
+  color: var(--textColor, #000);
+  box-sizing: border-box;
+}
+
+.inspectorNumberInput:focus {
+  outline: none;
+  border-color: var(--accentColor, #007aff);
+}
+
+.inspectorReadOnlyField {
+  display: block;
+  padding: 6px .5em;
+  font-size: 12px;
+  color: var(--secondaryLabelColor, #666);
+  background: var(--tertiarySystemBackground, #f9f9f9);
+  border-radius: 4px;
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  box-sizing: border-box;
+}
+
+.inspectorEmptyState {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--secondaryLabelColor, #666);
+  font-size: 12px;
+  box-sizing: border-box;
+}
+
+/* Canvas Base */
+.canvasContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--windowBackgroundColor, #f5f5f5);
+  cursor: default;
+  user-select: none;
+}
+
+.canvasContainer.panning {
+  cursor: grabbing;
+}
+
+.canvasContainer.spacePanning {
+  cursor: grab;
+}
+
+.canvasContainer.spacePanning.panning {
+  cursor: grabbing;
+}
+
+.canvasContainer.boxSelecting,
+.canvasContainer.boxSelecting .canvas {
+  cursor: crosshair !important;
+}
+
+.gridSvg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Editor Layout */
+.editorLayout {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.editorToolbar {
+  flex: 0 0 auto;
+  background: var(--controlBackground, #ffffff);
+  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  padding: .5em 16px;
+  display: flex;
+  align-items: center;
+  min-height: 4.5em;
+  box-sizing: border-box;
+}
+
+.editorContent {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.editorMain {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.editorSidebar {
+  flex: 0 0 auto;
+}
+
+/* Top Toolbar */
+.topToolbar {
+  display: flex;
+  gap: .5em;
+  align-items: center;
+  flex: 1;
+}
+
+.topToolbar .toolButton {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  color: var(--textColor, #000);
+}
+
+.topToolbar .toolButton:hover {
+  background-color: var(--controlHoverBackground, #f5f5f5);
+}
+
+.topToolbar .toolButton:active {
+  background-color: var(--tableHeaderBackgroundColor, #f0f0f0);
+}
+
+/* Node Layer */
+.nodeLayer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  /* Above connections but below overlays */
+}
+
+/* Node View */
+.nodeView {
+  position: absolute;
+  background-color: var(--controlBackground, #ffffff);
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  border-radius: .5em;
+  box-shadow: 0 2px .5em rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+  min-height: 50px;
+  cursor: move;
+  transition: box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+  /* Changed from hidden to visible for ports */
+}
+
+.nodeView:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nodeView.locked {
+  opacity: 0.7;
+  cursor: not-allowed;
+  border-color: var(--cautionColor, #ff3b30);
+}
+
+.nodeView.locked:hover {
+  box-shadow: 0 2px .5em rgba(255, 59, 48, 0.2);
+}
+
+.nodeView.selected {
+  border-color: var(--accentColor, #0066cc);
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+
+.nodeView.dragging {
+  opacity: 0.8;
+  cursor: grabbing;
+  z-index: 1000;
+}
+
+.nodeTitle {
+  flex: 1;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--textColor, #000);
+  text-align: center;
+  cursor: text;
+  user-select: none;
+  padding: 2px 4px;
+  border-radius: 3px;
+  transition: background-color 0.2s;
+  box-sizing: border-box;
+}
+
+.nodeTitle:hover {
+  background-color: var(--hoverBackground, rgba(0, 0, 0, 0.05));
+}
+
+.interactiveDragHandle .nodeTitle {
+  padding-left: 20px; /* Make room for the drag handle icon */
+}
+
+.nodeTitleInput {
+  flex: 1;
+  font-weight: 500;
+  font-size: 13px;
+  color: var(--textColor, #000);
+  text-align: center;
+  background: var(--inputBackground, #fff);
+  border: 2px solid var(--accentColor, #0066cc);
+  border-radius: 3px;
+  padding: 2px 4px;
+  outline: none;
+  min-width: 80px;
+  box-sizing: border-box;
+}
+
+/* Node Header */
+.nodeHeader {
+  display: flex;
+  align-items: center;
+  padding: .5em 12px;
+  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  background-color: var(--controlHoverBackground, #f5f5f5);
+  box-sizing: border-box;
+}
+
+.lockIcon {
+  margin-right: 4px;
+  font-size: 12px;
+}
+
+/* Node Content */
+.nodeContent {
+  flex: 1;
+  padding: 12px;
+  font-size: 14px;
+  color: var(--textColor, #000);
+  box-sizing: border-box;
+}
+
+/* Group Node Styles */
+.groupNode {
+  background-color: var(--groupNodeBackground, rgba(240, 240, 240, 0.7));
+  border-style: dashed;
+  border-width: 2px;
+  border-color: var(--groupNodeBorder, #ccc);
+  z-index: 1;
+  /* Groups should be behind other nodes */
+}
+
+.groupNode.groupAcceptingDrop {
+  background-color: var(--groupNodeAcceptingBackground, rgba(0, 102, 204, 0.1));
+  border-color: var(--accentColor, #0066cc);
+  animation: groupPulse 1s ease-in-out infinite;
+}
+
+.groupNode.groupHasChildren {
+  border-color: var(--groupNodeActiveColor, #0066cc);
+  background-color: var(--groupNodeActiveBackground, rgba(0, 102, 204, 0.05));
+}
+
+@keyframes groupPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 102, 204, 0.4);
+  }
+
+  50% {
+    box-shadow: 0 0 0 .5em rgba(0, 102, 204, 0.1);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 102, 204, 0);
+  }
+}
+
+.groupCollapsed {
+  color: var(--secondaryLabelColor, #666);
+  font-style: italic;
+}
+
+.groupExpanded {
+  color: var(--textColor, #000);
+}
+
+/* Node Visual States */
+.nodeInfo {
+  border-color: var(--accentColor, #0066cc);
+  background-color: rgba(0, 102, 204, 0.05);
+}
+
+.nodeSuccess {
+  border-color: var(--successColor, #34c759);
+  background-color: rgba(52, 199, 89, 0.05);
+}
+
+.nodeWarning {
+  border-color: var(--warningColor, #ff9500);
+  background-color: rgba(255, 149, 0, 0.05);
+}
+
+.nodeError {
+  border-color: var(--cautionColor, #ff3b30);
+  background-color: rgba(255, 59, 48, 0.05);
+}
+
+.nodeDisabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Port Styles */
+.nodePorts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.port {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--controlBackground, #ffffff);
+  border: 2px solid var(--inputBorder, #e0e0e0);
+  cursor: crosshair;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  z-index: 10;
+  pointer-events: all;
+}
+
+.port:hover {
+  transform: scale(1.3);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, 0.3);
+}
+
+.portInput {
+  border-color: var(--nodePortInputColor, #66cc00);
+}
+
+.portOutput {
+  border-color: var(--nodePortOutputColor, #0099ff);
+}
+
+.portLeft {
+  left: -6px;
+}
+
+.portRight {
+  right: -6px;
+}
+
+.portTop {
+  top: -6px;
+}
+
+.portBottom {
+  bottom: -6px;
+}
+
+.portInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background-color: var(--inputBorder, #999);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: background-color 0.1s ease;
+}
+
+.port:hover .portInner,
+.portHovered .portInner {
+  background-color: var(--accentColor, #0066cc);
+}
+
+.portConnecting {
+  transform: scale(1.5);
+  animation: pulse 1s infinite;
+}
+
+.portConnected .portInner {
+  background-color: var(--successColor, #34c759);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 102, 204, 0.7);
+  }
+
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 102, 204, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 102, 204, 0);
+  }
+}
+
+/* Port Labels */
+.portLabel {
+  position: absolute;
+  font-size: 10px;
+  color: var(--secondaryLabelColor, #666);
+  white-space: nowrap;
+  pointer-events: none;
+  background-color: var(--controlBackground, #ffffff);
+  padding: 2px 4px;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.portLabelLeft {
+  right: 100%;
+  margin-right: 4px;
+}
+
+.portLabelRight {
+  left: 100%;
+  margin-left: 4px;
+}
+
+.portLabelTop {
+  bottom: 100%;
+  margin-bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.portLabelBottom {
+  top: 100%;
+  margin-top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Connection Layer */
+.connectionLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  /* Below nodes but above canvas */
+  overflow: visible;
+}
+
+.connectionLayer .connectionGroup {
+  pointer-events: all;
+  /* Only connection groups should be interactive */
+}
+
+/* Connection Styles */
+.connectionGroup {
+  cursor: pointer;
+}
+
+.connectionGroup:hover path {
+  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.2));
+}
+
+.connectionSelected path {
+  filter: drop-shadow(0 0 6px var(--accentColor, #0066cc));
+}
+
+.connectionHovered {
+  opacity: 0.8;
+}
+
+.connectionDragging {
+  opacity: 0.6;
+}
+
+.dragConnection path {
+  animation: dashAnimation 0.5s linear infinite;
+}
+
+@keyframes dashAnimation {
+  from {
+    stroke-dashoffset: 0;
+  }
+
+  to {
+    stroke-dashoffset: -10;
+  }
+}
+
+/* Connection Colors */
+:root {
+  --connectionColor: #999999;
+  --connectionHoverColor: #666666;
+  --connectionSelectedColor: var(--accentColor, #0066cc);
+  --connectionErrorColor: var(--cautionColor, #ff3b30);
+  --connectionSuccessColor: var(--successColor, #34c759);
+}
+
+/* Selection Box */
+/* Removed duplicate selectionBox - using selectionBoxOverlay instead */
+
+/* Selection Box Overlay */
+.selectionBoxOverlay {
+  position: absolute;
+  border: 2px solid var(--accentColor, #0066cc);
+  background-color: rgba(0, 102, 204, 0.15);
+  border-radius: 2px;
+  pointer-events: none;
+  z-index: 1000;
+  box-sizing: border-box;
+  min-width: 1px;
+  min-height: 1px;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);
+}
+
+/* Selection Overlay Layer */
+.selectionOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1000;
+  overflow: visible;
+}
+
+/* Loading/Saving Overlay */
+.loadingOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.loadingIndicator {
+  background-color: var(--controlBackground, #ffffff);
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  border-radius: .5em;
+  padding: 16px 32px;
+  font-size: 14px;
+  color: var(--controlTextColor, #000000);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+}
+
+/* Custom Node Content */
+.customNodeContent {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* Resize Handles - Transparent by default, accent color fill on hover */
+.resizeHandle {
+  position: absolute;
+  background-color: transparent;
+  border: none;
+  opacity: 0;
+  transition: opacity 0.1s ease, transform 0.1s ease, background-color 0.1s ease;
+  z-index: 15;
+  pointer-events: all;
+  /* Corner-specific border radius - only bottom-right is rounded */
+  border-radius: 0 0 4px 0;
+}
+
+/* Show handle when node is hovered or selected */
+.nodeView:hover .resizeHandle,
+.nodeView.selected .resizeHandle {
+  opacity: 0.6;
+}
+
+/* Accent color fill on hover */
+.resizeHandle:hover {
+  background-color: var(--accentColor, #007aff);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Active state during resize */
+.resizeHandleActive {
+  background-color: var(--accentColor, #007aff);
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* ========================================= */
+/* Node Search Menu (Context Menu) Styles   */
+/* ========================================= */
+
+.nodeSearchMenu {
+  min-width: 360px;
+  max-width: 480px;
+  max-height: 480px;
+  background: var(--controlBackground, #ffffff);
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  border-radius: .75em;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15),
+    0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  font-family: var(--systemFont, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
+  animation: menuFadeIn 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  z-index: var(--dialogLevelElevation, 1000);
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes menuFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.searchHeader {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  background: var(--tableHeaderBackgroundColor, #f8f8f8);
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Removed decorative line to simplify design */
+
+.searchInput {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: var(--inputFont, inherit);
+  background: var(--controlBackground, #ffffff);
+  color: var(--textColor, #000000);
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.searchInput:focus {
+  border-color: var(--accentColor, #0066cc);
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+
+.searchInput::placeholder {
+  color: var(--quaternaryLabelColor, rgba(0, 0, 0, 0.4));
+  font-weight: 400;
+}
+
+.searchHint {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--secondaryLabelColor, #666666);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.searchHint kbd {
+  padding: 2px 4px;
+  background: var(--tableHeaderBackgroundColor, #f0f0f0);
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  border-radius: 3px;
+  font-size: 10px;
+  font-family: var(--inputFont, ui-monospace, SFMono-Regular, "SF Mono", Consolas, monospace);
+  color: var(--textColor, #000000);
+  font-weight: 500;
+  box-sizing: border-box;
+}
+
+.searchResults {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  box-sizing: border-box;
+  background: var(--controlBackground, #ffffff);
+}
+
+.categoryList {
+  /* Container for all categories */
+}
+
+.categoryGroup {
+  margin-bottom: 0;
+}
+
+.categoryHeader {
+  padding: 8px 16px;
+  background: var(--tableHeaderBackgroundColor, #f0f0f0);
+  color: var(--secondaryLabelColor, #666666);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background-color 0.15s ease;
+  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.categoryHeader:hover {
+  background: var(--controlHoverBackground, #f5f5f5);
+  color: var(--textColor, #000000);
+}
+
+.selectedCategory {
+  background: rgba(0, 102, 204, 0.1) !important;
+  color: var(--accentColor, #0066cc) !important;
+  border-bottom-color: var(--accentColor, #0066cc);
+}
+
+.categoryName {
+  flex: 1;
+}
+
+.nodeCount {
+  font-size: 10px;
+  color: var(--secondaryLabelColor, #666666);
+  opacity: 0.8;
+}
+
+.nodeList {
+  /* Container for nodes in a category */
+}
+
+.nodeItem {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Removed decorative overlay */
+
+.nodeItem:hover {
+  background: var(--controlHoverBackground, #f5f5f5);
+}
+
+.selectedNode {
+  background: rgba(0, 102, 204, 0.1) !important;
+}
+
+.nodeIcon {
+  font-size: 18px;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nodeInfo {
+  flex: 1;
+  min-width: 0;
+}
+
+.nodeName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--textColor, #000000);
+  margin-bottom: 2px;
+  line-height: 1.3;
+}
+
+.nodeDescription {
+  font-size: 11px;
+  color: var(--secondaryLabelColor, #666666);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.nodeType {
+  font-size: 10px;
+  color: var(--secondaryLabelColor, #666666);
+  font-family: var(--inputFont, ui-monospace, SFMono-Regular, "SF Mono", Consolas, monospace);
+  background: var(--tableHeaderBackgroundColor, #f0f0f0);
+  padding: 2px 6px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+}
+
+.noResults {
+  padding: 48px 20px;
+  text-align: center;
+  color: var(--secondaryLabelColor, #666666);
+  box-sizing: border-box;
+}
+
+.noResultsIcon {
+  font-size: 32px;
+  margin-bottom: 8px;
+  opacity: 0.5;
+}
+
+.searchFooter {
+  padding: 8px 16px;
+  border-top: 1px solid var(--inputBorder, #e0e0e0);
+  background: var(--tableHeaderBackgroundColor, #f8f8f8);
+  font-size: 11px;
+  color: var(--secondaryLabelColor, #666666);
+  box-sizing: border-box;
+}
+
+.selectionInfo {
+  text-align: center;
+  font-weight: 500;
+  color: var(--textColor, #000000);
+}
+
+/* Modern scrollbar styling */
+.searchResults::-webkit-scrollbar {
+  width: 8px;
+}
+
+.searchResults::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.searchResults::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.searchResults::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.searchResults::-webkit-scrollbar-thumb:active {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Firefox scrollbar styling */
+.searchResults {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+}
+
+/* Minimap Styles */
+.minimapContainer {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 100;
+  pointer-events: all;
+}
+
+.minimap {
+  width: 200px;
+  background: var(--controlBackground, rgba(255, 255, 255, 0.9));
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  border-radius: .5em;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(.5em);
+  overflow: hidden;
+}
+
+.minimapTitle {
+  padding: .5em 12px;
+  background: var(--tableHeaderBackgroundColor, #f0f0f0);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--textColor, #000);
+  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+}
+
+.minimapContent {
+  padding: 12px;
+}
+
+.minimapViewport,
+.minimapNodes {
+  font-size: 11px;
+  color: var(--secondaryLabelColor, #666);
+  margin-bottom: 4px;
+}
+
+.minimapViewport:last-child,
+.minimapNodes:last-child {
+  margin-bottom: 0;
+}
+
+/* Theme-specific styles */
+.darkTheme {
+  background-color: var(--darkBackgroundColor, #1e1e1e);
+  color: var(--darkTextColor, #ffffff);
+}
+
+.darkTheme .minimap {
+  background: var(--darkControlBackground, rgba(42, 42, 42, 0.9));
+  border-color: var(--darkInputBorder, #444);
+}
+
+.darkTheme .minimapTitle {
+  background: var(--darkTableHeaderBackground, #333);
+  color: var(--darkTextColor, #ffffff);
+  border-bottom-color: var(--darkInputBorder, #444);
+}
+
+.darkTheme .minimapViewport,
+.darkTheme .minimapNodes {
+  color: var(--darkSecondaryTextColor, #ccc);
+}
+
+/* Smooth animations - selective only for non-performance critical elements */
+.smoothAnimations .statusSection {
+  transition: opacity 0.2s ease;
+}
+
+.smoothAnimations .minimap {
+  transition: opacity 0.2s ease;
+}
+
+/* Remove all transform transitions to prevent janky movement */
+
+/* Disable all transitions during drag operations for smooth experience */
+.nodeView.dragging,
+.nodeView.dragging * {
+  transition: none !important;
+}
+
+/* Status bar saving indicator */
+.statusSaving {
+  color: var(--accentColor, #007aff);
+  font-weight: 600;
+}
+
+/* UI Overlay Container - Fixed position, non-interactive overlay for UI customization */
+.uiOverlayContainer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  /* Never trap events - allows interaction with underlying elements */
+  z-index: 2000;
+  /* Above everything else in the editor */
+  overflow: visible;
+  /* Ensure children can be positioned absolutely within this container */
+}
+
+/* Allow individual UI overlay elements to be interactive if needed */
+.uiOverlayContainer>* {
+  pointer-events: auto;
+  /* Children can choose to be interactive */
+}
