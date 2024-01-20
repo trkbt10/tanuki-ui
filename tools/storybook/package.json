@@ -1,0 +1,29 @@
+{
+  "name": "@tanuki-ui/storybook",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Storybook for Tanuki UI components",
+  "scripts": {
+    "storybook": "storybook dev -p 6006 --config-dir ./.storybook",
+    "build-storybook": "storybook build --config-dir ./.storybook -o ./storybook-static"
+  },
+  "dependencies": {
+    "tanuki-ui": "file:../..",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^8.5.2",
+    "@storybook/addon-docs": "^8.5.2",
+    "@storybook/addon-essentials": "^8.5.2",
+    "@storybook/addon-interactions": "^8.5.2",
+    "@storybook/addon-links": "^8.5.2",
+    "@storybook/cli": "^8.5.2",
+    "@storybook/react": "^8.5.2",
+    "@storybook/react-vite": "^8.5.2",
+    "storybook": "^8.5.2",
+    "@vitejs/plugin-react": "^4.3.4",
+    "vite": "^6.0.11",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,67 @@
+.enter,
+.appear {
+  opacity: 0.01;
+}
+.enter.enter-active,
+.appear.appear-active {
+  opacity: 1;
+  transition: opacit 50ms ease-in;
+}
+.exit {
+  opacity: 1;
+}
+.exit.exit-active {
+  opacity: 0.01;
+  transition: opacity 50ms ease-in;
+}
+* {
+  outline: 1px solid rgba(255, 0, 0, 0.1);
+}
+
+.base {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100vw;
+  min-height: 100%;
+  box-sizing: border-box;
+  display: flex;
+  overflow: hidden;
+  outline: 1px solid gray;
+}
+@supports (-webkit-touch-callout: none) {
+  .base {
+    min-height: 100vh;
+    height: -webkit-fill-available;
+  }
+}
+
+.mainNav {
+  display: block;
+  width: 300px;
+}
+.inboxList {
+  position: relative;
+  z-index: 1;
+  display: block;
+}
+.mailView {
+  display: block;
+}
+.subView {
+  position: relative;
+  background: rgba(0, 0, 0, 0.2);
+  display: grid;
+  z-index: 1;
+  grid-template-columns: auto 1fr;
+}
+.heading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 25%;
+  height: 100%;
+  z-index: 2;
+}

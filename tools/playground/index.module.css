@@ -1,0 +1,8 @@
+.iconContainer {
+  color: currentColor;
+  fill: currentColor;
+}
+
+.sidebarListContainer * {
+  outline: 1px solid red;
+}
