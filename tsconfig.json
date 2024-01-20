@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+    "module": "CommonJS",
+    
+    "newLine": "LF",
+    "sourceMap": true,
+    "declaration": true,
+    "lib": ["DOM", "ES2022"],
+    "composite": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "strictNullChecks": true,
+    "outDir": "dist",
+    "target": "ES2022",
+    "jsx": "react",
+    "types": ["vitest/globals", "vite/client"]
+  },
+  "include": [
+    "./src/**/*",
+    "./__tests__/**/*"
+  ]
+}

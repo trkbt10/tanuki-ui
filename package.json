@@ -1,0 +1,71 @@
+{
+  "name": "tanuki-ui",
+  "type": "module",
+  "main": "./dist/lib/index.js",
+  "module": "./dist/lib/index.js",
+  "require": "./dist/lib/index.cjs",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/lib/index.js",
+      "require": "./dist/lib/index.cjs",
+      "default": "./dist/lib/index.js"
+    },
+    "./layouts": {
+      "types": "./dist/types/layouts/index.d.ts",
+      "import": "./dist/lib/layouts.js",
+      "require": "./dist/lib/layouts.cjs",
+      "default": "./dist/lib/layouts.js"
+    },
+    "./extended/node-editor": {
+      "types": "./dist/types/extended/node-editor/index.d.ts",
+      "import": "./dist/lib/extended/node-editor.js",
+      "require": "./dist/lib/extended/node-editor.cjs",
+      "default": "./dist/lib/extended/node-editor.js"
+    },
+    "./themes/LiquidGlassFilter": {
+      "types": "./dist/types/themes/LiquidGlassFilter.d.ts",
+      "import": "./dist/lib/themes/LiquidGlassFilter.js",
+      "require": "./dist/lib/themes/LiquidGlassFilter.cjs",
+      "default": "./dist/lib/themes/LiquidGlassFilter.js"
+    },
+    "./style.css": "./dist/lib/style.css",
+    "./layouts/style.css": "./dist/lib/layouts/style.css",
+    "./extended/node-editor/style.css": "./dist/lib/extended/node-editor/style.css",
+    "./styles/*.css": "./public/styles/*.css"
+  },
+  "version": "1.205.0",
+  "license": "Unlicense",
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "bunx tsc --noEmit",
+    "typecheck:no-stories": "bunx tsc --noEmit --project tsconfig.typecheck.json",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,css}\"",
+    "test": "vitest",
+    "dev:storybook": "cd tools/storybook && npm run storybook",
+    "dev:playground": "cd tools/playground && npm run dev",
+    "build:storybook": "cd tools/storybook && npm run build-storybook",
+    "setup:tools": "cd tools/storybook && npm install && cd ../playground && npm install"
+  },
+  "devDependencies": {
+    "@previewjs/plugin-react": "^17.1.0",
+    "@previewjs/screenshot": "^1.0.1",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.2.0",
+    "@types/node": "^22.12.0",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "typescript": "^5.8.3",
+    "vite": "^6.0.11",
+    "vite-plugin-dts": "^4.5.0",
+    "vitest": "^3.0.4"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-use": ">=17.6.0"
+  },
+  "dependencies": {}
+}
