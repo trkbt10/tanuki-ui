@@ -183,5 +183,5 @@ root.render(
         </Routes>
       </HeaderMainLayout>
     </Router>
-  </React.StrictMode>,
+  </React.StrictMode>
 );

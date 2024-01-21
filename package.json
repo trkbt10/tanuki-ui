@@ -45,8 +45,10 @@
     "test": "vitest",
     "dev:storybook": "cd tools/storybook && npm run storybook",
     "dev:playground": "cd tools/playground && npm run dev",
+    "dev:catalog": "cd tools/catalog && npm run dev",
     "build:storybook": "cd tools/storybook && npm run build-storybook",
-    "setup:tools": "cd tools/storybook && npm install && cd ../playground && npm install"
+    "build:catalog": "cd tools/catalog && npm run build",
+    "setup:tools": "cd tools/storybook && npm install && cd ../playground && npm install && cd ../catalog && npm install"
   },
   "devDependencies": {
     "@previewjs/plugin-react": "^17.1.0",
