@@ -1,5 +1,28 @@
 {
   "name": "tanuki-ui",
+  "description": "HTML-first React component library with semantic elements, multi-OS themes, and production-ready visual node editor",
+  "keywords": [
+    "react",
+    "ui",
+    "component-library",
+    "html-first",
+    "semantic-html",
+    "design-system",
+    "node-editor",
+    "visual-editor",
+    "typescript",
+    "css-modules",
+    "theme",
+    "ios",
+    "macos",
+    "windows",
+    "material-design",
+    "accessible",
+    "tree-shaking",
+    "ui-kit",
+    "frontend",
+    "web-components"
+  ],
   "type": "module",
   "main": "./dist/lib/index.js",
   "module": "./dist/lib/index.js",
@@ -37,6 +60,15 @@
   },
   "version": "1.205.0",
   "license": "Unlicense",
+  "author": "trkbt10 <triplequartet@gmail.com>",
+  "homepage": "https://github.com/trkbt10/tanuki-ui#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trkbt10/tanuki-ui.git"
+  },
+  "bugs": {
+    "url": "https://github.com/trkbt10/tanuki-ui/issues"
+  },
   "scripts": {
     "build": "vite build",
     "typecheck": "bunx tsc --noEmit",
