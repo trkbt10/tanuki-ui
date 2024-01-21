@@ -1,7 +1,7 @@
 .base {
-  display: grid;
-  place-items: stretch;
-  grid-template-rows: var(--appMainToolbarHeight, 52px) max-content;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .header {
@@ -14,7 +14,7 @@
 }
 
 .main {
-  display: grid;
-  place-self: stretch;
-  place-items: stretch;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
