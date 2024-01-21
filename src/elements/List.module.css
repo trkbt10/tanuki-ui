@@ -5,6 +5,7 @@
   margin: 0;
   box-sizing: border-box;
 }
+
 .listItem {
   position: relative;
   display: flex;
@@ -14,17 +15,14 @@
   list-style: none;
   margin: 0;
 }
-.listItem:active > .listItemLabelArea,
-.listItem[data-selected="true"] > .listItemLabelArea {
-  position: relative;
-  background: var(--selectedSidebarListItemBackground);
-}
+
 .listItemLabel {
   display: block;
   font: var(--sidebarListItemFont);
   letter-spacing: 0;
   box-sizing: border-box;
 }
+
 .listItemLabelArea {
   display: flex;
   align-items: center;
@@ -36,46 +34,9 @@
   border-radius: var(--sidebarListItemBorderRadius);
 }
 
-.listItem[data-selected="true"]::before {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  content: "";
-  display: var(--selectedSidebarListItemMarker);
-  height: 16px;
-  width: 3px;
-  background: var(--accentColor);
-  border-radius: 20px;
-}
 .listItemChildren {
   width: 100%;
   padding: 0.5em 0;
   box-sizing: border-box;
   display: block;
-}
-
-.listItem > .summary {
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  list-style: none;
-  color: inherit;
-  position: relative;
-}
-
-.listItem > .summary::-webkit-details-marker,
-.listItem > .summary::after {
-  display: none;
-}
-
-.listItem > .summary .label {
-  display: flex;
-  justify-content: space-between;
-}
-
-.listItem[open] > .summary svg {
-  transition: transform 0.1s ease;
-  transform: rotate(90deg);
 }
