@@ -69,15 +69,25 @@
   --linkColor: rgba(0, 0, 255, 1);
   --placeholderTextColor: rgba(128, 128, 128, 1);
 
-  /* Window Properties */
+  /* Window Properties - Authentic XP 3D Borders */
   --windowBackdropFilter: none;
-  --windowBoxShadow: 0 0 0 1px rgba(0, 48, 156, 1),
-    0 0 0 2px rgba(61, 149, 255, 1),
-    0 0 0 3px rgba(0, 84, 227, 1),
-    2px 2px 8px rgba(0, 0, 0, 0.5);
+  --windowBoxShadow: 
+    /* Outer dark border */
+    0 0 0 1px #0831d9,
+    /* Blue active window gradient border */
+    0 0 0 2px #0055ea,
+    0 0 0 3px #0055ea,
+    0 0 0 4px #0831d9,
+    /* Inner bevel highlight */
+    inset 1px 1px 0 #7aa5e7,
+    inset -1px -1px 0 #001ea0,
+    /* Drop shadow */
+    0 0 11px 0 rgba(0, 0, 0, 0.5),
+    5px 5px 5px -3px rgba(0, 0, 0, 0.35);
   --windowBorderRadius: 6px 6px 0 0;
   /* Rounded top corners only */
-  --windowPadding: 8px;
+  --windowPadding: 3px;
+  --windowInnerBorder: inset 0 0 0 1px #d4d0c8;
 
   /* Control Base States - Classic XP Style */
   --controlAccentColor: var(--xpBlue);
@@ -106,15 +116,35 @@
   --controlDisabledBackground: var(--xpBeige);
   --disabledControlTextColor: #a1a192;
 
-  /* Control Properties - XP Specific */
+  /* Control Properties - Authentic XP 3D Style */
   --controlBorderRadius: 3px;
-  --controlPadding: 3px 8px 3px 8px;
-  --controlBoxShadow: 0 0 0 1px #003c74;
-  --controlHoverBoxShadow: 0 0 0 1px #003c74, 0 0 0 2px #98b4e2;
-  --controlActiveBoxShadow: inset 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 1px #003c74;
-  --controlFocusBoxShadow: 0 0 0 1px #003c74, 0 0 0 2px #98b4e2, 0 0 0 3px #cbdbf3;
+  --controlPadding: 1px 8px 1px 8px;
+  --controlBoxShadow: 
+    /* Outer dark border */
+    0 0 0 1px #003c74,
+    /* 3D raised effect */
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #716f64,
+    /* Very subtle depth */
+    0 1px 0 rgba(0, 0, 0, 0.1);
+  --controlHoverBoxShadow: 
+    0 0 0 1px #0054e3,
+    0 0 0 2px #98d1ff,
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #5d8cc9;
+  --controlActiveBoxShadow: 
+    0 0 0 1px #003c74,
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #716f64,
+    inset 2px 2px 1px rgba(0, 0, 0, 0.1);
+  --controlFocusBoxShadow: 
+    0 0 0 1px #003c74,
+    0 0 0 2px #98d1ff,
+    0 0 0 3px #ffffff,
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #5d8cc9;
 
-  /* Primary Controls - Authentic XP Blue Button */
+  /* Primary Controls - Authentic XP Blue Button with Inner Glow */
   --controlBackground--primary: linear-gradient(to bottom,
     #98d1ff 0%,
     #75bfff 5%,
@@ -123,7 +153,7 @@
     #0054e3 95%,
     #003c74 100%);
   --controlTextColor--primary: #ffffff;
-  --controlTextShadow--primary: 1px 1px 0 rgba(0, 60, 116, 0.5);
+  --controlTextShadow--primary: 0 1px 0 rgba(0, 60, 116, 0.8);
   --controlHoverBackground--primary: linear-gradient(to bottom,
     #b6e1ff 0%,
     #93cfff 5%,
@@ -132,102 +162,214 @@
     #1e68ed 95%,
     #0050a7 100%);
   --controlFocusBackground--primary: var(--controlHoverBackground--primary);
-  --controlBoxShadow--primary: 0 0 0 1px #003c74;
+  --controlBoxShadow--primary: 
+    0 0 0 1px #003c74,
+    inset 1px 1px 0 rgba(152, 209, 255, 0.7),
+    inset -1px -1px 0 rgba(0, 60, 116, 0.5),
+    0 1px 0 rgba(0, 0, 0, 0.1);
+  --controlHoverBoxShadow--primary: 
+    0 0 0 1px #0054e3,
+    0 0 0 2px #98d1ff,
+    inset 1px 1px 0 rgba(182, 225, 255, 0.7),
+    inset -1px -1px 0 rgba(0, 80, 167, 0.5);
+  --controlActiveBoxShadow--primary: 
+    0 0 0 1px #003c74,
+    inset -1px -1px 0 rgba(152, 209, 255, 0.7),
+    inset 1px 1px 0 rgba(0, 60, 116, 0.5),
+    inset 2px 2px 2px rgba(0, 48, 116, 0.3);
 
-  /* Secondary Controls */
+  /* Secondary Controls - Standard XP Gray Button */
   --controlBackground--secondary: var(--controlBackground);
   --controlTextColor--secondary: var(--controlTextColor);
   --controlHoverBackground--secondary: var(--controlHoverBackground);
   --controlFocusBackground--secondary: var(--controlFocusBackground);
   --controlBoxShadow--secondary: var(--controlBoxShadow);
+  
+  /* CTA Controls - XP Green "Go" Button */
+  --controlBackground--cta: linear-gradient(to bottom,
+    #98ff98 0%,
+    #75ff75 5%,
+    #3eff3e 45%,
+    #21e321 50%,
+    #00c900 95%,
+    #008f00 100%);
+  --controlTextColor--cta: #ffffff;
+  --controlTextShadow--cta: 0 1px 0 rgba(0, 100, 0, 0.8);
+  --controlHoverBackground--cta: linear-gradient(to bottom,
+    #b6ffb6 0%,
+    #93ff93 5%,
+    #5cff5c 45%,
+    #3ff03f 50%,
+    #1ed91e 95%,
+    #00a700 100%);
+  --controlBoxShadow--cta: 
+    0 0 0 1px #006400,
+    inset 1px 1px 0 rgba(152, 255, 152, 0.7),
+    inset -1px -1px 0 rgba(0, 100, 0, 0.5),
+    0 1px 0 rgba(0, 0, 0, 0.1);
 
-  /* Input Elements - Classic XP Style */
-  --inputPadding: 2px 3px 2px 3px;
+  /* Input Elements - Authentic XP 3D Inset Style */
+  --inputPadding: 1px 3px 1px 3px;
   --inputFont: normal normal 400 11px/16px var(--themeDefaultFontFamily);
   --inputBorder: 1px solid #7f9db9;
   --inputBorderRadius: 0;
   --inputBackground: #ffffff;
-  --inputBoxShadow: inset 1px 1px 0 #716f64, inset -1px -1px 0 #ffffff;
-  --inputFocusBorder: 1px solid var(--xpBlue);
-  --inputFocusBoxShadow: inset 1px 1px 0 #716f64, inset -1px -1px 0 #ffffff;
+  --inputBoxShadow: 
+    /* Classic XP sunken field effect */
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #716f64,
+    inset -2px -2px 0 #d4d0c8,
+    inset 2px 2px 0 #404040;
+  --inputFocusBorder: 1px solid #0054e3;
+  --inputFocusBoxShadow: 
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #5d8cc9,
+    inset -2px -2px 0 #d4d0c8,
+    inset 2px 2px 0 #003c74;
   --inputHoverBorder: 1px solid #5d8cc9;
 
-  /* Dialog Styles */
-  --dialogBackground: rgba(236, 233, 216, 1);
-  --dialogBorderRadius: 6px 6px 0 0;
-  --dialogBoxShadow: 0 0 0 1px rgba(0, 48, 156, 1),
-    0 0 0 2px rgba(61, 149, 255, 1),
-    0 0 0 3px rgba(0, 84, 227, 1),
-    4px 4px 12px rgba(0, 0, 0, 0.5);
-  --dialogBackdrop: rgba(0, 0, 0, 0.5);
-  --dialogPadding: 8px;
+  /* Dialog Styles - Authentic XP Window Chrome */
+  --dialogBackground: #d4d0c8;
+  --dialogBorderRadius: 8px 8px 0 0;
+  --dialogBoxShadow: 
+    /* Outer frame */
+    0 0 0 1px #0831d9,
+    0 0 0 2px #0055ea,
+    0 0 0 3px #0055ea,
+    0 0 0 4px #0831d9,
+    /* Inner bevel */
+    inset 1px 1px 0 #7aa5e7,
+    inset -1px -1px 0 #001ea0,
+    /* Window content area border */
+    inset 0 30px 0 0 #0055ea,
+    /* Drop shadow */
+    0 0 11px 0 rgba(0, 0, 0, 0.5),
+    5px 5px 5px -3px rgba(0, 0, 0, 0.35);
+  --dialogBackdrop: rgba(0, 0, 0, 0.0);
+  --dialogPadding: 3px;
+  --dialogInnerBoxShadow: inset 0 0 0 1px #ffffff, inset 0 0 0 2px #d4d0c8;
 
-  /* Title Bar Styles - Authentic Luna Blue */
+  /* Title Bar Styles - Authentic Luna Blue with Glossy Effect */
   --titleBarBackground: linear-gradient(180deg,
       #0058ee 0%,
+      #1566f0 2%,
       #004ed8 3%,
+      #0048cc 5%,
       #0044c1 6%,
+      #003db2 10%,
       #0037a6 31%,
+      #003399 40%,
       #003095 45%,
+      #002a85 60%,
+      #002176 80%,
       #001e70 100%);
   --titleBarInactiveBackground: linear-gradient(180deg,
       #7a95ce 0%,
+      #8ca4d4 10%,
+      #6c8ac8 50%,
       #5577bf 100%);
   --titleBarTextColor: #ffffff;
-  --titleBarTextShadow: 1px 1px 0 rgba(0, 30, 112, 0.5);
+  --titleBarTextShadow: 0 1px 1px rgba(0, 30, 112, 0.8);
   --titleBarHeight: 30px;
-  --titleBarFont: 700 12px/30px "Trebuchet MS", var(--themeDefaultFontFamily);
+  --titleBarFont: 700 13px/30px "Trebuchet MS", "Franklin Gothic Medium", var(--themeDefaultFontFamily);
   --titleBarPadding: 0 6px;
   --titleBarButtonSize: 21px;
   --titleBarButtonMargin: 2px;
+  --titleBarGloss: linear-gradient(180deg,
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0) 100%);
 
-  /* Table Styles */
-  --tableBackgroundColor: rgba(255, 255, 255, 1);
-  --tableBorderColor: rgba(172, 168, 153, 1);
-  --tableHeaderTextColor: rgba(0, 0, 0, 1);
-  --tableHeaderBackgroundColor: rgba(240, 240, 233, 1);
-  --tableHeaderBorderColor: rgba(172, 168, 153, 1);
+  /* Table Styles - XP List View Style */
+  --tableBackgroundColor: #ffffff;
+  --tableBorderColor: #aca899;
+  --tableBoxShadow: 
+    /* Sunken list view effect */
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #716f64,
+    inset -2px -2px 0 #d4d0c8,
+    inset 2px 2px 0 #404040;
+  --tableHeaderTextColor: #000000;
+  --tableHeaderBackgroundColor: #f0f0e9;
+  --tableHeaderGradient: linear-gradient(to bottom,
+    #ffffff 0%,
+    #f8f8f2 20%,
+    #f0f0e9 50%,
+    #e8e8e0 100%);
+  --tableHeaderBorderColor: #aca899;
+  --tableHeaderBoxShadow: 
+    inset 0 -1px 0 #716f64,
+    inset 0 -2px 0 #d4d0c8;
   --tableHeaderFont: 400 11px/1.363636 var(--themeDefaultFontFamily);
-  --tableRowTextColor: rgba(0, 0, 0, 1);
-  --tableRowBackgroundColor: rgba(255, 255, 255, 1);
-  --tableRowBorderColor: rgba(242, 242, 242, 1);
-  --tableRowAlternateTextColor: rgba(0, 0, 0, 1);
-  --tableRowAlternateBackgroundColor: rgba(245, 245, 237, 1);
-  --tableRowAlternateBorderColor: rgba(242, 242, 242, 1);
-  --tableHoverBackground: rgba(182, 214, 255, 1);
-  --tableHoverTextColor: rgba(0, 0, 0, 1);
+  --tableRowTextColor: #000000;
+  --tableRowBackgroundColor: #ffffff;
+  --tableRowBorderColor: #f2f2f2;
+  --tableRowAlternateTextColor: #000000;
+  --tableRowAlternateBackgroundColor: #f5f5ed;
+  --tableRowAlternateBorderColor: #f2f2f2;
+  --tableHoverBackground: #b6d6ff;
+  --tableHoverTextColor: #000000;
   --tableCellPadding: 3px 5px;
-  --tableBorder: 1px solid rgba(172, 168, 153, 1);
+  --tableBorder: 1px solid #aca899;
 
-  /* Toolbar Styles */
+  /* Toolbar Styles - XP Rebar Style */
   --toolbarBackground: linear-gradient(to bottom,
-    rgba(254, 254, 253, 1) 0%,
-    rgba(243, 242, 240, 1) 5%,
-    rgba(226, 225, 220, 1) 50%,
-    rgba(214, 213, 206, 1) 51%,
-    rgba(203, 202, 194, 1) 100%);
+    #fefefd 0%,
+    #f3f2f0 5%,
+    #e2e1dc 50%,
+    #d6d5ce 51%,
+    #cbcac2 100%);
   --toolbarHeight: 28px;
   --toolbarPadding: 2px 3px;
   --toolbarBorder: none;
-  --toolbarBoxShadow: 0 1px 0 rgba(245, 244, 234, 1), 0 2px 0 rgba(172, 168, 153, 1);
+  --toolbarBoxShadow: 
+    /* Top highlight */
+    0 1px 0 #f5f4ea,
+    /* Bottom shadow */
+    0 2px 0 #aca899,
+    /* Inner 3D effect */
+    inset 0 1px 0 #ffffff,
+    inset 0 -1px 0 #d4d0c8;
+  --toolbarSeparatorStyle: 
+    1px solid #aca899,
+    1px solid #ffffff;
+  --toolbarGripperStyle: 
+    /* Vertical gripper dots */
+    repeating-linear-gradient(to bottom,
+      #aca899 0px,
+      #aca899 2px,
+      transparent 2px,
+      transparent 4px);
 
   /* Tab Bar Styles */
   --tabBarBackground: rgba(236, 233, 216, 1);
   --tabBarBoxShadow: none;
   --tabBarLayout: horizontal;
 
-  /* Tab Item Styles */
+  /* Tab Item Styles - XP Style Tabs with 3D Effect */
   --tabItemBackground: linear-gradient(to bottom,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(248, 247, 240, 1) 10%,
-    rgba(241, 239, 228, 1) 50%,
-    rgba(236, 234, 221, 1) 51%,
-    rgba(228, 225, 208, 1) 100%);
-  --tabItemTextColor: rgba(0, 0, 0, 1);
+    #ffffff 0%,
+    #f8f7f0 10%,
+    #f1efe4 50%,
+    #eceadd 51%,
+    #e4e1d0 100%);
+  --tabItemTextColor: #000000;
   --tabItemFont: var(--textFont);
   --tabItemPadding: 3px 12px 2px;
   --tabItemBorderRadius: 3px 3px 0 0;
-  --tabItemBoxShadow: -1px 0 0 rgba(172, 168, 153, 1), 0 -1px 0 rgba(172, 168, 153, 1), 1px 0 0 rgba(172, 168, 153, 1);
+  --tabItemBoxShadow: 
+    /* Left edge */
+    -1px 0 0 #aca899,
+    -2px 0 0 #ffffff,
+    /* Top edge */
+    0 -1px 0 #aca899,
+    0 -2px 0 #ffffff,
+    /* Right edge */
+    1px 0 0 #aca899,
+    /* Inner highlights */
+    inset 1px 1px 0 #ffffff,
+    inset -1px 0 0 #d4d0c8;
 
   /* Tab Item States */
   --tabItemBackground-hover: linear-gradient(to bottom,
@@ -244,18 +386,29 @@
   --tabItemFont-selected: var(--tabItemFont);
   --tabItemBoxShadow-selected: -1px 0 0 rgba(172, 168, 153, 1), 0 -1px 0 rgba(172, 168, 153, 1), 1px 0 0 rgba(172, 168, 153, 1);
 
-  /* Sidebar Styles - XP Explorer Bar */
+  /* Sidebar Styles - XP Explorer Bar with Gradient */
   --sidebarBackground: linear-gradient(to right,
     #7ba2e7 0%,
+    #6d96e1 25%,
     #638dd8 50%,
-    #638dd8 100%);
+    #5684d1 75%,
+    #4a7bc9 100%);
   --sidebarWidth: 200px;
   --sidebarBorder: none;
+  --sidebarBoxShadow: 
+    inset -1px 0 0 #436bb8,
+    inset -2px 0 0 #9bb9ec;
   --sidebarHeaderBackground: linear-gradient(to bottom,
     #ffffff 0%,
+    #f0f6fc 20%,
     #e6eff9 50%,
+    #d4e5f5 80%,
     #c8ddf0 100%);
   --sidebarHeaderBorder: 1px solid #5582d1;
+  --sidebarHeaderBoxShadow: 
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #a6c5e7,
+    0 1px 0 #436bb8;
 
   /* Sidebar List Item */
   --sidebarListItemPadding: 3px 6px;
@@ -268,32 +421,50 @@
   --selectedSidebarListItemTextColor: rgba(255, 255, 255, 1);
   --selectedSidebarListItemMarker: rgba(255, 255, 255, 1);
 
-  /* Panel Styles */
-  --panelBackground: rgba(255, 255, 255, 1);
-  --panelBorder: 1px solid rgba(172, 168, 153, 1);
+  /* Panel Styles - XP 3D Raised Panel */
+  --panelBackground: #ffffff;
+  --panelBorder: none;
+  --panelBoxShadow: 
+    /* Raised 3D effect */
+    0 0 0 1px #d4d0c8,
+    inset -1px -1px 0 #716f64,
+    inset 1px 1px 0 #ffffff,
+    inset -2px -2px 0 #b8b4a8,
+    inset 2px 2px 0 #ffffff;
   --panelHeaderBackground: linear-gradient(to bottom,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(249, 248, 245, 1) 10%,
-    rgba(241, 239, 231, 1) 50%,
-    rgba(236, 234, 223, 1) 51%,
-    rgba(227, 224, 209, 1) 100%);
+    #fefefc 0%,
+    #f7f5ed 5%,
+    #ebe9db 50%,
+    #e4e2d1 95%,
+    #d8d5c4 100%);
   --panelHeaderHeight: 24px;
   --panelHeaderFont: 700 11px/1.363636 var(--themeDefaultFontFamily);
   --panelHeaderPadding: 3px 6px;
-  --panelHeaderBoxShadow: 0 1px 0 rgba(172, 168, 153, 1);
+  --panelHeaderBoxShadow: 
+    0 1px 0 #ffffff,
+    0 2px 0 #aca899;
 
-  /* Contextual Menu */
-  --contextualMenuBackground: rgba(255, 255, 255, 1);
-  --contextualMenuBorder: 1px solid rgba(142, 139, 124, 1);
+  /* Contextual Menu - Authentic XP Menu Style */
+  --contextualMenuBackground: #ffffff;
+  --contextualMenuBorder: 1px solid #8e8b7c;
   --contextualMenuBorderRadius: 0;
-  --contextualMenuBoxShadow: 1px 1px 1px rgba(0, 0, 0, 0.1), 2px 2px 3px rgba(0, 0, 0, 0.3);
+  --contextualMenuBoxShadow: 
+    /* 3D raised effect */
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #d4d0c8,
+    /* Drop shadow */
+    1px 1px 1px rgba(0, 0, 0, 0.1),
+    2px 2px 3px rgba(0, 0, 0, 0.3);
   --contextualMenuPadding: 2px;
-  --contextualMenuItemPadding: 2px 20px;
+  --contextualMenuLeftStripe: linear-gradient(to bottom, #dbeaf9 0%, #c7e2f7 100%);
+  --contextualMenuLeftStripeWidth: 25px;
+  --contextualMenuItemPadding: 2px 20px 2px 30px;
   --contextualMenuItemFont: var(--textFont);
-  --contextualMenuItemHoverBackground: rgba(49, 106, 197, 1);
-  --contextualMenuItemHoverColor: rgba(255, 255, 255, 1);
-  --contextualMenuSeparatorColor: rgba(208, 205, 189, 1);
-  --contextualMenuSeparatorHeight: 1px;
+  --contextualMenuItemHoverBackground: #316ac5;
+  --contextualMenuItemHoverColor: #ffffff;
+  --contextualMenuSeparatorColor: #d0cdba;
+  --contextualMenuSeparatorStyle: inset 1px 0 0 #ffffff, inset 0 1px 0 #d0cdba;
+  --contextualMenuSeparatorHeight: 2px;
 
   /* Resizer */
   --resizerColor: rgba(172, 168, 153, 1);
@@ -302,15 +473,26 @@
   --resizerSize: 3px;
   --resizerBoxShadow: none;
 
-  /* Progress and Meter */
-  --progressBackground: rgba(208, 205, 189, 1);
+  /* Progress and Meter - XP Style Progress Bar */
+  --progressBackground: #d4d0c8;
   --progressForeground: linear-gradient(180deg,
-      rgba(140, 201, 140, 1) 0%,
-      rgba(72, 192, 72, 1) 50%,
-      rgba(24, 180, 24, 1) 100%);
+      #8cc98c 0%,
+      #5fbf5f 20%,
+      #48c048 50%,
+      #2eb82e 80%,
+      #18b418 100%);
   --progressBorderRadius: 0;
   --progressHeight: 16px;
-  --progressBoxShadow: inset 1px 1px 0 rgba(113, 111, 100, 1), inset -1px -1px 0 rgba(255, 255, 255, 1);
+  --progressBoxShadow: 
+    /* Sunken track */
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #716f64,
+    inset -2px -2px 0 #d4d0c8,
+    inset 2px 2px 0 #404040;
+  --progressChunkBoxShadow: 
+    /* Raised chunks */
+    inset 1px 1px 0 #a6d9a6,
+    inset -1px -1px 0 #18a418;
 
   /* Selection Colors (Text and Content) */
   --selectedTextColor: rgba(255, 255, 255, 1);
@@ -322,43 +504,77 @@
   --unemphasizedSelectedContentBackgroundColor: rgba(212, 212, 212, 1);
   --selectedMenuItemTextColor: rgba(255, 255, 255, 1);
 
-  /* Focus Indicators */
-  --keyboardFocusIndicatorColor: rgba(0, 0, 0, 1);
+  /* Focus Indicators - XP Dotted Focus Rectangle */
+  --keyboardFocusIndicatorColor: #000000;
   --focusRingWidth: 1px;
   --focusRingOffset: 2px;
   --focusRingStyle: dotted;
+  --focusRingSpacing: 1px;
 
-  /* Scrollbar Styles - Classic XP */
-  --scrollBarBackgroundColor: rgba(212, 208, 200, 1);
+  /* Scrollbar Styles - Authentic XP 3D Scrollbar */
+  --scrollBarBackgroundColor: #d4d0c8;
+  --scrollBarTrackBoxShadow: 
+    inset -1px 0 0 #ffffff,
+    inset 1px 0 0 #716f64;
   --scrollBarThumbColor: linear-gradient(to right,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(241, 239, 226, 1) 20%,
-    rgba(236, 233, 216, 1) 50%,
-    rgba(213, 210, 194, 1) 80%,
-    rgba(198, 195, 179, 1) 100%);
+    #ffffff 0%,
+    #f1efe2 20%,
+    #ece9d8 50%,
+    #d5d2c2 80%,
+    #c6c3b3 100%);
+  --scrollBarThumbBoxShadow: 
+    0 0 0 1px #716f64,
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #aca899;
   --activeScrollBarThumbColor: linear-gradient(to right,
-    rgba(206, 231, 255, 1) 0%,
-    rgba(182, 219, 255, 1) 20%,
-    rgba(166, 202, 240, 1) 50%,
-    rgba(143, 186, 229, 1) 80%,
-    rgba(128, 170, 213, 1) 100%);
+    #cee7ff 0%,
+    #b6dbff 20%,
+    #a6caf0 50%,
+    #8fbae5 80%,
+    #80aad5 100%);
+  --activeScrollBarThumbBoxShadow: 
+    0 0 0 1px #003c74,
+    inset 1px 1px 0 #e3f2ff,
+    inset -1px -1px 0 #5d8cc9;
   --scrollbarWidth: 16px;
-  --scrollbarThumbBoxShadow: 0 0 0 1px rgba(0, 60, 116, 1);
   --scrollbarButtonBackground: linear-gradient(to bottom,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(248, 247, 242, 1) 10%,
-    rgba(241, 239, 231, 1) 50%,
-    rgba(234, 232, 221, 1) 51%,
-    rgba(225, 223, 209, 1) 100%);
-  --scrollbarButtonBoxShadow: 0 0 0 1px rgba(0, 60, 116, 1);
+    #ffffff 0%,
+    #f8f7f2 10%,
+    #f1efe7 50%,
+    #eae8dd 51%,
+    #e1dfd1 100%);
+  --scrollbarButtonBoxShadow: 
+    0 0 0 1px #716f64,
+    inset 1px 1px 0 #ffffff,
+    inset -1px -1px 0 #aca899;
+  --scrollbarButtonHoverBoxShadow: 
+    0 0 0 1px #003c74,
+    inset 1px 1px 0 #e3f2ff,
+    inset -1px -1px 0 #5d8cc9;
+  --scrollbarButtonActiveBoxShadow: 
+    0 0 0 1px #716f64,
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #aca899;
 
-  /* Checkbox and Radio Styles */
+  /* Checkbox and Radio Styles - Authentic XP 3D Inset */
   --checkboxSize: 13px;
-  --checkboxBackground: rgba(255, 255, 255, 1);
-  --checkboxBorder: 1px solid rgba(0, 60, 116, 1);
-  --checkboxBoxShadow: inset 1px 1px 0 rgba(113, 111, 100, 1), inset -1px -1px 0 rgba(255, 255, 255, 1);
-  --checkboxCheckedBackground: rgba(255, 255, 255, 1);
-  --checkboxCheckmarkColor: rgba(33, 161, 33, 1);
+  --checkboxBackground: #ffffff;
+  --checkboxBorder: 1px solid #8e8b7c;
+  --checkboxBoxShadow: 
+    /* Sunken 3D effect */
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #716f64,
+    inset -2px -2px 0 #d4d0c8,
+    inset 2px 2px 0 #404040;
+  --checkboxCheckedBackground: #ffffff;
+  --checkboxCheckmarkColor: #21a121;
+  --checkboxHoverBorder: 1px solid #5d8cc9;
+  --checkboxFocusBoxShadow: 
+    0 0 0 1px #003c74,
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #5d8cc9,
+    inset -2px -2px 0 #d4d0c8,
+    inset 2px 2px 0 #003c74;
 
   /* Additional System Colors */
   --gridColor: rgba(240, 240, 233, 1);
@@ -375,12 +591,27 @@
   --highlightColor: rgba(49, 106, 197, 1);
   --shadowColor: rgba(0, 0, 0, 0.5);
 
-  /* Status Bar */
-  --statusBarBackground: rgba(236, 233, 216, 1);
+  /* Status Bar - XP Style with Grip */
+  --statusBarBackground: #ece9d8;
   --statusBarHeight: 22px;
   --statusBarFont: var(--textFont);
-  --statusBarBorder: 1px solid rgba(255, 255, 255, 1);
-  --statusBarBoxShadow: inset 0 1px 0 rgba(172, 168, 153, 1);
+  --statusBarBorder: none;
+  --statusBarBoxShadow: 
+    inset 0 1px 0 #aca899,
+    inset 0 2px 0 #ffffff;
+  --statusBarPanelBoxShadow: 
+    inset -1px 0 0 #ffffff,
+    inset 1px 0 0 #716f64,
+    inset -2px 0 0 #d4d0c8,
+    inset 2px 0 0 #404040;
+  --statusBarGripBackground: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 2px,
+    #aca899 2px,
+    #aca899 3px,
+    transparent 3px,
+    transparent 5px);
 
   /* Menu Bar */
   --menuBarBackground: linear-gradient(to bottom,
@@ -432,13 +663,25 @@
   --selectBoxSplitButtonBorderWidth: 0;
   --selectBoxSplitButtonBackground: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(236, 233, 216, 1) 100%);
 
-  /* Window Controls - Authentic XP Style */
+  /* Window Controls - Authentic XP Luna Style Buttons */
   --windowCloseButtonBackground: radial-gradient(ellipse at 30% 30%,
     #ffc6ba 0%,
     #e97763 30%,
     #da533a 45%,
     #cb331a 60%,
     #aa220d 100%);
+  --windowCloseButtonHoverBackground: radial-gradient(ellipse at 30% 30%,
+    #ffd6ca 0%,
+    #f98773 30%,
+    #ea634a 45%,
+    #db432a 60%,
+    #ba321d 100%);
+  --windowCloseButtonActiveBackground: radial-gradient(ellipse at 30% 30%,
+    #d4180b 0%,
+    #ba1308 30%,
+    #aa0e05 45%,
+    #9a0803 60%,
+    #8a0300 100%);
   --windowMinimizeButtonBackground: radial-gradient(ellipse at 30% 30%,
     #c6e2ff 0%,
     #73b2ff 30%,
@@ -451,11 +694,24 @@
     #5598e5 45%,
     #367dcb 60%,
     #1f5fa7 100%);
-  --windowButtonBoxShadow: inset 1px 1px 0 rgba(255, 255, 255, 0.4), 
-    inset -1px -1px 0 rgba(0, 0, 0, 0.2),
-    0 0 1px rgba(0, 0, 0, 0.5);
-  --windowButtonHoverFilter: brightness(1.1);
-  --windowButtonActiveFilter: brightness(0.9);
+  --windowButtonBoxShadow: 
+    /* Outer border */
+    0 0 0 1px #0831d9,
+    /* 3D effect */
+    inset 1px 1px 0 rgba(255, 255, 255, 0.4), 
+    inset -1px -1px 0 rgba(0, 0, 0, 0.2);
+  --windowButtonHoverBoxShadow: 
+    0 0 0 1px #0831d9,
+    0 0 0 2px rgba(255, 255, 255, 0.5),
+    inset 1px 1px 0 rgba(255, 255, 255, 0.6), 
+    inset -1px -1px 0 rgba(0, 0, 0, 0.3);
+  --windowButtonActiveBoxShadow: 
+    0 0 0 1px #0831d9,
+    inset -1px -1px 0 rgba(255, 255, 255, 0.4), 
+    inset 1px 1px 0 rgba(0, 0, 0, 0.2),
+    inset 2px 2px 2px rgba(0, 0, 0, 0.3);
+  --windowButtonHoverFilter: none;
+  --windowButtonActiveFilter: none;
 
   /* Balloon Tooltip (XP Feature) */
   --balloonBackground: linear-gradient(180deg, rgba(255, 255, 225, 1) 0%, rgba(255, 255, 199, 1) 100%);
@@ -463,7 +719,55 @@
   --balloonTextColor: rgba(0, 0, 0, 1);
   --balloonBoxShadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 
+  /* Card Styles - XP Inset Panel Style */
+  --cardBackground: #ffffff;
+  --cardBorder: none;
+  --cardBorderRadius: 0;
+  --cardBoxShadow: 
+    /* Sunken panel effect */
+    0 0 0 1px #aca899,
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #716f64,
+    inset -2px -2px 0 #d4d0c8,
+    inset 2px 2px 0 #404040;
+  --cardPadding: 8px;
+  --cardMargin: 4px;
+  --cardHoverBoxShadow: 
+    0 0 0 1px #5d8cc9,
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #5d8cc9,
+    inset -2px -2px 0 #d4d0c8,
+    inset 2px 2px 0 #003c74;
+  --cardHeaderBackground: linear-gradient(to bottom,
+    #fefefc 0%,
+    #f3f1e6 20%,
+    #e9e7d8 50%,
+    #e1dfc8 100%);
+  --cardHeaderPadding: 4px 8px;
+  --cardHeaderFont: 700 11px/1.363636 var(--themeDefaultFontFamily);
+  --cardHeaderBorder: 1px solid #aca899;
+  --cardTitleColor: #003c74;
+
+  /* Popover/Tooltip Styles - XP Balloon Tips */
+  --popoverBackground: #ffffe1;
+  --popoverBorder: 1px solid #000000;
+  --popoverBorderRadius: 4px;
+  --popoverBoxShadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.3);
+  --popoverTextColor: #000000;
+  --popoverFont: var(--textFont);
+  --popoverPadding: 4px 8px;
+  --popoverArrowSize: 8px;
+
+  /* Alert Dialog - XP Style Message Box */
+  --alertDialogBackground: #ece9d8;
+  --alertDialogIconSize: 32px;
+  --alertDialogIconMargin: 12px;
+  --alertDialogButtonGroupMargin: 12px 8px;
+  --alertDialogButtonSpacing: 6px;
+  --alertDialogContentPadding: 12px 8px 8px 60px;
+
   /* Animation Timing - Subtle animations */
-  --animationDuration: 200ms;
-  --animationEasing: ease-out;
+  --animationDuration: 0ms; /* XP had minimal animations */
+  --animationEasing: step-end;
 }
