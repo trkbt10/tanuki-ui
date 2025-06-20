@@ -37,6 +37,17 @@ import { H1, Heading } from 'tanuki-ui';
 import { A, Anchor } from 'tanuki-ui';
 ```
 
+## 🚀 軽量・高速
+
+**驚きの軽さ** - たった **23.5KB** (gzipped) で全てのコンポーネントが使える！
+
+- **Core Components**: 23.5KB gzipped ✨
+- **CSS**: 9.9KB gzipped
+- **Layouts**: +12.6KB (オプション)
+- **Node Editor**: +49.5KB (オプション)
+
+React UIライブラリの中でもトップクラスの軽量さを実現。必要な機能だけをインポートすれば、さらに小さくなります。
+
 ## 主要機能
 
 ### 📄 HTML 基本要素
@@ -198,10 +209,11 @@ function GraphEditor() {
 
 ```jsx
 // テーマ CSS をインポート
-import 'tanuki-ui/styles/ios12.css';        // iOS 12 風
-import 'tanuki-ui/styles/macOS12.css';      // macOS 12 風
-import 'tanuki-ui/styles/windows11.css';    // Windows 11 風
-import 'tanuki-ui/styles/nintendo-switch.css'; // Nintendo Switch 風
+import 'tanuki-ui/styles/monotone.css';      // Monotone (デフォルト)
+import 'tanuki-ui/styles/ios12.css';         // iOS 12 風
+import 'tanuki-ui/styles/macOS12.css';       // macOS 12 風
+import 'tanuki-ui/styles/windows11.css';     // Windows 11 風
+import 'tanuki-ui/styles/handheld-console.css'; // ゲーム機風
 ```
 
 ## API
@@ -249,9 +261,12 @@ import { Button, Input } from 'tanuki-ui';
 
 | パッケージ | サイズ (minified + gzipped) |
 |----------|---------------------------|
-| Core Components | ~45KB |
-| Layouts | ~12KB |
-| Node Editor | ~85KB |
+| Core Components | 23.5KB |
+| Core CSS | 9.9KB |
+| Layouts | 12.6KB |
+| Layouts CSS | 2.5KB |
+| Node Editor | 49.5KB |
+| Node Editor CSS | 6.9KB |
 | Themes (各) | ~3-5KB |
 
 ## パフォーマンス
