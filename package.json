@@ -66,6 +66,12 @@
   "bugs": {
     "url": "https://github.com/trkbt10/tanuki-ui/issues"
   },
+  "files": [
+    "dist",
+    "public/styles",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "vite build",
     "typecheck": "bunx tsc --noEmit",
