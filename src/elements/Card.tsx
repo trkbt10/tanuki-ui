@@ -34,9 +34,10 @@ export const Card: React.FC<React.PropsWithChildren<CardProps>> = ({
       className={`${style.card} ${className || ""}`}
       data-variant={variant}
       data-clickable={clickable}
-      disabled={disabled}
+      data-disabled={disabled}
       tabIndex={clickable && !disabled ? 0 : undefined}
       role={clickable ? "button" : undefined}
+      aria-disabled={clickable && disabled ? true : undefined}
       style={{
         ...inlineStyle,
         ...(clickable && !disabled ? { cursor: "pointer" } : {})
