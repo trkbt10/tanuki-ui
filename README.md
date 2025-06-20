@@ -1,8 +1,18 @@
-# Tanuki UI
+<div align="center">
+  <img src="./docs/logo.png" alt="Tanuki UI Logo" width="120" height="120" />
+  
+  # Tanuki UI
+  
+  **Use HTML elements as they are.**
+  
+  [![npm version](https://img.shields.io/npm/v/tanuki-ui.svg?style=flat-square)](https://www.npmjs.com/package/tanuki-ui)
+  [![Bundle Size](https://img.shields.io/bundlephobia/minzip/tanuki-ui?style=flat-square)](https://bundlephobia.com/package/tanuki-ui)
+  [![License: Unlicense](https://img.shields.io/badge/License-Unlicense-blue.svg?style=flat-square)](http://unlicense.org/)
+  
+  [日本語](./README.ja.md) | English
+</div>
 
-[日本語](./README.ja.md) | English
-
-**Use HTML elements as they are.**
+---
 
 Tanuki UI is a styled component library based on standard HTML elements. Unlike traditional UI libraries, it provides ready-to-use components while preserving HTML semantics.
 
@@ -39,16 +49,46 @@ import { H1, Heading } from 'tanuki-ui';
 import { A, Anchor } from 'tanuki-ui';
 ```
 
-## 🚀 Lightweight & Fast
+## 🎯 Why Tanuki UI?
 
-**Incredibly lightweight** - All components in just **23.5KB** (gzipped)!
+<table>
+<tr>
+<td width="33%" align="center">
 
-- **Core Components**: 23.5KB gzipped ✨
-- **CSS**: 9.9KB gzipped
-- **Layouts**: +12.6KB (optional)
-- **Node Editor**: +49.5KB (optional)
+### 🚀 Lightweight
+**23.5KB** gzipped<br/>
+All core components
 
-One of the lightest React UI libraries available. Import only what you need to make it even smaller.
+</td>
+<td width="33%" align="center">
+
+### 🎨 16 Themes
+Platform-native designs<br/>
+Ready to use
+
+</td>
+<td width="33%" align="center">
+
+### 📝 HTML First
+Standard semantics<br/>
+No learning curve
+
+</td>
+</tr>
+</table>
+
+## 📦 Bundle Size
+
+One of the lightest React UI libraries available:
+
+| Package | Size |
+|---------|------|
+| **Core Components** | 23.5KB |
+| **Core CSS** | 9.9KB |
+| **Layouts** *(optional)* | +12.6KB |
+| **Node Editor** *(optional)* | +49.5KB |
+
+> 💡 Import only what you need to make it even smaller!
 
 ## Key Features
 
@@ -118,32 +158,67 @@ function MyApp() {
 - History management (Undo/Redo)
 - Constraint system
 
-## Installation
+## 🚀 Quick Start
+
+```bash
+# Install
+npm install tanuki-ui
+
+# Import and use
+```
+
+```jsx
+import { Button } from 'tanuki-ui';
+import 'tanuki-ui/style.css';
+
+function App() {
+  return <Button>Click me!</Button>;
+}
+```
+
+## 📥 Installation
+
+<table>
+<tr>
+<td>
 
 ```bash
 # npm
 npm install tanuki-ui
+```
 
+</td>
+<td>
+
+```bash
 # yarn
 yarn add tanuki-ui
+```
 
+</td>
+<td>
+
+```bash
 # pnpm
 pnpm add tanuki-ui
+```
 
+</td>
+<td>
+
+```bash
 # bun
 bun add tanuki-ui
 ```
 
+</td>
+</tr>
+</table>
+
 ### Peer Dependencies
 
-```json
-{
-  "peerDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
-  }
-}
-```
+- React 18.0.0 or higher
+- React DOM 18.0.0 or higher
 
 ## Usage
 
@@ -319,7 +394,7 @@ import { Button, Input } from 'tanuki-ui';
 
 ## License
 
-MIT
+Unlicense
 
 ## Contributing
 

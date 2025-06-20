@@ -1,8 +1,18 @@
-# Tanuki UI
+<div align="center">
+  <img src="./docs/logo.png" alt="Tanuki UI Logo" width="120" height="120" />
+  
+  # Tanuki UI
+  
+  **HTML の基本要素を、そのまま使える。**
+  
+  [![npm version](https://img.shields.io/npm/v/tanuki-ui.svg?style=flat-square)](https://www.npmjs.com/package/tanuki-ui)
+  [![Bundle Size](https://img.shields.io/bundlephobia/minzip/tanuki-ui?style=flat-square)](https://bundlephobia.com/package/tanuki-ui)
+  [![License: Unlicense](https://img.shields.io/badge/License-Unlicense-blue.svg?style=flat-square)](http://unlicense.org/)
+  
+  [English](./README.md) | 日本語
+</div>
 
-[English](./README.md) | 日本語
-
-**HTML の基本要素を、そのまま使える。**
+---
 
 Tanuki UI は、HTML の標準要素をベースとしたスタイル付きコンポーネントライブラリです。従来の UI ライブラリとは異なり、HTML セマンティクスを保ったまま、そのまま使えるコンポーネントを提供します。
 
@@ -39,16 +49,46 @@ import { H1, Heading } from 'tanuki-ui';
 import { A, Anchor } from 'tanuki-ui';
 ```
 
-## 🚀 軽量・高速
+## 🎯 なぜ Tanuki UI？
 
-**驚きの軽さ** - たった **23.5KB** (gzipped) で全てのコンポーネントが使える！
+<table>
+<tr>
+<td width="33%" align="center">
 
-- **Core Components**: 23.5KB gzipped ✨
-- **CSS**: 9.9KB gzipped
-- **Layouts**: +12.6KB (オプション)
-- **Node Editor**: +49.5KB (オプション)
+### 🚀 超軽量
+**23.5KB** gzipped<br/>
+全コアコンポーネント込み
 
-React UIライブラリの中でもトップクラスの軽量さを実現。必要な機能だけをインポートすれば、さらに小さくなります。
+</td>
+<td width="33%" align="center">
+
+### 🎨 16種類のテーマ
+プラットフォーム準拠<br/>
+すぐに使える
+
+</td>
+<td width="33%" align="center">
+
+### 📝 HTML ファースト
+標準セマンティクス<br/>
+学習コスト不要
+
+</td>
+</tr>
+</table>
+
+## 📦 バンドルサイズ
+
+React UIライブラリの中でもトップクラスの軽量さ：
+
+| パッケージ | サイズ |
+|----------|-------|
+| **Core Components** | 23.5KB |
+| **Core CSS** | 9.9KB |
+| **Layouts** *(オプション)* | +12.6KB |
+| **Node Editor** *(オプション)* | +49.5KB |
+
+> 💡 必要な機能だけをインポートすれば、さらに小さくなります！
 
 ## 主要機能
 
@@ -118,32 +158,67 @@ function MyApp() {
 - 履歴管理（Undo/Redo）
 - 制約システム
 
-## インストール
+## 🚀 クイックスタート
+
+```bash
+# インストール
+npm install tanuki-ui
+
+# インポートして使用
+```
+
+```jsx
+import { Button } from 'tanuki-ui';
+import 'tanuki-ui/style.css';
+
+function App() {
+  return <Button>クリックしてね！</Button>;
+}
+```
+
+## 📥 インストール
+
+<table>
+<tr>
+<td>
 
 ```bash
 # npm
 npm install tanuki-ui
+```
 
+</td>
+<td>
+
+```bash
 # yarn
 yarn add tanuki-ui
+```
 
+</td>
+<td>
+
+```bash
 # pnpm
 pnpm add tanuki-ui
+```
 
+</td>
+<td>
+
+```bash
 # bun
 bun add tanuki-ui
 ```
 
+</td>
+</tr>
+</table>
+
 ### ピア依存関係
 
-```json
-{
-  "peerDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
-  }
-}
-```
+- React 18.0.0 以上
+- React DOM 18.0.0 以上
 
 ## 使用方法
 
@@ -319,7 +394,7 @@ import { Button, Input } from 'tanuki-ui';
 
 ## ライセンス
 
-MIT
+Unlicense
 
 ## 貢献
 
