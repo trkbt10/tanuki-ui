@@ -1,4 +1,4 @@
-body {
+:root {
   /* Fonts */
   --themeDefaultFontFamily: "SF Pro Text", "SF Pro Icons", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Helvetica",
     "Arial", sans-serif;
@@ -239,7 +239,7 @@ body {
 }
 
 @media (prefers-color-scheme: dark) {
-  body {
+  :root {
     --windowBackgroundColor: rgba(33, 28, 38, 1);
     --labelColor: rgba(255, 255, 255, 0.847059);
     --controlBackgroundColor: rgba(30, 30, 30, 1);

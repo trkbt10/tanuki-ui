@@ -1,4 +1,4 @@
-body {
+:root {
   /* Fonts - GitHub uses system fonts with -apple-system */
   --themeDefaultFontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   --themeControlFontFamily: var(--themeDefaultFontFamily);
@@ -302,7 +302,7 @@ body {
 
 /* Light mode support (GitHub also has a light theme) */
 @media (prefers-color-scheme: light) {
-  body {
+  :root {
     /* GitHub Light Color Palette */
     --githubCanvas: #ffffff;
     --githubCanvasDefault: #ffffff;
@@ -407,7 +407,7 @@ body ::-webkit-scrollbar-thumb:hover {
 
 /* High Contrast Support */
 @media (prefers-contrast: high) {
-  body {
+  :root {
     --githubBorderDefault: #7d8590;
     --controlBorder: 1px solid currentColor;
     --inputBorder: 1px solid currentColor;
@@ -418,7 +418,7 @@ body ::-webkit-scrollbar-thumb:hover {
 
 /* Reduced Motion Support */
 @media (prefers-reduced-motion: reduce) {
-  body {
+  :root {
     --animationDuration: 0ms;
   }
 }

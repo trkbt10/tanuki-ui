@@ -1,4 +1,4 @@
-body {
+:root {
   /* Fonts - Vercel uses Inter font family */
   --themeDefaultFontFamily: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
     "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -186,7 +186,7 @@ body {
 
 /* Dark Mode */
 @media (prefers-color-scheme: dark) {
-  body {
+  :root {
     /* Dark Mode Colors */
     --textColor: var(--vercelGray100);
     --secondaryTextColor: var(--vercelGray400);
@@ -253,7 +253,7 @@ body {
 }
 
 /* Vercel-specific component overrides */
-body {
+:root {
   font-feature-settings:
     "rlig" 1,
     "calt" 1;

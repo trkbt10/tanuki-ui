@@ -1,4 +1,4 @@
-body {
+:root {
   font-feature-settings: "rclt" off;
   /* Nintendo Switch Color Palette */
   /* Primary Colors */
@@ -231,7 +231,7 @@ body {
 
 /* Dark theme support */
 @media (prefers-color-scheme: dark) {
-  body {
+  :root {
     /* Dark mode adjustments */
     --switchBackgroundGray: #1a1a1a;
     --switchCardGray: #2d2d2d;

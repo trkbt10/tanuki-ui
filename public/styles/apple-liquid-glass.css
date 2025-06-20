@@ -1,4 +1,4 @@
-body {
+:root {
   /* Fonts */
   --themeDefaultFontFamily: "SF Pro Text", "SF Pro Icons", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Helvetica",
     "Arial", sans-serif;

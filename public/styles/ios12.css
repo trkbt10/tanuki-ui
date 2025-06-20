@@ -1,4 +1,4 @@
-body {
+:root {
   font-feature-settings: "rclt" off;
   --windowLevelElevation: 128;
   --dialogLevelElevation: 128;
@@ -65,14 +65,14 @@ body {
   --appMainToolbarBoxShadow: 0 0 8px 0 rgba(0, 0, 0, 0.12), 0 8px 8px 0 rgba(0, 0, 0, 0.24);
 }
 
-body {
+:root {
   --segmentControlPadding: 2px;
   --segmentControlSegmentPadding: 0.5rem 0.6rem;
   --segmentControlBackgroundColor: #ffffff;
 }
 
 /* Control */
-body {
+:root {
   --controlTextFont: normal normal 400 1.7rem/1.2 var(--themeDefaultFontFamily);
   --controlDisabledBackground: rgba(0, 0, 0, 0.12);
   --controlDisabledTextColor: rgba(60, 60, 67, 0.3);

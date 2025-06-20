@@ -1,4 +1,4 @@
-body {
+:root {
   margin: 0;
   /* Fonts */
   --themeDefaultFontFamily: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
@@ -171,7 +171,7 @@ body {
   --segmentControlIndicatorBoxShadow: 0 2px 0 0 rgba(0, 0, 0, 0.8);
 }
 
-body {
+:root {
   --scrollBarBackgroundColor: rgba(255, 255, 255, 0.247059);
   --scrollBarThumbColor: rgba(0, 0, 0, 0.247059);
   --activeScrollBarThumbColor: rgba(0, 0, 0, 0.4);

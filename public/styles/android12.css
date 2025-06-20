@@ -374,6 +374,70 @@
   --chipSelectedBackground: rgba(232, 222, 248, 1);
   --chipSelectedTextColor: rgba(33, 24, 66, 1);
 
+  /* Card Component - Material You (Material Design 3) */
+  /* Base Card Properties */
+  --cardBackground: var(--surfaceColor);
+  --cardBorderRadius: 12px;
+  --cardBorder: none;
+  --cardPadding: 16px;
+  --cardBoxShadow: none;
+  --cardTextColor: var(--textColor);
+  --cardSecondaryTextColor: var(--secondaryLabelColor);
+  
+  /* Card States - Ripple-like effects */
+  --cardHoverBackground: var(--surfaceColor-1);
+  --cardHoverBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --cardActiveBackground: var(--surfaceColor-2);
+  --cardActiveBoxShadow: none;
+  --cardFocusBackground: var(--surfaceColor-1);
+  --cardFocusBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+    0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+  --cardDisabledBackground: rgba(28, 27, 31, 0.04);
+  --cardDisabledTextColor: rgba(28, 27, 31, 0.38);
+  
+  /* Card Variants */
+  /* Elevated Card - Uses surface tints for elevation */
+  --cardBackground--elevated: var(--surfaceColor-1);
+  --cardBorderRadius--elevated: 12px;
+  --cardBoxShadow--elevated: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --cardHoverBackground--elevated: var(--surfaceColor-2);
+  --cardHoverBoxShadow--elevated: 0px 2px 4px rgba(0, 0, 0, 0.3), 
+    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+  
+  /* Outlined Card */
+  --cardBackground--outlined: var(--surfaceColor);
+  --cardBorderRadius--outlined: 12px;
+  --cardBorder--outlined: 1px solid var(--dividerColor);
+  --cardBoxShadow--outlined: none;
+  --cardHoverBackground--outlined: var(--surfaceColor-1);
+  --cardHoverBorder--outlined: 1px solid rgba(121, 116, 126, 0.2);
+  
+  /* Filled Card - Higher emphasis */
+  --cardBackground--filled: var(--surfaceColor-2);
+  --cardBorderRadius--filled: 12px;
+  --cardBoxShadow--filled: none;
+  --cardHoverBackground--filled: var(--surfaceColor-3);
+  
+  /* Large Rounded Card - Material You style */
+  --cardBorderRadius--large: 16px;
+  --cardPadding--large: 20px;
+  
+  /* Card Header Properties */
+  --cardHeaderPadding: 16px 16px 8px;
+  --cardHeaderFont: var(--subtitleFont);
+  --cardHeaderTextColor: var(--labelColor);
+  
+  /* Card Content Properties */
+  --cardContentPadding: 0 16px 16px;
+  --cardContentFont: var(--textFont);
+  
+  /* Card Actions Properties */
+  --cardActionsPadding: 8px;
+  --cardActionsJustify: flex-end;
+  --cardActionsGap: 8px;
+
   /* Bottom Sheet - Android Specific */
   --bottomSheetBackground: rgba(255, 251, 254, 1);
   --bottomSheetBorderRadius: 28px 28px 0 0;
@@ -505,6 +569,37 @@
     --chipHoverBackground: rgba(56, 52, 63, 1);
     --chipSelectedBackground: rgba(73, 69, 91, 1);
     --chipSelectedTextColor: rgba(232, 222, 248, 1);
+    
+    /* Card Component - Dark Mode */
+    /* Base Card Properties */
+    --cardBackground: var(--surfaceColor);
+    --cardTextColor: var(--textColor);
+    --cardSecondaryTextColor: var(--secondaryLabelColor);
+    --cardDisabledBackground: rgba(230, 225, 229, 0.04);
+    --cardDisabledTextColor: rgba(230, 225, 229, 0.38);
+    
+    /* Card States - Dark */
+    --cardHoverBackground: var(--surfaceColor-1);
+    --cardActiveBackground: var(--surfaceColor-2);
+    --cardFocusBackground: var(--surfaceColor-1);
+    
+    /* Card Variants - Dark */
+    /* Elevated Card */
+    --cardBackground--elevated: var(--surfaceColor-1);
+    --cardHoverBackground--elevated: var(--surfaceColor-2);
+    
+    /* Outlined Card */
+    --cardBackground--outlined: var(--surfaceColor);
+    --cardBorder--outlined: 1px solid var(--dividerColor);
+    --cardHoverBackground--outlined: var(--surfaceColor-1);
+    --cardHoverBorder--outlined: 1px solid rgba(202, 196, 208, 0.2);
+    
+    /* Filled Card */
+    --cardBackground--filled: var(--surfaceColor-2);
+    --cardHoverBackground--filled: var(--surfaceColor-3);
+    
+    /* Card Header - Dark */
+    --cardHeaderTextColor: var(--labelColor);
     
     /* Bottom Sheet - Dark */
     --bottomSheetBackground: rgba(36, 34, 40, 1);
