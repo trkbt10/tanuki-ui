@@ -9,7 +9,7 @@
   [![Bundle Size](https://img.shields.io/bundlephobia/minzip/tanuki-ui?style=flat-square)](https://bundlephobia.com/package/tanuki-ui)
   [![License: Unlicense](https://img.shields.io/badge/License-Unlicense-blue.svg?style=flat-square)](http://unlicense.org/)
   
-  [日本語](./README.ja.md) | English
+  [🎨 Component Catalog](https://trkbt10.github.io/tanuki-ui/) | [日本語](./README.ja.md) | English
 </div>
 
 ---
