@@ -12,15 +12,22 @@ Tanuki UI uses CSS custom properties (CSS Variables) as design tokens, allowing 
 
 The following themes are available in `public/styles/`:
 
-1. **iOS 12** (`ios12.css`) - iOS design language with rounded corners and translucent effects
-2. **macOS 12** (`macOS12.css`) - macOS Big Sur/Monterey design system with system colors and blur effects
-3. **Windows 11** (`windows11.css`) - Windows 11 Fluent Design system
-4. **Android 12** (`android12.css`) - Material Design 3 (Material You) styling
-6. **Apple Liquid Glass** (`apple-liquid-glass.css`) - Premium glass morphism effect
-7. **Vercel** (`vercel.css`) - Clean, modern development-focused theme
-8. **Windows 98** (`windows98.css`) - Retro Windows 98 styling
-9. **Monotone** (`monotone.css`) - High contrast, accessibility-focused theme
-10. **handheld-console** (`handheld-console.css`) -　N天堂 Gaming console inspired theme
+1. **Monotone** (`monotone.css`) - High contrast, accessibility-focused theme (Default)
+2. **Android 12** (`android12.css`) - Material Design 3 (Material You) styling
+3. **Apple Liquid Glass** (`apple-liquid-glass.css`) - Premium glass morphism effect
+4. **AWS** (`aws.css`) - AWS console-inspired design
+5. **Figma** (`figma.css`) - Figma design tool interface styling
+6. **GitHub Dark** (`github-dark.css`) - GitHub's dark theme
+7. **Handheld Console** (`handheld-console.css`) - Gaming console inspired theme
+8. **iOS 12** (`ios12.css`) - iOS design language with rounded corners and translucent effects
+9. **Linear** (`linear.css`) - Linear app-inspired modern design
+10. **macOS 12** (`macOS12.css`) - macOS Big Sur/Monterey design system with system colors and blur effects
+11. **Material Design** (`material-design.css`) - Google's Material Design system
+12. **OpenAI** (`openai.css`) - OpenAI's clean interface styling
+13. **Vercel** (`vercel.css`) - Clean, modern development-focused theme
+14. **Windows XP** (`windows-xp.css`) - Classic Windows XP styling
+15. **Windows 11** (`windows11.css`) - Windows 11 Fluent Design system
+16. **Windows 98** (`windows98.css`) - Retro Windows 98 styling
 
 ### Core Design Token Categories
 

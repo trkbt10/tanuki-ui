@@ -168,6 +168,14 @@
   --sidebarSectionTitleColor: var(--nintendoGray);
   --sidebarSectionTitlePadding: 20px 20px 8px 20px;
   --sidebarListItemPadding: 12px 20px;
+  
+  /* Sidebar Section Title - Nintendo Style */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.02em;
+  --sidebarSectionTitleMargin: 20px 0 8px 0;
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
 
   /* Dialog - Switch modal style */
   --dialogBackground: var(--switchWhite);

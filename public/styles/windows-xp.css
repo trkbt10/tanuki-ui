@@ -420,6 +420,16 @@
   --selectedSidebarListItemBackground: rgba(49, 106, 197, 1);
   --selectedSidebarListItemTextColor: rgba(255, 255, 255, 1);
   --selectedSidebarListItemMarker: rgba(255, 255, 255, 1);
+  
+  /* Sidebar Section Title - Windows XP Style */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0;
+  --sidebarSectionTitleMargin: 12px 0 4px 0;
+  --sidebarSectionTitlePadding: 0 6px;
+  --sidebarSectionTitleColor: var(--secondaryLabelColor);
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: none;
 
   /* Panel Styles - XP 3D Raised Panel */
   --panelBackground: #ffffff;

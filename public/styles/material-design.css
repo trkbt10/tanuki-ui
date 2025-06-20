@@ -264,17 +264,26 @@
   --sidebarListItemFont: normal normal 500 14px/20px var(--themeDefaultFontFamily);
   --sidebarListItemBorderRadius: 28px;
   --selectedSidebarListItemBackground: var(--mdSecondaryContainer);
+  --selectedSidebarListItemTextColor: var(--mdOnSecondaryContainer);
+  --sidebarListItemTextColor: var(--mdOnSurface);
   --selectedSidebarListItemMarker: none;
   --sidebarItemPadding: 12px 24px;
   --sidebarItemHoverBackground: rgba(103, 80, 164, 0.08);
   --sidebarListItemDetailsBackground: var(--mdSurfaceVariant);
-  --sidebarListItemTextColor: var(--mdOnSurface);
   --sidebarListItemHoverBackground: rgba(103, 80, 164, 0.08);
   --sidebarListItemIconSize: 24px;
   --sidebarListItemChildrenPadding: 0 0 0 32px;
   --sidebarSectionTitleColor: var(--mdOnSurfaceVariant);
   --sidebarSectionTitlePadding: 16px 24px 8px 24px;
   --sidebarListItemPadding: 12px 24px;
+  
+  /* Sidebar Section Title - Material Design Style */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.01em;
+  --sidebarSectionTitleMargin: 24px 0 8px 0;
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
 
   /* App Layout */
   --appMainToolbarFloatingBackground: var(--mdSurface);

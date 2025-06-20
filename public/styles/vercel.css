@@ -170,6 +170,19 @@
   --sidebarItemHoverBackground: var(--vercelGray100);
   --sidebarItemSelectedBackground: var(--vercelBlue100);
   --sidebarItemSelectedTextColor: var(--accentColor);
+  --sidebarListItemTextColor: var(--textColor);
+  --selectedSidebarListItemBackground: var(--vercelBlue100);
+  --selectedSidebarListItemTextColor: var(--accentColor);
+  
+  /* Sidebar Section Title */
+  --sidebarSectionTitleFont: var(--textFontSmall);
+  --sidebarSectionTitleLetterSpacing: 0.05em;
+  --sidebarSectionTitleMargin: 20px 0 8px 0;
+  --sidebarSectionTitlePadding: 0 12px;
+  --sidebarSectionTitleColor: var(--tertiaryTextColor);
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
 
   /* Checkbox & Radio */
   --checkboxSize: 16px;

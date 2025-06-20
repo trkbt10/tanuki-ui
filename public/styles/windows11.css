@@ -232,6 +232,16 @@
   --selectedSidebarListItemBackground: rgba(0, 0, 0, 0.0373);
   --selectedSidebarListItemTextColor: rgba(0, 0, 0, 0.847059);
   --selectedSidebarListItemMarker: var(--accentColor);
+  
+  /* Sidebar Section Title */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.03em;
+  --sidebarSectionTitleMargin: 16px 0 4px 0;
+  --sidebarSectionTitlePadding: 0 16px;
+  --sidebarSectionTitleColor: var(--secondaryLabelColor);
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
 
   /* Panel Styles */
   --panelBackground: rgba(255, 255, 255, 1);

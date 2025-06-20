@@ -207,7 +207,19 @@
   --sidebarListItemFont: normal normal 400 13px/1.230769 var(--themeDefaultFontFamily);
   --sidebarListItemBorderRadius: 5px;
   --selectedSidebarListItemBackground: rgba(0, 0, 0, 0.1235295);
+  --selectedSidebarListItemTextColor: rgba(0, 0, 0, 0.847059);
+  --sidebarListItemTextColor: rgba(0, 0, 0, 0.847059);
   --selectedSidebarListItemMarker: none;
+  
+  /* Sidebar Section Title */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.02em;
+  --sidebarSectionTitleMargin: 16px 0 4px 0;
+  --sidebarSectionTitlePadding: 0 8px;
+  --sidebarSectionTitleColor: var(--tertiaryLabelColor);
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
 
   --appMainToolbarFloatingBackground: rgba(255, 255, 255, 0.9);
 

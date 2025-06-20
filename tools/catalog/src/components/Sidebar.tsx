@@ -1,46 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router";
 import { CategoryInfo } from "../catalog/components";
-import { Select, SidebarList, Toolbar } from "tanuki-ui";
+import { DataList, SidebarList, Toolbar } from "tanuki-ui";
 import { HeaderMainLayout } from "tanuki-ui/layouts";
 // 実際に存在するテーマファイルを基にしたテーマリスト
 const themes = [
   { value: "monotone", label: "Monotone (Default)", file: "/tanuki-ui/styles/monotone.css" },
   { value: "android12", label: "Android 12", file: "/tanuki-ui/styles/android12.css" },
   { value: "apple-liquid-glass", label: "Apple Liquid Glass", file: "/tanuki-ui/styles/apple-liquid-glass.css" },
+  { value: "aws", label: "AWS", file: "/tanuki-ui/styles/aws.css" },
   { value: "figma", label: "Figma", file: "/tanuki-ui/styles/figma.css" },
-  { value: "ios", label: "iOS", file: "/tanuki-ui/styles/ios.css" },
+  { value: "github-dark", label: "GitHub Dark", file: "/tanuki-ui/styles/github-dark.css" },
+  { value: "handheld-console", label: "Handheld Console", file: "/tanuki-ui/styles/handheld-console.css" },
   { value: "ios12", label: "iOS 12", file: "/tanuki-ui/styles/ios12.css" },
+  { value: "linear", label: "Linear", file: "/tanuki-ui/styles/linear.css" },
   { value: "macOS12", label: "macOS 12", file: "/tanuki-ui/styles/macOS12.css" },
-  { value: "nintendo-switch", label: "Ntendo", file: "/tanuki-ui/styles/handheld-console.css" },
+  { value: "material-design", label: "Material Design", file: "/tanuki-ui/styles/material-design.css" },
+  { value: "openai", label: "OpenAI", file: "/tanuki-ui/styles/openai.css" },
   { value: "vercel", label: "Vercel", file: "/tanuki-ui/styles/vercel.css" },
+  { value: "windows-xp", label: "Windows XP", file: "/tanuki-ui/styles/windows-xp.css" },
   { value: "windows11", label: "Windows 11", file: "/tanuki-ui/styles/windows11.css" },
   { value: "windows98", label: "Windows 98", file: "/tanuki-ui/styles/windows98.css" },
-  {
-    value: "openai",
-    label: "OpenAI",
-    file: "/tanuki-ui/styles/openai.css",
-  },
-  {
-    value: "github-dark",
-    label: "GitHub Dark",
-    file: "/tanuki-ui/styles/github-dark.css",
-  },
-  {
-    value: "linear",
-    label: "Linear",
-    file: "/tanuki-ui/styles/linear.css",
-  },
-  {
-    value: "windows-xp",
-    label: "Windows-XP",
-    file: "/tanuki-ui/styles/windows-xp.css",
-  },
-  {
-    value: "aws",
-    label: "AWS",
-    file: "/tanuki-ui/styles/aws.css",
-  },
 ];
 
 interface SidebarProps {
@@ -74,22 +54,20 @@ const Sidebar: React.FC<SidebarProps> = ({ components }) => {
     <HeaderMainLayout
       header={
         <Toolbar>
-          <Toolbar.Body>
-            <Toolbar.Title>
-              <strong>
-                <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-                  Tanuki UI
-                </Link>
-              </strong>
-            </Toolbar.Title>
-            <Select value={selectedTheme} onChange={(e) => setSelectedTheme(e.target.value)}>
-              {themes.map((theme) => (
-                <option key={theme.value} value={theme.value}>
-                  {theme.label}
-                </option>
-              ))}
-            </Select>
-          </Toolbar.Body>
+          <DataList
+            value={selectedTheme}
+            onChange={(value) => setSelectedTheme(String(value))}
+            list="themes-list"
+            placeholder="Select theme..."
+            style={{ minWidth: "200px" }}
+          />
+          <datalist id="themes-list">
+            {themes.map((theme) => (
+              <option key={theme.value} value={theme.value}>
+                {theme.label}
+              </option>
+            ))}
+          </datalist>
         </Toolbar>
       }
     >

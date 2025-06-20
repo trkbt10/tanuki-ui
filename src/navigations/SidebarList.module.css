@@ -67,14 +67,17 @@
 
 .sectionTitle {
   position: relative;
-  font: var(--labelFont);
-  letter-spacing: 0;
-  margin: 0.8rem 0 0 0;
-  padding: 0.5rem var(--summaryMarkerSize) 0.45rem 0.6rem;
-  color: inherit;
+  font: var(--sidebarSectionTitleFont, var(--labelFont));
+  letter-spacing: var(--sidebarSectionTitleLetterSpacing, 0.02em);
+  margin: var(--sidebarSectionTitleMargin, 0.8rem 0 0.2rem 0);
+  padding: var(--sidebarSectionTitlePadding, 0.5rem var(--summaryMarkerSize) 0.45rem 0.6rem);
+  color: var(--sidebarSectionTitleColor, var(--tertiaryLabelColor));
+  background: var(--sidebarSectionTitleBackground, transparent);
+  border-radius: var(--sidebarSectionTitleBorderRadius, 0);
   display: flex;
   box-sizing: border-box;
   justify-content: space-between;
+  text-transform: var(--sidebarSectionTitleTextTransform, none);
 }
 
 .listItem {
@@ -110,6 +113,10 @@
 .listItem[data-selected="true"]>.listItemLabelArea {
   position: relative;
   background: var(--selectedSidebarListItemBackground);
+}
+
+.listItem[data-selected="true"] .listItemLabel {
+  color: var(--selectedSidebarListItemTextColor, var(--sidebarListItemTextColor));
 }
 
 .listItemLabel {

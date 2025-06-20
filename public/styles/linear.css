@@ -225,6 +225,7 @@
   --sidebarListItemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
   --sidebarListItemBorderRadius: 6px;
   --selectedSidebarListItemBackground: var(--linearAccentSubtle);
+  --selectedSidebarListItemTextColor: var(--linearText);
   --selectedSidebarListItemMarker: 2px solid var(--linearAccent);
   --sidebarListItemDetailsBackground: var(--linearBgSubtle);
   --sidebarListItemTextColor: var(--linearText);
@@ -234,6 +235,14 @@
   --sidebarSectionTitleColor: var(--linearTextSubtle);
   --sidebarSectionTitlePadding: 20px 16px 8px 16px;
   --sidebarListItemPadding: 8px 16px;
+  
+  /* Sidebar Section Title - Linear Style */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.02em;
+  --sidebarSectionTitleMargin: 20px 0 8px 0;
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
 
   /* App Layout */
   --appMainToolbarFloatingBackground: rgba(255, 255, 255, 0.8);

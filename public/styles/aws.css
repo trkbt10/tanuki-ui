@@ -144,6 +144,22 @@
   --tableRowAlternateTextColor: var(--awsTextPrimary);
   --tableRowAlternateBackgroundColor: var(--awsDeepSquidInk);
   --tableRowAlternateBorderColor: var(--awsBorderDark);
+  
+  /* Dropdown/Select Styles - AWS Console Specific */
+  --selectDropdownBackground: var(--awsCardBackground);
+  --selectDropdownBorder: 1px solid var(--awsBorder);
+  --selectDropdownShadow: 0 2px 8px 0 rgba(0, 28, 36, 0.5);
+  --selectOptionBackground: var(--awsCardBackground);
+  --selectOptionHoverBackground: var(--awsHoverBackground);
+  --selectOptionSelectedBackground: var(--awsSelectedBackground);
+  --selectOptionTextColor: var(--awsTextPrimary);
+  --selectOptionBorder: 1px solid var(--awsBorderDark);
+  --selectSearchBackground: var(--awsBackgroundSecondary);
+  --selectSearchBorder: 1px solid var(--awsBorder);
+  --selectSearchTextColor: var(--awsTextPrimary);
+  
+  /* Make alternating rows more visible in AWS theme */
+  --tableRowAlternateBackgroundColor: rgba(22, 25, 31, 0.8);
 
   /* Dialog */
   --dialogBackground: var(--awsCardBackground);
@@ -231,6 +247,7 @@
   --sidebarListItemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
   --sidebarListItemBorderRadius: 0px;
   --selectedSidebarListItemBackground: var(--awsSelectedBackground);
+  --selectedSidebarListItemTextColor: var(--awsOrange);
   --selectedSidebarListItemMarker: 3px solid var(--awsOrange);
   --sidebarListItemDetailsBackground: var(--awsCardBackground);
   --sidebarListItemTextColor: var(--awsTextPrimary);
@@ -240,6 +257,14 @@
   --sidebarSectionTitleColor: var(--awsTextSecondary);
   --sidebarSectionTitlePadding: 16px 16px 8px 16px;
   --sidebarListItemPadding: 10px 16px;
+  
+  /* Sidebar Section Title - AWS Console Style */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.05em;
+  --sidebarSectionTitleMargin: 24px 0 8px 0;
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
 
   /* App Layout */
   --appMainToolbarFloatingBackground: rgba(35, 47, 62, 0.95);

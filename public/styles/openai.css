@@ -198,6 +198,7 @@
   --sidebarListItemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
   --sidebarListItemBorderRadius: 6px;
   --selectedSidebarListItemBackground: var(--openaiGray100);
+  --selectedSidebarListItemTextColor: var(--textColor);
   --selectedSidebarListItemMarker: 3px solid var(--accentColor);
   --sidebarListItemDetailsBackground: var(--openaiGray50);
   --sidebarListItemTextColor: var(--textColor);
@@ -207,6 +208,14 @@
   --sidebarSectionTitleColor: var(--openaiGray600);
   --sidebarSectionTitlePadding: 16px 16px 8px 16px;
   --sidebarListItemPadding: 8px 16px;
+  
+  /* Sidebar Section Title - OpenAI Style */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.03em;
+  --sidebarSectionTitleMargin: 16px 0 8px 0;
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
 
   /* App Layout */
   --appMainToolbarFloatingBackground: rgba(255, 255, 255, 0.95);
@@ -327,6 +336,7 @@
     --barItemsHoverSegmentControlBackground: var(--openaiGray600);
     --barItemsActiveSegmentControlBackground: var(--openaiGray500);
     --selectedSidebarListItemBackground: var(--openaiGray700);
+    --selectedSidebarListItemTextColor: var(--textColor);
     --sidebarListItemDetailsBackground: var(--openaiGray800);
     --sidebarListItemTextColor: var(--textColor);
     --sidebarListItemHoverBackground: var(--openaiGray800);
