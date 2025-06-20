@@ -1,0 +1,424 @@
+body {
+  /* Fonts - GitHub uses system fonts with -apple-system */
+  --themeDefaultFontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --themeControlFontFamily: var(--themeDefaultFontFamily);
+  --themeLabelFontFamily: var(--themeDefaultFontFamily);
+  --themeMonospaceFont: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  --themeSystemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --textFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --labelFont: normal normal 600 12px/1.333333 var(--themeLabelFontFamily);
+
+  /* GitHub Dark Color Palette */
+  --githubCanvas: #0d1117;
+  --githubCanvasDefault: #0d1117;
+  --githubCanvasSubtle: #161b22;
+  --githubCanvasInset: #010409;
+  --githubCanvasOverlay: #161b22;
+
+  /* Foreground colors */
+  --githubFgDefault: #c9d1d9;
+  --githubFgMuted: #8b949e;
+  --githubFgSubtle: #6e7681;
+  --githubFgOnEmphasis: #ffffff;
+
+  /* Border colors */
+  --githubBorderDefault: #30363d;
+  --githubBorderMuted: #21262d;
+  --githubBorderSubtle: rgba(240, 246, 252, 0.1);
+
+  /* Accent colors */
+  --githubAccentFg: #58a6ff;
+  --githubAccentEmphasis: #1f6feb;
+  --githubAccentMuted: rgba(56, 139, 253, 0.4);
+  --githubAccentSubtle: rgba(56, 139, 253, 0.15);
+
+  /* Success colors */
+  --githubSuccessFg: #3fb950;
+  --githubSuccessEmphasis: #238636;
+  --githubSuccessSubtle: rgba(63, 185, 80, 0.15);
+
+  /* Attention/Warning colors */
+  --githubAttentionFg: #d29922;
+  --githubAttentionEmphasis: #9e6a03;
+  --githubAttentionSubtle: rgba(187, 128, 9, 0.15);
+
+  /* Danger/Error colors */
+  --githubDangerFg: #f85149;
+  --githubDangerEmphasis: #da3633;
+  --githubDangerSubtle: rgba(248, 81, 73, 0.15);
+
+  /* Neutral colors */
+  --githubNeutralEmphasis: #6e7681;
+  --githubNeutralMuted: rgba(110, 118, 129, 0.4);
+  --githubNeutralSubtle: rgba(110, 118, 129, 0.1);
+
+  /* Special colors */
+  --githubDoneFg: #a371f7;
+  --githubDoneEmphasis: #8957e5;
+  --githubSponsorsFg: #db61a2;
+  --githubSponsorsEmphasis: #bf4b8a;
+
+  /* Core Colors */
+  --textColor: var(--githubFgDefault);
+  --accentColor: var(--githubAccentFg);
+  --cautionColor: var(--githubDangerFg);
+  accent-color: var(--accentColor);
+
+  /* Background Colors */
+  --windowBackgroundColor: var(--githubCanvasDefault);
+  --backgroundSecondary: var(--githubCanvasSubtle);
+  --backgroundTertiary: var(--githubCanvasInset);
+  --backgroundHover: rgba(177, 186, 196, 0.12);
+  --backgroundActive: rgba(177, 186, 196, 0.2);
+
+  /* No backdrop filters for GitHub style */
+  --backgroundBackdropFilter: none;
+  --windowBackdropFilter: none;
+
+  /* Window Shadow */
+  --windowBoxShadow: 0 0 0 1px var(--githubBorderDefault);
+
+  /* Scrollbar Colors */
+  --scrollBarBackgroundColor: transparent;
+  --scrollBarThumbColor: rgba(110, 118, 129, 0.4);
+  --activeScrollBarThumbColor: rgba(110, 118, 129, 0.7);
+
+  /* Text Colors */
+  --labelColor: var(--githubFgDefault);
+  --secondaryLabelColor: var(--githubFgMuted);
+  --tertiaryLabelColor: var(--githubFgSubtle);
+  --quaternaryLabelColor: var(--githubNeutralEmphasis);
+  --placeholderTextColor: var(--githubFgSubtle);
+  --selectedTextColor: var(--githubFgOnEmphasis);
+  --textBackgroundColor: var(--windowBackgroundColor);
+  --selectedTextBackgroundColor: var(--githubAccentEmphasis);
+  --keyboardFocusIndicatorColor: var(--githubAccentMuted);
+  --unemphasizedSelectedTextColor: var(--githubFgDefault);
+  --unemphasizedSelectedTextBackgroundColor: var(--githubNeutralSubtle);
+  --linkColor: var(--githubAccentFg);
+  --separatorColor: var(--githubBorderDefault);
+  --selectedContentBackgroundColor: var(--githubAccentEmphasis);
+  --unemphasizedSelectedContentBackgroundColor: var(--githubNeutralSubtle);
+  --selectedMenuItemTextColor: var(--githubFgOnEmphasis);
+  --gridColor: var(--githubBorderDefault);
+  --headerTextColor: var(--githubFgDefault);
+
+  /* Control Colors */
+  --controlAccentColor: var(--githubAccentFg);
+  --controlColor: var(--githubCanvasSubtle);
+  --controlTextColor: var(--githubFgDefault);
+  --disabledControlTextColor: var(--githubFgSubtle);
+  --selectedControlColor: var(--githubAccentSubtle);
+  --selectedControlTextColor: var(--githubFgDefault);
+  --alternateSelectedControlTextColor: var(--githubFgOnEmphasis);
+  --scrubberTexturedBackgroundColor: var(--githubCanvasSubtle);
+  --windowFrameTextColor: var(--githubFgDefault);
+  --underPageBackgroundColor: var(--githubCanvasInset);
+  --findHighlightColor: #ffd33d;
+  --highlightColor: var(--githubFgOnEmphasis);
+  --shadowColor: rgba(0, 0, 0, 1);
+
+  /* System Colors */
+  --systemBrownColor: #bb8009;
+  --systemGrayColor: var(--githubFgSubtle);
+  --systemGreenColor: var(--githubSuccessFg);
+  --systemIndigoColor: var(--githubDoneFg);
+  --systemOrangeColor: var(--githubAttentionFg);
+  --systemPinkColor: var(--githubSponsorsFg);
+  --systemPurpleColor: var(--githubDoneFg);
+  --systemRedColor: var(--githubDangerFg);
+  --systemTealColor: #79c0ff;
+  --systemYellowColor: #ffd33d;
+  --systemBlueColor: var(--githubAccentFg);
+
+  /* Table */
+  --tableBackgroundColor: var(--githubCanvasDefault);
+  --tableBorderColor: var(--githubBorderDefault);
+  --tableHeaderTextColor: var(--githubFgDefault);
+  --tableHeaderBackgroundColor: var(--githubCanvasSubtle);
+  --tableHeaderBorderColor: var(--githubBorderDefault);
+  --tableRowTextColor: var(--githubFgDefault);
+  --tableRowBackgroundColor: var(--githubCanvasDefault);
+  --tableRowBorderColor: var(--githubBorderMuted);
+  --tableRowAlternateTextColor: var(--githubFgDefault);
+  --tableRowAlternateBackgroundColor: var(--githubCanvasSubtle);
+  --tableRowAlternateBorderColor: var(--githubBorderMuted);
+
+  /* Dialog */
+  --dialogBackground: var(--githubCanvasOverlay);
+  --dialogBoxShadow: 0 8px 24px rgba(1, 4, 9, 0.85);
+
+  /* Control */
+  --controlBoxShadow: 0 0 0 1px var(--githubBorderDefault);
+  --controlFocusBoxShadow: 0 0 0 3px var(--githubAccentMuted);
+  --controlTextFont: normal normal 500 14px/20px var(--themeControlFontFamily);
+  --controlBorderRadius: 6px;
+  --controlPadding: 5px 16px;
+  --controlTextLetterSpacing: normal;
+  --controlTextColor: var(--githubFgDefault);
+  --controlBackground: var(--githubCanvasSubtle);
+  --controlBorder: 1px solid var(--githubBorderDefault);
+  --controlHoverBackground: var(--githubCanvasSubtle);
+  --controlHoverBorder: 1px solid var(--githubFgMuted);
+  --controlActiveBackground: var(--githubCanvasInset);
+
+  /* Button Primary */
+  --controlBoxShadow--primary: 0 0 0 1px rgba(27, 31, 36, 0.15);
+  --controlBackground--primary: var(--githubSuccessEmphasis);
+  --controlBorder--primary: 1px solid rgba(240, 246, 252, 0.1);
+  --controlTextColor--primary: var(--githubFgOnEmphasis);
+  --controlHoverTextColor--primary: var(--githubFgOnEmphasis);
+  --controlHoverBackground--primary: #2ea043;
+  --controlFocusBackground--primary: var(--githubSuccessEmphasis);
+  --controlFocusTextColor--primary: var(--githubFgOnEmphasis);
+
+  /* Button Secondary */
+  --controlBoxShadow--secondary: 0 0 0 1px var(--githubBorderDefault);
+  --controlBackground--secondary: var(--githubCanvasSubtle);
+  --controlBorder--secondary: 1px solid var(--githubBorderDefault);
+  --controlTextColor--secondary: var(--githubFgDefault);
+  --controlHoverBackground--secondary: var(--githubCanvasSubtle);
+  --controlHoverBorder--secondary: 1px solid var(--githubFgMuted);
+  --controlHoverTextColor--secondary: var(--githubFgDefault);
+
+  /* Button Danger */
+  --controlBoxShadow--danger: 0 0 0 1px rgba(27, 31, 36, 0.15);
+  --controlBackground--danger: var(--githubDangerEmphasis);
+  --controlBorder--danger: 1px solid rgba(240, 246, 252, 0.1);
+  --controlTextColor--danger: var(--githubFgOnEmphasis);
+  --controlHoverBackground--danger: #bd2c2c;
+
+  /* Input */
+  --inputPadding: 5px 12px;
+  --inputBoxShadow: inset 0 1px 0 rgba(1, 4, 9, 0.2);
+  --inputBorder: 1px solid var(--githubBorderDefault);
+  --inputBorderRadius: 6px;
+  --inputFont: normal normal 400 14px/20px var(--themeControlFontFamily);
+  --inputBackground: var(--githubCanvasInset);
+  --inputFocusBorder: 1px solid var(--githubAccentFg);
+  --inputFocusBoxShadow: 0 0 0 3px var(--githubAccentMuted);
+  --inputHoverBorder: 1px solid var(--githubBorderDefault);
+
+  /* Select Box */
+  --selectBoxSplitButtonWidth: 28px;
+  --selectBoxSplitButtonBorderColor: transparent;
+  --selectBoxSplitButtonBorderWidth: 0;
+
+  /* Checkbox */
+  --checkboxSize: 16px;
+  --checkboxBorderRadius: 3px;
+
+  /* Toolbar */
+  --barItemsFontFamily: var(--themeLabelFontFamily);
+  --barItemsTextColor: var(--githubFgDefault);
+  --barItemsLabelTextColor: var(--githubFgMuted);
+  --barItemsDisabledLabelTextColor: var(--githubFgSubtle);
+  --barItemsDisabledLabelBackgroundColor: var(--githubNeutralSubtle);
+  --barItemsBorderRadius: 6px;
+  --barItemsControlMarkerBorderRadius: 3px;
+  --barItemsControlPlaceholderTextColor: var(--githubFgSubtle);
+  --barItemsControlMarkerBackgroundColor: var(--githubCanvasSubtle);
+  --barItemsControlsBorder: 1px solid var(--githubBorderDefault);
+  --barItemsSegmentControlBackground: var(--githubCanvasSubtle);
+  --barItemsHoverSegmentControlBackground: var(--githubCanvasSubtle);
+  --barItemsActiveSegmentControlBackground: var(--githubCanvasInset);
+  --segmentControlBackgroundColor: var(--githubCanvasDefault);
+  
+  /* Sidebar */
+  --sidebarBackground: var(--githubCanvasSubtle);
+  --sidebarListItemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --sidebarListItemBorderRadius: 6px;
+  --selectedSidebarListItemBackground: var(--githubAccentSubtle);
+  --selectedSidebarListItemMarker: 2px solid var(--githubAccentEmphasis);
+  --sidebarListItemDetailsBackground: var(--githubCanvasOverlay);
+  --sidebarListItemTextColor: var(--githubFgDefault);
+  --sidebarListItemHoverBackground: var(--githubNeutralSubtle);
+  --sidebarListItemIconSize: 16px;
+  --sidebarListItemChildrenPadding: 0 0 0 20px;
+  --sidebarSectionTitleColor: var(--githubFgMuted);
+  --sidebarSectionTitlePadding: 16px 16px 8px 16px;
+  --sidebarListItemPadding: 6px 16px;
+
+  /* App Layout */
+  --appMainToolbarFloatingBackground: #d1d9e0;
+  --appMainToolbarHeight: 48px;
+
+  /* Tab Bar */
+  --tabBarBackground: var(--githubCanvasSubtle);
+  --tabBarBoxShadow: inset 0 -1px 0 0 var(--githubBorderDefault);
+  --tabItemHeight: 40px;
+  --tabItemTextColor: var(--githubFgMuted);
+  --tabItemBoxShadow: none;
+  --tabItemIconSize: 16px;
+  --tabItemFont: normal normal 400 14px/1.5 var(--themeLabelFontFamily);
+  --tabBarLayout: start;
+  --tabItemBackground-selected: transparent;
+  --tabItemBoxShadow-selected: inset 0 -2px 0 0 var(--githubAccentEmphasis);
+  --tabItemTextColor-selected: var(--githubFgDefault);
+  --tabItemFont-selected: var(--tabItemFont);
+
+  /* Scrolled State */
+  --scrolledAppMainToolbarBoxShadow: 0 1px 0 0 var(--githubBorderDefault);
+
+  /* Segment Control */
+  --segmentControlPadding: 2px;
+  --segmentControlSegmentPadding: 4px 12px;
+  --segmentControlBoxShadow: none;
+  --segmentControlBackground: rgba(110, 118, 129, 0.1);
+  --segmentControlBorderRadius: 6px;
+  --segmentControlIndicatorBoxShadow: none;
+  --segmentControlIndicatorBackground: var(--githubCanvasSubtle);
+  --segmentControlIndicatorBorder: 1px solid var(--githubBorderDefault);
+
+  /* Card */
+  --cardBackground: var(--githubCanvasSubtle);
+  --cardBorder: 1px solid var(--githubBorderDefault);
+  --cardBorderRadius: 6px;
+  --cardBoxShadow: none;
+  --cardPadding: 16px;
+
+  /* Popover */
+  --popoverBackground: var(--githubCanvasOverlay);
+  --popoverBorder: 1px solid var(--githubBorderDefault);
+  --popoverBorderRadius: 12px;
+  --popoverBoxShadow: 0 8px 24px rgba(1, 4, 9, 0.85);
+
+  /* Code colors (for syntax highlighting feel) */
+  --codeKeyword: #ff7b72;
+  --codeFunction: #d2a8ff;
+  --codeVariable: #79c0ff;
+  --codeString: #a5d6ff;
+  --codeComment: var(--githubFgSubtle);
+  --codeNumber: #79c0ff;
+
+  /* Header */
+  --headerBackground: var(--githubCanvasSubtle);
+  --headerBorder: 1px solid var(--githubBorderDefault);
+
+  /* Hover states */
+  --hoverBackground: rgba(177, 186, 196, 0.12);
+  --activeBackground: rgba(177, 186, 196, 0.2);
+}
+
+/* Light mode support (GitHub also has a light theme) */
+@media (prefers-color-scheme: light) {
+  body {
+    /* GitHub Light Color Palette */
+    --githubCanvas: #ffffff;
+    --githubCanvasDefault: #ffffff;
+    --githubCanvasSubtle: #f6f8fa;
+    --githubCanvasInset: #f6f8fa;
+    --githubCanvasOverlay: #ffffff;
+
+    /* Foreground colors */
+    --githubFgDefault: #24292f;
+    --githubFgMuted: #57606a;
+    --githubFgSubtle: #6e7781;
+    --githubFgOnEmphasis: #ffffff;
+
+    /* Border colors */
+    --githubBorderDefault: #d0d7de;
+    --githubBorderMuted: #d8dee4;
+    --githubBorderSubtle: rgba(27, 31, 36, 0.15);
+
+    /* Accent colors */
+    --githubAccentFg: #0969da;
+    --githubAccentEmphasis: #0969da;
+    --githubAccentMuted: rgba(84, 174, 255, 0.4);
+    --githubAccentSubtle: #ddf4ff;
+
+    /* Success colors */
+    --githubSuccessFg: #1a7f37;
+    --githubSuccessEmphasis: #2da44e;
+    --githubSuccessSubtle: #dafbe1;
+
+    /* Attention/Warning colors */
+    --githubAttentionFg: #9a6700;
+    --githubAttentionEmphasis: #bf8700;
+    --githubAttentionSubtle: #fff8c5;
+
+    /* Danger/Error colors */
+    --githubDangerFg: #cf222e;
+    --githubDangerEmphasis: #cf222e;
+    --githubDangerSubtle: #ffebe9;
+
+    /* Neutral colors */
+    --githubNeutralEmphasis: #6e7781;
+    --githubNeutralMuted: rgba(175, 184, 193, 0.2);
+    --githubNeutralSubtle: rgba(234, 238, 242, 0.5);
+
+    /* Special colors */
+    --githubDoneFg: #8250df;
+    --githubDoneEmphasis: #8250df;
+    --githubSponsorsFg: #bf3989;
+    --githubSponsorsEmphasis: #bf3989;
+
+    /* Adjustments for light mode */
+    --windowBoxShadow: 0 0 0 1px var(--githubBorderDefault);
+    --scrollBarThumbColor: rgba(110, 118, 129, 0.4);
+    --activeScrollBarThumbColor: rgba(110, 118, 129, 0.7);
+    --backgroundHover: rgba(208, 215, 222, 0.32);
+    --backgroundActive: rgba(208, 215, 222, 0.48);
+
+    /* Input adjustments */
+    --inputBackground: var(--githubCanvasDefault);
+    --inputBoxShadow: inset 0 1px 0 rgba(208, 215, 222, 0.2);
+
+    /* Control adjustments */
+    --controlBackground: var(--githubCanvasDefault);
+    --controlHoverBackground: var(--githubCanvasSubtle);
+    --controlActiveBackground: var(--githubCanvasSubtle);
+
+    /* Dialog */
+    --dialogBoxShadow: 0 8px 24px rgba(140, 149, 159, 0.2);
+
+    /* Popover */
+    --popoverBoxShadow: 0 8px 24px rgba(140, 149, 159, 0.2);
+  }
+}
+
+/* Scrollbar Styling */
+body ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+
+body ::-webkit-scrollbar-corner {
+  background: transparent;
+  user-select: none;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: var(--scrollBarThumbColor);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+body ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: var(--activeScrollBarThumbColor);
+  background-clip: padding-box;
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+  body {
+    --githubBorderDefault: #7d8590;
+    --controlBorder: 1px solid currentColor;
+    --inputBorder: 1px solid currentColor;
+    --controlFocusBoxShadow: 0 0 0 3px var(--githubAccentFg);
+    --inputFocusBoxShadow: 0 0 0 3px var(--githubAccentFg);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  body {
+    --animationDuration: 0ms;
+  }
+}

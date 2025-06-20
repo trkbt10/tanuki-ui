@@ -12,10 +12,35 @@ const themes = [
   { value: "ios", label: "iOS", file: "/tanuki-ui/styles/ios.css" },
   { value: "ios12", label: "iOS 12", file: "/tanuki-ui/styles/ios12.css" },
   { value: "macOS12", label: "macOS 12", file: "/tanuki-ui/styles/macOS12.css" },
-  { value: "nintendo-switch", label: "Nintendo Switch", file: "/tanuki-ui/styles/nintendo-switch.css" },
+  { value: "nintendo-switch", label: "Ntendo", file: "/tanuki-ui/styles/handheld-console.css" },
   { value: "vercel", label: "Vercel", file: "/tanuki-ui/styles/vercel.css" },
   { value: "windows11", label: "Windows 11", file: "/tanuki-ui/styles/windows11.css" },
   { value: "windows98", label: "Windows 98", file: "/tanuki-ui/styles/windows98.css" },
+  {
+    value: "openai",
+    label: "OpenAI",
+    file: "/tanuki-ui/styles/openai.css",
+  },
+  {
+    value: "github-dark",
+    label: "GitHub Dark",
+    file: "/tanuki-ui/styles/github-dark.css",
+  },
+  {
+    value: "linear",
+    label: "Linear",
+    file: "/tanuki-ui/styles/linear.css",
+  },
+  {
+    value: "windows-xp",
+    label: "Windows-XP",
+    file: "/tanuki-ui/styles/windows-xp.css",
+  },
+  {
+    value: "aws",
+    label: "AWS",
+    file: "/tanuki-ui/styles/aws.css",
+  },
 ];
 
 interface SidebarProps {
@@ -80,10 +105,7 @@ const Sidebar: React.FC<SidebarProps> = ({ components }) => {
                 color: "inherit",
               }}
             >
-              <SidebarList.ListItem
-                label="📝 Form Elements Catalog"
-                selected={location.pathname === "/form-catalog"}
-              />
+              <SidebarList.ListItem label="📝 Form Elements Catalog" selected={location.pathname === "/form-catalog"} />
             </Link>
           </SidebarList.List>
         </SidebarList.Container>

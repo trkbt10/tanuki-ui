@@ -158,14 +158,61 @@
 .card {
   position: relative;
   width: 100%;
-  border-radius: 1rem;
-  padding: 0.95em 1em 1.2rem;
+  background: var(--cardBackground, var(--secondaryBackgroundColor, rgba(246, 246, 246, 0.6)));
+  border: var(--cardBorder, none);
+  border-color: var(--cardBorderColor, transparent);
+  border-radius: var(--cardBorderRadius, 8px);
+  padding: var(--cardPadding, 16px);
+  margin: var(--cardMargin, 0);
+  min-height: var(--cardMinHeight, auto);
+  max-width: var(--cardMaxWidth, 100%);
   box-sizing: border-box;
-  transition: box-shadow 0.4s ease;
-  background: rgba(246, 246, 246, 0.6);
-  box-shadow:
-    inset 0 0 3px 0 #ffffff1a,
-    0 0 3px 0 rgba(0, 0, 0, 0.55);
+  box-shadow: var(--cardBoxShadow, 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24));
+  cursor: var(--cardCursor, default);
+  transition: var(--cardTransition, all var(--cardTransitionDuration, 200ms) var(--cardTransitionEasing, cubic-bezier(0.4, 0, 0.2, 1)));
+}
+
+.card:hover {
+  background: var(--cardHoverBackground, var(--cardBackground));
+  border: var(--cardHoverBorder, var(--cardBorder, none));
+  box-shadow: var(--cardHoverBoxShadow, var(--cardBoxShadow));
+  transform: var(--cardHoverTransform, none);
+}
+
+.card:active {
+  background: var(--cardActiveBackground, var(--cardBackground));
+  box-shadow: var(--cardActiveBoxShadow, var(--cardBoxShadow));
+}
+
+.card:focus-visible {
+  outline: none;
+  border: var(--cardFocusBorder, var(--cardBorder, none));
+  box-shadow: var(--cardFocusBoxShadow, var(--cardBoxShadow));
+}
+
+.card[disabled],
+.card:disabled {
+  background: var(--cardDisabledBackground, var(--cardBackground));
+  opacity: var(--cardDisabledOpacity, 0.6);
+  cursor: not-allowed;
+}
+
+/* Card Variants */
+.card[data-variant="elevated"] {
+  background: var(--cardBackground--elevated, var(--cardBackground));
+  box-shadow: var(--cardBoxShadow--elevated, 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06));
+}
+
+.card[data-variant="outlined"] {
+  background: var(--cardBackground--outlined, transparent);
+  border: var(--cardBorder--outlined, 1px solid var(--dividerColor, rgba(0, 0, 0, 0.12)));
+  box-shadow: none;
+}
+
+.card[data-variant="filled"] {
+  background: var(--cardBackground--filled, var(--secondaryBackgroundColor));
+  border: none;
+  box-shadow: none;
 }
 
 .horizontalrule {

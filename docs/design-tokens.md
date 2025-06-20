@@ -293,6 +293,69 @@ Layout tokens define spacing, sizing, and structural properties.
 --tabHoverBackground: Tab hover background
 ```
 
+### Card Tokens
+
+```css
+/* Base Card Properties */
+--cardBackground: Card background color
+--cardBorder: Card border definition
+--cardBorderRadius: Card corner radius
+--cardBorderColor: Card border color (separate from border)
+--cardBoxShadow: Card shadow/elevation
+--cardPadding: Card internal padding
+--cardMargin: Card external margin
+--cardGap: Gap between cards in a grid
+--cardMinHeight: Minimum card height
+--cardMaxWidth: Maximum card width
+
+/* Card States */
+--cardHoverBackground: Hover state background
+--cardHoverBorder: Hover state border
+--cardHoverBoxShadow: Hover state shadow
+--cardHoverTransform: Hover state transform (e.g., scale)
+--cardActiveBackground: Active/pressed state background
+--cardActiveBoxShadow: Active state shadow
+--cardFocusBorder: Focus state border
+--cardFocusBoxShadow: Focus state shadow
+--cardDisabledBackground: Disabled state background
+--cardDisabledOpacity: Disabled state opacity
+
+/* Card Variants */
+--cardBackground--elevated: Elevated card background
+--cardBoxShadow--elevated: Elevated card shadow
+--cardBackground--outlined: Outlined card background
+--cardBorder--outlined: Outlined card border
+--cardBackground--filled: Filled card background
+
+/* Card Header/Footer */
+--cardHeaderBackground: Card header background
+--cardHeaderPadding: Card header padding
+--cardHeaderBorder: Card header border
+--cardHeaderFont: Card header typography
+--cardFooterBackground: Card footer background
+--cardFooterPadding: Card footer padding
+--cardFooterBorder: Card footer border
+
+/* Card Content */
+--cardTitleFont: Card title typography
+--cardTitleColor: Card title text color
+--cardSubtitleFont: Card subtitle typography
+--cardSubtitleColor: Card subtitle text color
+--cardBodyFont: Card body text typography
+--cardBodyColor: Card body text color
+
+/* Card Media */
+--cardMediaBorderRadius: Card media (image/video) border radius
+--cardMediaObjectFit: Card media object-fit property
+--cardMediaAspectRatio: Card media aspect ratio
+
+/* Card Interaction */
+--cardCursor: Card cursor (pointer for clickable cards)
+--cardTransition: Card transition properties
+--cardTransitionDuration: Card transition duration
+--cardTransitionEasing: Card transition easing
+```
+
 ### Toolbar Tokens
 
 ```css

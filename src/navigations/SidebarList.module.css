@@ -31,12 +31,12 @@
   transform: translateY(-50%) rotate(-90deg);
 }
 
-.summary .marker > svg {
+.summary .marker>svg {
   width: var(--summaryMarkerSize);
   height: var(--summaryMarkerSize);
 }
 
-.details[open] > .summary .marker {
+.details[open]>.summary .marker {
   transform: translateY(-50%) rotate(0deg);
 }
 
@@ -106,8 +106,8 @@
   touch-action: manipulation;
 }
 
-.listItem:active > .listItemLabelArea,
-.listItem[data-selected="true"] > .listItemLabelArea {
+.listItem:active>.listItemLabelArea,
+.listItem[data-selected="true"]>.listItemLabelArea {
   position: relative;
   background: var(--selectedSidebarListItemBackground);
 }
@@ -116,6 +116,7 @@
   display: block;
   font: var(--sidebarListItemFont);
   letter-spacing: 0;
+  color: var(--sidebarListItemTextColor);
   box-sizing: border-box;
 }
 

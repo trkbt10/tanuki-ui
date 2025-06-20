@@ -1,0 +1,433 @@
+body {
+  /* Fonts - Linear uses Inter with specific weights */
+  --themeDefaultFontFamily: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --themeControlFontFamily: var(--themeDefaultFontFamily);
+  --themeLabelFontFamily: var(--themeDefaultFontFamily);
+  --themeMonospaceFont: "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Menlo, Consolas, "Courier New", monospace;
+  --themeSystemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --textFont: normal normal 400 14px/1.6 var(--themeDefaultFontFamily);
+  --labelFont: normal normal 500 12px/1.5 var(--themeLabelFontFamily);
+
+  /* Linear Color Palette - Light Mode */
+  /* Backgrounds */
+  --linearBg: #ffffff;
+  --linearBgSubtle: #fafafa;
+  --linearBgSubtlest: #f7f7f7;
+  --linearBgOverlay: rgba(255, 255, 255, 0.9);
+  --linearBgBackdrop: rgba(0, 0, 0, 0.5);
+  
+  /* Text colors */
+  --linearText: #0e0e0e;
+  --linearTextSubtle: #5e5e5e;
+  --linearTextSubtlest: #8f8f8f;
+  --linearTextInverse: #ffffff;
+  --linearTextPlaceholder: #a8a8a8;
+  
+  /* Border colors */
+  --linearBorder: #e1e1e1;
+  --linearBorderSubtle: #ebebeb;
+  --linearBorderStrong: #d4d4d4;
+  --linearBorderHover: #c7c7c7;
+  
+  /* Brand colors */
+  --linearAccent: #5e6ad2;
+  --linearAccentHover: #4e5ac2;
+  --linearAccentSubtle: #e8e9ff;
+  --linearAccentText: #5e6ad2;
+  
+  /* Semantic colors */
+  --linearSuccess: #26b082;
+  --linearSuccessSubtle: #e6f7f1;
+  --linearWarning: #f77b3e;
+  --linearWarningSubtle: #fff0e6;
+  --linearDanger: #eb5757;
+  --linearDangerSubtle: #ffe6e6;
+  --linearInfo: #3e90f7;
+  --linearInfoSubtle: #e6f2ff;
+  
+  /* Special Linear colors */
+  --linearPurple: #8c7ae6;
+  --linearPurpleSubtle: #f0edff;
+  --linearPink: #e550a7;
+  --linearPinkSubtle: #ffe6f5;
+  --linearOrange: #f77b3e;
+  --linearOrangeSubtle: #fff0e6;
+  --linearYellow: #f7c750;
+  --linearYellowSubtle: #fff9e6;
+  --linearGreen: #26b082;
+  --linearGreenSubtle: #e6f7f1;
+  --linearBlue: #3e90f7;
+  --linearBlueSubtle: #e6f2ff;
+
+  /* Core Colors */
+  --textColor: var(--linearText);
+  --accentColor: var(--linearAccent);
+  --cautionColor: var(--linearDanger);
+  accent-color: var(--accentColor);
+  
+  /* Background Colors */
+  --windowBackgroundColor: var(--linearBg);
+  --backgroundSecondary: var(--linearBgSubtle);
+  --backgroundTertiary: var(--linearBgSubtlest);
+  --backgroundHover: rgba(0, 0, 0, 0.02);
+  --backgroundActive: rgba(0, 0, 0, 0.04);
+
+  /* Linear's signature backdrop filters */
+  --backgroundBackdropFilter: saturate(180%) blur(20px);
+  --windowBackdropFilter: saturate(180%) blur(40px);
+  
+  /* Window Shadow - Linear's subtle depth */
+  --windowBoxShadow: 0 0 0 1px var(--linearBorderSubtle), 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  /* Scrollbar Colors */
+  --scrollBarBackgroundColor: transparent;
+  --scrollBarThumbColor: rgba(0, 0, 0, 0.1);
+  --activeScrollBarThumbColor: rgba(0, 0, 0, 0.2);
+
+  /* Text Colors */
+  --labelColor: var(--linearText);
+  --secondaryLabelColor: var(--linearTextSubtle);
+  --tertiaryLabelColor: var(--linearTextSubtlest);
+  --quaternaryLabelColor: var(--linearTextPlaceholder);
+  --placeholderTextColor: var(--linearTextPlaceholder);
+  --selectedTextColor: var(--linearTextInverse);
+  --textBackgroundColor: var(--windowBackgroundColor);
+  --selectedTextBackgroundColor: var(--linearAccent);
+  --keyboardFocusIndicatorColor: rgba(94, 106, 210, 0.2);
+  --unemphasizedSelectedTextColor: var(--linearText);
+  --unemphasizedSelectedTextBackgroundColor: var(--linearAccentSubtle);
+  --linkColor: var(--linearAccentText);
+  --separatorColor: var(--linearBorder);
+  --selectedContentBackgroundColor: var(--linearAccent);
+  --unemphasizedSelectedContentBackgroundColor: var(--linearAccentSubtle);
+  --selectedMenuItemTextColor: var(--linearTextInverse);
+  --gridColor: var(--linearBorder);
+  --headerTextColor: var(--linearText);
+
+  /* Control Colors */
+  --controlAccentColor: var(--linearAccent);
+  --controlColor: var(--windowBackgroundColor);
+  --controlTextColor: var(--linearText);
+  --disabledControlTextColor: var(--linearTextSubtlest);
+  --selectedControlColor: var(--linearAccentSubtle);
+  --selectedControlTextColor: var(--linearText);
+  --alternateSelectedControlTextColor: var(--linearTextInverse);
+  --scrubberTexturedBackgroundColor: var(--windowBackgroundColor);
+  --windowFrameTextColor: var(--linearText);
+  --underPageBackgroundColor: var(--linearBgSubtle);
+  --findHighlightColor: var(--linearYellow);
+  --highlightColor: var(--linearTextInverse);
+  --shadowColor: rgba(0, 0, 0, 1);
+
+  /* System Colors */
+  --systemBrownColor: #8b6f47;
+  --systemGrayColor: var(--linearTextSubtle);
+  --systemGreenColor: var(--linearGreen);
+  --systemIndigoColor: var(--linearAccent);
+  --systemOrangeColor: var(--linearOrange);
+  --systemPinkColor: var(--linearPink);
+  --systemPurpleColor: var(--linearPurple);
+  --systemRedColor: var(--linearDanger);
+  --systemTealColor: #50d0e0;
+  --systemYellowColor: var(--linearYellow);
+  --systemBlueColor: var(--linearBlue);
+
+  /* Table */
+  --tableBackgroundColor: var(--windowBackgroundColor);
+  --tableBorderColor: var(--linearBorder);
+  --tableHeaderTextColor: var(--linearTextSubtle);
+  --tableHeaderBackgroundColor: var(--linearBgSubtle);
+  --tableHeaderBorderColor: var(--linearBorder);
+  --tableRowTextColor: var(--linearText);
+  --tableRowBackgroundColor: var(--windowBackgroundColor);
+  --tableRowBorderColor: var(--linearBorderSubtle);
+  --tableRowAlternateTextColor: var(--linearText);
+  --tableRowAlternateBackgroundColor: var(--linearBgSubtlest);
+  --tableRowAlternateBorderColor: var(--linearBorderSubtle);
+
+  /* Dialog */
+  --dialogBackground: var(--windowBackgroundColor);
+  --dialogBoxShadow: 0 0 0 1px var(--linearBorderSubtle), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --dialogBackdropFilter: var(--windowBackdropFilter);
+  
+  /* Control - Linear's minimal style */
+  --controlBoxShadow: 0 0 0 1px var(--linearBorder);
+  --controlFocusBoxShadow: 0 0 0 2px var(--keyboardFocusIndicatorColor);
+  --controlTextFont: normal normal 500 14px/20px var(--themeControlFontFamily);
+  --controlBorderRadius: 8px;
+  --controlPadding: 6px 12px;
+  --controlTextLetterSpacing: -0.006em;
+  --controlTextColor: var(--linearText);
+  --controlBackground: var(--windowBackgroundColor);
+  --controlBorder: 1px solid var(--linearBorder);
+  --controlHoverBackground: var(--linearBgSubtle);
+  --controlHoverBorder: 1px solid var(--linearBorderHover);
+  --controlActiveBackground: var(--linearBgSubtlest);
+
+  /* Button Primary - Linear's signature purple */
+  --controlBoxShadow--primary: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --controlBackground--primary: var(--linearAccent);
+  --controlBorder--primary: 1px solid var(--linearAccent);
+  --controlTextColor--primary: var(--linearTextInverse);
+  --controlHoverTextColor--primary: var(--linearTextInverse);
+  --controlHoverBackground--primary: var(--linearAccentHover);
+  --controlHoverBorder--primary: 1px solid var(--linearAccentHover);
+  --controlFocusBackground--primary: var(--linearAccentHover);
+  --controlFocusTextColor--primary: var(--linearTextInverse);
+
+  /* Button Secondary */
+  --controlBoxShadow--secondary: none;
+  --controlBackground--secondary: var(--windowBackgroundColor);
+  --controlBorder--secondary: 1px solid var(--linearBorder);
+  --controlTextColor--secondary: var(--linearText);
+  --controlHoverBackground--secondary: var(--linearBgSubtle);
+  --controlHoverBorder--secondary: 1px solid var(--linearBorderHover);
+  --controlHoverTextColor--secondary: var(--linearText);
+
+  /* Input - Linear's clean input style */
+  --inputPadding: 8px 12px;
+  --inputBoxShadow: none;
+  --inputBorder: 1px solid var(--linearBorder);
+  --inputBorderRadius: 8px;
+  --inputFont: normal normal 400 14px/20px var(--themeControlFontFamily);
+  --inputBackground: var(--windowBackgroundColor);
+  --inputFocusBorder: 1px solid var(--linearAccent);
+  --inputFocusBoxShadow: 0 0 0 3px var(--keyboardFocusIndicatorColor);
+  --inputHoverBorder: 1px solid var(--linearBorderHover);
+
+  /* Select Box */
+  --selectBoxSplitButtonWidth: 24px;
+  --selectBoxSplitButtonBorderColor: transparent;
+  --selectBoxSplitButtonBorderWidth: 0;
+
+  /* Checkbox */
+  --checkboxSize: 16px;
+  --checkboxBorderRadius: 4px;
+
+  /* Toolbar */
+  --barItemsFontFamily: var(--themeLabelFontFamily);
+  --barItemsTextColor: var(--linearText);
+  --barItemsLabelTextColor: var(--linearTextSubtle);
+  --barItemsDisabledLabelTextColor: var(--linearTextSubtlest);
+  --barItemsDisabledLabelBackgroundColor: var(--linearBgSubtle);
+  --barItemsBorderRadius: 6px;
+  --barItemsControlMarkerBorderRadius: 4px;
+  --barItemsControlPlaceholderTextColor: var(--linearTextPlaceholder);
+  --barItemsControlMarkerBackgroundColor: var(--linearBgSubtle);
+  --barItemsControlsBorder: 1px solid var(--linearBorder);
+  --barItemsSegmentControlBackground: var(--linearBgSubtle);
+  --barItemsHoverSegmentControlBackground: var(--linearBgSubtlest);
+  --barItemsActiveSegmentControlBackground: var(--linearAccentSubtle);
+  --segmentControlBackgroundColor: var(--windowBackgroundColor);
+  
+  /* Sidebar */
+  --sidebarBackground: var(--windowBackgroundColor);
+  --sidebarListItemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --sidebarListItemBorderRadius: 6px;
+  --selectedSidebarListItemBackground: var(--linearAccentSubtle);
+  --selectedSidebarListItemMarker: 2px solid var(--linearAccent);
+  --sidebarListItemDetailsBackground: var(--linearBgSubtle);
+  --sidebarListItemTextColor: var(--linearText);
+  --sidebarListItemHoverBackground: var(--linearBgSubtle);
+  --sidebarListItemIconSize: 16px;
+  --sidebarListItemChildrenPadding: 0 0 0 24px;
+  --sidebarSectionTitleColor: var(--linearTextSubtle);
+  --sidebarSectionTitlePadding: 20px 16px 8px 16px;
+  --sidebarListItemPadding: 8px 16px;
+
+  /* App Layout */
+  --appMainToolbarFloatingBackground: rgba(255, 255, 255, 0.8);
+  --appMainToolbarHeight: 52px;
+
+  /* Tab Bar */
+  --tabBarBackground: var(--windowBackgroundColor);
+  --tabBarBoxShadow: inset 0 -1px 0 0 var(--linearBorder);
+  --tabItemHeight: 36px;
+  --tabItemTextColor: var(--linearTextSubtle);
+  --tabItemBoxShadow: none;
+  --tabItemIconSize: 16px;
+  --tabItemFont: normal normal 500 13px/1.5 var(--themeLabelFontFamily);
+  --tabBarLayout: start;
+  --tabItemBackground-selected: transparent;
+  --tabItemBoxShadow-selected: inset 0 -2px 0 0 var(--linearAccent);
+  --tabItemTextColor-selected: var(--linearText);
+  --tabItemFont-selected: var(--tabItemFont);
+
+  /* Scrolled State */
+  --scrolledAppMainToolbarBoxShadow: 0 1px 0 0 var(--linearBorder);
+
+  /* Segment Control - Linear's pill style */
+  --segmentControlPadding: 2px;
+  --segmentControlSegmentPadding: 6px 16px;
+  --segmentControlBoxShadow: inset 0 0 0 1px var(--linearBorder);
+  --segmentControlBackground: var(--linearBgSubtle);
+  --segmentControlBorderRadius: 9999px;
+  --segmentControlIndicatorBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --segmentControlIndicatorBackground: var(--windowBackgroundColor);
+  --segmentControlIndicatorBorderRadius: 9999px;
+
+  /* Card */
+  --cardBackground: var(--windowBackgroundColor);
+  --cardBorder: 1px solid var(--linearBorder);
+  --cardBorderRadius: 12px;
+  --cardBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --cardPadding: 20px;
+
+  /* Popover */
+  --popoverBackground: var(--windowBackgroundColor);
+  --popoverBorder: 1px solid var(--linearBorder);
+  --popoverBorderRadius: 12px;
+  --popoverBoxShadow: 0 0 0 1px var(--linearBorderSubtle), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --popoverBackdropFilter: var(--windowBackdropFilter);
+
+  /* Linear's signature animation timing */
+  --animationDuration: 200ms;
+  --animationEasing: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    /* Dark Mode Colors */
+    --linearBg: #0c0c0c;
+    --linearBgSubtle: #141414;
+    --linearBgSubtlest: #1a1a1a;
+    --linearBgOverlay: rgba(12, 12, 12, 0.9);
+    
+    /* Text colors dark */
+    --linearText: #f0f0f0;
+    --linearTextSubtle: #a1a1a1;
+    --linearTextSubtlest: #6e6e6e;
+    --linearTextInverse: #0c0c0c;
+    --linearTextPlaceholder: #575757;
+    
+    /* Border colors dark */
+    --linearBorder: #2b2b2b;
+    --linearBorderSubtle: #1f1f1f;
+    --linearBorderStrong: #3a3a3a;
+    --linearBorderHover: #404040;
+    
+    /* Brand colors dark */
+    --linearAccent: #6e7ce0;
+    --linearAccentHover: #5e6ad2;
+    --linearAccentSubtle: #1a1d3a;
+    --linearAccentText: #8b96ff;
+    
+    /* Semantic colors dark */
+    --linearSuccess: #30c48d;
+    --linearSuccessSubtle: #0f2e21;
+    --linearWarning: #ff8c4a;
+    --linearWarningSubtle: #2e1a0f;
+    --linearDanger: #ff6b6b;
+    --linearDangerSubtle: #2e0f0f;
+    --linearInfo: #4a9eff;
+    --linearInfoSubtle: #0f1f2e;
+    
+    /* Special colors dark */
+    --linearPurple: #9c88ff;
+    --linearPurpleSubtle: #1f1a2e;
+    --linearPink: #ff6bb3;
+    --linearPinkSubtle: #2e0f1f;
+    --linearOrange: #ff8c4a;
+    --linearOrangeSubtle: #2e1a0f;
+    --linearYellow: #ffd93d;
+    --linearYellowSubtle: #2e2a0f;
+    --linearGreen: #30c48d;
+    --linearGreenSubtle: #0f2e21;
+    --linearBlue: #4a9eff;
+    --linearBlueSubtle: #0f1f2e;
+
+    /* Adjustments for dark mode */
+    --windowBoxShadow: 0 0 0 1px var(--linearBorderSubtle), 0 4px 12px rgba(0, 0, 0, 0.4);
+    --scrollBarThumbColor: rgba(255, 255, 255, 0.1);
+    --activeScrollBarThumbColor: rgba(255, 255, 255, 0.2);
+    --backgroundHover: rgba(255, 255, 255, 0.02);
+    --backgroundActive: rgba(255, 255, 255, 0.04);
+    
+    /* Input dark */
+    --inputBackground: var(--linearBgSubtle);
+    
+    /* Control dark */
+    --controlBackground: var(--linearBgSubtle);
+    --controlHoverBackground: var(--linearBgSubtlest);
+    --controlActiveBackground: #202020;
+    
+    /* Dialog dark */
+    --dialogBackground: var(--linearBgSubtle);
+    --dialogBoxShadow: 0 0 0 1px var(--linearBorderSubtle), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    
+    /* Card dark */
+    --cardBackground: var(--linearBgSubtle);
+    
+    /* Popover dark */
+    --popoverBackground: var(--linearBgSubtle);
+    
+    /* Segment Control dark */
+    --segmentControlBackground: var(--linearBgSubtlest);
+    --segmentControlIndicatorBackground: var(--linearBgSubtle);
+    
+    /* Tab dark */
+    --tabBarBackground: var(--linearBg);
+    
+    /* Toolbar dark */
+    --appMainToolbarFloatingBackground: rgba(12, 12, 12, 0.8);
+    
+    /* Primary button dark */
+    --controlTextColor--primary: var(--linearTextInverse);
+    
+    /* Secondary button dark */
+    --controlBackground--secondary: var(--linearBgSubtle);
+    
+    /* Sidebar dark */
+    --sidebarListItemDetailsBackground: var(--linearBgSubtlest);
+    --sidebarListItemHoverBackground: var(--linearBgSubtlest);
+    --sidebarSectionTitleColor: var(--linearTextSubtlest);
+  }
+}
+
+/* Scrollbar Styling - Linear's minimal style */
+body ::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+  background: transparent;
+}
+
+body ::-webkit-scrollbar-corner {
+  background: transparent;
+  user-select: none;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: var(--scrollBarThumbColor);
+  border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+
+body ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: var(--activeScrollBarThumbColor);
+  background-clip: padding-box;
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+  body {
+    --linearBorder: currentColor;
+    --controlBorder: 1px solid currentColor;
+    --inputBorder: 1px solid currentColor;
+    --controlFocusBoxShadow: 0 0 0 3px var(--linearAccent);
+    --inputFocusBoxShadow: 0 0 0 3px var(--linearAccent);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  body {
+    --animationDuration: 0ms;
+    --backgroundBackdropFilter: none;
+    --windowBackdropFilter: none;
+  }
+}
