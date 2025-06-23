@@ -9,7 +9,22 @@ module.exports = {
     storyStoreV7: true,
   },
   async viteFinal(config) {
+    const { default: react } = await import('@vitejs/plugin-react');
+    
     config.base = "./";
+    
+    // Remove existing React plugin if any
+    config.plugins = config.plugins.filter(
+      plugin => !plugin.name || !plugin.name.includes('vite:react')
+    );
+    
+    // Add React plugin with automatic JSX runtime
+    config.plugins.push(
+      react({
+        jsxRuntime: 'automatic',
+      })
+    );
+    
     return config;
   },
   docs: {

@@ -1,100 +1,111 @@
 import * as React from "react";
-import { useObservePointer, type PointerInfo } from "../hooks/usePointerObserver";
+import { useSidebarLayout, type MobileView, type MobileSidebarMode } from "./hooks";
 import classes from "./SidebarLayout.module.css";
 
 type SidebarLayoutProps = {
   aside: React.ReactNode;
   children: React.ReactNode;
-  /** aria-labelやidなど、永続化用の識別子 */
   asideId?: string;
-  /** asideの最小幅 */
   minAsideWidth?: number;
-  /** asideの最大幅 */
   maxAsideWidth?: number;
+  mobileView?: MobileView;
+  defaultMobileView?: MobileView;
+  mobileBreakpoint?: number;
+  onMobileViewChange?: (view: MobileView) => void;
+  mobileSidebarMode?: MobileSidebarMode;
+  mobileOverlayMaxWidth?: number;
+  mobileOverlayDimBackground?: boolean;
 };
 
-const DEFAULT_WIDTH = 240;
-const MIN_WIDTH = 120;
-const MAX_WIDTH = 480;
+export const SidebarLayout: React.FC<SidebarLayoutProps> = (props) => {
+  const {
+    aside,
+    children,
+    minAsideWidth = 120,
+    maxAsideWidth = 480,
+    defaultMobileView = "main",
+    mobileBreakpoint = 768,
+    mobileSidebarMode = "fullscreen",
+    mobileOverlayMaxWidth = 320,
+    mobileOverlayDimBackground = true,
+    ...rest
+  } = props;
 
-const useStateWithStorage = (key: string | undefined, initialValue: number) => {
-  const [value, setValue] = React.useState<number>(initialValue);
+  const config = {
+    minAsideWidth,
+    maxAsideWidth,
+    asideId: props.asideId,
+    mobileBreakpoint,
+    mobileSidebarMode,
+    mobileOverlayMaxWidth,
+    mobileOverlayDimBackground,
+    defaultMobileView,
+  };
 
-  React.useEffect(() => {
-    if (key) {
-      if (typeof window === "undefined") {
-        return;
-      }
-      const saved = window.localStorage.getItem(key);
-      if (saved) {
-        const num = Number(saved);
-        if (!isNaN(num)) setValue(Math.min(Math.max(num, MIN_WIDTH), MAX_WIDTH));
-      }
-    }
-  }, [key]);
+  const {
+    resizerRef,
+    containerRef,
+    viewsContainerRef,
+    isMobile,
+    asideWidth,
+    mobileSidebarWidth,
+    currentMobileView,
+    updateMobileView,
+  } = useSidebarLayout(config, props.mobileView, props.onMobileViewChange);
 
-  React.useEffect(() => {
-    if (key) {
-      if (typeof window === "undefined") {
-        return;
-      }
-      window.localStorage.setItem(key, String(value));
-    }
-  }, [value, key]);
-
-  return [value, setValue] as const;
-};
-
-export const SidebarLayout: React.FC<SidebarLayoutProps> = ({
-  aside,
-  children,
-  asideId,
-  minAsideWidth = MIN_WIDTH,
-  maxAsideWidth = MAX_WIDTH,
-}) => {
-  const storageKey = asideId ? `SidebarLayout:width:${asideId}` : undefined;
-  const [asideWidth, setAsideWidth] = useStateWithStorage(storageKey, DEFAULT_WIDTH);
-
-  // resizer用ref
-  const resizerRef = React.useRef<HTMLDivElement>(null);
-
-  // ドラッグ状態・リサイズ処理
-  const isDragging = React.useRef(false);
-  const baseRect = React.useRef<DOMRect | null>(null);
-
-  const handlePointer = React.useCallback(
-    (info: PointerInfo) => {
-      if (info.type === "pointerdown") {
-        isDragging.current = true;
-        baseRect.current = document.querySelector(`.${classes.base}`)?.getBoundingClientRect() ?? null;
-      } else if (info.type === "pointermove" && isDragging.current && baseRect.current) {
-        const newWidth = Math.min(Math.max(info.pageX - baseRect.current.left, minAsideWidth), maxAsideWidth);
-        setAsideWidth(newWidth);
-      } else if (info.type === "pointerend") {
-        isDragging.current = false;
-        baseRect.current = null;
-      }
-    },
-    [minAsideWidth, maxAsideWidth],
-  );
-
-  useObservePointer(resizerRef, handlePointer);
+  const isOverlay = mobileSidebarMode === "overlay";
+  const baseClasses = `${classes.base}${isMobile ? ` ${classes.mobile}` : ''}${isOverlay ? ` ${classes.overlay}` : ''}`;
 
   return (
-    <div className={classes.base}>
-      <aside className={classes.aside} style={{ width: asideWidth }} aria-label={asideId} id={asideId}>
-        {aside}
-      </aside>
-      <div
-        className={classes.resizer}
-        ref={resizerRef}
-        role="separator"
-        aria-orientation="vertical"
-        tabIndex={0}
-        aria-label="resize"
-        style={{ left: asideWidth - 4 }}
-      />
-      <main className={classes.main}>{children}</main>
+    <div 
+      className={baseClasses}
+      ref={containerRef}
+      data-sidebar-base
+      style={isMobile ? { '--mobile-sidebar-width': `${mobileSidebarWidth}px` } as React.CSSProperties : undefined}
+    >
+      {!isMobile ? (
+        <>
+          <aside className={classes.aside} style={{ width: asideWidth }} aria-label={config.asideId} id={config.asideId}>
+            {aside}
+          </aside>
+          <div
+            className={classes.resizer}
+            ref={resizerRef}
+            role="separator"
+            aria-orientation="vertical"
+            tabIndex={0}
+            aria-label="resize"
+            style={{ left: asideWidth - 4 }}
+          />
+          <main className={classes.main}>{children}</main>
+        </>
+      ) : (
+        <>
+          {isOverlay && mobileOverlayDimBackground && (
+            <div 
+              className={classes.overlayBackdrop} 
+              data-visible={currentMobileView === "aside" ? "true" : "false"}
+              onClick={() => updateMobileView("main")} 
+            />
+          )}
+          <div 
+            className={classes.mobileViewsContainer} 
+            ref={viewsContainerRef}
+            style={{ viewTransitionName: 'sidebar-layout' } as React.CSSProperties}
+          >
+            <aside 
+              className={`${classes.aside} ${classes.mobileView}`} 
+              data-sidebar="aside"
+              data-active={currentMobileView === "aside" ? "true" : "false"}
+              aria-label={config.asideId} 
+              id={config.asideId}
+            >
+              {aside}
+            </aside>
+            <main className={`${classes.main} ${classes.mobileView}`}>{children}</main>
+          </div>
+        </>
+      )}
     </div>
   );
 };

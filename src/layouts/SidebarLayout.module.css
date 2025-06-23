@@ -33,3 +33,189 @@
   flex-direction: column;
   flex-grow: 1;
 }
+
+/* ================================
+   Mobile Layout Base
+   ================================ */
+.mobile {
+  position: relative;
+  overflow: hidden;
+}
+
+.mobile .resizer {
+  display: none;
+}
+
+/* Container for mobile views (sidebar + main) */
+.mobileViewsContainer {
+  position: relative;
+  display: flex;
+  width: 200vw; /* Default: fullscreen mode (sidebar + main) */
+  height: 100%;
+  transform: translateX(0);
+  
+  /* Performance optimizations */
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  
+  /* Touch handling */
+  touch-action: pan-y;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Individual mobile views */
+.mobileView {
+  flex: none;
+  width: 100vw; /* Default: full screen width */
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  
+  /* Re-enable text selection within views */
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+/* Mobile sidebar styling */
+.mobile .aside {
+  position: relative;
+  max-width: none;
+  box-shadow: none;
+  background: var(--sidebarBackground, #fff);
+}
+
+/* Mobile main content styling */
+.mobile .main {
+  position: relative;
+}
+
+/* Ensure child elements don't interfere with horizontal gestures */
+.mobileView * {
+  touch-action: pan-y;
+}
+
+/* ================================
+   Overlay Mode Overrides
+   ================================ */
+.overlay .mobileViewsContainer {
+  /* Fixed positioning for overlay */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.overlay .aside {
+  /* Sidebar positioned absolutely on the left */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--mobile-sidebar-width);
+  height: 100%;
+  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.2);
+  z-index: 1002;
+  background: var(--sidebarBackground, #fff);
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.overlay .main {
+  /* Main content fills entire viewport */
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: 1001;
+}
+
+/* Show sidebar when aside view is active */
+.overlay .aside[data-active="true"] {
+  transform: translateX(0);
+}
+
+/* ================================
+   Overlay Backdrop
+   ================================ */
+.overlayBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1001;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+.overlayBackdrop[data-visible="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* ================================
+   View Transition API Support
+   ================================ */
+::view-transition-old(sidebar-layout),
+::view-transition-new(sidebar-layout) {
+  animation-duration: 0.3s;
+  animation-timing-function: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+::view-transition-old(sidebar-layout) {
+  animation-name: slide-out;
+}
+
+::view-transition-new(sidebar-layout) {
+  animation-name: slide-in;
+}
+
+/* Slide animations for view transitions */
+@keyframes slide-out {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* ================================
+   Accessibility & Performance
+   ================================ */
+@media (prefers-reduced-motion: reduce) {
+  .mobileViewsContainer {
+    transition: none !important;
+  }
+  
+  .overlayBackdrop {
+    animation: none !important;
+  }
+  
+  ::view-transition-old(sidebar-layout),
+  ::view-transition-new(sidebar-layout) {
+    animation: none !important;
+  }
+}
