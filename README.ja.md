@@ -14,11 +14,40 @@
 
 ---
 
-Tanuki UI は、HTML の標準要素をベースとしたスタイル付きコンポーネントライブラリです。従来の UI ライブラリとは異なり、HTML セマンティクスを保ったまま、そのまま使えるコンポーネントを提供します。
+Tanuki UI は、HTML の標準要素をベースとしたスタイル付きコンポーネントライブラリです。HTML セマンティクスを保ったまま、そのまま使えるコンポーネントを提供します。
 
-## コンセプト
+## 特徴
 
-### HTML First アプローチ
+- **HTML ファースト**: HTML 要素と同じように使える
+- **複数のテーマ**: プラットフォーム準拠デザインをすぐに利用可能
+- **デュアルエクスポート**: HTML 要素名とセマンティック名の両方
+
+## クイックスタート
+
+```bash
+npm install tanuki-ui
+```
+
+```jsx
+import { H1, P, Button } from 'tanuki-ui';
+import 'tanuki-ui/style.css';
+
+function App() {
+  return (
+    <>
+      <H1>Tanuki UI へようこそ</H1>
+      <P>HTML 要素がそのまま使える UI ライブラリです。</P>
+      <Button onClick={() => alert('Hello!')}>クリック</Button>
+    </>
+  );
+}
+```
+
+**ピア依存関係:** React 18.0.0+, React DOM 18.0.0+
+
+## 使用方法
+
+### 基本コンポーネント
 
 ```jsx
 // 普通の HTML のように書ける
@@ -28,7 +57,7 @@ function App() {
   return (
     <main>
       <H1>ページタイトル</H1>
-      <P>これは段落です。HTMLの p 要素と同じように使えます。</P>
+      <P>これは段落です。HTML の p 要素と同じように使えます。</P>
       <Form>
         <Input type="text" placeholder="テキスト入力" />
         <Button type="submit">送信</Button>
@@ -40,7 +69,7 @@ function App() {
 
 ### デュアルエクスポート
 
-直感的に使えるよう、HTML 要素名とセマンティック名の両方でエクスポートしています。
+HTML 要素名とセマンティック名の両方でエクスポートしています：
 
 ```jsx
 // どちらも同じコンポーネント
@@ -49,196 +78,29 @@ import { H1, Heading } from 'tanuki-ui';
 import { A, Anchor } from 'tanuki-ui';
 ```
 
-## 🎯 なぜ Tanuki UI？
+### TypeScript サポート
 
-<table>
-<tr>
-<td width="33%" align="center">
+HTML 標準の属性を継承した完全な TypeScript サポート：
 
-### 🚀 超軽量
-**23.5KB** gzipped<br/>
-全コアコンポーネント込み
+```tsx
+import { Button, Input } from 'tanuki-ui';
 
-</td>
-<td width="33%" align="center">
+// HTML 属性がそのまま使える
+<Button 
+  type="submit" 
+  disabled={loading}
+  onClick={handleClick}
+  data-testid="submit-btn"
+>
+  送信
+</Button>
 
-### 🎨 16種類のテーマ
-プラットフォーム準拠<br/>
-すぐに使える
-
-</td>
-<td width="33%" align="center">
-
-### 📝 HTML ファースト
-標準セマンティクス<br/>
-学習コスト不要
-
-</td>
-</tr>
-</table>
-
-## 📦 バンドルサイズ
-
-React UIライブラリの中でもトップクラスの軽量さ：
-
-| パッケージ | サイズ |
-|----------|-------|
-| **Core Components** | 23.5KB |
-| **Core CSS** | 9.9KB |
-| **Layouts** *(オプション)* | +12.6KB |
-| **Node Editor** *(オプション)* | +49.5KB |
-
-> 💡 必要な機能だけをインポートすれば、さらに小さくなります！
-
-## 主要機能
-
-### 📄 HTML 基本要素
-
-HTML5 のセマンティック要素を完全網羅：
-
-**コンテンツセクション**
-- `Article`, `Section`, `Nav`, `Main`, `Header`, `Footer`, `Aside`, `Address`
-
-**テキストコンテンツ**
-- `H1`〜`H6`, `P`, `Blockquote`, `Pre`, `Div`, `Hr`
-
-**埋め込みコンテンツ**
-- `Image` (`Img`), `Figure`, `Figcaption`
-
-**リスト**
-- `List` (`Ul`), `ListItem` (`Li`), `Descriptions` (`Dl`)
-
-**フォーム**
-- `Form`, `Button`, `Input`, `Textarea`, `Select`, `Label`, `Fieldset`, `Legend`
-- `Progress`, `Meter`, `Output`
-
-### 🎛️ 高機能コンポーネント
-
-**フォーム拡張**
-- `MediaInput` - ファイルアップロード
-- `RangeInput` - スライダー
-- `SwitchInput` - トグルスイッチ
-- `SortableList` - ドラッグ&ドロップソート
-
-**ダイアログ・ナビゲーション**
-- `Dialog`, `Modal`, `Alert`, `Drawer`
-- `ContextualMenu`, `Popover`
-- `TabNav`, `TabBar`, `SidebarList`
-
-**レイアウト**
-- `AppLayout`, `SidebarLayout`, `HeaderMainLayout`
-- `ScrollView`, `ParavirtualScroll`
-- `Panel` システム（動的レイアウト）
-
-### 🎨 ビジュアルノードエディター
-
-`tanuki-ui/extended/node-editor` では、プロダクションレディなビジュアルエディターを提供：
-
-```jsx
-import { NodeEditor } from 'tanuki-ui/extended/node-editor';
-
-function MyApp() {
-  return (
-    <NodeEditor
-      nodes={nodes}
-      connections={connections}
-      onNodesChange={handleNodesChange}
-      onConnectionsChange={handleConnectionsChange}
-    />
-  );
-}
-```
-
-**特徴:**
-- ドラッグ&ドロップによるノード操作
-- 自動レイアウト機能
-- ミニマップ表示
-- 多言語対応 (i18n)
-- キーボードショートカット
-- 履歴管理（Undo/Redo）
-- 制約システム
-
-## 🚀 クイックスタート
-
-```bash
-# インストール
-npm install tanuki-ui
-
-# インポートして使用
-```
-
-```jsx
-import { Button } from 'tanuki-ui';
-import 'tanuki-ui/style.css';
-
-function App() {
-  return <Button>クリックしてね！</Button>;
-}
-```
-
-## 📥 インストール
-
-<table>
-<tr>
-<td>
-
-```bash
-# npm
-npm install tanuki-ui
-```
-
-</td>
-<td>
-
-```bash
-# yarn
-yarn add tanuki-ui
-```
-
-</td>
-<td>
-
-```bash
-# pnpm
-pnpm add tanuki-ui
-```
-
-</td>
-<td>
-
-```bash
-# bun
-bun add tanuki-ui
-```
-
-</td>
-</tr>
-</table>
-
-### ピア依存関係
-
-- React 18.0.0 以上
-- React DOM 18.0.0 以上
-
-## 使用方法
-
-### 基本的な使い方
-
-```jsx
-import { H1, P, Button } from 'tanuki-ui';
-import 'tanuki-ui/style.css';
-
-function Welcome() {
-  return (
-    <>
-      <H1>Tanuki UI へようこそ</H1>
-      <P>HTML 要素がそのまま使える UI ライブラリです。</P>
-      <Button onClick={() => alert('Hello!')}>
-        クリック
-      </Button>
-    </>
-  );
-}
+<Input
+  type="email"
+  required
+  placeholder="メールアドレス"
+  onChange={handleChange}
+/>
 ```
 
 ### レイアウトを使う
@@ -280,59 +142,129 @@ function GraphEditor() {
 }
 ```
 
-## テーマ
+## コンポーネント
 
-複数のテーマを用意しています：
+### HTML 基本要素
+
+HTML5 のセマンティック要素を完全網羅：
+
+**コンテンツセクション**
+- `Article`, `Section`, `Nav`, `Main`, `Header`, `Footer`, `Aside`, `Address`
+
+**テキストコンテンツ**
+- `H1`〜`H6`, `P`, `Blockquote`, `Pre`, `Div`, `Hr`
+
+**埋め込みコンテンツ**
+- `Image` (`Img`), `Figure`, `Figcaption`
+
+**リスト**
+- `List` (`Ul`), `ListItem` (`Li`), `Descriptions` (`Dl`)
+
+**フォーム**
+- `Form`, `Button`, `Input`, `Textarea`, `Select`, `Label`, `Fieldset`, `Legend`
+- `Progress`, `Meter`, `Output`
+
+### 高機能コンポーネント
+
+**フォーム拡張**
+- `MediaInput` - ファイルアップロード
+- `RangeInput` - スライダー
+- `SwitchInput` - トグルスイッチ
+- `SortableList` - ドラッグ&ドロップソート
+
+**ダイアログ・ナビゲーション**
+- `Dialog`, `Modal`, `Alert`, `Drawer`
+- `ContextualMenu`, `Popover`
+- `TabNav`, `TabBar`, `SidebarList`
+
+**レイアウト**
+- `AppLayout`, `SidebarLayout`, `HeaderMainLayout`
+- `ScrollView`, `ParavirtualScroll`
+- `Panel` システム（動的レイアウト）
+
+### ビジュアルノードエディター
+
+`tanuki-ui/extended/node-editor` では、プロダクションレディなビジュアルエディターを提供：
+
+**特徴:**
+- ドラッグ&ドロップによるノード操作
+- 自動レイアウト機能
+- ミニマップ表示
+- 多言語対応 (i18n)
+- キーボードショートカット
+- 履歴管理（Undo/Redo）
+- 制約システム
+
+## テーマ
 
 ```jsx
 // テーマ CSS をインポート
-import 'tanuki-ui/styles/monotone.css';         // Monotone (デフォルト)
-import 'tanuki-ui/styles/android12.css';        // Android 12
-import 'tanuki-ui/styles/apple-liquid-glass.css'; // Apple Liquid Glass
-import 'tanuki-ui/styles/aws.css';              // AWS
-import 'tanuki-ui/styles/figma.css';            // Figma
-import 'tanuki-ui/styles/github-dark.css';      // GitHub Dark
-import 'tanuki-ui/styles/handheld-console.css'; // Handheld Console
-import 'tanuki-ui/styles/ios12.css';            // iOS 12
-import 'tanuki-ui/styles/linear.css';           // Linear
-import 'tanuki-ui/styles/macOS12.css';          // macOS 12
-import 'tanuki-ui/styles/material-design.css';  // Material Design
-import 'tanuki-ui/styles/openai.css';           // OpenAI
-import 'tanuki-ui/styles/vercel.css';           // Vercel
-import 'tanuki-ui/styles/windows-xp.css';       // Windows XP
-import 'tanuki-ui/styles/windows11.css';        // Windows 11
-import 'tanuki-ui/styles/windows98.css';        // Windows 98
+import 'tanuki-ui/styles/monotone.css';  // デフォルトテーマ
+import 'tanuki-ui/styles/github-dark.css';
+import 'tanuki-ui/styles/ios12.css';
+// ... その他
 ```
 
-### 利用可能なテーマ（全16種類）
+### 利用可能なテーマ (18 種類)
 
-**モダン・ミニマル**
-- **Monotone** (`monotone.css`) - 高コントラスト、アクセシビリティ重視のテーマ（デフォルト）
-- **Vercel** (`vercel.css`) - クリーンでモダンな開発者向けテーマ
-- **Linear** (`linear.css`) - Linear アプリ風のモダンデザイン
-- **OpenAI** (`openai.css`) - OpenAI のクリーンなインターフェース
+**Accessibility**
+- **Monotone (Default)** (`monotone.css`) - High contrast accessibility-focused design with clear visual hierarchy and enhanced readability
 
-**プラットフォームテーマ**
-- **macOS 12** (`macOS12.css`) - macOS Big Sur/Monterey デザインシステム
-- **iOS 12** (`ios12.css`) - 角丸を特徴とする iOS デザイン言語
-- **Windows 11** (`windows11.css`) - Windows 11 Fluent Design システム
-- **Android 12** (`android12.css`) - Material Design 3 (Material You)
+**Modern**
+- **Apple Liquid Glass** (`apple-liquid-glass.css`) - Premium glass morphism design with translucent effects and blur
 
-**開発者ツール**
-- **GitHub Dark** (`github-dark.css`) - GitHub のダークテーマ
-- **Figma** (`figma.css`) - Figma デザインツールインターフェース
-- **AWS** (`aws.css`) - AWS コンソール風デザイン
+**Developer**
+- **GitHub Dark** (`github-dark.css`) - GitHub's dark theme with professional developer-focused aesthetics
+- **Vercel** (`vercel.css`) - Clean modern development-focused design with crisp typography and minimal visual elements
 
-**特殊効果**
-- **Apple Liquid Glass** (`apple-liquid-glass.css`) - プレミアムグラスモーフィズム効果
-- **Material Design** (`material-design.css`) - Google の Material Design システム
+**Apple**
+- **iOS 12** (`ios12.css`) - Implements Apple's Human Interface Guidelines with authentic iOS styling and dynamic color system
+- **macOS 12** (`macOS12.css`) - Apple's design system with translucent effects and refined interface elements
 
-**レトロ・ゲーミング**
-- **Windows 98** (`windows98.css`) - クラシックな Windows 98 スタイル
-- **Windows XP** (`windows-xp.css`) - Windows XP Luna テーマ
-- **Handheld Console** (`handheld-console.css`) - ゲーム機風テーマ
+**Google**
+- **Android 12** (`android12.css`) - Based on Material You design system with dynamic color, large touch targets, and smooth animations
+- **Material Design** (`material-design.css`) - Google's Material Design system with elevation layers and dynamic color palette
 
-## API
+**Microsoft**
+- **Windows 11** (`windows11.css`) - Modern, clean design with subtle shadows, rounded corners, and Fluent Design principles
+
+**Retro**
+- **8-bit Game Console RPG** (`8bit-gameconsole-rpg.css`) - Authentic retro 8-bit console experience with pixel-perfect design, monochrome palette, chunky borders, and classic RPG aesthetics
+- **Windows 98** (`windows98.css`) - Recreates the classic Windows 98 interface with 3D beveled controls, retro typography, and nostalgic aesthetics
+- **Windows XP** (`windows-xp.css`) - Recreates the iconic Luna Blue interface with gradient buttons, rounded corners, and the classic XP aesthetic
+
+**Gaming**
+- **Handheld Console** (`handheld-console.css`) - Nintendo Switch and handheld gaming aesthetics with rounded corners and vibrant colors
+
+**Design**
+- **Figma** (`figma.css`) - Recreates Figma's modern design system with clean typography, subtle shadows, and professional aesthetics
+
+**Enterprise**
+- **AWS** (`aws.css`) - Amazon Web Services console-inspired design with professional cloud interface aesthetics
+
+**Productivity**
+- **Linear** (`linear.css`) - Linear app-inspired modern design with clean typography and minimal interface elements
+
+**AI**
+- **OpenAI** (`openai.css`) - OpenAI's clean interface styling with thoughtful typography and modern color palette
+
+**Media**
+- **YouTube** (`youtube.css`) - Modern, clean design inspired by YouTube's interface with rounded corners, subtle shadows, and video-centric aesthetics
+
+
+## バンドルサイズ
+
+| パッケージ | サイズ (minified + gzipped) |
+|----------|---------------------------|
+| コアコンポーネント | 25.5KB |
+| Core CSS | 16.0KB |
+| Layouts | 15.8KB |
+| Layouts CSS | 3.5KB |
+| Node Editor | 63.3KB |
+| Node Editor CSS | 11.5KB |
+| テーマ (各) | ~3-5KB |
+
+## API リファレンス
 
 ### エクスポート構成
 
@@ -341,31 +273,6 @@ import 'tanuki-ui/styles/windows98.css';        // Windows 98
 - **ノードエディター** (`tanuki-ui/extended/node-editor`): 高機能エディター
 - **テーマ** (`tanuki-ui/themes/LiquidGlassFilter`): 特殊エフェクト
 
-### TypeScript サポート
-
-完全な TypeScript サポートと、HTML 標準の属性を継承：
-
-```tsx
-import { Button, Input } from 'tanuki-ui';
-
-// HTML 属性がそのまま使える
-<Button 
-  type="submit" 
-  disabled={loading}
-  onClick={handleClick}
-  data-testid="submit-btn"
->
-  送信
-</Button>
-
-<Input
-  type="email"
-  required
-  placeholder="メールアドレス"
-  onChange={handleChange}
-/>
-```
-
 ## ブラウザサポート
 
 - Chrome/Edge 90+
@@ -373,32 +280,9 @@ import { Button, Input } from 'tanuki-ui';
 - Safari 14+
 - モバイルブラウザ（iOS Safari, Chrome for Android）
 
-## バンドルサイズ
-
-| パッケージ | サイズ (minified + gzipped) |
-|----------|---------------------------|
-| Core Components | 23.5KB |
-| Core CSS | 9.9KB |
-| Layouts | 12.6KB |
-| Layouts CSS | 2.5KB |
-| Node Editor | 49.5KB |
-| Node Editor CSS | 6.9KB |
-| Themes (各) | ~3-5KB |
-
-## パフォーマンス
-
-- React.memo による最適化
-- CSS Modules によるスタイル分離
-- 遅延読み込み対応
-- Tree-shaking 対応
-
 ## ライセンス
 
 Unlicense
-
-## 貢献
-
-プルリクエストを歓迎します。大きな変更の場合は、まず issue を開いて変更内容について議論してください。
 
 ## 開発
 
