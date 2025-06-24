@@ -1,0 +1,29 @@
+{
+  "name": "@tanuki-ui/screenshot-test",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Visual regression testing tool for Tanuki UI components",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:serve": "npm run build:parent && tsx visual-test-server.ts",
+    "test:update": "playwright test --update-snapshots",
+    "build:parent": "cd ../.. && npm run build"
+  },
+  "dependencies": {
+    "tanuki-ui": "file:../..",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-use": "^17.6.0",
+    "hono": "^4.6.15"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.53.1",
+    "@types/node": "^22.12.0",
+    "@types/react": "^19.0.8",
+    "@types/react-dom": "^19.0.3",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  }
+}
