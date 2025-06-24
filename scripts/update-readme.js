@@ -7,11 +7,9 @@
 
 import fs from 'fs';
 import path from 'path';
-import { execSync, execFile } from 'child_process';
+import { execFileSync } from 'child_process';
 import { fileURLToPath } from 'url';
-import { promisify } from 'util';
-
-const execFileAsync = promisify(execFile);
+import { gzipSync } from 'zlib';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,104 +26,112 @@ function getThemeFiles() {
     .sort();
 }
 
+// ファイルベースのサイズ取得
+function getFileBasedSizes() {
+  const distPath = path.join(rootDir, 'dist/lib');
+  const sizeInfo = {};
+  
+  const files = [
+    'index.js',
+    'style.css', 
+    'layouts.js',
+    'layouts/style.css',
+    'extended/node-editor.js',
+    'extended/node-editor/style.css'
+  ];
+  
+  for (const file of files) {
+    const filePath = path.join(distPath, file);
+    if (fs.existsSync(filePath)) {
+      const content = fs.readFileSync(filePath);
+      const stats = fs.statSync(filePath);
+      const gzipped = gzipSync(content);
+      const sizeKB = (stats.size / 1024).toFixed(1) + 'KB';
+      const gzipSizeKB = (gzipped.length / 1024).toFixed(1) + 'KB';
+      sizeInfo[file] = { size: sizeKB, gzipSize: gzipSizeKB };
+    }
+  }
+  
+  return sizeInfo;
+}
+
 // ビルドサイズ情報を取得
 function getBuildSizes(skipBuild = false) {
-  try {
-    if (skipBuild) {
-      // 既存のビルドファイルがあるかチェック
-      const distPath = path.join(rootDir, 'dist/lib');
-      if (!fs.existsSync(distPath)) {
-        console.log('ビルドファイルが存在しないため、ビルドを実行します...');
-        skipBuild = false;
-      }
+  // 既存のビルドファイルがある場合は早期リターン
+  if (skipBuild) {
+    const distPath = path.join(rootDir, 'dist/lib');
+    if (fs.existsSync(distPath)) {
+      return getFileBasedSizes();
     }
-    
-    if (!skipBuild) {
-      // ビルドを実行
-      console.log('ビルドを実行中...');
-      const npmPath = process.env.npm_execpath || 'npm';
-      execFile(npmPath, ['run', 'build'], { 
-        cwd: rootDir, 
-        stdio: 'inherit',
-        env: process.env
-      }, (error) => {
-        if (error) {
-          console.error('ビルドエラー:', error);
-          throw error;
-        }
-      });
-      
-      // ビルド出力からサイズ情報を抽出（ビルド出力は表示のみ）
-      const lines = [];
-      const sizeInfo = {};
-      
-      for (const line of lines) {
-        if (line.includes('dist/lib/')) {
-          const match = line.match(/dist\/lib\/(.+?)\s+(.+?)\s+│\s+gzip:\s+(.+?)\s/);
-          if (match) {
-            const [, filename, size, gzipSize] = match;
-            sizeInfo[filename] = { size, gzipSize };
-          }
-        }
-      }
-      
-      return sizeInfo;
-    } else {
-      // 既存のファイルサイズを概算
-      const distPath = path.join(rootDir, 'dist/lib');
-      const sizeInfo = {};
-      
-      const files = [
-        'index.js',
-        'style.css',
-        'layouts.js',
-        'layouts/style.css',
-        'extended/node-editor.js',
-        'extended/node-editor/style.css'
-      ];
-      
-      for (const file of files) {
-        const filePath = path.join(distPath, file);
-        if (fs.existsSync(filePath)) {
-          const stats = fs.statSync(filePath);
-          const sizeKB = (stats.size / 1024).toFixed(1) + 'KB';
-          const gzipSizeKB = (stats.size / 1024 * 0.3).toFixed(1) + 'KB'; // 概算
-          sizeInfo[file] = { size: sizeKB, gzipSize: gzipSizeKB };
-        }
-      }
-      
-      return sizeInfo;
-    }
-  } catch (error) {
-    console.warn('ビルドサイズの取得に失敗しました:', error.message);
-    return {};
+    console.log('Build files not found, executing build...');
   }
+  
+  // Execute build
+  console.log('Building...');
+  const npmPath = process.env.npm_execpath || 'npm';
+  execFileSync(npmPath, ['run', 'build'], { 
+    cwd: rootDir, 
+    stdio: 'inherit',
+    env: process.env,
+    timeout: 120000 // 2 minute timeout
+  });
+  console.log('Build completed.');
+  
+  // Get file sizes after build completion
+  return getFileBasedSizes();
 }
 
 // テーマリストを生成（スキーマベース）
 async function generateThemeList() {
+  // 1. Run theme catalog generator to create latest themes.ts
+  console.log('Generating theme catalog...');
   try {
-    // 生成されたテーマカタログから取得（ファイル内容を直接読み込み）
-    const themeDataPath = path.join(rootDir, 'tools/catalog/src/data/themes.ts');
-    
-    // ファイルが存在するかチェック
-    if (!fs.existsSync(themeDataPath)) {
-      throw new Error('Theme catalog file not found');
-    }
-    
-    // ファイル内容を読み込み、themesデータを抽出
+    const catalogPath = process.env.npm_execpath || 'npm';
+    execFileSync('node', ['scripts/generate-theme-catalog.js'], { 
+      cwd: rootDir, 
+      stdio: 'pipe',
+      timeout: 30000
+    });
+  } catch (error) {
+    throw new Error(`Theme catalog generation failed: ${error.message}`);
+  }
+  
+  // 2. Safely load data from generated themes.ts file
+  const themeDataPath = path.join(rootDir, 'tools/catalog/src/data/themes.ts');
+  
+  if (!fs.existsSync(themeDataPath)) {
+    throw new Error('Theme catalog file not found after generation');
+  }
+  
+  // 3. Convert themes.ts to temporary JS file and load with dynamic import
+  const tempJsPath = path.join(rootDir, 'temp-themes.mjs');
+  try {
     const fileContent = fs.readFileSync(themeDataPath, 'utf8');
     
-    // themes配列の部分を正規表現で抽出
-    const themesMatch = fileContent.match(/export const themes: ThemeMetadata\[\] = (\[[\s\S]*?\]);/);
-    if (!themesMatch) {
-      throw new Error('Could not extract themes data from file');
+    // Remove TypeScript type annotations and convert to JavaScript
+    const jsContent = fileContent
+      .replace(/export interface ThemeMetadata \{[\s\S]*?\}/g, '')
+      .replace(/: ThemeMetadata\[\]/g, '')
+      .replace(/: Record<string, ThemeMetadata\[\]>/g, '');
+    
+    fs.writeFileSync(tempJsPath, jsContent);
+    
+    // Safely load data with dynamic import
+    const themeModule = await import(`file://${tempJsPath}`);
+    const themes = themeModule.themes;
+    
+    if (!Array.isArray(themes)) {
+      throw new Error('Invalid themes data structure');
     }
     
-    // JSON.parseで配列をパース
-    const themes = JSON.parse(themesMatch[1]);
+    // 4. Validate theme data
+    for (const theme of themes) {
+      if (!theme.value || !theme.label || !theme.category) {
+        throw new Error(`Invalid theme data: ${JSON.stringify(theme)}`);
+      }
+    }
     
-    // groupThemesByCategory 関数を実装
+    // 5. Group by category
     const groupThemesByCategory = (themes) => {
       const grouped = {};
       for (const theme of themes) {
@@ -142,7 +148,7 @@ async function generateThemeList() {
 
     let themeListMarkdown = '';
     
-    // カテゴリ順を調整（人気順/使用頻度順）
+    // Adjust category order (by popularity/usage frequency)
     const categoryOrder = [
       'Accessibility',
       'Modern', 
@@ -160,7 +166,7 @@ async function generateThemeList() {
       'Other'
     ];
 
-    // カテゴリをソートして表示
+    // Sort and display categories
     const sortedCategories = Object.keys(themesByCategory).sort((a, b) => {
       const indexA = categoryOrder.indexOf(a);
       const indexB = categoryOrder.indexOf(b);
@@ -174,7 +180,7 @@ async function generateThemeList() {
       const categoryThemes = themesByCategory[category];
       themeListMarkdown += `**${category}**\n`;
       
-      // テーマをソート（monotoneを最初に、その後はアルファベット順）
+      // Sort themes (monotone first, then alphabetical)
       const sortedThemes = categoryThemes.sort((a, b) => {
         if (a.value === 'monotone') return -1;
         if (b.value === 'monotone') return 1;
@@ -189,65 +195,19 @@ async function generateThemeList() {
     });
 
     return themeListMarkdown.trim();
-  } catch (error) {
-    console.warn('テーマカタログの読み込みに失敗しました。フォールバックを使用します:', error.message);
     
-    // フォールバック: ファイルシステムから直接読み取り
-    const themeFiles = getThemeFiles();
-    const fallbackCategories = {
-      'Accessibility': [],
-      'Modern & Developer': [],
-      'Platform Themes': [],
-      'Retro & Gaming': [],
-      'Others': []
-    };
-    
-    themeFiles.forEach(file => {
-      const themeName = file.replace('.css', '');
-      const displayName = themeName.split('-').map(word => 
-        word.charAt(0).toUpperCase() + word.slice(1)
-      ).join(' ');
-      
-      let category = 'Others';
-      if (themeName === 'monotone') category = 'Accessibility';
-      else if (['vercel', 'linear', 'openai', 'github-dark', 'figma', 'aws'].includes(themeName)) category = 'Modern & Developer';
-      else if (['macos12', 'ios12', 'windows11', 'android12', 'youtube'].includes(themeName)) category = 'Platform Themes';
-      else if (['windows98', 'windows-xp', 'handheld-console', '8bit-gameconsole-rpg'].includes(themeName)) category = 'Retro & Gaming';
-      
-      fallbackCategories[category].push({ 
-        file, 
-        name: displayName,
-        description: `${displayName} theme`
-      });
-    });
-
-    let themeListMarkdown = '';
-    Object.entries(fallbackCategories).forEach(([category, themes]) => {
-      if (themes.length > 0) {
-        themeListMarkdown += `**${category}**\n`;
-        themes.forEach(theme => {
-          themeListMarkdown += `- **${theme.name}** (\`${theme.file}\`) - ${theme.description}\n`;
-        });
-        themeListMarkdown += '\n';
-      }
-    });
-
-    return themeListMarkdown.trim();
+  } finally {
+    // 6. Clean up temporary files
+    if (fs.existsSync(tempJsPath)) {
+      fs.unlinkSync(tempJsPath);
+    }
   }
 }
 
 // ビルドサイズテーブルを生成
 function generateBundleSizeTable(buildSizes) {
   if (Object.keys(buildSizes).length === 0) {
-    return `| Package | Size (minified + gzipped) |
-|---------|---------------------------|
-| Core Components | 23.5KB |
-| Core CSS | 9.9KB |
-| Layouts | 12.6KB |
-| Layouts CSS | 2.5KB |
-| Node Editor | 49.5KB |
-| Node Editor CSS | 6.9KB |
-| Themes (each) | ~3-5KB |`;
+    throw new Error('Build sizes not available');
   }
 
   let table = `| Package | Size (minified + gzipped) |\n|---------|---------------------------|\n`;
@@ -278,28 +238,47 @@ function generateBundleSizeTable(buildSizes) {
 
 // README.mdを更新
 async function updateReadme() {
-  await updateReadmeFile('README.md');
-  await updateReadmeFile('README.ja.md');
+  console.log('📊 Collecting statistics data...');
+  
+  // 1. Collect statistics data once
+  const themeFiles = getThemeFiles();
+  const themeCount = themeFiles.length;
+  console.log(`   - Theme count: ${themeCount}`);
+  
+  const buildSizes = getBuildSizes(true); // Use existing build, build if not found
+  console.log(`   - Build sizes collected`);
+  
+  const themeList = await generateThemeList();
+  console.log(`   - Theme list generated`);
+  
+  const statsData = {
+    themeFiles,
+    themeCount,
+    buildSizes,
+    themeList
+  };
+  
+  // 2. Update each file with statistics data
+  await updateReadmeFile('README.md', statsData);
+  await updateReadmeFile('README.ja.md', statsData);
 }
 
 // 個別のREADMEファイルを更新
-async function updateReadmeFile(filename) {
+async function updateReadmeFile(filename, statsData) {
   const readmePath = path.join(rootDir, filename);
   
-  // ファイルが存在しない場合はスキップ
+  // Skip if file doesn't exist
   if (!fs.existsSync(readmePath)) {
-    console.log(`⚠️  ${filename} が見つかりません。スキップします。`);
+    console.log(`⚠️  ${filename} not found. Skipping.`);
     return;
   }
   
   let readmeContent = fs.readFileSync(readmePath, 'utf8');
   
-  // データを取得
-  const themeFiles = getThemeFiles();
-  const buildSizes = getBuildSizes(true); // 初回は既存ビルドを使用
-  const themeCount = themeFiles.length;
+  // Extract statistics data
+  const { themeFiles, themeCount, buildSizes, themeList } = statsData;
   
-  // 言語判定
+  // Detect language
   const isJapanese = filename.includes('.ja.');
   const availableThemesPattern = isJapanese 
     ? /### 利用可能なテーマ \(\d+ 種類\)/g
@@ -308,18 +287,15 @@ async function updateReadmeFile(filename) {
     ? `### 利用可能なテーマ (${themeCount} 種類)`
     : `### Available Themes (${themeCount} total)`;
   
-  console.log(`📝 ${filename} を更新中...`);
-  console.log(`   - テーマ数: ${themeCount}`);
+  console.log(`📝 Updating ${filename}...`);
   
-  // 🎨 Themes は固定値なので更新しない（手動管理）
-  
-  // Available Themes セクションのテーマ数を更新
+  // Update theme count in Available Themes section
   readmeContent = readmeContent.replace(
     availableThemesPattern,
     availableThemesReplacement
   );
   
-  // Bundle Size table内のCore Componentsサイズを更新
+  // Update Core Components size in Bundle Size table
   if (buildSizes['index.js']) {
     readmeContent = readmeContent.replace(
       /\| \*\*?Core Components\*\*? \| [\d.]+[KM]B \|/g,
@@ -331,7 +307,7 @@ async function updateReadmeFile(filename) {
     );
   }
   
-  // Bundle Size セクション全体を更新（重複削除）
+  // Update entire Bundle Size section (remove duplicates)
   const bundleSizeTableRegex = /## 📦 Bundle Size[\s\S]*?\n\n(?=##)/;
   const bundleSizeTableRegex2 = /## Bundle Size[\s\S]*?\n\n(?=##|$)/;
   
@@ -353,15 +329,14 @@ ${generateBundleSizeTable(buildSizes)}
 
 `;
   
-  // Bundle Sizeセクションの重複を削除
+  // Remove duplicate Bundle Size sections
   readmeContent = readmeContent.replace(bundleSizeTableRegex, bundleSizeSection);
   readmeContent = readmeContent.replace(bundleSizeTableRegex2, ''); // 2つ目があれば削除
   
-  // テーマリストを更新
+  // Update theme list
   const themeListRegex = isJapanese 
     ? /### 利用可能なテーマ \(\d+ 種類\)\s*\n([\s\S]*?)(?=\n## )/
     : /### Available Themes \(\d+ total\)\s*\n([\s\S]*?)(?=\n## )/;
-  const themeList = await generateThemeList();
   const newThemeSection = `${availableThemesReplacement}
 
 ${themeList}
@@ -370,22 +345,22 @@ ${themeList}
   
   readmeContent = readmeContent.replace(themeListRegex, newThemeSection);
   
-  // ファイルを書き込み
+  // Write file
   fs.writeFileSync(readmePath, readmeContent, 'utf8');
   
-  console.log(`✅ ${filename} が正常に更新されました`);
+  console.log(`✅ ${filename} updated successfully`);
   if (buildSizes['index.js']) {
-    console.log(`   - コアコンポーネントサイズ: ${buildSizes['index.js'].gzipSize}`);
+    console.log(`   - Core component size: ${buildSizes['index.js'].gzipSize}`);
   }
 }
 
-// メイン実行
+// Main execution
 if (import.meta.url === `file://${process.argv[1]}`) {
   try {
     await updateReadme();
-    console.log('\n🎉 すべてのREADMEファイルの更新が完了しました！');
+    console.log('\n🎉 All README files updated successfully!');
   } catch (error) {
-    console.error('❌ README の更新に失敗しました:', error.message);
+    console.error('❌ Failed to update README:', error.message);
     process.exit(1);
   }
 }

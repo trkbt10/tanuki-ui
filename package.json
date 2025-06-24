@@ -85,7 +85,7 @@
     "build:catalog": "cd tools/catalog && npm run build",
     "setup:tools": "cd tools/storybook && npm install && cd ../playground && npm install && cd ../catalog && npm install && cd ../screenshot-test && npm install && cd ../tools-shared && npm install",
     "update-readme": "node scripts/update-readme.js",
-    "prebuild": "npm run update-readme",
+    "check-loops": "node scripts/check-script-loops.js",
     "test:visual": "cd tools/screenshot-test && npm run test",
     "test:visual:ui": "cd tools/screenshot-test && npm run test:ui",
     "test:visual:serve": "cd tools/screenshot-test && npm run test:serve",
