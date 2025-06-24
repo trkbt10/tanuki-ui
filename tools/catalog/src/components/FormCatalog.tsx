@@ -166,7 +166,7 @@ const FormCatalog: React.FC = () => {
         </Section>
 
         <Section>
-          <Meter value={formData.rating} min="1" max="10" optimum="8">
+          <Meter value={formData.rating} min={1} max={10} optimum={8}>
             満足度: {formData.rating}/10
           </Meter>
         </Section>

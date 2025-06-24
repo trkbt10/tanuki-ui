@@ -1,7 +1,9 @@
 /**
- * iOS 17+ Design System for Tanuki UI
- * Implements Apple's latest Human Interface Guidelines with authentic iOS styling
- * Supports both light and dark modes with dynamic color system
+ * @theme iOS 12
+ * @description Implements Apple's Human Interface Guidelines with authentic iOS styling and dynamic color system
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Apple
  */
 
 :root {
@@ -360,6 +362,7 @@
   --tableHeaderBackground: var(--systemGroupedBackgroundColor);
   --tableHeaderFont: var(--footnoteFont);
   --tableHeaderTextColor: var(--secondaryLabelColor);
+  --tableHeaderBorder: 0.5px solid var(--separatorColor);
   --tableHeaderPadding: 6px 16px;
   --tableFooterFont: var(--footnoteFont);
   --tableFooterTextColor: var(--secondaryLabelColor);

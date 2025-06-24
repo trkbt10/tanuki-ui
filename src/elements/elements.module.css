@@ -238,3 +238,190 @@
   text-decoration: none;
   transition: color 0.2s ease;
 }
+
+/* Text Decoration Elements */
+.strong {
+  font-weight: bold;
+}
+
+.em {
+  font-style: italic;
+}
+
+.small {
+  font-size: 0.875em;
+  color: var(--themeSecondaryTextColor, #6b6b6b);
+}
+
+.mark {
+  background-color: var(--themeHighlightColor, #ffff00);
+  color: var(--themeHighlightTextColor, #000000);
+  padding: 0.125em 0.25em;
+  border-radius: 2px;
+}
+
+.del {
+  text-decoration: line-through;
+  color: var(--themeSecondaryTextColor, #6b6b6b);
+}
+
+.ins {
+  text-decoration: underline;
+  background-color: var(--themeSuccessBackgroundColor, #e8f5e8);
+  color: var(--themeSuccessTextColor, #2d5a2d);
+  padding: 0.125em 0.25em;
+  border-radius: 2px;
+}
+
+.sub {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  bottom: -0.25em;
+}
+
+.sup {
+  font-size: 0.75em;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+  top: -0.5em;
+}
+
+.code {
+  font-family: var(--themeMonospaceFontFamily, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace);
+  font-size: 0.875em;
+  background-color: var(--themeCodeBackgroundColor, rgba(175, 184, 193, 0.2));
+  color: var(--themeCodeTextColor, inherit);
+  padding: 0.125em 0.25em;
+  border-radius: 3px;
+  border: 1px solid var(--themeCodeBorderColor, transparent);
+}
+
+.kbd {
+  font-family: var(--themeMonospaceFontFamily, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace);
+  font-size: 0.875em;
+  background-color: var(--themeKbdBackgroundColor, #f7f7f7);
+  color: var(--themeKbdTextColor, #333);
+  padding: 0.125em 0.375em;
+  border-radius: 3px;
+  border: 1px solid var(--themeKbdBorderColor, #ccc);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+  text-shadow: 0 1px 0 #fff;
+}
+
+.samp {
+  font-family: var(--themeMonospaceFontFamily, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace);
+  font-size: 0.875em;
+  background-color: var(--themeSampBackgroundColor, rgba(175, 184, 193, 0.2));
+  color: var(--themeSampTextColor, inherit);
+  padding: 0.125em 0.25em;
+  border-radius: 3px;
+}
+
+.var {
+  font-family: var(--themeMonospaceFontFamily, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace);
+  font-style: italic;
+  font-weight: normal;
+  color: var(--themeVarTextColor, inherit);
+}
+
+/* Semantic Elements */
+.abbr {
+  text-decoration: underline dotted;
+  cursor: help;
+  border-bottom: 1px dotted var(--themeSecondaryTextColor, #6b6b6b);
+}
+
+.cite {
+  font-style: italic;
+  color: var(--themeCiteTextColor, inherit);
+}
+
+.dfn {
+  font-style: italic;
+  font-weight: bold;
+  color: var(--themeDfnTextColor, inherit);
+}
+
+.q {
+  font-style: italic;
+}
+
+.q:before {
+  content: open-quote;
+}
+
+.q:after {
+  content: close-quote;
+}
+
+/* Ruby Elements */
+.ruby {
+  display: ruby;
+  ruby-align: center;
+}
+
+.rt {
+  display: ruby-text;
+  font-size: 0.7em;
+  line-height: 1;
+  text-align: center;
+  color: var(--themeSecondaryTextColor, #6b6b6b);
+}
+
+
+/* List Elements */
+.ol {
+  display: block;
+  list-style-type: decimal;
+  margin: 1em 0;
+  padding-left: 2em;
+}
+
+.dd {
+  display: block;
+  margin-left: 2em;
+  margin-bottom: 0.5em;
+}
+
+.dt {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 0.25em;
+}
+
+/* Table Elements */
+
+.th {
+  display: table-cell;
+  padding: 0.75em 1em;
+  text-align: left;
+  font-weight: bold;
+  background-color: var(--themeTableHeaderCellBackgroundColor, transparent);
+  border-right: 1px solid var(--themeTableBorderColor, rgba(0, 0, 0, 0.1));
+}
+
+.th:last-child {
+  border-right: none;
+}
+
+.td {
+  display: table-cell;
+  padding: 0.75em 1em;
+  text-align: left;
+  border-right: 1px solid var(--themeTableBorderColor, rgba(0, 0, 0, 0.1));
+}
+
+.td:last-child {
+  border-right: none;
+}
+
+.caption {
+  display: table-caption;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  color: var(--themeCaptionTextColor, inherit);
+}

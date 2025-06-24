@@ -5,6 +5,7 @@
   letter-spacing: 0.006154em;
   background: var(--tableBackgroundColor);
   border-spacing: 0;
+  border: var(--tableBorder, var(--tableBorderWidth, 4px) var(--tableBorderStyle, double) var(--tableBorderColor, #444));
 }
 
 .table thead {
@@ -28,7 +29,7 @@
   letter-spacing: 0;
   height: 24px;
   color: var(--tableHeaderTextColor);
-  border-bottom: 1px solid var(--tableHeaderBorderColor);
+  border-bottom: var(--tableHeaderBorder, var(--tableHeaderBorderWidth, 4px) var(--tableHeaderBorderStyle, double) var(--tableHeaderBorderColor, #444));
 }
 
 .table thead th::after {
@@ -41,7 +42,7 @@
   height: 1em;
   display: block;
   content: "";
-  border-right: 1px solid var(--tableHeaderBorderColor);
+  border-right: var(--tableCellBorder, var(--tableCellBorderWidth, 2px) var(--tableCellBorderStyle, solid) var(--tableHeaderBorderColor, #444));
 }
 
 .table thead th:last-child::after {
@@ -61,8 +62,8 @@
   box-sizing: border-box;
   padding: 0 0.5em;
   letter-spacing: 0;
-  box-sizing: border-box;
-  box-sizing: border-box;
+  border-right: var(--tableCellBorder, var(--tableCellBorderWidth, 2px) var(--tableCellBorderStyle, solid) var(--tableBorderColor, #444));
+  border-bottom: var(--tableRowBorder, var(--tableRowBorderWidth, 1px) var(--tableRowBorderStyle, solid) var(--tableRowBorderColor, #ccc));
 }
 
 .table tbody tr {

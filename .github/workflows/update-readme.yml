@@ -1,0 +1,64 @@
+name: Update README with latest data
+
+on:
+  # テーマファイルの変更時に実行
+  push:
+    paths:
+      - 'public/styles/*.css'
+      - 'src/**'
+      - 'package.json'
+      - 'vite.config.mts'
+    branches: [ main, feature/refine-docs ]
+  
+  # 手動実行も可能
+  workflow_dispatch:
+  
+  # 週1回の定期実行
+  schedule:
+    - cron: '0 0 * * 0'  # 毎週日曜日 00:00 (UTC)
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Update README.md
+      run: npm run update-readme
+    
+    - name: Check for changes
+      id: verify-changed-files
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Commit changes
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add README.md
+        git commit -m "docs: auto-update README with latest theme count and bundle sizes"
+    
+    - name: Push changes
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}

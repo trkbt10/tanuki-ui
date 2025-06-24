@@ -14,11 +14,40 @@
 
 ---
 
-Tanuki UI is a styled component library based on standard HTML elements. Unlike traditional UI libraries, it provides ready-to-use components while preserving HTML semantics.
+Tanuki UI is a styled component library based on standard HTML elements. It provides ready-to-use components while preserving HTML semantics.
 
-## Concept
+## Features
 
-### HTML First Approach
+- **HTML First**: Use components just like HTML elements
+- **Multiple Themes**: Platform-native designs ready to use
+- **Dual Export**: HTML element names and semantic names
+
+## Quick Start
+
+```bash
+npm install tanuki-ui
+```
+
+```jsx
+import { H1, P, Button } from 'tanuki-ui';
+import 'tanuki-ui/style.css';
+
+function App() {
+  return (
+    <>
+      <H1>Welcome to Tanuki UI</H1>
+      <P>A UI library where HTML elements work as they are.</P>
+      <Button onClick={() => alert('Hello!')}>Click me</Button>
+    </>
+  );
+}
+```
+
+**Peer Dependencies:** React 18.0.0+, React DOM 18.0.0+
+
+## Usage
+
+### Basic Components
 
 ```jsx
 // Write like regular HTML
@@ -40,7 +69,7 @@ function App() {
 
 ### Dual Export
 
-Components are exported with both HTML element names and semantic names for intuitive usage.
+Components are exported with both HTML element names and semantic names:
 
 ```jsx
 // Both are the same component
@@ -49,196 +78,29 @@ import { H1, Heading } from 'tanuki-ui';
 import { A, Anchor } from 'tanuki-ui';
 ```
 
-## 🎯 Why Tanuki UI?
+### TypeScript Support
 
-<table>
-<tr>
-<td width="33%" align="center">
+Full TypeScript support with standard HTML attribute inheritance:
 
-### 🚀 Lightweight
-**23.5KB** gzipped<br/>
-All core components
+```tsx
+import { Button, Input } from 'tanuki-ui';
 
-</td>
-<td width="33%" align="center">
+// Use HTML attributes as-is
+<Button 
+  type="submit" 
+  disabled={loading}
+  onClick={handleClick}
+  data-testid="submit-btn"
+>
+  Submit
+</Button>
 
-### 🎨 16 Themes
-Platform-native designs<br/>
-Ready to use
-
-</td>
-<td width="33%" align="center">
-
-### 📝 HTML First
-Standard semantics<br/>
-No learning curve
-
-</td>
-</tr>
-</table>
-
-## 📦 Bundle Size
-
-One of the lightest React UI libraries available:
-
-| Package | Size |
-|---------|------|
-| **Core Components** | 23.5KB |
-| **Core CSS** | 9.9KB |
-| **Layouts** *(optional)* | +12.6KB |
-| **Node Editor** *(optional)* | +49.5KB |
-
-> 💡 Import only what you need to make it even smaller!
-
-## Key Features
-
-### 📄 HTML Basic Elements
-
-Complete coverage of HTML5 semantic elements:
-
-**Content Sections**
-- `Article`, `Section`, `Nav`, `Main`, `Header`, `Footer`, `Aside`, `Address`
-
-**Text Content**
-- `H1`-`H6`, `P`, `Blockquote`, `Pre`, `Div`, `Hr`
-
-**Embedded Content**
-- `Image` (`Img`), `Figure`, `Figcaption`
-
-**Lists**
-- `List` (`Ul`), `ListItem` (`Li`), `Descriptions` (`Dl`)
-
-**Forms**
-- `Form`, `Button`, `Input`, `Textarea`, `Select`, `Label`, `Fieldset`, `Legend`
-- `Progress`, `Meter`, `Output`
-
-### 🎛️ Advanced Components
-
-**Form Extensions**
-- `MediaInput` - File upload
-- `RangeInput` - Slider
-- `SwitchInput` - Toggle switch
-- `SortableList` - Drag & drop sorting
-
-**Dialogs & Navigation**
-- `Dialog`, `Modal`, `Alert`, `Drawer`
-- `ContextualMenu`, `Popover`
-- `TabNav`, `TabBar`, `SidebarList`
-
-**Layouts**
-- `AppLayout`, `SidebarLayout`, `HeaderMainLayout`
-- `ScrollView`, `ParavirtualScroll`
-- `Panel` System (Dynamic layouts)
-
-### 🎨 Visual Node Editor
-
-`tanuki-ui/extended/node-editor` provides a production-ready visual editor:
-
-```jsx
-import { NodeEditor } from 'tanuki-ui/extended/node-editor';
-
-function MyApp() {
-  return (
-    <NodeEditor
-      nodes={nodes}
-      connections={connections}
-      onNodesChange={handleNodesChange}
-      onConnectionsChange={handleConnectionsChange}
-    />
-  );
-}
-```
-
-**Features:**
-- Drag & drop node manipulation
-- Auto-layout functionality
-- Minimap display
-- Internationalization (i18n)
-- Keyboard shortcuts
-- History management (Undo/Redo)
-- Constraint system
-
-## 🚀 Quick Start
-
-```bash
-# Install
-npm install tanuki-ui
-
-# Import and use
-```
-
-```jsx
-import { Button } from 'tanuki-ui';
-import 'tanuki-ui/style.css';
-
-function App() {
-  return <Button>Click me!</Button>;
-}
-```
-
-## 📥 Installation
-
-<table>
-<tr>
-<td>
-
-```bash
-# npm
-npm install tanuki-ui
-```
-
-</td>
-<td>
-
-```bash
-# yarn
-yarn add tanuki-ui
-```
-
-</td>
-<td>
-
-```bash
-# pnpm
-pnpm add tanuki-ui
-```
-
-</td>
-<td>
-
-```bash
-# bun
-bun add tanuki-ui
-```
-
-</td>
-</tr>
-</table>
-
-### Peer Dependencies
-
-- React 18.0.0 or higher
-- React DOM 18.0.0 or higher
-
-## Usage
-
-### Basic Usage
-
-```jsx
-import { H1, P, Button } from 'tanuki-ui';
-import 'tanuki-ui/style.css';
-
-function Welcome() {
-  return (
-    <>
-      <H1>Welcome to Tanuki UI</H1>
-      <P>A UI library where HTML elements work as they are.</P>
-      <Button onClick={() => alert('Hello!')}>
-        Click me
-      </Button>
-    </>
-  );
-}
+<Input
+  type="email"
+  required
+  placeholder="Email address"
+  onChange={handleChange}
+/>
 ```
 
 ### Using Layouts
@@ -280,59 +142,117 @@ function GraphEditor() {
 }
 ```
 
-## Themes
+## Components
 
-Multiple themes available:
+### HTML Basic Elements
+
+Complete coverage of HTML5 semantic elements:
+
+**Content Sections**
+- `Article`, `Section`, `Nav`, `Main`, `Header`, `Footer`, `Aside`, `Address`
+
+**Text Content**
+- `H1`-`H6`, `P`, `Blockquote`, `Pre`, `Div`, `Hr`
+
+**Embedded Content**
+- `Image` (`Img`), `Figure`, `Figcaption`
+
+**Lists**
+- `List` (`Ul`), `ListItem` (`Li`), `Descriptions` (`Dl`)
+
+**Forms**
+- `Form`, `Button`, `Input`, `Textarea`, `Select`, `Label`, `Fieldset`, `Legend`
+- `Progress`, `Meter`, `Output`
+
+### Advanced Components
+
+**Form Extensions**
+- `MediaInput` - File upload
+- `RangeInput` - Slider
+- `SwitchInput` - Toggle switch
+- `SortableList` - Drag & drop sorting
+
+**Dialogs & Navigation**
+- `Dialog`, `Modal`, `Alert`, `Drawer`
+- `ContextualMenu`, `Popover`
+- `TabNav`, `TabBar`, `SidebarList`
+
+**Layouts**
+- `AppLayout`, `SidebarLayout`, `HeaderMainLayout`
+- `ScrollView`, `ParavirtualScroll`
+- `Panel` System (Dynamic layouts)
+
+### Visual Node Editor
+
+`tanuki-ui/extended/node-editor` provides a production-ready visual editor:
+
+**Features:**
+- Drag & drop node manipulation
+- Auto-layout functionality
+- Minimap display
+- Internationalization (i18n)
+- Keyboard shortcuts
+- History management (Undo/Redo)
+- Constraint system
+
+## Themes
 
 ```jsx
 // Import theme CSS
-import 'tanuki-ui/styles/monotone.css';         // Monotone (Default)
-import 'tanuki-ui/styles/android12.css';        // Android 12
-import 'tanuki-ui/styles/apple-liquid-glass.css'; // Apple Liquid Glass
-import 'tanuki-ui/styles/aws.css';              // AWS
-import 'tanuki-ui/styles/figma.css';            // Figma
-import 'tanuki-ui/styles/github-dark.css';      // GitHub Dark
-import 'tanuki-ui/styles/handheld-console.css'; // Handheld Console
-import 'tanuki-ui/styles/ios12.css';            // iOS 12
-import 'tanuki-ui/styles/linear.css';           // Linear
-import 'tanuki-ui/styles/macOS12.css';          // macOS 12
-import 'tanuki-ui/styles/material-design.css';  // Material Design
-import 'tanuki-ui/styles/openai.css';           // OpenAI
-import 'tanuki-ui/styles/vercel.css';           // Vercel
-import 'tanuki-ui/styles/windows-xp.css';       // Windows XP
-import 'tanuki-ui/styles/windows11.css';        // Windows 11
-import 'tanuki-ui/styles/windows98.css';        // Windows 98
+import 'tanuki-ui/styles/monotone.css';  // Default theme
+import 'tanuki-ui/styles/github-dark.css';
+import 'tanuki-ui/styles/ios12.css';
+// ... and more
 ```
 
-### Available Themes (16 total)
+### Available Themes (18 total)
 
-**Modern & Minimal**
-- **Monotone** (`monotone.css`) - High contrast, accessibility-focused theme (Default)
-- **Vercel** (`vercel.css`) - Clean, modern development-focused theme
-- **Linear** (`linear.css`) - Linear app-inspired modern design
-- **OpenAI** (`openai.css`) - OpenAI's clean interface styling
+**Accessibility**
+- **Monotone (Default)** (`monotone.css`) - High contrast accessibility-focused design with clear visual hierarchy and enhanced readability
 
-**Platform Themes**
-- **macOS 12** (`macOS12.css`) - macOS Big Sur/Monterey design system
-- **iOS 12** (`ios12.css`) - iOS design language with rounded corners
-- **Windows 11** (`windows11.css`) - Windows 11 Fluent Design system
-- **Android 12** (`android12.css`) - Material Design 3 (Material You)
+**Modern**
+- **Apple Liquid Glass** (`apple-liquid-glass.css`) - Premium glass morphism design with translucent effects and blur
 
-**Developer Tools**
-- **GitHub Dark** (`github-dark.css`) - GitHub's dark theme
-- **Figma** (`figma.css`) - Figma design tool interface
-- **AWS** (`aws.css`) - AWS console-inspired design
+**Developer**
+- **GitHub Dark** (`github-dark.css`) - GitHub's dark theme with professional developer-focused aesthetics
+- **Vercel** (`vercel.css`) - Clean modern development-focused design with crisp typography and minimal visual elements
 
-**Special Effects**
-- **Apple Liquid Glass** (`apple-liquid-glass.css`) - Premium glass morphism effect
-- **Material Design** (`material-design.css`) - Google's Material Design system
+**Apple**
+- **iOS 12** (`ios12.css`) - Implements Apple's Human Interface Guidelines with authentic iOS styling and dynamic color system
+- **macOS 12** (`macOS12.css`) - Apple's design system with translucent effects and refined interface elements
 
-**Retro & Gaming**
-- **Windows 98** (`windows98.css`) - Classic Windows 98 styling
-- **Windows XP** (`windows-xp.css`) - Windows XP Luna theme
-- **Handheld Console** (`handheld-console.css`) - Gaming console inspired theme
+**Google**
+- **Android 12** (`android12.css`) - Based on Material You design system with dynamic color, large touch targets, and smooth animations
+- **Material Design** (`material-design.css`) - Google's Material Design system with elevation layers and dynamic color palette
 
-## API
+**Microsoft**
+- **Windows 11** (`windows11.css`) - Modern, clean design with subtle shadows, rounded corners, and Fluent Design principles
+
+**Retro**
+- **8-bit Game Console RPG** (`8bit-gameconsole-rpg.css`) - Authentic retro 8-bit console experience with pixel-perfect design, monochrome palette, chunky borders, and classic RPG aesthetics
+- **Windows 98** (`windows98.css`) - Recreates the classic Windows 98 interface with 3D beveled controls, retro typography, and nostalgic aesthetics
+- **Windows XP** (`windows-xp.css`) - Recreates the iconic Luna Blue interface with gradient buttons, rounded corners, and the classic XP aesthetic
+
+**Gaming**
+- **Handheld Console** (`handheld-console.css`) - Nintendo Switch and handheld gaming aesthetics with rounded corners and vibrant colors
+
+**Design**
+- **Figma** (`figma.css`) - Recreates Figma's modern design system with clean typography, subtle shadows, and professional aesthetics
+
+**Enterprise**
+- **AWS** (`aws.css`) - Amazon Web Services console-inspired design with professional cloud interface aesthetics
+
+**Productivity**
+- **Linear** (`linear.css`) - Linear app-inspired modern design with clean typography and minimal interface elements
+
+**AI**
+- **OpenAI** (`openai.css`) - OpenAI's clean interface styling with thoughtful typography and modern color palette
+
+**Media**
+- **YouTube** (`youtube.css`) - Modern, clean design inspired by YouTube's interface with rounded corners, subtle shadows, and video-centric aesthetics
+
+
+## API Reference
 
 ### Export Structure
 
@@ -341,31 +261,6 @@ import 'tanuki-ui/styles/windows98.css';        // Windows 98
 - **Node Editor** (`tanuki-ui/extended/node-editor`): Advanced editor
 - **Themes** (`tanuki-ui/themes/LiquidGlassFilter`): Special effects
 
-### TypeScript Support
-
-Full TypeScript support with standard HTML attribute inheritance:
-
-```tsx
-import { Button, Input } from 'tanuki-ui';
-
-// Use HTML attributes as-is
-<Button 
-  type="submit" 
-  disabled={loading}
-  onClick={handleClick}
-  data-testid="submit-btn"
->
-  Submit
-</Button>
-
-<Input
-  type="email"
-  required
-  placeholder="Email address"
-  onChange={handleChange}
-/>
-```
-
 ## Browser Support
 
 - Chrome/Edge 90+
@@ -373,32 +268,9 @@ import { Button, Input } from 'tanuki-ui';
 - Safari 14+
 - Mobile browsers (iOS Safari, Chrome for Android)
 
-## Bundle Size
-
-| Package | Size (minified + gzipped) |
-|---------|---------------------------|
-| Core Components | 23.5KB |
-| Core CSS | 9.9KB |
-| Layouts | 12.6KB |
-| Layouts CSS | 2.5KB |
-| Node Editor | 49.5KB |
-| Node Editor CSS | 6.9KB |
-| Themes (each) | ~3-5KB |
-
-## Performance
-
-- Optimized with React.memo
-- Style isolation with CSS Modules
-- Lazy loading support
-- Tree-shaking ready
-
 ## License
 
 Unlicense
-
-## Contributing
-
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## Development
 

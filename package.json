@@ -83,11 +83,15 @@
     "dev:catalog": "cd tools/catalog && npm run dev",
     "build:storybook": "cd tools/storybook && npm run build-storybook",
     "build:catalog": "cd tools/catalog && npm run build",
-    "setup:tools": "cd tools/storybook && npm install && cd ../playground && npm install && cd ../catalog && npm install"
+    "setup:tools": "cd tools/storybook && npm install && cd ../playground && npm install && cd ../catalog && npm install && cd ../screenshot-test && npm install && cd ../tools-shared && npm install",
+    "update-readme": "node scripts/update-readme.js",
+    "prebuild": "npm run update-readme",
+    "test:visual": "cd tools/screenshot-test && npm run test",
+    "test:visual:ui": "cd tools/screenshot-test && npm run test:ui",
+    "test:visual:serve": "cd tools/screenshot-test && npm run test:serve",
+    "test:visual:update": "cd tools/screenshot-test && npm run test:update"
   },
   "devDependencies": {
-    "@previewjs/plugin-react": "^17.1.0",
-    "@previewjs/screenshot": "^1.0.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@types/node": "^22.12.0",
@@ -103,6 +107,5 @@
   "peerDependencies": {
     "react": ">=17.0.0",
     "react-use": ">=17.6.0"
-  },
-  "dependencies": {}
+  }
 }

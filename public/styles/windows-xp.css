@@ -1,6 +1,9 @@
 /**
- * Windows XP Theme for Tanuki UI
- * Recreates the iconic Luna Blue interface with gradient buttons, rounded corners, and the classic XP aesthetic
+ * @theme Windows XP
+ * @description Recreates the iconic Luna Blue interface with gradient buttons, rounded corners, and the classic XP aesthetic
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Retro
  */
 :root {
   /* Font Rendering - Crisp ClearType style */

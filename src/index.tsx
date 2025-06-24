@@ -74,3 +74,37 @@ export { Meter } from "./form/Meter";
 export { Output } from "./form/Output";
 export { Optgroup } from "./form/Optgroup";
 export { Option } from "./form/Option";
+
+// HTML Standard Elements (Text Decoration & Formatting)
+export { Strong } from "./elements/Strong";
+export { Em } from "./elements/Em";
+export { Small } from "./elements/Small";
+export { Mark } from "./elements/Mark";
+export { Del } from "./elements/Del";
+export { Ins } from "./elements/Ins";
+export { Sub } from "./elements/Sub";
+export { Sup } from "./elements/Sup";
+export { Code } from "./elements/Code";
+export { Kbd } from "./elements/Kbd";
+export { Samp } from "./elements/Samp";
+export { Var } from "./elements/Var";
+
+// Semantic Elements
+export { Abbr } from "./elements/Abbr";
+export { Cite } from "./elements/Cite";
+export { Dfn } from "./elements/Dfn";
+export { Q } from "./elements/Q";
+
+// Ruby Elements (Japanese text support)
+export { Ruby } from "./elements/Ruby";
+export { Rt } from "./elements/Rt";
+
+// List Elements
+export { Ol } from "./elements/Ol";
+export { Dd } from "./elements/Dd";
+export { Dt } from "./elements/Dt";
+
+// Table Elements
+export { Th } from "./elements/Th";
+export { Td } from "./elements/Td";
+export { Caption } from "./elements/Caption";
