@@ -1,3 +1,11 @@
+/**
+ * @theme OpenAI
+ * @description OpenAI's clean interface styling with thoughtful typography and modern color palette
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category AI
+ */
+
 :root {
   /* Fonts - OpenAI uses Söhne and system fonts */
   --themeDefaultFontFamily: "Söhne", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif;

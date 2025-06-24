@@ -1,3 +1,11 @@
+/**
+ * @theme GitHub Dark
+ * @description GitHub's dark theme with professional developer-focused aesthetics
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Developer
+ */
+
 :root {
   /* Fonts - GitHub uses system fonts with -apple-system */
   --themeDefaultFontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";

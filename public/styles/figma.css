@@ -1,6 +1,9 @@
 /**
- * Figma Theme for Tanuki UI
- * Recreates Figma's modern design system with clean typography, subtle shadows, and professional aesthetics
+ * @theme Figma
+ * @description Recreates Figma's modern design system with clean typography, subtle shadows, and professional aesthetics
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Design
  */
 
 /* Import Inter font from Google Fonts */
@@ -96,6 +99,7 @@
   /* Table Styles */
   --tableHeaderBackground: rgba(248, 249, 250, 1);
   --tableHeaderFont: 500 12px var(--themeDefaultFontFamily);
+  --tableHeaderBorder: 1px solid rgba(0, 0, 0, 0.08);
   --tableCellPadding: 12px 16px;
   --tableBorder: 1px solid rgba(0, 0, 0, 0.08);
   --tableHoverBackground: rgba(248, 249, 250, 0.8);
@@ -280,6 +284,7 @@
 
     /* Table Styles - Dark */
     --tableHeaderBackground: rgba(28, 28, 30, 1);
+    --tableHeaderBorder: 1px solid rgba(255, 255, 255, 0.08);
     --tableBorder: 1px solid rgba(255, 255, 255, 0.08);
     --tableHoverBackground: rgba(44, 44, 46, 0.8);
 

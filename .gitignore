@@ -137,4 +137,12 @@ dist
 tools/*/node_modules/
 tools/*/dist/
 tools/storybook/storybook-static/
+
+# Screenshot test generated files
+tools/screenshot-test/test-results/
+tools/screenshot-test/playwright-report/
+tools/screenshot-test/**/*-snapshots/
+test-results/
+playwright-report/
+
 package-lock.json

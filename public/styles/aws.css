@@ -1,3 +1,11 @@
+/**
+ * @theme AWS
+ * @description Amazon Web Services console-inspired design with professional cloud interface aesthetics
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Enterprise
+ */
+
 :root {
   /* Fonts - AWS uses Amazon Ember and system fonts */
   --themeDefaultFontFamily: "Amazon Ember", "Helvetica Neue", Roboto, Arial, sans-serif;

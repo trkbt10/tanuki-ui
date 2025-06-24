@@ -1,3 +1,11 @@
+/**
+ * @theme macOS 12
+ * @description Apple's design system with translucent effects and refined interface elements
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Apple
+ */
+
 :root {
   /* Fonts */
   --themeDefaultFontFamily: "SF Pro Text", "SF Pro Icons", -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Helvetica",

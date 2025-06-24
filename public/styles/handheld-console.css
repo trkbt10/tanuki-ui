@@ -1,3 +1,11 @@
+/**
+ * @theme Handheld Console
+ * @description Nintendo Switch and handheld gaming aesthetics with rounded corners and vibrant colors
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Gaming
+ */
+
 :root {
   font-feature-settings: "rclt" off;
   /* Nintendo Switch Color Palette */
