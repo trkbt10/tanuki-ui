@@ -7,8 +7,11 @@
 
 import fs from 'fs';
 import path from 'path';
-import { execSync } from 'child_process';
+import { execSync, execFile } from 'child_process';
 import { fileURLToPath } from 'url';
+import { promisify } from 'util';
+
+const execFileAsync = promisify(execFile);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -40,14 +43,20 @@ function getBuildSizes(skipBuild = false) {
     if (!skipBuild) {
       // ビルドを実行
       console.log('ビルドを実行中...');
-      const buildOutput = execSync('npm run build', { 
+      const npmPath = process.env.npm_execpath || 'npm';
+      execFile(npmPath, ['run', 'build'], { 
         cwd: rootDir, 
-        encoding: 'utf8',
-        stdio: 'pipe'
+        stdio: 'inherit',
+        env: process.env
+      }, (error) => {
+        if (error) {
+          console.error('ビルドエラー:', error);
+          throw error;
+        }
       });
       
-      // ビルド出力からサイズ情報を抽出
-      const lines = buildOutput.split('\n');
+      // ビルド出力からサイズ情報を抽出（ビルド出力は表示のみ）
+      const lines = [];
       const sizeInfo = {};
       
       for (const line of lines) {
