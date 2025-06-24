@@ -55,7 +55,7 @@
     "./extended/node-editor/style.css": "./dist/lib/extended/node-editor/style.css",
     "./styles/*.css": "./public/styles/*.css"
   },
-  "version": "1.206.45",
+  "version": "1.207.48",
   "license": "Unlicense",
   "author": "trkbt10 <triplequartet@gmail.com>",
   "homepage": "https://github.com/trkbt10/tanuki-ui#readme",
