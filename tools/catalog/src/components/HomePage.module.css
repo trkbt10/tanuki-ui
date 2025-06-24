@@ -1,0 +1,167 @@
+.container {
+  padding: 0;
+}
+
+.heroSection {
+  padding: 48px 0;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(0,123,255,0.1), rgba(102,51,153,0.1));
+  border-radius: 12px;
+  margin-bottom: 32px;
+}
+
+.heroTitle {
+  font-size: 3rem;
+  margin-bottom: 16px;
+}
+
+.heroSubtitle {
+  font-size: 1.25rem;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.statsGrid {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.statItem {
+  text-align: center;
+}
+
+.statNumber {
+  margin: 0;
+}
+
+.statNumberPrimary {
+  color: #007bff;
+}
+
+.statNumberSuccess {
+  color: #28a745;
+}
+
+.statNumberWarning {
+  color: #fd7e14;
+}
+
+.statLabel {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.section {
+  margin-bottom: 48px;
+}
+
+.sectionTitle {
+  margin-bottom: 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 24px;
+  background-color: #fff;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.badge {
+  background: #f8f9fa;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.cardDescription {
+  margin: 0 0 16px 0;
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.componentTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  text-decoration: none;
+  background: #e3f2fd;
+  color: #1976d2;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  transition: background-color 0.2s ease;
+}
+
+.tag:hover {
+  background-color: #bbdefb;
+}
+
+.moreCount {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  color: #999;
+  font-style: italic;
+}
+
+.formLink {
+  text-decoration: none;
+  color: #007bff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.formLinkTitle {
+  margin: 0 0 12px 0;
+}
+
+.formDescription {
+  margin: 0 0 12px 0;
+}
+
+.formSubDescription {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.codeBlock {
+  margin: 0;
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  overflow: auto;
+}

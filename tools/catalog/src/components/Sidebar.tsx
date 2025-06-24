@@ -3,25 +3,7 @@ import { Link, useLocation } from "react-router";
 import { CategoryInfo } from "../catalog/components";
 import { DataList, SidebarList, Toolbar } from "tanuki-ui";
 import { HeaderMainLayout } from "tanuki-ui/layouts";
-// 実際に存在するテーマファイルを基にしたテーマリスト
-const themes = [
-  { value: "monotone", label: "Monotone (Default)", file: "/tanuki-ui/styles/monotone.css" },
-  { value: "android12", label: "Android 12", file: "/tanuki-ui/styles/android12.css" },
-  { value: "apple-liquid-glass", label: "Apple Liquid Glass", file: "/tanuki-ui/styles/apple-liquid-glass.css" },
-  { value: "aws", label: "AWS", file: "/tanuki-ui/styles/aws.css" },
-  { value: "figma", label: "Figma", file: "/tanuki-ui/styles/figma.css" },
-  { value: "github-dark", label: "GitHub Dark", file: "/tanuki-ui/styles/github-dark.css" },
-  { value: "handheld-console", label: "Handheld Console", file: "/tanuki-ui/styles/handheld-console.css" },
-  { value: "ios12", label: "iOS 12", file: "/tanuki-ui/styles/ios12.css" },
-  { value: "linear", label: "Linear", file: "/tanuki-ui/styles/linear.css" },
-  { value: "macOS12", label: "macOS 12", file: "/tanuki-ui/styles/macOS12.css" },
-  { value: "material-design", label: "Material Design", file: "/tanuki-ui/styles/material-design.css" },
-  { value: "openai", label: "OpenAI", file: "/tanuki-ui/styles/openai.css" },
-  { value: "vercel", label: "Vercel", file: "/tanuki-ui/styles/vercel.css" },
-  { value: "windows-xp", label: "Windows XP", file: "/tanuki-ui/styles/windows-xp.css" },
-  { value: "windows11", label: "Windows 11", file: "/tanuki-ui/styles/windows11.css" },
-  { value: "windows98", label: "Windows 98", file: "/tanuki-ui/styles/windows98.css" },
-];
+import { themes, groupThemesByCategory } from "../data/themes";
 
 interface SidebarProps {
   components: Record<string, CategoryInfo>;
@@ -30,16 +12,17 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ components }) => {
   const location = useLocation();
   const [selectedTheme, setSelectedTheme] = useState("monotone");
+  const themesByCategory = groupThemesByCategory(themes);
 
-  // テーマCSSを動的に読み込み
+  // Apply selected theme CSS
   useEffect(() => {
-    // 既存のテーマCSSを削除
+    // Remove existing theme CSS
     const existingTheme = document.getElementById("theme-css");
     if (existingTheme) {
       existingTheme.remove();
     }
 
-    // 新しいテーマCSSを追加
+    // Add new theme CSS
     const selectedThemeData = themes.find((t) => t.value === selectedTheme);
     if (selectedThemeData?.file) {
       const link = document.createElement("link");
@@ -62,12 +45,21 @@ const Sidebar: React.FC<SidebarProps> = ({ components }) => {
             style={{ minWidth: "200px" }}
           />
           <datalist id="themes-list">
-            {themes.map((theme) => (
-              <option key={theme.value} value={theme.value}>
-                {theme.label}
-              </option>
+            {Object.entries(themesByCategory).map(([category, categoryThemes]) => (
+              <optgroup key={category} label={category}>
+                {categoryThemes.map((theme) => (
+                  <option key={theme.value} value={theme.value}>
+                    {theme.label}
+                  </option>
+                ))}
+              </optgroup>
             ))}
           </datalist>
+          {themes.length > 0 && (
+            <span style={{ fontSize: '12px', color: 'var(--secondaryLabelColor)', marginLeft: '8px' }}>
+              {themes.length} themes available
+            </span>
+          )}
         </Toolbar>
       }
     >
