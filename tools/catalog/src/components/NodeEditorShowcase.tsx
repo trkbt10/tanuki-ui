@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router";
 import { NodeEditor } from "tanuki-ui/extended/node-editor";
 import type { NodeEditorData, NodeDefinition } from "tanuki-ui/extended/node-editor";
-import { H2, H3, P, Section, Article, Button } from "tanuki-ui";
+import { H2, H3, P, Section, Article, Button, Label } from "tanuki-ui";
 
 // Basic node definitions for the demo
 const basicNodeDefinitions: NodeDefinition[] = [
@@ -59,19 +60,46 @@ const initialDemoData: NodeEditorData = {
   connections: {
     "conn1": {
       id: "conn1",
-      from: { nodeId: "node1", portId: "output" },
-      to: { nodeId: "node3", portId: "a" },
-    } as any,
+      fromNodeId: "node1",
+      fromPortId: "output",
+      toNodeId: "node3",
+      toPortId: "a",
+    },
     "conn2": {
-      id: "conn2", 
-      from: { nodeId: "node2", portId: "output" },
-      to: { nodeId: "node3", portId: "b" },
-    } as any,
+      id: "conn2",
+      fromNodeId: "node2",
+      fromPortId: "output",
+      toNodeId: "node3",
+      toPortId: "b",
+    },
   },
+};
+
+// Alternative demo data for testing controlled mode
+const alternativeDemoData: NodeEditorData = {
+  nodes: {
+    "alt1": {
+      id: "alt1",
+      type: "data-source",
+      position: { x: 200, y: 100 },
+      size: { width: 180, height: 100 },
+      data: { title: "Alternative Source", value: 20 },
+    },
+    "alt2": {
+      id: "alt2",
+      type: "math-add",
+      position: { x: 450, y: 100 },
+      size: { width: 150, height: 80 },
+      data: { title: "Alternative Add", result: 0 },
+    },
+  },
+  connections: {},
 };
 
 const NodeEditorShowcase: React.FC = () => {
   const [editorData, setEditorData] = useState<NodeEditorData>(initialDemoData);
+  const [controlledData, setControlledData] = useState<NodeEditorData>(initialDemoData);
+  const [isControlled, setIsControlled] = useState(false);
 
   return (
     <Article>
@@ -84,13 +112,72 @@ const NodeEditorShowcase: React.FC = () => {
       </Section>
 
       <Section style={{ marginBottom: "24px" }}>
-        <H3>🚀 インタラクティブデモ</H3>
+        <div style={{ display: "flex", alignItems: "center", gap: "16px", marginBottom: "16px" }}>
+          <H3 style={{ margin: 0 }}>🚀 インタラクティブデモ</H3>
+          <Link
+            to="/node-editor-test"
+            style={{
+              display: "inline-block",
+              padding: "6px 12px",
+              background: "#007bff",
+              color: "white",
+              textDecoration: "none",
+              borderRadius: "6px",
+              fontSize: "13px",
+              fontWeight: "bold",
+            }}
+          >
+            🧪 Props テストページへ
+          </Link>
+        </div>
         <P>
           下記のエディターでは、ノードの移動、ポート間の接続、ズーム・パンなどの基本操作を体験できます。
           右側のインスペクターパネルでノードの詳細も確認できます。
         </P>
 
-        <Section style={{ marginBottom: "16px" }}></Section>
+        <Section style={{ marginBottom: "16px" }}>
+          <div style={{ display: "flex", gap: "16px", alignItems: "center", marginBottom: "12px" }}>
+            <Label>
+              <input
+                type="checkbox"
+                checked={isControlled}
+                onChange={(e) => setIsControlled(e.target.checked)}
+                style={{ marginRight: "8px" }}
+              />
+              Controlled Mode (data prop) を使用する
+            </Label>
+            
+            {isControlled && (
+              <>
+                <Button 
+                  onClick={() => setControlledData(initialDemoData)}
+                  style={{ fontSize: "12px", padding: "4px 8px" }}
+                >
+                  データ A をロード
+                </Button>
+                <Button 
+                  onClick={() => setControlledData(alternativeDemoData)}
+                  style={{ fontSize: "12px", padding: "4px 8px" }}
+                >
+                  データ B をロード
+                </Button>
+                <Button 
+                  onClick={() => setControlledData({ nodes: {}, connections: {} })}
+                  style={{ fontSize: "12px", padding: "4px 8px" }}
+                >
+                  クリア
+                </Button>
+              </>
+            )}
+          </div>
+          
+          <P style={{ fontSize: "14px", color: "#666" }}>
+            {isControlled ? 
+              "Controlled Mode: コンポーネントの状態は親コンポーネントが管理します。上のボタンで即座にデータを切り替えられます。" : 
+              "Uncontrolled Mode: コンポーネントが内部的に状態を管理します (initialData)。"
+            }
+          </P>
+        </Section>
 
         <Section
           style={{
@@ -102,12 +189,21 @@ const NodeEditorShowcase: React.FC = () => {
           }}
         >
           <div style={{ width: "100%", height: "100%" }}>
-            <NodeEditor
-              initialData={editorData}
-              onDataChange={setEditorData}
-              nodeDefinitions={basicNodeDefinitions}
-              showInspector={true}
-            />
+            {isControlled ? (
+              <NodeEditor
+                initialData={controlledData}
+                onDataChange={setControlledData}
+                nodeDefinitions={basicNodeDefinitions}
+                showInspector={true}
+              />
+            ) : (
+              <NodeEditor
+                initialData={editorData}
+                onDataChange={setEditorData}
+                nodeDefinitions={basicNodeDefinitions}
+                showInspector={true}
+              />
+            )}
           </div>
         </Section>
       </Section>
@@ -137,42 +233,110 @@ const NodeEditorShowcase: React.FC = () => {
 
       <Section style={{ marginBottom: "24px" }}>
         <H3>🛠️ 使用方法</H3>
+        
+        <Section style={{ marginBottom: "16px" }}>
+          <H3 style={{ fontSize: "16px" }}>📝 Uncontrolled Mode (initialData)</H3>
+          <P>コンポーネントが内部的に状態を管理する方式です。defaultValueのような動作をします。</P>
+          <Section
+            style={{
+              background: "#f8f9fa",
+              padding: "16px",
+              borderRadius: "8px",
+              borderLeft: "4px solid #28a745",
+              marginBottom: "16px",
+            }}
+          >
+            <pre
+              style={{
+                margin: 0,
+                fontFamily: '"Courier New", monospace',
+                fontSize: "13px",
+                lineHeight: "1.5",
+                overflow: "auto",
+              }}
+            >
+              {`// Uncontrolled Mode
+function UncontrolledNodeEditor() {
+  const [savedData, setSavedData] = useState(initialData);
+
+  return (
+    <NodeEditor
+      initialData={savedData}  // 初期値として設定
+      onDataChange={(data) => {
+        // 変更通知を受け取る（オプション）
+        console.log("Data changed:", data);
+      }}
+      showInspector={true}
+    />
+  );
+}`}
+            </pre>
+          </Section>
+        </Section>
+
+        <Section>
+          <H3 style={{ fontSize: "16px" }}>🎛️ Controlled Mode (data)</H3>
+          <P>親コンポーネントが状態を管理する方式です。valueのような動作をします。</P>
+          <Section
+            style={{
+              background: "#f8f9fa",
+              padding: "16px",
+              borderRadius: "8px",
+              borderLeft: "4px solid #007bff",
+            }}
+          >
+            <pre
+              style={{
+                margin: 0,
+                fontFamily: '"Courier New", monospace',
+                fontSize: "13px",
+                lineHeight: "1.5",
+                overflow: "auto",
+              }}
+            >
+              {`// Controlled Mode
+function ControlledNodeEditor() {
+  const [data, setData] = useState(initialData);
+
+  return (
+    <NodeEditor
+      data={data}              // 状態を直接制御
+      onDataChange={setData}   // 必須：状態更新ハンドラー
+      showInspector={true}
+    />
+  );
+}`}
+            </pre>
+          </Section>
+        </Section>
+      </Section>
+
+      <Section style={{ marginTop: "24px" }}>
+        <H3>💡 Props の比較</H3>
         <Section
           style={{
             background: "#f8f9fa",
             padding: "16px",
             borderRadius: "8px",
-            borderLeft: "4px solid #007bff",
+            border: "1px solid #dee2e6",
           }}
         >
-          <pre
-            style={{
-              margin: 0,
-              fontFamily: '"Courier New", monospace',
-              fontSize: "13px",
-              lineHeight: "1.5",
-              overflow: "auto",
-            }}
-          >
-            {`import { NodeEditor } from 'tanuki-ui/extended/node-editor';
-
-function MyApp() {
-  const [data, setData] = useState({
-    nodes: {},
-    connections: {}
-  });
-
-  return (
-    <div style={{ width: "100vw", height: "100vh" }}>
-      <NodeEditor
-        initialData={data}
-        onDataChange={setData}
-        showInspector={true}
-      />
-    </div>
-  );
-}`}
-          </pre>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
+            <div>
+              <H3 style={{ fontSize: "14px", color: "#28a745" }}>Uncontrolled Mode</H3>
+              <P style={{ fontSize: "13px", margin: "4px 0" }}>• <code>initialData</code> prop を使用</P>
+              <P style={{ fontSize: "13px", margin: "4px 0" }}>• コンポーネントが内部状態を管理</P>
+              <P style={{ fontSize: "13px", margin: "4px 0" }}>• 再レンダー時に initialData を変更しても無視される</P>
+              <P style={{ fontSize: "13px", margin: "4px 0" }}>• HTMLの defaultValue と同じ動作</P>
+            </div>
+            <div>
+              <H3 style={{ fontSize: "14px", color: "#007bff" }}>Controlled Mode</H3>
+              <P style={{ fontSize: "13px", margin: "4px 0" }}>• <code>data</code> prop を使用</P>
+              <P style={{ fontSize: "13px", margin: "4px 0" }}>• 親コンポーネントが状態を管理</P>
+              <P style={{ fontSize: "13px", margin: "4px 0" }}>• data prop の変更は即座に反映される</P>
+              <P style={{ fontSize: "13px", margin: "4px 0" }}>• HTMLの value と同じ動作</P>
+            </div>
+          </div>
         </Section>
       </Section>
 

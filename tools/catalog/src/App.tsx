@@ -5,6 +5,7 @@ import { components } from "./catalog/components";
 import ComponentView from "./components/ComponentView";
 import HomePage from "./components/HomePage";
 import FormCatalog from "./components/FormCatalog";
+import NodeEditorTestPage from "./components/NodeEditorTestPage";
 import Sidebar from "./components/Sidebar";
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
           <Routes>
             <Route index element={<HomePage />} />
             <Route path="/form-catalog" element={<FormCatalog />} />
+            <Route path="/node-editor-test" element={<NodeEditorTestPage />} />
             <Route path="/component/:category/:name" element={<ComponentView />} />
           </Routes>
         </div>

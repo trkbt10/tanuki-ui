@@ -77,6 +77,15 @@ const Sidebar: React.FC<SidebarProps> = ({ components }) => {
             >
               <SidebarList.ListItem label="📝 Form Elements Catalog" selected={location.pathname === "/form-catalog"} />
             </Link>
+            <Link
+              to="/node-editor-test"
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
+            >
+              <SidebarList.ListItem label="🧪 NodeEditor Props Test" selected={location.pathname === "/node-editor-test"} />
+            </Link>
           </SidebarList.List>
         </SidebarList.Container>
 
