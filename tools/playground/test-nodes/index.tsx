@@ -5,6 +5,7 @@ import { createGraphicsNodeDefinitions } from "./graphicsNodes";
 import { createUIElementNodeDefinitions } from "./uiElementNodes";
 import { createExternalDataNodeDefinitions } from "./externalDataNodes";
 import { createDataProcessingNodeDefinitions } from "./dataProcessingNodes";
+import { createProgressNodeDefinitions } from "./progressNodes";
 
 export interface TestNodeFactories {
   getConnectedValue: (nodeId: string, portId: string) => any;
@@ -21,6 +22,7 @@ export const createAllTestNodeDefinitions = (factories: TestNodeFactories): Node
     ...createUIElementNodeDefinitions(updateNodeValue),
     ...createExternalDataNodeDefinitions(updateNodeValue),
     ...createDataProcessingNodeDefinitions(getConnectedValue, updateNodeValue),
+    ...createProgressNodeDefinitions(getConnectedValue),
   ];
 };
 
@@ -30,3 +32,4 @@ export * from "./graphicsNodes";
 export * from "./uiElementNodes";
 export * from "./externalDataNodes";
 export * from "./dataProcessingNodes";
+export * from "./progressNodes";

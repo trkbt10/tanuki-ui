@@ -196,6 +196,92 @@ export const TestNodeEditor: React.FC = () => {
           { id: "error", type: "output", label: "Error", nodeId: "dataTransformer1", position: "right" }
         ],
       },
+      // Additional Feature Test Nodes
+      textInput2: {
+        id: "textInput2",
+        type: "text-input",
+        position: { x: 50, y: 750 },
+        size: { width: 200, height: 150 },
+        data: { 
+          title: "Multi-line Text", 
+          value: "This is a\nmulti-line\ntext example", 
+          placeholder: "Enter notes...", 
+          multiline: true, 
+          maxLength: 200 
+        },
+        ports: [
+          { id: "input", type: "input", label: "Default", nodeId: "textInput2", position: "left" },
+          { id: "output", type: "output", label: "Text", nodeId: "textInput2", position: "right" }
+        ],
+      },
+      dropdownSelect2: {
+        id: "dropdownSelect2",
+        type: "dropdown-select",
+        position: { x: 300, y: 750 },
+        size: { width: 180, height: 120 },
+        data: { 
+          title: "Theme Selector", 
+          options: ["Light Theme", "Dark Theme", "Auto"], 
+          selectedValue: "Dark Theme", 
+          allowCustom: false 
+        },
+        ports: [
+          { id: "options", type: "input", label: "Options", nodeId: "dropdownSelect2", position: "left" },
+          { id: "selected", type: "output", label: "Selected", nodeId: "dropdownSelect2", position: "right" }
+        ],
+      },
+      checkboxGroup2: {
+        id: "checkboxGroup2",
+        type: "checkbox-group",
+        position: { x: 520, y: 750 },
+        size: { width: 220, height: 120 },
+        data: { 
+          title: "Export Options", 
+          options: ["Include Headers", "Minify", "Compress"], 
+          selectedValues: ["Include Headers", "Minify"], 
+          layout: "horizontal" 
+        },
+        ports: [
+          { id: "options", type: "input", label: "Options", nodeId: "checkboxGroup2", position: "left" },
+          { id: "selected", type: "output", label: "Selected", nodeId: "checkboxGroup2", position: "right" }
+        ],
+      },
+      buttonTrigger2: {
+        id: "buttonTrigger2",
+        type: "button-trigger",
+        position: { x: 780, y: 750 },
+        size: { width: 160, height: 100 },
+        data: { 
+          title: "Export Button", 
+          label: "Export Data", 
+          variant: "danger", 
+          disabled: false, 
+          clickCount: 0 
+        },
+        ports: [
+          { id: "trigger", type: "output", label: "Triggered", nodeId: "buttonTrigger2", position: "right" },
+          { id: "count", type: "output", label: "Count", nodeId: "buttonTrigger2", position: "right" }
+        ],
+      },
+      progressBar2: {
+        id: "progressBar2",
+        type: "progress-bar",
+        position: { x: 980, y: 750 },
+        size: { width: 200, height: 100 },
+        data: { 
+          title: "Export Progress", 
+          value: 0, 
+          min: 0, 
+          max: 100, 
+          showValue: true, 
+          color: "#FF5722", 
+          animated: true 
+        },
+        ports: [
+          { id: "value", type: "input", label: "Value", nodeId: "progressBar2", position: "left" },
+          { id: "progress", type: "output", label: "Progress", nodeId: "progressBar2", position: "right" }
+        ],
+      },
       // Math Processing Test Section
       mathAdd: {
         id: "mathAdd",
@@ -249,6 +335,21 @@ export const TestNodeEditor: React.FC = () => {
         fromPortId: "count",
         toNodeId: "progressBar1",
         toPortId: "value",
+      },
+      // Additional Feature Test Connections
+      exportButtonToProgressConn: {
+        id: "exportButtonToProgressConn",
+        fromNodeId: "buttonTrigger2",
+        fromPortId: "count",
+        toNodeId: "progressBar2",
+        toPortId: "value",
+      },
+      checkboxToDropdownConn: {
+        id: "checkboxToDropdownConn",
+        fromNodeId: "checkboxGroup2",
+        fromPortId: "selected",
+        toNodeId: "dropdownSelect2",
+        toPortId: "options",
       },
     },
   };
