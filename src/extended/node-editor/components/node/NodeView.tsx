@@ -364,14 +364,13 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
                 <PortView
                   key={port.id}
                   port={port}
-                  nodeWidth={size.width}
-                  nodeHeight={size.height}
-                  allPorts={ports}
                   onPointerDown={onPortPointerDown}
                   onPointerUp={onPortPointerUp}
                   onPointerEnter={onPortPointerEnter}
                   onPointerLeave={onPortPointerLeave}
-                  isConnecting={connectingPort?.id === port.id}
+                  isConnecting={actionState.connectionDragState?.fromPort.id === port.id}
+                  isConnectable={actionState.connectablePortIds.has(port.id)}
+                  isCandidate={actionState.connectionDragState?.candidatePort?.id === port.id}
                   isHovered={hoveredPort?.id === port.id}
                   isConnected={connectedPorts?.has(port.id)}
                 />

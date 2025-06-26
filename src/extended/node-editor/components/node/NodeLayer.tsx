@@ -8,9 +8,9 @@ import { useGroupManagement } from "../../hooks/useGroupManagement";
 import { useNodeResize } from "../../hooks/useNodeResize";
 import { useVisibleNodes } from "../../hooks/useVisibleNodes";
 import { usePointerInteraction } from "../../hooks/usePointerInteraction";
+import { usePortPositions } from "../../contexts/PortPositionContext";
 import styles from "../../NodeEditor.module.css";
 import type { Port } from "../../types/core";
-import { getPortPosition } from "../connection/utils/connectionUtils";
 import { snapMultipleToGrid } from "../../utils/gridSnap";
 import { NodeView } from "./NodeView";
 
@@ -26,6 +26,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
   const { state: nodeEditorState, dispatch: nodeEditorDispatch, actions: nodeEditorActions } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState } = useNodeCanvas();
+  const { getPortPosition } = usePortPositions();
 
   // Helper to get node definition
   const getNodeDef = useNodeDefinitions();
@@ -192,7 +193,10 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       const node = nodeEditorState.nodes[port.nodeId];
       if (!node) return;
 
-      const portPosition = getPortPosition(node, port);
+      const portPositionData = getPortPosition(port.nodeId, port.id);
+      if (!portPositionData) return;
+      
+      const portPosition = portPositionData.connectionPoint;
 
       // Check if port is connected
       const existingConnections = Object.values(nodeEditorState.connections).filter(
