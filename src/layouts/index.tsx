@@ -7,5 +7,3 @@ export { StickyHeader } from "./StickyHeader";
 export { ParavirtualScroll } from "./ParavirtualScroll";
 export { ViewSwitcher } from "./ViewSwitcher";
 
-// Panel system exports
-export * from "./panel";
