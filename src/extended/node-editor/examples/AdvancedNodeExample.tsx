@@ -15,13 +15,7 @@ interface CodeData {
   errors?: string[];
 }
 
-const CodeEditorRenderer = ({
-  node,
-  isSelected,
-  isDragging,
-  externalData,
-  onUpdateNode,
-}: NodeRenderProps) => {
+const CodeEditorRenderer = ({ node, isSelected, isDragging, externalData, onUpdateNode }: NodeRenderProps) => {
   const codeData = externalData as CodeData | undefined;
   const [isEditing, setIsEditing] = React.useState(false);
   const [localCode, setLocalCode] = React.useState(codeData?.code || "");
@@ -35,18 +29,23 @@ const CodeEditorRenderer = ({
       data: {
         ...node.data,
         lastModified: new Date().toISOString(),
-      }
+      },
     });
     setIsEditing(false);
   };
 
   const getLanguageColor = (lang?: string) => {
     switch (lang) {
-      case "javascript": return "#f7df1e";
-      case "typescript": return "#3178c6";
-      case "python": return "#3776ab";
-      case "rust": return "#dea584";
-      default: return "#6b7280";
+      case "javascript":
+        return "#f7df1e";
+      case "typescript":
+        return "#3178c6";
+      case "python":
+        return "#3776ab";
+      case "rust":
+        return "#dea584";
+      default:
+        return "#6b7280";
     }
   };
 
@@ -62,22 +61,24 @@ const CodeEditorRenderer = ({
         fontFamily: "monospace",
       }}
     >
-      <div style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: "8px",
-      }}>
-        <span style={{
-          fontSize: "12px",
-          fontWeight: "bold",
-          color: getLanguageColor(codeData?.language),
-        }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "8px",
+        }}
+      >
+        <span
+          style={{
+            fontSize: "12px",
+            fontWeight: "bold",
+            color: getLanguageColor(codeData?.language),
+          }}
+        >
           {codeData?.language?.toUpperCase() || "CODE"}
         </span>
-        {codeData?.compiled && (
-          <span style={{ fontSize: "12px", color: "#10b981" }}>✓ Compiled</span>
-        )}
+        {codeData?.compiled && <span style={{ fontSize: "12px", color: "#10b981" }}>✓ Compiled</span>}
       </div>
 
       {isEditing ? (
@@ -133,14 +134,16 @@ const CodeEditorRenderer = ({
         </div>
       ) : (
         <div>
-          <pre style={{
-            fontSize: "11px",
-            color: "#374151",
-            margin: 0,
-            whiteSpace: "pre-wrap",
-            maxHeight: "60px",
-            overflow: "hidden",
-          }}>
+          <pre
+            style={{
+              fontSize: "11px",
+              color: "#374151",
+              margin: 0,
+              whiteSpace: "pre-wrap",
+              maxHeight: "60px",
+              overflow: "hidden",
+            }}
+          >
             {codeData?.code || "// Click to edit code"}
           </pre>
           <button
@@ -159,9 +162,7 @@ const CodeEditorRenderer = ({
             Edit Code
           </button>
           {codeData?.errors && codeData.errors.length > 0 && (
-            <div style={{ marginTop: "4px", fontSize: "10px", color: "#ef4444" }}>
-              {codeData.errors.length} error(s)
-            </div>
+            <div style={{ marginTop: "4px", fontSize: "10px", color: "#ef4444" }}>{codeData.errors.length} error(s)</div>
           )}
         </div>
       )}
@@ -169,11 +170,7 @@ const CodeEditorRenderer = ({
   );
 };
 
-const CodeInspectorRenderer = ({
-  node,
-  externalData,
-  onUpdateExternalData,
-}: InspectorRenderProps) => {
+const CodeInspectorRenderer = ({ node, externalData, onUpdateExternalData }: InspectorRenderProps) => {
   const codeData = externalData as CodeData | undefined;
   const [editedData, setEditedData] = React.useState<CodeData>({
     id: codeData?.id || "",
@@ -192,7 +189,7 @@ const CodeInspectorRenderer = ({
   const simulate = (action: "compile" | "run" | "test") => {
     switch (action) {
       case "compile":
-        setEditedData(prev => ({
+        setEditedData((prev) => ({
           ...prev,
           compiled: Math.random() > 0.3,
           errors: Math.random() > 0.3 ? [] : ["Syntax error on line 5"],
@@ -210,9 +207,11 @@ const CodeInspectorRenderer = ({
   return (
     <div style={{ padding: "16px" }}>
       <h3>Code Editor</h3>
-      
+
       <div style={{ marginBottom: "12px" }}>
-        <label htmlFor="code-language" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>Language:</label>
+        <label htmlFor="code-language" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>
+          Language:
+        </label>
         <select
           id="code-language"
           name="codeLanguage"
@@ -229,7 +228,9 @@ const CodeInspectorRenderer = ({
       </div>
 
       <div style={{ marginBottom: "12px" }}>
-        <label htmlFor="code-content" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>Code:</label>
+        <label htmlFor="code-content" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>
+          Code:
+        </label>
         <textarea
           id="code-content"
           name="codeContent"
@@ -294,15 +295,16 @@ const CodeInspectorRenderer = ({
             Test
           </button>
         </div>
-        
+
         <div style={{ fontSize: "11px" }}>
-          Status: {editedData.compiled ? (
+          Status:{" "}
+          {editedData.compiled ? (
             <span style={{ color: "#10b981" }}>✓ Compiled</span>
           ) : (
             <span style={{ color: "#ef4444" }}>✗ Not compiled</span>
           )}
         </div>
-        
+
         {editedData.errors && editedData.errors.length > 0 && (
           <div style={{ marginTop: "8px" }}>
             <strong style={{ fontSize: "11px", color: "#ef4444" }}>Errors:</strong>
@@ -344,18 +346,13 @@ interface ChartData {
   data: Array<{ label: string; value: number; color?: string }>;
 }
 
-const ChartRenderer = ({
-  node,
-  isSelected,
-  isDragging,
-  externalData,
-}: NodeRenderProps) => {
+const ChartRenderer = ({ node, isSelected, isDragging, externalData }: NodeRenderProps) => {
   const chartData = externalData as ChartData | undefined;
 
   const renderMiniChart = () => {
     if (!chartData?.data) return null;
 
-    const maxValue = Math.max(...chartData.data.map(d => d.value));
+    const maxValue = Math.max(...chartData.data.map((d) => d.value));
     const chartHeight = 60;
 
     switch (chartData.type) {
@@ -376,38 +373,27 @@ const ChartRenderer = ({
             ))}
           </div>
         );
-      
+
       case "line":
-        const points = chartData.data.map((item, index) => {
-          const x = (index / (chartData.data.length - 1)) * 100;
-          const y = 100 - ((item.value / maxValue) * 80);
-          return `${x},${y}`;
-        }).join(" ");
+        const points = chartData.data
+          .map((item, index) => {
+            const x = (index / (chartData.data.length - 1)) * 100;
+            const y = 100 - (item.value / maxValue) * 80;
+            return `${x},${y}`;
+          })
+          .join(" ");
 
         return (
           <svg width="100%" height={chartHeight} style={{ border: "1px solid #e5e7eb" }}>
-            <polyline
-              points={points}
-              fill="none"
-              stroke="#3b82f6"
-              strokeWidth="2"
-            />
+            <polyline points={points} fill="none" stroke="#3b82f6" strokeWidth="2" />
             {chartData.data.map((item, index) => {
               const x = (index / (chartData.data.length - 1)) * 100;
-              const y = 100 - ((item.value / maxValue) * 80);
-              return (
-                <circle
-                  key={index}
-                  cx={`${x}%`}
-                  cy={`${y}%`}
-                  r="3"
-                  fill="#3b82f6"
-                />
-              );
+              const y = 100 - (item.value / maxValue) * 80;
+              return <circle key={index} cx={`${x}%`} cy={`${y}%`} r="3" fill="#3b82f6" />;
             })}
           </svg>
         );
-      
+
       case "pie":
         let currentAngle = 0;
         const radius = chartHeight / 2 - 5;
@@ -423,12 +409,12 @@ const ChartRenderer = ({
               const y1 = centerY + radius * Math.sin((currentAngle * Math.PI) / 180);
               const x2 = centerX + radius * Math.cos(((currentAngle + angle) * Math.PI) / 180);
               const y2 = centerY + radius * Math.sin(((currentAngle + angle) * Math.PI) / 180);
-              
+
               const largeArcFlag = angle > 180 ? 1 : 0;
               const pathData = `M ${centerX} ${centerY} L ${x1} ${y1} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
-              
+
               currentAngle += angle;
-              
+
               return (
                 <path
                   key={index}
@@ -441,7 +427,7 @@ const ChartRenderer = ({
             })}
           </svg>
         );
-      
+
       default:
         return null;
     }
@@ -459,31 +445,24 @@ const ChartRenderer = ({
       }}
     >
       <div style={{ marginBottom: "8px" }}>
-        <h4 style={{ margin: "0 0 4px", fontSize: "13px" }}>
-          {chartData?.title || "Chart"}
-        </h4>
+        <h4 style={{ margin: "0 0 4px", fontSize: "13px" }}>{chartData?.title || "Chart"}</h4>
         <span style={{ fontSize: "11px", color: "#6b7280" }}>
           {chartData?.type?.toUpperCase() || "CHART"} • {chartData?.data?.length || 0} items
         </span>
       </div>
-      
-      <div style={{ marginBottom: "8px" }}>
-        {renderMiniChart()}
-      </div>
-      
+
+      <div style={{ marginBottom: "8px" }}>{renderMiniChart()}</div>
+
       {chartData?.data && (
         <div style={{ fontSize: "10px", color: "#6b7280" }}>
-          Range: {Math.min(...chartData.data.map(d => d.value))} - {Math.max(...chartData.data.map(d => d.value))}
+          Range: {Math.min(...chartData.data.map((d) => d.value))} - {Math.max(...chartData.data.map((d) => d.value))}
         </div>
       )}
     </div>
   );
 };
 
-const ChartInspectorRenderer = ({
-  externalData,
-  onUpdateExternalData,
-}: InspectorRenderProps) => {
+const ChartInspectorRenderer = ({ externalData, onUpdateExternalData }: InspectorRenderProps) => {
   const chartData = externalData as ChartData | undefined;
   const [editedData, setEditedData] = React.useState<ChartData>({
     id: chartData?.id || "",
@@ -497,23 +476,23 @@ const ChartInspectorRenderer = ({
   });
 
   const addDataPoint = () => {
-    setEditedData(prev => ({
+    setEditedData((prev) => ({
       ...prev,
       data: [...prev.data, { label: `Item ${prev.data.length + 1}`, value: 5 }],
     }));
   };
 
   const removeDataPoint = (index: number) => {
-    setEditedData(prev => ({
+    setEditedData((prev) => ({
       ...prev,
       data: prev.data.filter((_, i) => i !== index),
     }));
   };
 
   const updateDataPoint = (index: number, updates: Partial<ChartData["data"][0]>) => {
-    setEditedData(prev => ({
+    setEditedData((prev) => ({
       ...prev,
-      data: prev.data.map((item, i) => i === index ? { ...item, ...updates } : item),
+      data: prev.data.map((item, i) => (i === index ? { ...item, ...updates } : item)),
     }));
   };
 
@@ -526,9 +505,11 @@ const ChartInspectorRenderer = ({
   return (
     <div style={{ padding: "16px" }}>
       <h3>Chart Configuration</h3>
-      
+
       <div style={{ marginBottom: "12px" }}>
-        <label htmlFor="chart-title" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>Title:</label>
+        <label htmlFor="chart-title" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>
+          Title:
+        </label>
         <input
           id="chart-title"
           name="chartTitle"
@@ -540,7 +521,9 @@ const ChartInspectorRenderer = ({
       </div>
 
       <div style={{ marginBottom: "12px" }}>
-        <label htmlFor="chart-type" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>Chart Type:</label>
+        <label htmlFor="chart-type" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>
+          Chart Type:
+        </label>
         <select
           id="chart-type"
           name="chartType"
@@ -572,7 +555,7 @@ const ChartInspectorRenderer = ({
             Add
           </button>
         </div>
-        
+
         <div style={{ maxHeight: "200px", overflowY: "auto" }}>
           {editedData.data.map((item, index) => (
             <div key={index} style={{ display: "flex", gap: "4px", marginBottom: "4px", alignItems: "center" }}>
@@ -657,12 +640,7 @@ interface FormData {
   }>;
 }
 
-const FormRenderer = ({
-  node,
-  isSelected,
-  isDragging,
-  externalData,
-}: NodeRenderProps) => {
+const FormRenderer = ({ node, isSelected, isDragging, externalData }: NodeRenderProps) => {
   const formData = externalData as FormData | undefined;
 
   return (
@@ -678,32 +656,23 @@ const FormRenderer = ({
       }}
     >
       <div style={{ marginBottom: "8px" }}>
-        <h4 style={{ margin: "0 0 4px", fontSize: "13px" }}>
-          📝 {formData?.title || "Form"}
-        </h4>
-        <span style={{ fontSize: "11px", color: "#6b7280" }}>
-          {formData?.fields?.length || 0} fields
-        </span>
+        <h4 style={{ margin: "0 0 4px", fontSize: "13px" }}>📝 {formData?.title || "Form"}</h4>
+        <span style={{ fontSize: "11px", color: "#6b7280" }}>{formData?.fields?.length || 0} fields</span>
       </div>
-      
+
       <div style={{ fontSize: "10px", color: "#6b7280" }}>
         {formData?.fields?.slice(0, 3).map((field, index) => (
           <div key={field.id} style={{ marginBottom: "2px" }}>
             • {field.label} ({field.type}) {field.required && "*"}
           </div>
         ))}
-        {formData && formData.fields.length > 3 && (
-          <div>... and {formData.fields.length - 3} more</div>
-        )}
+        {formData && formData.fields.length > 3 && <div>... and {formData.fields.length - 3} more</div>}
       </div>
     </div>
   );
 };
 
-const FormInspectorRenderer = ({
-  externalData,
-  onUpdateExternalData,
-}: InspectorRenderProps) => {
+const FormInspectorRenderer = ({ externalData, onUpdateExternalData }: InspectorRenderProps) => {
   const formData = externalData as FormData | undefined;
   const [editedData, setEditedData] = React.useState<FormData>({
     id: formData?.id || "",
@@ -718,25 +687,23 @@ const FormInspectorRenderer = ({
       label: "New Field",
       required: false,
     };
-    setEditedData(prev => ({
+    setEditedData((prev) => ({
       ...prev,
       fields: [...prev.fields, newField],
     }));
   };
 
   const updateField = (fieldId: string, updates: Partial<FormData["fields"][0]>) => {
-    setEditedData(prev => ({
+    setEditedData((prev) => ({
       ...prev,
-      fields: prev.fields.map(field =>
-        field.id === fieldId ? { ...field, ...updates } : field
-      ),
+      fields: prev.fields.map((field) => (field.id === fieldId ? { ...field, ...updates } : field)),
     }));
   };
 
   const removeField = (fieldId: string) => {
-    setEditedData(prev => ({
+    setEditedData((prev) => ({
       ...prev,
-      fields: prev.fields.filter(field => field.id !== fieldId),
+      fields: prev.fields.filter((field) => field.id !== fieldId),
     }));
   };
 
@@ -749,9 +716,11 @@ const FormInspectorRenderer = ({
   return (
     <div style={{ padding: "16px" }}>
       <h3>Form Builder</h3>
-      
+
       <div style={{ marginBottom: "12px" }}>
-        <label htmlFor="form-title" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>Form Title:</label>
+        <label htmlFor="form-title" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>
+          Form Title:
+        </label>
         <input
           id="form-title"
           name="formTitle"
@@ -780,10 +749,13 @@ const FormInspectorRenderer = ({
             Add Field
           </button>
         </div>
-        
+
         <div style={{ maxHeight: "300px", overflowY: "auto" }}>
           {editedData.fields.map((field) => (
-            <div key={field.id} style={{ border: "1px solid #e5e7eb", borderRadius: "4px", padding: "8px", marginBottom: "8px" }}>
+            <div
+              key={field.id}
+              style={{ border: "1px solid #e5e7eb", borderRadius: "4px", padding: "8px", marginBottom: "8px" }}
+            >
               <div style={{ display: "flex", gap: "4px", marginBottom: "4px" }}>
                 <input
                   id={`field-label-${field.id}`}
@@ -810,7 +782,7 @@ const FormInspectorRenderer = ({
                   ×
                 </button>
               </div>
-              
+
               <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
                 <select
                   id={`field-type-${field.id}`}
@@ -827,7 +799,10 @@ const FormInspectorRenderer = ({
                   <option value="textarea">Textarea</option>
                   <option value="checkbox">Checkbox</option>
                 </select>
-                <label htmlFor={`field-required-${field.id}`} style={{ fontSize: "11px", display: "flex", alignItems: "center" }}>
+                <label
+                  htmlFor={`field-required-${field.id}`}
+                  style={{ fontSize: "11px", display: "flex", alignItems: "center" }}
+                >
                   <input
                     id={`field-required-${field.id}`}
                     name={`fieldRequired-${field.id}`}
@@ -839,7 +814,7 @@ const FormInspectorRenderer = ({
                   Required
                 </label>
               </div>
-              
+
               {field.type === "select" && (
                 <div style={{ marginTop: "4px" }}>
                   <input
@@ -848,9 +823,14 @@ const FormInspectorRenderer = ({
                     aria-label={`Options for select field ${field.id}`}
                     type="text"
                     value={field.options?.join(", ") || ""}
-                    onChange={(e) => updateField(field.id, { 
-                      options: e.target.value.split(",").map(o => o.trim()).filter(Boolean)
-                    })}
+                    onChange={(e) =>
+                      updateField(field.id, {
+                        options: e.target.value
+                          .split(",")
+                          .map((o) => o.trim())
+                          .filter(Boolean),
+                      })
+                    }
                     style={{ width: "100%", padding: "2px 4px", fontSize: "11px" }}
                     placeholder="Options (comma separated)"
                   />
@@ -916,7 +896,7 @@ const CodeNodeDefinition: NodeDefinition = {
   renderNode: CodeEditorRenderer,
   renderInspector: CodeInspectorRenderer,
   loadExternalData: async (ref: ExternalDataReference) => {
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     return {
       id: ref.id,
       language: "javascript",
@@ -926,7 +906,7 @@ const CodeNodeDefinition: NodeDefinition = {
     };
   },
   updateExternalData: async (ref: ExternalDataReference, data: unknown) => {
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     console.log("Updated code data:", data);
   },
 };
@@ -957,7 +937,7 @@ const ChartNodeDefinition: NodeDefinition = {
   renderNode: ChartRenderer,
   renderInspector: ChartInspectorRenderer,
   loadExternalData: async (ref: ExternalDataReference) => {
-    await new Promise(resolve => setTimeout(resolve, 200));
+    await new Promise((resolve) => setTimeout(resolve, 200));
     return {
       id: ref.id,
       type: "bar",
@@ -971,7 +951,7 @@ const ChartNodeDefinition: NodeDefinition = {
     };
   },
   updateExternalData: async (ref: ExternalDataReference, data: unknown) => {
-    await new Promise(resolve => setTimeout(resolve, 200));
+    await new Promise((resolve) => setTimeout(resolve, 200));
     console.log("Updated chart data:", data);
   },
 };
@@ -1008,7 +988,7 @@ const FormNodeDefinition: NodeDefinition = {
   renderNode: FormRenderer,
   renderInspector: FormInspectorRenderer,
   loadExternalData: async (ref: ExternalDataReference) => {
-    await new Promise(resolve => setTimeout(resolve, 250));
+    await new Promise((resolve) => setTimeout(resolve, 250));
     return {
       id: ref.id,
       title: "Contact Form",
@@ -1020,7 +1000,7 @@ const FormNodeDefinition: NodeDefinition = {
     };
   },
   updateExternalData: async (ref: ExternalDataReference, data: unknown) => {
-    await new Promise(resolve => setTimeout(resolve, 250));
+    await new Promise((resolve) => setTimeout(resolve, 250));
     console.log("Updated form data:", data);
   },
 };
@@ -1037,10 +1017,11 @@ const advancedInitialData: NodeEditorData = {
       position: { x: 50, y: 50 },
       size: { width: 280, height: 160 },
       data: { title: "Frontend Code", language: "typescript" },
-      ports: CodeNodeDefinition.ports?.map(portDef => ({
-        ...portDef,
-        nodeId: "code-1",
-      })) || [],
+      ports:
+        CodeNodeDefinition.ports?.map((portDef) => ({
+          ...portDef,
+          nodeId: "code-1",
+        })) || [],
     },
     "chart-1": {
       id: "chart-1",
@@ -1048,10 +1029,11 @@ const advancedInitialData: NodeEditorData = {
       position: { x: 400, y: 50 },
       size: { width: 200, height: 140 },
       data: { title: "Performance Chart" },
-      ports: ChartNodeDefinition.ports?.map(portDef => ({
-        ...portDef,
-        nodeId: "chart-1",
-      })) || [],
+      ports:
+        ChartNodeDefinition.ports?.map((portDef) => ({
+          ...portDef,
+          nodeId: "chart-1",
+        })) || [],
     },
     "form-1": {
       id: "form-1",
@@ -1059,10 +1041,11 @@ const advancedInitialData: NodeEditorData = {
       position: { x: 50, y: 280 },
       size: { width: 250, height: 120 },
       data: { title: "User Registration" },
-      ports: FormNodeDefinition.ports?.map(portDef => ({
-        ...portDef,
-        nodeId: "form-1",
-      })) || [],
+      ports:
+        FormNodeDefinition.ports?.map((portDef) => ({
+          ...portDef,
+          nodeId: "form-1",
+        })) || [],
     },
     "code-2": {
       id: "code-2",
@@ -1070,10 +1053,11 @@ const advancedInitialData: NodeEditorData = {
       position: { x: 400, y: 250 },
       size: { width: 280, height: 160 },
       data: { title: "Backend API", language: "python" },
-      ports: CodeNodeDefinition.ports?.map(portDef => ({
-        ...portDef,
-        nodeId: "code-2",
-      })) || [],
+      ports:
+        CodeNodeDefinition.ports?.map((portDef) => ({
+          ...portDef,
+          nodeId: "code-2",
+        })) || [],
     },
     "group-1": {
       id: "group-1",
@@ -1089,10 +1073,11 @@ const advancedInitialData: NodeEditorData = {
       position: { x: 800, y: 150 },
       size: { width: 180, height: 120 },
       data: { title: "Analytics Dashboard" },
-      ports: ChartNodeDefinition.ports?.map(portDef => ({
-        ...portDef,
-        nodeId: "chart-2",
-      })) || [],
+      ports:
+        ChartNodeDefinition.ports?.map((portDef) => ({
+          ...portDef,
+          nodeId: "chart-2",
+        })) || [],
       parentId: "group-1",
     },
   },
@@ -1138,21 +1123,23 @@ export const AdvancedNodeExample: React.FC = () => {
 
   return (
     <div style={{ width: "100vw", height: "100vh", display: "flex", flexDirection: "column" }}>
-      <div style={{ 
-        padding: "16px", 
-        borderBottom: "1px solid #e0e0e0",
-        backgroundColor: "#f9fafb",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}>
+      <div
+        style={{
+          padding: "16px",
+          borderBottom: "1px solid #e0e0e0",
+          backgroundColor: "#f9fafb",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <div>
           <h2 style={{ margin: "0 0 4px 0", fontSize: "18px" }}>Advanced Node Editor</h2>
           <p style={{ margin: 0, color: "#666", fontSize: "14px" }}>
             Custom renderers: Code Editor, Chart Visualization, Form Builder
           </p>
         </div>
-        
+
         <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
           <label style={{ fontSize: "12px" }}>Theme:</label>
           <select
@@ -1166,7 +1153,7 @@ export const AdvancedNodeExample: React.FC = () => {
           </select>
         </div>
       </div>
-      
+
       <div style={{ flex: 1, backgroundColor: currentTheme === "dark" ? "#1f2937" : "#ffffff" }}>
         <NodeEditor
           initialData={advancedInitialData}
@@ -1177,7 +1164,7 @@ export const AdvancedNodeExample: React.FC = () => {
           }}
           onSave={async (data) => {
             console.log("Saving advanced editor data:", data);
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             alert("Advanced editor data saved!");
           }}
         />

@@ -11,7 +11,7 @@ const meta = {
     layout: "fullscreen",
   },
   decorators: [
-    (Story) => (
+    (Story: any) => (
       <div style={{ width: "100vw", height: "100vh" }}>
         <Story />
       </div>
@@ -89,7 +89,7 @@ export const WithSaveLoad: Story = {
     onSave: async (data) => {
       console.log("Saving data:", data);
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       // Store in localStorage for demo
       localStorage.setItem("nodeEditorData", JSON.stringify(data));
       console.log("Data saved!");
@@ -97,7 +97,7 @@ export const WithSaveLoad: Story = {
     onLoad: async () => {
       console.log("Loading data...");
       // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       // Load from localStorage for demo
       const savedData = localStorage.getItem("nodeEditorData");
       if (savedData) {

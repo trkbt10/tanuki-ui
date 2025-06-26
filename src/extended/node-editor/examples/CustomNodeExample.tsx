@@ -15,22 +15,28 @@ interface TaskData {
 
 // Mock external data storage
 const mockTaskDatabase = new Map<string, TaskData>([
-  ["task-1", {
-    id: "task-1",
-    title: "Design System Review",
-    description: "Review and approve the new design system components",
-    status: "in-progress",
-    assignee: "Alice",
-    dueDate: "2024-02-15",
-  }],
-  ["task-2", {
-    id: "task-2",
-    title: "API Integration",
-    description: "Integrate the backend API with the frontend",
-    status: "todo",
-    assignee: "Bob",
-    dueDate: "2024-02-20",
-  }],
+  [
+    "task-1",
+    {
+      id: "task-1",
+      title: "Design System Review",
+      description: "Review and approve the new design system components",
+      status: "in-progress",
+      assignee: "Alice",
+      dueDate: "2024-02-15",
+    },
+  ],
+  [
+    "task-2",
+    {
+      id: "task-2",
+      title: "API Integration",
+      description: "Integrate the backend API with the frontend",
+      status: "todo",
+      assignee: "Bob",
+      dueDate: "2024-02-20",
+    },
+  ],
 ]);
 
 // Custom Task Node Renderer
@@ -47,10 +53,14 @@ const TaskNodeRenderer = ({
 
   const getStatusColor = (status?: string) => {
     switch (status) {
-      case "done": return "#34c759";
-      case "in-progress": return "#007aff";
-      case "todo": return "#8e8e93";
-      default: return "#c7c7cc";
+      case "done":
+        return "#34c759";
+      case "in-progress":
+        return "#007aff";
+      case "todo":
+        return "#8e8e93";
+      default:
+        return "#c7c7cc";
     }
   };
 
@@ -71,16 +81,10 @@ const TaskNodeRenderer = ({
         <div style={{ textAlign: "center", color: "#999" }}>Loading...</div>
       ) : task ? (
         <>
-          <h3 style={{ margin: "0 0 8px", fontSize: "14px", fontWeight: 600 }}>
-            {task.title}
-          </h3>
-          <p style={{ margin: "0 0 8px", fontSize: "12px", color: "#666" }}>
-            {task.description}
-          </p>
+          <h3 style={{ margin: "0 0 8px", fontSize: "14px", fontWeight: 600 }}>{task.title}</h3>
+          <p style={{ margin: "0 0 8px", fontSize: "12px", color: "#666" }}>{task.description}</p>
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px" }}>
-            <span style={{ color: getStatusColor(task.status) }}>
-              {task.status.toUpperCase()}
-            </span>
+            <span style={{ color: getStatusColor(task.status) }}>{task.status.toUpperCase()}</span>
             {task.assignee && <span>👤 {task.assignee}</span>}
           </div>
         </>
@@ -126,9 +130,11 @@ const TaskInspectorRenderer = ({
   return (
     <div style={{ padding: "16px" }}>
       <h3>Task Properties</h3>
-      
+
       <div style={{ marginBottom: "12px" }}>
-        <label htmlFor="task-title" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>Title:</label>
+        <label htmlFor="task-title" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>
+          Title:
+        </label>
         <input
           id="task-title"
           name="taskTitle"
@@ -140,7 +146,9 @@ const TaskInspectorRenderer = ({
       </div>
 
       <div style={{ marginBottom: "12px" }}>
-        <label htmlFor="task-description" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>Description:</label>
+        <label htmlFor="task-description" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>
+          Description:
+        </label>
         <textarea
           id="task-description"
           name="taskDescription"
@@ -151,7 +159,9 @@ const TaskInspectorRenderer = ({
       </div>
 
       <div style={{ marginBottom: "12px" }}>
-        <label htmlFor="task-status" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>Status:</label>
+        <label htmlFor="task-status" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>
+          Status:
+        </label>
         <select
           id="task-status"
           name="taskStatus"
@@ -166,7 +176,9 @@ const TaskInspectorRenderer = ({
       </div>
 
       <div style={{ marginBottom: "12px" }}>
-        <label htmlFor="task-assignee" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>Assignee:</label>
+        <label htmlFor="task-assignee" style={{ display: "block", marginBottom: "4px", fontSize: "12px" }}>
+          Assignee:
+        </label>
         <input
           id="task-assignee"
           name="taskAssignee"
@@ -238,12 +250,12 @@ const TaskNodeDefinition: NodeDefinition = {
   renderInspector: TaskInspectorRenderer,
   loadExternalData: async (ref: ExternalDataReference) => {
     // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
     return mockTaskDatabase.get(ref.id);
   },
   updateExternalData: async (ref: ExternalDataReference, data: unknown) => {
     // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise((resolve) => setTimeout(resolve, 500));
     const taskData = data as TaskData;
     mockTaskDatabase.set(ref.id, taskData);
   },
@@ -258,10 +270,11 @@ const initialData: NodeEditorData = {
       position: { x: 100, y: 100 },
       size: { width: 220, height: 120 },
       data: { title: "Task 1" },
-      ports: TaskNodeDefinition.ports?.map(portDef => ({
-        ...portDef,
-        nodeId: "node-1",
-      })) || [],
+      ports:
+        TaskNodeDefinition.ports?.map((portDef) => ({
+          ...portDef,
+          nodeId: "node-1",
+        })) || [],
     },
     "node-2": {
       id: "node-2",
@@ -269,10 +282,11 @@ const initialData: NodeEditorData = {
       position: { x: 400, y: 100 },
       size: { width: 220, height: 120 },
       data: { title: "Task 2" },
-      ports: TaskNodeDefinition.ports?.map(portDef => ({
-        ...portDef,
-        nodeId: "node-2",
-      })) || [],
+      ports:
+        TaskNodeDefinition.ports?.map((portDef) => ({
+          ...portDef,
+          nodeId: "node-2",
+        })) || [],
     },
     "node-3": {
       id: "node-3",
@@ -318,7 +332,7 @@ export const CustomNodeExample: React.FC = () => {
           This example shows custom task nodes with external data loading and custom rendering.
         </p>
       </div>
-      
+
       <div style={{ flex: 1 }}>
         <NodeEditor
           initialData={initialData}
@@ -329,7 +343,7 @@ export const CustomNodeExample: React.FC = () => {
           }}
           onSave={async (data) => {
             console.log("Saving data:", data);
-            await new Promise(resolve => setTimeout(resolve, 1000));
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             setSavedData(data);
             alert("Data saved successfully!");
           }}
