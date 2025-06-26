@@ -12,6 +12,7 @@ import { Label } from "../../../form/Label";
 import { SegmentedControl } from "../../../controls/SegmentedControl";
 import styles from "../NodeEditor.module.css";
 import { H4 } from "../../../elements/Heading";
+import { Toolbar } from "../../../bars/Toolbar";
 
 export interface InspectorPanelProps {
   className?: string;
@@ -62,12 +63,9 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
   return (
     <div className={classNames(styles.inspectorPanel, className)}>
       <div className={styles.inspectorHeader}>
-        <SegmentedControl
-          items={tabItems}
-          selectedIndex={activeTabIndex}
-          controlled={true}
-          onSelect={setActiveTabIndex}
-        />
+        <Toolbar.Body>
+          <Toolbar.SegmentedControl items={tabItems} defaultSelected={activeTabIndex} onSelect={setActiveTabIndex} />
+        </Toolbar.Body>
       </div>
 
       <div className={classNames(styles.inspectorContent, activeTabIndex === 0 && styles.inspectorContentNoPadding)}>
