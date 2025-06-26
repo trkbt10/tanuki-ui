@@ -446,6 +446,19 @@ const basicNodeDefinitions: NodeDefinition[] = [
       { id: "output", type: "output", label: "String", position: "right", dataType: "string" },
     ],
   },
+  {
+    type: "simple",
+    displayName: "Simple Node",
+    description: "A simple node for demonstration",
+    category: "Demo",
+    icon: "🔧",
+    defaultSize: { width: 180, height: 100 },
+    defaultData: { title: "Simple Node", value: 0 },
+    ports: [
+      { id: "input", type: "input", label: "Input", position: "left", dataType: "any" },
+      { id: "output", type: "output", label: "Output", position: "right", dataType: "any" },
+    ],
+  },
 ];
 
 // Test data sets
@@ -454,13 +467,36 @@ const testDataSets: Record<string, NodeEditorData> = {
     nodes: {
       node1: {
         id: "node1",
-        type: "data-source",
-        position: { x: 100, y: 200 },
-        size: { width: 180, height: 100 },
-        data: { title: "Simple Source", value: 42 },
+        type: "standard",
+        position: { x: 100, y: 100 },
+        size: { width: 150, height: 80 },
+        data: { title: "Input Node" },
+        ports: [
+          { id: "output1", nodeId: "node1", type: "output", label: "Data Out", position: "right" },
+          { id: "output2", nodeId: "node1", type: "output", label: "Signal", position: "right" },
+        ],
+      },
+      node2: {
+        id: "node2",
+        type: "standard",
+        position: { x: 400, y: 100 },
+        size: { width: 150, height: 80 },
+        data: { title: "Process Node" },
+        ports: [
+          { id: "input1", nodeId: "node2", type: "input", label: "Data In", position: "left" },
+          { id: "output1", nodeId: "node2", type: "output", label: "Result", position: "right" },
+        ],
       },
     },
-    connections: {},
+    connections: {
+      conn1: {
+        id: "conn1",
+        fromNodeId: "node1",
+        fromPortId: "output1",
+        toNodeId: "node2",
+        toPortId: "input1",
+      },
+    },
   },
   mathFlow: {
     nodes: {
@@ -671,8 +707,8 @@ const testDataSets: Record<string, NodeEditorData> = {
 } as const;
 
 const NodeEditorTestPage: React.FC = () => {
-  const [uncontrolledData, setUncontrolledData] = useState<NodeEditorData>(() => testDataSets.mathFlow);
-  const [controlledData, setControlledData] = useState<NodeEditorData>(() => testDataSets.mathFlow);
+  const [uncontrolledData, setUncontrolledData] = useState<NodeEditorData>(() => testDataSets.simple);
+  const [controlledData, setControlledData] = useState<NodeEditorData>(() => testDataSets.simple);
   const [isControlledMode, setIsControlledMode] = useState(false);
   const [selectedTestData, setSelectedTestData] = useState<keyof typeof testDataSets>("simple");
 
