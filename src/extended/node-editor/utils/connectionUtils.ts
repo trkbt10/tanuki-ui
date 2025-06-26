@@ -9,30 +9,26 @@ const PORT_MARGIN = 8; // Distance beyond port's visual boundary
 /**
  * Calculate port offset for multiple ports on the same side
  */
-function calculatePortOffset(
-  port: Port,
-  portsOnSameSide: Port[],
-  dimension: number
-): number {
+function calculatePortOffset(port: Port, portsOnSameSide: Port[], dimension: number): number {
   const totalPorts = portsOnSameSide.length;
-  
+
   if (totalPorts === 1) {
     return dimension / 2;
   }
-  
-  const portIndex = portsOnSameSide.findIndex(p => p.id === port.id);
-  
+
+  const portIndex = portsOnSameSide.findIndex((p) => p.id === port.id);
+
   if (totalPorts === 2) {
     const positions = [0.3333, 0.6667];
     return dimension * positions[portIndex];
   }
-  
+
   // For 3+ ports, distribute evenly with padding
   const padding = 20;
-  const availableSpace = dimension - (padding * 2);
+  const availableSpace = dimension - padding * 2;
   const step = availableSpace / (totalPorts - 1);
-  const absolutePosition = padding + (step * portIndex);
-  
+  const absolutePosition = padding + step * portIndex;
+
   // Clamp to reasonable bounds
   const minPos = dimension * 0.1;
   const maxPos = dimension * 0.9;
@@ -47,7 +43,7 @@ function calculatePortOffset(
 export const getPortPosition = (node: Node, port: Port): Position => {
   const { width, height } = getNodeSize(node);
   const { left, top } = getNodeBoundingBox(node);
-  
+
   // Group ports by position for efficient multi-port calculations
   const portsByPosition = createPortsByPositionMap(node.ports || []);
   const portsOnSameSide = portsByPosition.get(port.position) || [port];
@@ -93,20 +89,19 @@ export const calculateBezierPath = (
 ): string => {
   // Calculate control point offset based on distance and port positions
   const distance = getDistance(from, to);
-  
+
   // Dynamic offset based on distance and port configuration
   const minOffset = 40;
   const maxOffset = 120;
   let offset = Math.max(minOffset, Math.min(maxOffset, distance * 0.5));
-  
+
   // Increase offset for opposite-facing ports for smoother curves
-  const isOppositeFacing = (
-    (fromPortPosition === 'right' && toPortPosition === 'left') ||
-    (fromPortPosition === 'left' && toPortPosition === 'right') ||
-    (fromPortPosition === 'top' && toPortPosition === 'bottom') ||
-    (fromPortPosition === 'bottom' && toPortPosition === 'top')
-  );
-  
+  const isOppositeFacing =
+    (fromPortPosition === "right" && toPortPosition === "left") ||
+    (fromPortPosition === "left" && toPortPosition === "right") ||
+    (fromPortPosition === "top" && toPortPosition === "bottom") ||
+    (fromPortPosition === "bottom" && toPortPosition === "top");
+
   if (isOppositeFacing) {
     offset = Math.max(offset, distance * 0.4);
   }
@@ -162,10 +157,7 @@ export const calculateBezierPath = (
 /**
  * Calculate the midpoint of a bezier curve (approximation)
  */
-export const getConnectionMidpoint = (
-  from: Position,
-  to: Position
-): Position => {
+export const getConnectionMidpoint = (from: Position, to: Position): Position => {
   return {
     x: (from.x + to.x) / 2,
     y: (from.y + to.y) / 2,
@@ -176,12 +168,7 @@ export const getConnectionMidpoint = (
  * Check if a point is near a connection line
  * Used for connection selection and interaction
  */
-export const isPointNearConnection = (
-  point: Position,
-  from: Position,
-  to: Position,
-  threshold: number = 10
-): boolean => {
+export const isPointNearConnection = (point: Position, from: Position, to: Position, threshold: number = 10): boolean => {
   // Simple distance from line segment calculation
   const A = point.x - from.x;
   const B = point.y - from.y;
@@ -220,11 +207,7 @@ export const isPointNearConnection = (
  * Interpolate between two colors based on a factor (0-1)
  * Used for visual feedback during connection editing
  */
-export const interpolateColor = (
-  color1: string,
-  color2: string,
-  factor: number
-): string => {
+export const interpolateColor = (color1: string, color2: string, factor: number): string => {
   // Simple hex color interpolation
   const c1 = parseInt(color1.slice(1), 16);
   const c2 = parseInt(color2.slice(1), 16);

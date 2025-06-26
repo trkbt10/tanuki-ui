@@ -69,7 +69,7 @@ export function useSortedNodes(nodes: Record<NodeId, Node>): Node[] {
       // Groups go to back
       if (a.type === "group" && b.type !== "group") return -1;
       if (a.type !== "group" && b.type === "group") return 1;
-      
+
       // Within same type, sort by ID for stable ordering
       return a.id.localeCompare(b.id);
     });
@@ -82,7 +82,7 @@ export function useSortedNodes(nodes: Record<NodeId, Node>): Node[] {
 export function useConnectedPorts(connections: Record<ConnectionId, Connection>): Set<string> {
   return React.useMemo(() => {
     const connectedPorts = new Set<string>();
-    Object.values(connections).forEach(connection => {
+    Object.values(connections).forEach((connection) => {
       connectedPorts.add(connection.fromPortId);
       connectedPorts.add(connection.toPortId);
     });
