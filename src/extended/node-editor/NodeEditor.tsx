@@ -16,6 +16,9 @@ import { InlineEditingProvider } from "./contexts/InlineEditingContext";
 import { NodeEditorProvider, useNodeEditor, nodeEditorReducer, type NodeEditorData } from "./contexts/NodeEditorContext";
 import { NodeDefinitionProvider, useNodeDefinitions, useNodeDefinitionList } from "./contexts/NodeDefinitionContext";
 import { ExternalDataProvider } from "./contexts/ExternalDataContext";
+import { PortPositionProvider } from "./contexts/PortPositionContext";
+import { computeAllPortPositions, updatePortPositions } from "./utils/computePortPositions";
+import type { EditorPortPositions } from "./types/portPosition";
 import { useEditorActionState } from "./contexts/EditorActionStateContext";
 import { useNodeCanvas } from "./contexts/NodeCanvasContext";
 import type { NodeDefinition, ExternalDataReference } from "./types/NodeDefinition";
@@ -181,11 +184,60 @@ const NodeEditorContent: React.FC<{
   onLeftSidebarWidthChange,
   onRightSidebarWidthChange,
 }) => {
-  const { handleSave, dispatch, actions, isLoading, isSaving } = useNodeEditor();
+  const { state: editorState, handleSave, dispatch, actions, isLoading, isSaving, getNodePorts } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { utils } = useNodeCanvas();
 
   const nodeDefinitions = useNodeDefinitionList();
+  
+  // Compute port positions whenever nodes change
+  const portPositions = React.useMemo(() => {
+    // Ensure nodes exist
+    if (!editorState.nodes) {
+      return new Map();
+    }
+    
+    // Get dragging nodes from action state
+    const draggingNodeIds = actionState.dragState ? 
+      Object.keys(actionState.dragState.draggedOffsets) : [];
+    
+    // Compute port positions for all nodes
+    const nodes = Object.values(editorState.nodes).map(node => {
+      // Apply drag offset if node is being dragged
+      if (draggingNodeIds.includes(node.id) && actionState.dragState) {
+        const offset = actionState.dragState.draggedOffsets[node.id];
+        if (offset) {
+          return {
+            ...node,
+            position: {
+              x: actionState.dragState.startPosition.x + offset.x,
+              y: actionState.dragState.startPosition.y + offset.y,
+            },
+            ports: getNodePorts(node.id),
+          };
+        }
+      }
+      
+      return {
+        ...node,
+        ports: getNodePorts(node.id),
+      };
+    });
+    
+    return computeAllPortPositions(nodes);
+  }, [
+    // Re-compute when nodes are added/removed
+    editorState.nodes ? Object.keys(editorState.nodes).length : 0,
+    // Re-compute when node positions change (but not during drag)
+    actionState.dragState ? null : (editorState.nodes ? Object.values(editorState.nodes).map(n => `${n.position.x},${n.position.y}`).join('|') : ''),
+    // Re-compute when node sizes change
+    editorState.nodes ? Object.values(editorState.nodes).map(n => `${n.size?.width},${n.size?.height}`).join('|') : '',
+    // Re-compute during drag
+    actionState.dragState?.startPosition.x,
+    actionState.dragState?.startPosition.y,
+    JSON.stringify(actionState.dragState?.draggedOffsets),
+    getNodePorts
+  ]);
 
   // Use settings hook for clean state management
   const settings = useSettings(settingsManager);
@@ -313,18 +365,20 @@ const NodeEditorContent: React.FC<{
           >
             <div className={styles.editorMain}>
               <CanvasBase showGrid={showGrid}>
-                {/* Background layers render behind everything */}
-                {backgroundLayers?.map((layer, index) => (
-                  <React.Fragment key={`background-layer-${index}`}>{layer}</React.Fragment>
-                ))}
+                <PortPositionProvider portPositions={portPositions}>
+                  {/* Background layers render behind everything */}
+                  {backgroundLayers?.map((layer, index) => (
+                    <React.Fragment key={`background-layer-${index}`}>{layer}</React.Fragment>
+                  ))}
 
-                <ConnectionLayer />
-                <NodeLayer doubleClickToEdit={doubleClickToEdit} />
+                  <ConnectionLayer />
+                  <NodeLayer doubleClickToEdit={doubleClickToEdit} />
 
-                {/* Overlay layers render on top of everything */}
-                {overlayLayers?.map((layer, index) => (
-                  <React.Fragment key={`overlay-layer-${index}`}>{layer}</React.Fragment>
-                ))}
+                  {/* Overlay layers render on top of everything */}
+                  {overlayLayers?.map((layer, index) => (
+                    <React.Fragment key={`overlay-layer-${index}`}>{layer}</React.Fragment>
+                  ))}
+                </PortPositionProvider>
               </CanvasBase>
 
               {showStatusBar && <StatusBar autoSave={autoSave} isSaving={isSaving} settingsManager={settingsManager} />}

@@ -37,6 +37,15 @@ export type {
   ConstraintViolation,
   ConstraintValidationResult,
   NodeConstraint,
+  NodeDataTypeMap,
+} from "./types/NodeDefinition";
+
+export {
+  createNodeDefinition,
+  getTypedNodeData,
+  createNodeDataUpdater,
+  asOriginalNodeRender,
+  asOriginalInspectorRender,
 } from "./types/NodeDefinition";
 
 // Context providers (for advanced usage)
@@ -64,10 +73,12 @@ export { Toolbar } from "./components/Toolbar";
 export { FloatingContainer } from "./components/parts/FloatingContainer";
 export { ColumnLayout } from "./components/ColumnLayout";
 export { InspectorPanel } from "./components/InspectorPanel";
+export { NodeInspector } from "./components/NodeInspector";
 export type { ToolbarProps } from "./components/Toolbar";
 export type { FloatingContainerProps } from "./components/parts/FloatingContainer";
 export type { ColumnLayoutProps } from "./components/ColumnLayout";
 export type { InspectorPanelProps } from "./components/InspectorPanel";
+export type { NodeInspectorProps } from "./components/NodeInspector";
 
 // Utilities for custom components
 export {
@@ -84,13 +95,30 @@ export { calculateNodeDragOffsets, getDraggedNodesBounds } from "./utils/dragUti
 
 export { createPortToNodeMap, createParentToChildrenMap, createConnectionLookupMaps, SpatialGrid } from "./utils/lookupUtils";
 
+// Port position utilities
 export {
-  calculatePortRenderPosition,
-  calculatePortConnectionPosition,
-  calculatePortRelativeOffset,
-  getPortsGroupedByPosition,
-  PORT_CONFIG,
-} from "./utils/portPositionUtils";
+  computeNodePortPositions,
+  computeAllPortPositions,
+  updatePortPositions,
+} from "./utils/computePortPositions";
+
+export type {
+  PortPosition,
+  NodePortPositions,
+  EditorPortPositions,
+  PortPositionConfig,
+} from "./types/portPosition";
+
+export { DEFAULT_PORT_POSITION_CONFIG } from "./types/portPosition";
+
+// Port position context
+export {
+  PortPositionProvider,
+  usePortPositions,
+  usePortPosition,
+  useNodePortPositions,
+} from "./contexts/PortPositionContext";
+export type { PortPositionContextValue, PortPositionProviderProps } from "./contexts/PortPositionContext";
 
 // Settings system
 export { SettingsManager, LocalSettingsStorage } from "./settings/SettingsManager";
