@@ -70,13 +70,13 @@ describe("NodeEditor", () => {
   test("should show inspector when showInspector is true", () => {
     render(<NodeEditor initialData={mockInitialState} showInspector={true} />);
 
-    // Check if inspector panel exists by looking for the inspector panel test id
-    const inspectorPanel = screen.getByTestId("inspector-panel");
-    expect(inspectorPanel).toBeTruthy();
-    
-    // Check if Properties tab exists (unique text)
+    // Check if Properties tab exists (unique text that indicates inspector is present)
     const propertiesTab = screen.getByText("Properties");
     expect(propertiesTab).toBeTruthy();
+    
+    // Check if Layers tab also exists (another unique identifier for inspector)
+    const layersTab = screen.getByText("Layers");
+    expect(layersTab).toBeTruthy();
   });
 
   test("should not show inspector when showInspector is false", () => {
