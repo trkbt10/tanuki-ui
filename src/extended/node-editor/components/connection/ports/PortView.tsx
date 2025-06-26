@@ -1,6 +1,6 @@
 import * as React from "react";
-import type { Port } from "../../types/core";
-import { classNames } from "../../../../utilities/classNames";
+import type { Port } from "../../../types/core";
+import { classNames } from "../../../../../utilities/classNames";
 import styles from "./PortView.module.css";
 
 export interface PortViewProps {

@@ -1,18 +1,18 @@
 import * as React from "react";
-import type { Node, Position, Port } from "../types/core";
-import { useInlineEditing } from "../contexts/InlineEditingContext";
-import { useNodeEditor } from "../contexts/NodeEditorContext";
-import { useNodeDefinition } from "../contexts/NodeDefinitionContext";
-import { useExternalDataRef } from "../contexts/ExternalDataContext";
-import { useExternalData } from "../hooks/useExternalData";
-import { DefaultNodeRenderer } from "../types/DefaultRenderers";
-import { classNames } from "../../../utilities/classNames";
-import styles from "../NodeEditor.module.css";
-import { PortView } from "./parts/PortView";
-import { ResizeHandle } from "./parts/ResizeHandle";
-import { useEditorActionState } from "../contexts/EditorActionStateContext";
-import { useNodeResize } from "../hooks/useNodeResize";
-import { useGroupManagement } from "../hooks/useGroupManagement";
+import type { Node, Position, Port } from "../../types/core";
+import { useInlineEditing } from "../../contexts/InlineEditingContext";
+import { useNodeEditor } from "../../contexts/NodeEditorContext";
+import { useNodeDefinition } from "../../contexts/NodeDefinitionContext";
+import { useExternalDataRef } from "../../contexts/ExternalDataContext";
+import { useExternalData } from "../../hooks/useExternalData";
+import { DefaultNodeRenderer } from "./renderers/DefaultRenderers";
+import { classNames } from "../../../../utilities/classNames";
+import styles from "../../NodeEditor.module.css";
+import { PortView } from "../connection/ports/PortView";
+import { ResizeHandle } from "../parts/ResizeHandle";
+import { useEditorActionState } from "../../contexts/EditorActionStateContext";
+import { useNodeResize } from "../../hooks/useNodeResize";
+import { useGroupManagement } from "../../hooks/useGroupManagement";
 
 export interface CustomNodeRendererProps {
   node: Node;

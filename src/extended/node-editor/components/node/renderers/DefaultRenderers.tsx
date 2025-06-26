@@ -1,15 +1,15 @@
 import * as React from "react";
-import type { NodeRenderProps, InspectorRenderProps } from "./NodeDefinition";
-import type { Node } from "./core";
-import { AlignLeftIcon } from "../../../blocks/AlignLeftIcon";
-import { AlignCenterIcon } from "../../../blocks/AlignCenterIcon";
-import { AlignRightIcon } from "../../../blocks/AlignRightIcon";
-import { AlignTopIcon } from "../../../blocks/AlignTopIcon";
-import { AlignMiddleIcon } from "../../../blocks/AlignMiddleIcon";
-import { AlignBottomIcon } from "../../../blocks/AlignBottomIcon";
-import { DistributeHorizontalIcon } from "../../../blocks/DistributeHorizontalIcon";
-import { DistributeVerticalIcon } from "../../../blocks/DistributeVerticalIcon";
-import alignmentStyles from "../components/AlignmentControls.module.css";
+import type { NodeRenderProps, InspectorRenderProps } from "../../../types/NodeDefinition";
+import type { Node } from "../../../types/core";
+import { AlignLeftIcon } from "../../../../../blocks/AlignLeftIcon";
+import { AlignCenterIcon } from "../../../../../blocks/AlignCenterIcon";
+import { AlignRightIcon } from "../../../../../blocks/AlignRightIcon";
+import { AlignTopIcon } from "../../../../../blocks/AlignTopIcon";
+import { AlignMiddleIcon } from "../../../../../blocks/AlignMiddleIcon";
+import { AlignBottomIcon } from "../../../../../blocks/AlignBottomIcon";
+import { DistributeHorizontalIcon } from "../../../../../blocks/DistributeHorizontalIcon";
+import { DistributeVerticalIcon } from "../../../../../blocks/DistributeVerticalIcon";
+import alignmentStyles from "./AlignmentControls.module.css";
 
 /**
  * Default node renderer

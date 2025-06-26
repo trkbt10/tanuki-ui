@@ -1,8 +1,8 @@
 import * as React from "react";
-import type { Connection, Node, Port } from "../types/core";
-import { calculateBezierPath, getPortPosition } from "../utils/connectionUtils";
-import { classNames } from "../../../utilities/classNames";
-import styles from "../NodeEditor.module.css";
+import type { Connection, Node, Port } from "../../types/core";
+import { calculateBezierPath, getPortPosition } from "./utils/connectionUtils";
+import { classNames } from "../../../../utilities/classNames";
+import styles from "../../NodeEditor.module.css";
 
 export interface ConnectionViewProps {
   connection: Connection;

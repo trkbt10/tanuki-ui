@@ -16,8 +16,8 @@ export type { SelectionBoxProps } from "./SelectionBox";
 export { SelectionOverlay } from "./SelectionOverlay";
 export type { SelectionOverlayProps } from "./SelectionOverlay";
 
-export { PortView } from "./PortView";
-export type { PortViewProps } from "./PortView";
+export { PortView } from "../connection/ports/PortView";
+export type { PortViewProps } from "../connection/ports/PortView";
 
 export { ConstraintViolationDisplay } from "./ConstraintViolationDisplay";
 export type { ConstraintViolationDisplayProps } from "./ConstraintViolationDisplay";

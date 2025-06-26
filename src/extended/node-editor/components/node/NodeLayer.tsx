@@ -1,17 +1,17 @@
 import * as React from "react";
-import { classNames } from "../../../utilities/classNames";
-import { useEditorActionState } from "../contexts/EditorActionStateContext";
-import { useNodeCanvas } from "../contexts/NodeCanvasContext";
-import { useNodeDefinitions } from "../contexts/NodeDefinitionContext";
-import { useNodeEditor } from "../contexts/NodeEditorContext";
-import { useGroupManagement } from "../hooks/useGroupManagement";
-import { useNodeResize } from "../hooks/useNodeResize";
-import { useVisibleNodes } from "../hooks/useVisibleNodes";
-import { usePointerInteraction } from "../hooks/usePointerInteraction";
-import styles from "../NodeEditor.module.css";
-import type { Port } from "../types/core";
-import { getPortPosition } from "../utils/connectionUtils";
-import { snapMultipleToGrid } from "../utils/gridSnap";
+import { classNames } from "../../../../utilities/classNames";
+import { useEditorActionState } from "../../contexts/EditorActionStateContext";
+import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
+import { useNodeDefinitions } from "../../contexts/NodeDefinitionContext";
+import { useNodeEditor } from "../../contexts/NodeEditorContext";
+import { useGroupManagement } from "../../hooks/useGroupManagement";
+import { useNodeResize } from "../../hooks/useNodeResize";
+import { useVisibleNodes } from "../../hooks/useVisibleNodes";
+import { usePointerInteraction } from "../../hooks/usePointerInteraction";
+import styles from "../../NodeEditor.module.css";
+import type { Port } from "../../types/core";
+import { getPortPosition } from "../connection/utils/connectionUtils";
+import { snapMultipleToGrid } from "../../utils/gridSnap";
 import { NodeView } from "./NodeView";
 
 export interface NodeLayerProps {

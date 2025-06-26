@@ -4,7 +4,7 @@ import { useNodeEditor } from "../contexts/NodeEditorContext";
 import { useNodeDefinition } from "../contexts/NodeDefinitionContext";
 import { useExternalDataRef } from "../contexts/ExternalDataContext";
 import { useExternalData } from "../hooks/useExternalData";
-import { DefaultInspectorRenderer } from "../types/DefaultRenderers";
+import { DefaultInspectorRenderer } from "../components/node/renderers/DefaultRenderers";
 
 export interface NodeInspectorProps {
   node: Node;

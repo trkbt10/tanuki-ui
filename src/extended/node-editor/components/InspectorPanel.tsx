@@ -4,7 +4,7 @@ import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import { NodeInspector } from "./NodeInspector";
 import { NodeTreeList } from "./NodeTreeList";
-import { DefaultInspectorRenderer } from "../types/DefaultRenderers";
+import { DefaultInspectorRenderer } from "../components/node/renderers/DefaultRenderers";
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
 import { classNames } from "../../../utilities/classNames";
 import styles from "../NodeEditor.module.css";

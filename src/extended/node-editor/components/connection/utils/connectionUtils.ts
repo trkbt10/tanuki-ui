@@ -1,7 +1,7 @@
-import type { Node, Port, Position } from "../types/core";
-import { getNodeSize, getNodeBoundingBox } from "./boundingBoxUtils";
-import { getDistance } from "./vectorUtils";
-import { createPortsByPositionMap } from "./lookupUtils";
+import type { Node, Port, Position } from "../../../types/core";
+import { getNodeSize, getNodeBoundingBox } from "../../../utils/boundingBoxUtils";
+import { getDistance } from "../../../utils/vectorUtils";
+import { createPortsByPositionMap } from "../../../utils/lookupUtils";
 
 // Constants for port calculations
 const PORT_MARGIN = 8; // Distance beyond port's visual boundary

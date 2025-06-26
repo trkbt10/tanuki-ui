@@ -1,12 +1,12 @@
 import * as React from "react";
-import { useNodeEditor } from "../contexts/NodeEditorContext";
-import { useEditorActionState } from "../contexts/EditorActionStateContext";
-import { useNodeCanvas } from "../contexts/NodeCanvasContext";
+import { useNodeEditor } from "../../contexts/NodeEditorContext";
+import { useEditorActionState } from "../../contexts/EditorActionStateContext";
+import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
 import { ConnectionView } from "./ConnectionView";
-import { calculateBezierPath, getPortPosition } from "../utils/connectionUtils";
-import type { Connection, Node as EditorNode } from "../types/core";
-import { classNames } from "../../../utilities/classNames";
-import styles from "../NodeEditor.module.css";
+import { calculateBezierPath, getPortPosition } from "./utils/connectionUtils";
+import type { Connection, Node as EditorNode } from "../../types/core";
+import { classNames } from "../../../../utilities/classNames";
+import styles from "../../NodeEditor.module.css";
 
 export interface ConnectionLayerProps {
   className?: string;

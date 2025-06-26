@@ -1,9 +1,9 @@
 import * as React from "react";
-import { Port, PortId, NodeId, Position } from "../types/core";
-import { useNodeEditor } from "../contexts/NodeEditorContext";
-import { useEditorActionState } from "../contexts/EditorActionStateContext";
-import { useNodeCanvas } from "../contexts/NodeCanvasContext";
-import { usePointerDrag } from "../hooks/usePointerDrag";
+import { Port, PortId, NodeId, Position } from "../../../types/core";
+import { useNodeEditor } from "../../../contexts/NodeEditorContext";
+import { useEditorActionState } from "../../../contexts/EditorActionStateContext";
+import { useNodeCanvas } from "../../../contexts/NodeCanvasContext";
+import { usePointerDrag } from "../../../hooks/usePointerDrag";
 
 export interface PortInteractionHandlerProps {
   port: Port;
