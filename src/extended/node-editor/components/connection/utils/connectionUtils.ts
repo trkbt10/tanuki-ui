@@ -1,86 +1,16 @@
 import type { Node, Port, Position } from "../../../types/core";
-import { getNodeSize, getNodeBoundingBox } from "../../../utils/boundingBoxUtils";
 import { getDistance } from "../../../utils/vectorUtils";
-import { createPortsByPositionMap } from "../../../utils/lookupUtils";
-
-// Constants for port calculations
-const PORT_MARGIN = 8; // Distance beyond port's visual boundary
+import { calculatePortConnectionPosition } from "../../../utils/portPositionUtils";
 
 /**
- * Calculate port offset for multiple ports on the same side
- */
-function calculatePortOffset(port: Port, portsOnSameSide: Port[], dimension: number): number {
-  const totalPorts = portsOnSameSide.length;
-
-  if (totalPorts === 1) {
-    return dimension / 2;
-  }
-
-  const portIndex = portsOnSameSide.findIndex((p) => p.id === port.id);
-
-  if (totalPorts === 2) {
-    const positions = [0.3333, 0.6667];
-    return dimension * positions[portIndex];
-  }
-
-  // For 3+ ports, distribute evenly with padding
-  const padding = 20;
-  const availableSpace = dimension - padding * 2;
-  const step = availableSpace / (totalPorts - 1);
-  const absolutePosition = padding + step * portIndex;
-
-  // Clamp to reasonable bounds
-  const minPos = dimension * 0.1;
-  const maxPos = dimension * 0.9;
-  return Math.max(minPos, Math.min(maxPos, absolutePosition));
-}
-
-/**
- * Calculate the absolute position of a port on a node
- * Adds margin based on port type and position for better connection visuals
- * Supports multiple ports on the same side with proper spacing
+ * Calculate the absolute position of a port on a node for connection drawing
+ * Uses the centralized port position calculation system
  * @param node - The node containing the port
  * @param port - The port to calculate position for
  * @param allPorts - Optional array of all ports for the node (if not provided, will use node.ports)
  */
 export const getPortPosition = (node: Node, port: Port, allPorts?: Port[]): Position => {
-  const { width, height } = getNodeSize(node);
-  const { left, top } = getNodeBoundingBox(node);
-
-  // Use provided ports array or fall back to node.ports for backward compatibility
-  const ports = allPorts || node.ports || [];
-  
-  // Group ports by position for efficient multi-port calculations
-  const portsByPosition = createPortsByPositionMap(ports);
-  const portsOnSameSide = portsByPosition.get(port.position) || [port];
-
-  switch (port.position) {
-    case "left":
-      return {
-        x: left - PORT_MARGIN,
-        y: top + calculatePortOffset(port, portsOnSameSide, height),
-      };
-    case "right":
-      return {
-        x: left + width + PORT_MARGIN,
-        y: top + calculatePortOffset(port, portsOnSameSide, height),
-      };
-    case "top":
-      return {
-        x: left + calculatePortOffset(port, portsOnSameSide, width),
-        y: top - PORT_MARGIN,
-      };
-    case "bottom":
-      return {
-        x: left + calculatePortOffset(port, portsOnSameSide, width),
-        y: top + height + PORT_MARGIN,
-      };
-    default:
-      return {
-        x: left + width + PORT_MARGIN,
-        y: top + height / 2,
-      };
-  }
+  return calculatePortConnectionPosition(node, port, allPorts);
 };
 
 /**

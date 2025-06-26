@@ -84,6 +84,14 @@ export { calculateNodeDragOffsets, getDraggedNodesBounds } from "./utils/dragUti
 
 export { createPortToNodeMap, createParentToChildrenMap, createConnectionLookupMaps, SpatialGrid } from "./utils/lookupUtils";
 
+export {
+  calculatePortRenderPosition,
+  calculatePortConnectionPosition,
+  calculatePortRelativeOffset,
+  getPortsGroupedByPosition,
+  PORT_CONFIG,
+} from "./utils/portPositionUtils";
+
 // Settings system
 export { SettingsManager, LocalSettingsStorage } from "./settings/SettingsManager";
 export { defaultSettings } from "./settings/defaultSettings";

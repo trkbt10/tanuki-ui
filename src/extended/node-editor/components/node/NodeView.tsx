@@ -360,15 +360,13 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
         return (
           <div className={styles.nodePorts}>
             {ports.map((port: Port) => {
-              const portsOnSameSide = portsByPosition[port.position] || [];
-              const portIndexOnSide = portsOnSameSide.findIndex((p: Port) => p.id === port.id);
-
               return (
                 <PortView
                   key={port.id}
                   port={port}
                   nodeWidth={size.width}
                   nodeHeight={size.height}
+                  allPorts={ports}
                   onPointerDown={onPortPointerDown}
                   onPointerUp={onPortPointerUp}
                   onPointerEnter={onPortPointerEnter}
@@ -376,8 +374,6 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
                   isConnecting={connectingPort?.id === port.id}
                   isHovered={hoveredPort?.id === port.id}
                   isConnected={connectedPorts?.has(port.id)}
-                  portIndexOnSide={portIndexOnSide}
-                  totalPortsOnSide={portsOnSameSide.length}
                 />
               );
             })}
