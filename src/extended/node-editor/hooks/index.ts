@@ -18,6 +18,7 @@ export { useExternalDataRef } from "../contexts/ExternalDataContext";
 export { useNodeResize } from "./useNodeResize";
 export { useGroupManagement } from "./useGroupManagement";
 export { usePointerDrag } from "./usePointerDrag";
+export { usePointerInteraction } from "./usePointerInteraction";
 
 // Utility hooks
 export { useDocumentPointerEvents, usePointerCapture, usePreventPointerDefaults, useDragPointerEvents } from "./useDocumentPointerEvents";
@@ -40,3 +41,4 @@ export type { UseNodeResizeResult } from "./useNodeResize";
 export type { UseGroupManagementResult } from "./useGroupManagement";
 export type { PointerDragOptions, PointerDragState } from "./usePointerDrag";
 export type { UseDocumentPointerEventsOptions } from "./useDocumentPointerEvents";
+export type { PointerInteractionConfig } from "./usePointerInteraction";
