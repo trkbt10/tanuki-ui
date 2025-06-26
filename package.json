@@ -90,9 +90,11 @@
     "test:visual": "cd tools/screenshot-test && npm run test",
     "test:visual:ui": "cd tools/screenshot-test && npm run test:ui",
     "test:visual:serve": "cd tools/screenshot-test && npm run test:serve",
-    "test:visual:update": "cd tools/screenshot-test && npm run test:update"
+    "test:visual:update": "cd tools/screenshot-test && npm run test:update",
+    "verify:exports": "node tools/build/verifyExports.js"
   },
   "devDependencies": {
+    "@storybook/react": "^9.0.13",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@types/node": "^22.12.0",
