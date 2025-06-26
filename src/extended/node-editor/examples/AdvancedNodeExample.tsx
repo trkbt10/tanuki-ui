@@ -104,38 +104,16 @@ const CodeEditorRenderer = ({ node, isSelected, isDragging, externalData, onUpda
             placeholder="Enter your code here..."
           />
           <div style={{ marginTop: "8px", display: "flex", gap: "4px" }}>
-            <Button
-              onClick={handleSave}
-              style={{
-                padding: "4px 8px",
-                fontSize: "11px",
-                backgroundColor: "#10b981",
-                color: "white",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-            >
+            <Button onClick={handleSave}>
               Save
             </Button>
-            <Button
-              onClick={() => setIsEditing(false)}
-              style={{
-                padding: "4px 8px",
-                fontSize: "11px",
-                backgroundColor: "#6b7280",
-                color: "white",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-            >
+            <Button onClick={() => setIsEditing(false)}>
               Cancel
             </Button>
           </div>
         </div>
       ) : (
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
           <pre
             style={{
               fontSize: "11px",
@@ -148,23 +126,11 @@ const CodeEditorRenderer = ({ node, isSelected, isDragging, externalData, onUpda
           >
             {codeData?.code || "// Click to edit code"}
           </pre>
-          <Button
-            onClick={() => setIsEditing(true)}
-            style={{
-              marginTop: "8px",
-              padding: "4px 8px",
-              fontSize: "11px",
-              backgroundColor: "#3b82f6",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-            }}
-          >
+          <Button onClick={() => setIsEditing(true)}>
             Edit Code
           </Button>
           {codeData?.errors && codeData.errors.length > 0 && (
-            <div style={{ marginTop: "4px", fontSize: "10px", color: "#ef4444" }}>{codeData.errors.length} error(s)</div>
+            <div style={{ fontSize: "10px", color: "#ef4444" }}>{codeData.errors.length} error(s)</div>
           )}
         </div>
       )}
