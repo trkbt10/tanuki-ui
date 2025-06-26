@@ -61,7 +61,6 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({
   return (
     <div 
       className={classNames(styles.inspectorPanel, className)}
-      data-testid="inspector-panel"
     >
       <div className={styles.inspectorHeader}>
         <div className={styles.inspectorTabs}>
