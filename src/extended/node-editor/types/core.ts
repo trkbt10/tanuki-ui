@@ -58,6 +58,11 @@ export interface Node {
   position: Position;
   size?: Size;
   data: NodeData;
+  /**
+   * @deprecated Ports are now inferred from NodeDefinitions. 
+   * This field is only used for backward compatibility and will be removed in a future version.
+   * Use NodeEditorContext.getNodePorts() instead.
+   */
   ports?: Port[];
   children?: NodeId[]; // For group nodes
   parentId?: NodeId; // Parent group node ID
