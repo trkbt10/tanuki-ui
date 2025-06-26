@@ -39,13 +39,19 @@ function calculatePortOffset(port: Port, portsOnSameSide: Port[], dimension: num
  * Calculate the absolute position of a port on a node
  * Adds margin based on port type and position for better connection visuals
  * Supports multiple ports on the same side with proper spacing
+ * @param node - The node containing the port
+ * @param port - The port to calculate position for
+ * @param allPorts - Optional array of all ports for the node (if not provided, will use node.ports)
  */
-export const getPortPosition = (node: Node, port: Port): Position => {
+export const getPortPosition = (node: Node, port: Port, allPorts?: Port[]): Position => {
   const { width, height } = getNodeSize(node);
   const { left, top } = getNodeBoundingBox(node);
 
+  // Use provided ports array or fall back to node.ports for backward compatibility
+  const ports = allPorts || node.ports || [];
+  
   // Group ports by position for efficient multi-port calculations
-  const portsByPosition = createPortsByPositionMap(node.ports || []);
+  const portsByPosition = createPortsByPositionMap(ports);
   const portsOnSameSide = portsByPosition.get(port.position) || [port];
 
   switch (port.position) {
