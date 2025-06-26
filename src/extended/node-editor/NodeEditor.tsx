@@ -252,11 +252,7 @@ const NodeEditorContent: React.FC<{
         position: centeredPosition,
         size: nodeSize,
         data: nodeDefinition.defaultData || { title: nodeDefinition.displayName },
-        ports:
-          nodeDefinition.ports?.map((portDef) => ({
-            ...portDef,
-            nodeId,
-          })) || [],
+        // Ports are no longer assigned here - they will be inferred from NodeDefinition
       };
 
       // Add node to editor

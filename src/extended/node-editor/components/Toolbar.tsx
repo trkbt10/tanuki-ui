@@ -53,10 +53,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       position: { x: centerX, y: centerY },
       size: nodeDefinition.defaultSize || { width: 150, height: 50 },
       data: nodeDefinition.defaultData || { title: nodeDefinition.displayName },
-      ports: nodeDefinition.ports?.map(portDef => ({
-        ...portDef,
-        nodeId,
-      })) || [],
+      // Ports are no longer assigned here - they will be inferred from NodeDefinition
     };
 
     // Add node to editor
