@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { Connection, Node, Port } from "../../types/core";
-import { calculateBezierPath, getPortPosition } from "./utils/connectionUtils";
+import { calculateBezierPath } from "./utils/connectionUtils";
+import { usePortPositions } from "../../contexts/PortPositionContext";
 import { classNames } from "../../../../utilities/classNames";
 import styles from "../../NodeEditor.module.css";
 
@@ -45,28 +46,49 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
   onPointerEnter,
   onPointerLeave,
 }) => {
+  // Get pre-computed port positions from context
+  const { getPortPosition } = usePortPositions();
+  
   // Calculate port positions (use override positions for drag preview)
   const fromPosition = React.useMemo(() => {
-    const nodeForCalc = fromNodePosition
-      ? {
-          ...fromNode,
-          position: fromNodePosition,
-          size: fromNodeSize || fromNode.size,
-        }
-      : fromNode;
-    return getPortPosition(nodeForCalc, fromPort);
-  }, [fromNode, fromPort, fromNodePosition?.x, fromNodePosition?.y, fromNodeSize?.width, fromNodeSize?.height]);
+    const basePosition = getPortPosition(fromNode.id, fromPort.id)?.connectionPoint;
+    if (!basePosition) {
+      // Fallback if position not found
+      return { x: fromNode.position.x, y: fromNode.position.y };
+    }
+    
+    // Apply drag offset if dragging
+    if (fromNodePosition) {
+      const deltaX = fromNodePosition.x - fromNode.position.x;
+      const deltaY = fromNodePosition.y - fromNode.position.y;
+      return {
+        x: basePosition.x + deltaX,
+        y: basePosition.y + deltaY,
+      };
+    }
+    
+    return basePosition;
+  }, [getPortPosition, fromNode.id, fromNode.position.x, fromNode.position.y, fromPort.id, fromNodePosition?.x, fromNodePosition?.y]);
 
   const toPosition = React.useMemo(() => {
-    const nodeForCalc = toNodePosition
-      ? {
-          ...toNode,
-          position: toNodePosition,
-          size: toNodeSize || toNode.size,
-        }
-      : toNode;
-    return getPortPosition(nodeForCalc, toPort);
-  }, [toNode, toPort, toNodePosition?.x, toNodePosition?.y, toNodeSize?.width, toNodeSize?.height]);
+    const basePosition = getPortPosition(toNode.id, toPort.id)?.connectionPoint;
+    if (!basePosition) {
+      // Fallback if position not found
+      return { x: toNode.position.x, y: toNode.position.y };
+    }
+    
+    // Apply drag offset if dragging
+    if (toNodePosition) {
+      const deltaX = toNodePosition.x - toNode.position.x;
+      const deltaY = toNodePosition.y - toNode.position.y;
+      return {
+        x: basePosition.x + deltaX,
+        y: basePosition.y + deltaY,
+      };
+    }
+    
+    return basePosition;
+  }, [getPortPosition, toNode.id, toNode.position.x, toNode.position.y, toPort.id, toNodePosition?.x, toNodePosition?.y]);
 
   // Calculate bezier path (recalculate when positions change)
   const pathData = React.useMemo(

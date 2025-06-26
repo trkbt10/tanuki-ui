@@ -3,7 +3,8 @@ import { useNodeEditor } from "../../contexts/NodeEditorContext";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
 import { ConnectionView } from "./ConnectionView";
-import { calculateBezierPath, getPortPosition } from "./utils/connectionUtils";
+import { calculateBezierPath } from "./utils/connectionUtils";
+import { usePortPositions } from "../../contexts/PortPositionContext";
 import type { Connection, Node as EditorNode } from "../../types/core";
 import { classNames } from "../../../../utilities/classNames";
 import styles from "../../NodeEditor.module.css";
@@ -35,6 +36,8 @@ ConnectionLayer.displayName = "ConnectionLayer";
 const DragConnection = React.memo(() => {
   const { state: actionState } = useEditorActionState();
   const { state: nodeEditorState, getPort } = useNodeEditor();
+  const { getPortPosition } = usePortPositions();
+  
   if (actionState.connectionDragState) {
     const fromPort = actionState.connectionDragState.fromPort;
     const fromNode = nodeEditorState.nodes[fromPort.nodeId];
@@ -44,7 +47,10 @@ const DragConnection = React.memo(() => {
     const port = getPort(fromPort.nodeId, fromPort.id);
     if (!port) return null;
 
-    const fromPos = getPortPosition(fromNode, port);
+    const portPosition = getPortPosition(fromNode.id, port.id);
+    if (!portPosition) return null;
+    
+    const fromPos = portPosition.connectionPoint;
     const toPos = actionState.connectionDragState.toPosition;
 
     const pathData = calculateBezierPath(fromPos, toPos, port.position, "left");
@@ -74,7 +80,10 @@ const DragConnection = React.memo(() => {
     const fixedPort = getPort(disconnectState.fixedPort.nodeId, disconnectState.fixedPort.id);
     if (!fixedPort) return null;
 
-    const fixedPos = getPortPosition(fixedNode, fixedPort);
+    const portPosition = getPortPosition(fixedNode.id, fixedPort.id);
+    if (!portPosition) return null;
+    
+    const fixedPos = portPosition.connectionPoint;
     const draggingPos = disconnectState.draggingPosition;
 
     const pathData = calculateBezierPath(fixedPos, draggingPos, fixedPort.position, "left");
@@ -101,6 +110,7 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
   const { state: nodeEditorState, getPort } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState } = useNodeCanvas();
+  const { getPortPosition } = usePortPositions();
 
   // Handle connection pointer events
   const handleConnectionPointerDown = React.useCallback(
@@ -113,8 +123,14 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
       if (!fromNode || !toNode || !fromPort || !toPort) return;
 
       // Calculate positions
-      const fromPos = getPortPosition(fromNode, fromPort);
-      const toPos = getPortPosition(toNode, toPort);
+      const fromPortPos = getPortPosition(fromNode.id, fromPort.id);
+      const toPortPos = getPortPosition(toNode.id, toPort.id);
+      
+      if (!fromPortPos || !toPortPos) return;
+      
+      const fromPos = fromPortPos.connectionPoint;
+      const toPos = toPortPos.connectionPoint;
+      
       const midPoint = {
         x: (fromPos.x + toPos.x) / 2,
         y: (fromPos.y + toPos.y) / 2,

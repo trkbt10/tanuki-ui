@@ -1,20 +1,18 @@
 import * as React from "react";
 import type { Port } from "../../../types/core";
 import { classNames } from "../../../../../utilities/classNames";
-import { calculatePortRenderPosition, getPortsGroupedByPosition } from "../../../utils/portPositionUtils";
+import { usePortPosition } from "../../../contexts/PortPositionContext";
 import styles from "./PortView.module.css";
 
 export interface PortViewProps {
   port: Port;
-  nodeWidth?: number;
-  nodeHeight?: number;
-  /** All ports on the node (used for position calculation) */
-  allPorts?: Port[];
   onPointerDown?: (e: React.PointerEvent, port: Port) => void;
   onPointerUp?: (e: React.PointerEvent, port: Port) => void;
   onPointerEnter?: (e: React.PointerEvent, port: Port) => void;
   onPointerLeave?: (e: React.PointerEvent, port: Port) => void;
   isConnecting?: boolean;
+  isConnectable?: boolean;
+  isCandidate?: boolean;
   isHovered?: boolean;
   isConnected?: boolean;
 }
@@ -25,35 +23,34 @@ export interface PortViewProps {
  */
 export const PortView: React.FC<PortViewProps> = ({
   port,
-  nodeWidth = 150,
-  nodeHeight = 50,
-  allPorts,
   onPointerDown,
   onPointerUp,
   onPointerEnter,
   onPointerLeave,
   isConnecting = false,
+  isConnectable = false,
+  isCandidate = false,
   isHovered = false,
   isConnected = false,
 }) => {
-  // Calculate port position using the centralized position calculation
+  // Get pre-computed port position from context
+  const portPosition = usePortPosition(port.nodeId, port.id);
+  
   const getPortPosition = (): React.CSSProperties => {
-    const nodeSize = { width: nodeWidth, height: nodeHeight };
+    if (!portPosition) {
+      // Fallback position if not found
+      return {
+        left: 0,
+        top: 0,
+        position: 'absolute',
+      };
+    }
     
-    // Get all ports on the same side as this port
-    const portsGroupedByPosition = allPorts ? 
-      getPortsGroupedByPosition({ ports: allPorts } as any) : 
-      new Map([[port.position, [port]]]);
-    
-    const portsOnSameSide = portsGroupedByPosition.get(port.position) || [port];
-    
-    // Calculate position using the centralized function
-    const { x, y, transform } = calculatePortRenderPosition(port, nodeSize, portsOnSameSide);
-    
+    const { renderPosition } = portPosition;
     return {
-      left: x,
-      top: y,
-      transform,
+      left: renderPosition.x,
+      top: renderPosition.y,
+      transform: renderPosition.transform,
       position: 'absolute',
     };
   };
@@ -83,6 +80,8 @@ export const PortView: React.FC<PortViewProps> = ({
         styles[`port${port.type.charAt(0).toUpperCase()}${port.type.slice(1)}`],
         styles[`port${port.position.charAt(0).toUpperCase()}${port.position.slice(1)}`],
         isConnecting && styles.portConnecting,
+        isConnectable && styles.portConnectable,
+        isCandidate && styles.portCandidate,
         isHovered && styles.portHovered,
         isConnected && styles.portConnected
       )}

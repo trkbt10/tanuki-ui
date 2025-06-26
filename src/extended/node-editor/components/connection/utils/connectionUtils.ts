@@ -1,17 +1,5 @@
-import type { Node, Port, Position } from "../../../types/core";
+import type { Position } from "../../../types/core";
 import { getDistance } from "../../../utils/vectorUtils";
-import { calculatePortConnectionPosition } from "../../../utils/portPositionUtils";
-
-/**
- * Calculate the absolute position of a port on a node for connection drawing
- * Uses the centralized port position calculation system
- * @param node - The node containing the port
- * @param port - The port to calculate position for
- * @param allPorts - Optional array of all ports for the node (if not provided, will use node.ports)
- */
-export const getPortPosition = (node: Node, port: Port, allPorts?: Port[]): Position => {
-  return calculatePortConnectionPosition(node, port, allPorts);
-};
 
 /**
  * Calculate a bezier curve path between two points
