@@ -1,8 +1,12 @@
 import * as React from "react";
-import { Connection, ConnectionId, Node, NodeEditorData, NodeId, Position } from "../types/core";
+import { Connection, ConnectionId, Node, NodeEditorData, NodeId, Position, Port, PortId } from "../types/core";
 
 import { useSettings } from "../hooks";
 import { SettingsManager } from "../settings/SettingsManager";
+import { createCachedPortResolver } from "../utils/portResolver";
+import { NodeDefinitionContext } from "./NodeDefinitionContext";
+import { loadDataWithMigration, prepareDataForSave, type VersionedNodeEditorData } from "../utils/dataMigration";
+import { getFeatureFlags } from "../config/featureFlags";
 
 // Re-export NodeEditorData for external use
 export type { NodeEditorData };
@@ -32,13 +36,7 @@ export const nodeEditorReducer = (state: NodeEditorData, action: NodeEditorActio
       const id = generateId();
       const node = { ...action.payload.node, id } as Node;
 
-      // Set nodeId for all ports
-      if (node.ports) {
-        node.ports = node.ports.map((port) => ({
-          ...port,
-          nodeId: id,
-        }));
-      }
+      // Ports are no longer stored on nodes - they will be inferred from NodeDefinition
 
       return {
         ...state,
@@ -182,13 +180,7 @@ export const nodeEditorReducer = (state: NodeEditorData, action: NodeEditorActio
             title: originalNode.data.title ? `${originalNode.data.title} Copy` : `Node Copy`,
             createdAt: Date.now(), // Track creation time for selection
           },
-          // Duplicate ports with new IDs
-          ports:
-            originalNode.ports?.map((port) => ({
-              ...port,
-              id: `${port.id}-copy-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-              nodeId: newId,
-            })) || [],
+          // Ports are no longer duplicated - they will be inferred from NodeDefinition
         };
 
         // Handle group nodes
@@ -423,6 +415,10 @@ export interface NodeEditorContextValue {
   isLoading: boolean;
   isSaving: boolean;
   handleSave: () => Promise<void>;
+  // Port resolution methods
+  getNodePorts: (nodeId: NodeId) => Port[];
+  getPort: (nodeId: NodeId, portId: string) => Port | undefined;
+  portLookupMap: Map<string, { node: Node; port: Port }>;
 }
 
 export const NodeEditorContext = React.createContext<NodeEditorContextValue | null>(null);
@@ -446,6 +442,16 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
   onSave,
   settingsManager,
 }) => {
+  // Get node definitions from context
+  const nodeDefinitionsContext = React.useContext(NodeDefinitionContext);
+  const registry = nodeDefinitionsContext?.registry;
+  
+  // Get feature flags
+  const featureFlags = React.useMemo(() => getFeatureFlags(), []);
+  
+  // Create port resolver instance
+  const portResolver = React.useMemo(() => createCachedPortResolver(), []);
+  
   // Deep merge initial state with defaults
   const initialData: NodeEditorData = React.useMemo(() => {
     return {
@@ -485,7 +491,21 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
     if (onLoad && !isLoading) {
       setIsLoading(true);
       Promise.resolve(onLoad())
-        .then((data) => {
+        .then((loadedData) => {
+          // Handle migration if needed
+          const { data, migrated, migrationResult } = loadDataWithMigration(
+            loadedData as VersionedNodeEditorData,
+            registry,
+            featureFlags.autoMigrateOnLoad
+          );
+          
+          if (migrated && migrationResult && featureFlags.showMigrationWarnings) {
+            console.log("Node editor data migrated successfully:", migrationResult.statistics);
+            if (migrationResult.warnings.length > 0) {
+              console.warn("Migration warnings:", migrationResult.warnings);
+            }
+          }
+          
           dispatch(nodeEditorActions.setNodeData(data));
         })
         .catch((error) => {
@@ -495,14 +515,16 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
           setIsLoading(false);
         });
     }
-  }, []);
+  }, [featureFlags]);
 
   // Save handler
   const handleSave = React.useCallback(async () => {
     if (onSave && !isSaving) {
       setIsSaving(true);
       try {
-        await Promise.resolve(onSave(state));
+        // Prepare data for saving based on feature flags
+        const dataToSave = prepareDataForSave(state, featureFlags.saveInNewFormat);
+        await Promise.resolve(onSave(dataToSave));
       } catch (error) {
         console.error("Failed to save node editor data:", error);
       } finally {
@@ -523,6 +545,112 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
     return () => clearInterval(intervalId);
   }, [autoSave, autoSaveInterval, handleSave, isSaving]);
 
+  // Port resolution methods
+  const getNodePorts = React.useCallback(
+    (nodeId: NodeId): Port[] => {
+      const node = state.nodes[nodeId];
+      if (!node) return [];
+      
+      // If using inferred ports only, require registry
+      if (featureFlags.useInferredPortsOnly) {
+        if (!registry) {
+          console.error("NodeDefinitionRegistry is required when useInferredPortsOnly is enabled");
+          return [];
+        }
+        const definition = registry.get(node.type);
+        if (!definition) {
+          console.warn(`No definition found for node type: ${node.type}`);
+          return [];
+        }
+        return portResolver.getNodePorts(node, definition);
+      }
+      
+      // Use registry if available, otherwise fall back to legacy ports
+      if (registry) {
+        const definition = registry.get(node.type);
+        if (definition) {
+          return portResolver.getNodePorts(node, definition);
+        }
+      }
+      
+      // Fallback to legacy ports
+      return node.ports || [];
+    },
+    [state.nodes, registry, portResolver, featureFlags.useInferredPortsOnly]
+  );
+
+  const getPort = React.useCallback(
+    (nodeId: NodeId, portId: string): Port | undefined => {
+      const node = state.nodes[nodeId];
+      if (!node) return undefined;
+      
+      // If using inferred ports only, require registry
+      if (featureFlags.useInferredPortsOnly) {
+        if (!registry) {
+          console.error("NodeDefinitionRegistry is required when useInferredPortsOnly is enabled");
+          return undefined;
+        }
+        const definition = registry.get(node.type);
+        if (!definition) {
+          console.warn(`No definition found for node type: ${node.type}`);
+          return undefined;
+        }
+        return portResolver.getPort(node, portId, definition);
+      }
+      
+      // Use registry if available, otherwise fall back to legacy ports
+      if (registry) {
+        const definition = registry.get(node.type);
+        if (definition) {
+          return portResolver.getPort(node, portId, definition);
+        }
+      }
+      
+      // Fallback to legacy ports
+      return node.ports?.find(p => p.id === portId);
+    },
+    [state.nodes, registry, portResolver, featureFlags.useInferredPortsOnly]
+  );
+
+  // Create port lookup map
+  const portLookupMap = React.useMemo(() => {
+    // If using inferred ports only, require registry
+    if (featureFlags.useInferredPortsOnly) {
+      if (!registry) {
+        console.error("NodeDefinitionRegistry is required when useInferredPortsOnly is enabled");
+        return new Map<string, { node: Node; port: Port }>();
+      }
+      return portResolver.createPortLookupMap(
+        state.nodes,
+        (type: string) => registry.get(type)
+      );
+    }
+    
+    // Hybrid mode: use registry if available
+    if (!registry) {
+      // Fallback to legacy approach
+      const map = new Map<string, { node: Node; port: Port }>();
+      for (const node of Object.values(state.nodes)) {
+        const ports = node.ports || [];
+        for (const port of ports) {
+          const key = `${node.id}:${port.id}`;
+          map.set(key, { node, port });
+        }
+      }
+      return map;
+    }
+    
+    return portResolver.createPortLookupMap(
+      state.nodes,
+      (type: string) => registry.get(type)
+    );
+  }, [state.nodes, registry, portResolver, featureFlags.useInferredPortsOnly]);
+
+  // Clear port cache when nodes change
+  React.useEffect(() => {
+    portResolver.clearCache();
+  }, [state.nodes, portResolver]);
+
   const contextValue: NodeEditorContextValue = React.useMemo(() => {
     return {
       state,
@@ -531,8 +659,11 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
       isLoading,
       isSaving,
       handleSave,
+      getNodePorts,
+      getPort,
+      portLookupMap,
     };
-  }, [state, dispatch, isLoading, isSaving, handleSave]);
+  }, [state, dispatch, isLoading, isSaving, handleSave, getNodePorts, getPort, portLookupMap]);
 
   return <NodeEditorContext.Provider value={contextValue}>{children}</NodeEditorContext.Provider>;
 };
