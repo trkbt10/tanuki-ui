@@ -4,6 +4,7 @@ import type { Position } from "../types/core";
 import { classNames } from "../../../utilities/classNames";
 import { calculateContextMenuPosition, getViewportInfo } from "../../../dialogs/utilities/positionUtils";
 import { getNodeIcon } from "../utils/nodeUtils";
+import { Input } from "../../../form/Input";
 import styles from "./NodeSearchMenu.module.css";
 import editorStyles from "../NodeEditor.module.css";
 
@@ -197,7 +198,7 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
       onKeyDown={handleKeyDown}
     >
       <div className={editorStyles.searchHeader}>
-        <input
+        <Input
           ref={searchInputRef}
           id="node-search"
           name="nodeSearch"
