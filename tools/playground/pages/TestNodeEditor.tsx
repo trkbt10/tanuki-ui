@@ -1,271 +1,21 @@
 import * as React from "react";
 import { NodeEditor } from "../../src/extended/node-editor/NodeEditor";
 import type { NodeEditorData } from "../../src/extended/node-editor/types/core";
-import type { NodeDefinition } from "../../src/extended/node-editor/types/NodeDefinition";
 import { SettingsManager } from "../../src/extended/node-editor/settings/SettingsManager";
 import { defaultSettings } from "../../src/extended/node-editor/settings/defaultSettings";
 import { Minimap, GridToolbox } from "../../src/extended/node-editor/components/layers";
 import { Toolbar } from "../../src/extended/node-editor/components/Toolbar";
-import { WebGLRectangleNode } from "../components/WebGLRectangleNode";
 import { useNodeDataFlow } from "../components/NodeDataFlow";
-
-// Function to create custom node definitions with data flow
-const createCustomNodeDefinitions = (
-  getConnectedValue: (nodeId: string, portId: string) => any,
-  updateNodeValue: (nodeId: string, value: any) => void,
-  nodeDataState: Record<string, any>,
-): NodeDefinition[] => [
-  {
-    type: "math-add",
-    displayName: "Add",
-    description: "Adds two numbers together",
-    category: "Math",
-    icon: "➕",
-    defaultSize: { width: 150, height: 80 },
-    defaultData: { title: "Add", result: 0 },
-    ports: [
-      { id: "a", type: "input", label: "A", position: "left", dataType: "number" },
-      { id: "b", type: "input", label: "B", position: "left", dataType: "number" },
-      { id: "result", type: "output", label: "Result", position: "right", dataType: "number" },
-    ],
-  },
-  {
-    type: "math-multiply",
-    displayName: "Multiply",
-    description: "Multiplies two numbers",
-    category: "Math",
-    icon: "✖️",
-    defaultSize: { width: 150, height: 80 },
-    defaultData: { title: "Multiply", result: 0 },
-    ports: [
-      { id: "a", type: "input", label: "A", position: "left", dataType: "number" },
-      { id: "b", type: "input", label: "B", position: "left", dataType: "number" },
-      { id: "result", type: "output", label: "Result", position: "right", dataType: "number" },
-    ],
-  },
-  {
-    type: "data-source",
-    displayName: "Data Source",
-    description: "Provides data input",
-    category: "Data",
-    icon: "📊",
-    defaultSize: { width: 180, height: 100 },
-    defaultData: { title: "Data Source", value: "Sample Data" },
-    ports: [{ id: "output", type: "output", label: "Data", position: "right", dataType: "any" }],
-  },
-  {
-    type: "filter",
-    displayName: "Filter",
-    description: "Filters data based on conditions",
-    category: "Data",
-    icon: "🔍",
-    defaultSize: { width: 160, height: 90 },
-    defaultData: { title: "Filter", condition: "value > 0" },
-    ports: [
-      { id: "input", type: "input", label: "Input", position: "left", dataType: "any" },
-      { id: "condition", type: "input", label: "Condition", position: "left", dataType: "string" },
-      { id: "output", type: "output", label: "Filtered", position: "right", dataType: "any" },
-    ],
-  },
-  {
-    type: "ai-model",
-    displayName: "AI Model",
-    description: "AI processing node",
-    category: "AI",
-    icon: "🤖",
-    defaultSize: { width: 200, height: 120 },
-    defaultData: { title: "AI Model", model: "GPT-4", temperature: 0.7 },
-    ports: [
-      { id: "prompt", type: "input", label: "Prompt", position: "left", dataType: "string" },
-      { id: "context", type: "input", label: "Context", position: "left", dataType: "string" },
-      { id: "response", type: "output", label: "Response", position: "right", dataType: "string" },
-      { id: "tokens", type: "output", label: "Token Count", position: "right", dataType: "number" },
-    ],
-  },
-  {
-    type: "webhook",
-    displayName: "Webhook",
-    description: "HTTP webhook endpoint",
-    category: "Network",
-    icon: "🌐",
-    defaultSize: { width: 170, height: 100 },
-    defaultData: { title: "Webhook", url: "https://api.example.com/webhook" },
-    ports: [
-      { id: "payload", type: "input", label: "Payload", position: "left", dataType: "object" },
-      { id: "response", type: "output", label: "Response", position: "right", dataType: "object" },
-      { id: "status", type: "output", label: "Status", position: "right", dataType: "number" },
-    ],
-  },
-  {
-    type: "webgl-rectangle",
-    displayName: "WebGL Teapot",
-    description: "Classic OpenGL Utah teapot",
-    category: "Graphics",
-    icon: "🫖",
-    defaultSize: { width: 200, height: 150 },
-    defaultData: { title: "Utah Teapot", color: "#FF6B6B", borderRadius: 1 },
-    ports: [
-      { id: "color", type: "input", label: "Color", position: "left", dataType: "string" },
-      { id: "scale", type: "input", label: "Scale", position: "left", dataType: "number" },
-      { id: "output", type: "output", label: "Output", position: "right", dataType: "any" },
-    ],
-    renderNode: ({ node, isSelected }) => {
-      // Get values from connected nodes or use defaults
-      const connectedColor = getConnectedValue(node.id, "color");
-      const connectedScale = getConnectedValue(node.id, "scale");
-
-      const color = connectedColor || (node.data?.color as string) || "#2196F3";
-      const borderRadius = connectedScale || (node.data?.borderRadius as number) || 1;
-
-      const size = node.size || { width: 200, height: 150 };
-      return (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "relative",
-            border: isSelected ? "2px solid #1976D2" : "1px solid #ccc",
-            borderRadius: "4px",
-            overflow: "hidden",
-            background: "white",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              padding: "8px",
-              background: "rgba(0,0,0,0.05)",
-              borderBottom: "1px solid rgba(0,0,0,0.1)",
-              fontSize: "12px",
-              fontWeight: "bold",
-            }}
-          >
-            {node.data?.title || "Utah Teapot"}
-          </div>
-          <div
-            style={{
-              position: "absolute",
-              inset: 0,
-              display: "grid",
-            }}
-          >
-            <WebGLRectangleNode width={size.width} height={size.height} color={color} borderRadius={borderRadius} />
-          </div>
-        </div>
-      );
-    },
-  },
-  {
-    type: "color-picker",
-    displayName: "Color Picker",
-    description: "Pick a color value",
-    category: "Graphics",
-    icon: "🎨",
-    defaultSize: { width: 180, height: 100 },
-    defaultData: { title: "Color Picker", color: "#FF6B6B" },
-    ports: [{ id: "color", type: "output", label: "Color", position: "right", dataType: "string" }],
-    renderNode: ({ node }) => {
-      const currentColor = (node.data?.color as string) || "#FF6B6B";
-
-      return (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "relative",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-            background: "white",
-            display: "flex",
-            flexDirection: "column",
-            pointerEvents: "none",
-            gap: "8px",
-          }}
-        >
-          <div style={{ fontSize: "12px", fontWeight: "bold" }}>{node.data?.title || "Color Picker"}</div>
-          <div style={{ flex: 1, display: "flex", alignItems: "center", gap: "8px" }}>
-            <input
-              type="color"
-              value={currentColor}
-              onChange={(e) => {
-                if (node.data) {
-                  node.data.color = e.target.value;
-                  updateNodeValue(node.id, { ...node.data });
-                }
-              }}
-              style={{ width: "50px", height: "30px", border: "1px solid #ccc", borderRadius: "4px", pointerEvents: "auto" }}
-            />
-            <span style={{ fontSize: "11px", fontFamily: "monospace" }}>{currentColor}</span>
-          </div>
-        </div>
-      );
-    },
-  },
-  {
-    type: "number-slider",
-    displayName: "Number Slider",
-    description: "Adjust a numeric value",
-    category: "Graphics",
-    icon: "🎚️",
-    interactive: true,
-    defaultSize: { width: 180, height: 100 },
-    defaultData: { title: "Scale", value: 1, min: 0.1, max: 3 },
-    ports: [{ id: "value", type: "output", label: "Value", position: "right", dataType: "number" }],
-    renderNode: ({ node }) => {
-      const value = (node.data?.value as number) || 1;
-      const min = (node.data?.min as number) || 0.1;
-      const max = (node.data?.max as number) || 3;
-
-      return (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            position: "relative",
-            border: "1px solid #ccc",
-            borderRadius: "4px",
-            background: "white",
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-          }}
-        >
-          <div style={{ fontSize: "12px", fontWeight: "bold" }}>{node.data?.title || "Number Slider"}</div>
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", gap: "4px" }}>
-            <input
-              type="range"
-              min={min}
-              max={max}
-              step={0.1}
-              value={value}
-              onChange={(e) => {
-                if (node.data) {
-                  node.data.value = parseFloat(e.target.value);
-                  updateNodeValue(node.id, { ...node.data });
-                }
-              }}
-              style={{ width: "100%" }}
-            />
-            <div style={{ fontSize: "11px", textAlign: "center", fontFamily: "monospace" }}>{value.toFixed(1)}</div>
-          </div>
-        </div>
-      );
-    },
-  },
-];
-
+import { createAllTestNodeDefinitions } from "../test-nodes";
 export const TestNodeEditor: React.FC = () => {
   const [nodeDataState, setNodeDataState] = React.useState<Record<string, any>>({});
   const [editorData, setEditorData] = React.useState<NodeEditorData | null>(null);
   const { getConnectedValue, updateNodeValue, nodeValues } = useNodeDataFlow(editorData);
 
-  // Memoize custom node definitions to prevent unnecessary re-renders
+  // Create custom node definitions using the new modular approach
   const customNodeDefinitions = React.useMemo(
-    () => createCustomNodeDefinitions(getConnectedValue, updateNodeValue, nodeValues),
-    [getConnectedValue, updateNodeValue, nodeValues],
+    () => createAllTestNodeDefinitions({ getConnectedValue, updateNodeValue }),
+    [getConnectedValue, updateNodeValue],
   );
   const [settingsVersion, setSettingsVersion] = React.useState(0);
   const [minimapPosition, setMinimapPosition] = React.useState<"top-left" | "top-right" | "bottom-left" | "bottom-right">(
@@ -307,6 +57,7 @@ export const TestNodeEditor: React.FC = () => {
 
   const initialData: Partial<NodeEditorData> = {
     nodes: {
+      // Original WebGL Demo Nodes
       colorPicker: {
         id: "colorPicker",
         type: "color-picker",
@@ -335,6 +86,117 @@ export const TestNodeEditor: React.FC = () => {
           { id: "output", type: "output", label: "Output", nodeId: "teapot", position: "right" },
         ],
       },
+      // UI Elements Test Section
+      textInput1: {
+        id: "textInput1",
+        type: "text-input",
+        position: { x: 50, y: 400 },
+        size: { width: 200, height: 120 },
+        data: { title: "User Input", value: "Hello World", placeholder: "Enter message...", multiline: false, maxLength: 50 },
+        ports: [
+          { id: "input", type: "input", label: "Default", nodeId: "textInput1", position: "left" },
+          { id: "output", type: "output", label: "Text", nodeId: "textInput1", position: "right" }
+        ],
+      },
+      buttonTrigger1: {
+        id: "buttonTrigger1",
+        type: "button-trigger",
+        position: { x: 300, y: 400 },
+        size: { width: 160, height: 100 },
+        data: { title: "Action Button", label: "Process", variant: "success", disabled: false, clickCount: 0 },
+        ports: [
+          { id: "trigger", type: "output", label: "Triggered", nodeId: "buttonTrigger1", position: "right" },
+          { id: "count", type: "output", label: "Count", nodeId: "buttonTrigger1", position: "right" }
+        ],
+      },
+      dropdownSelect1: {
+        id: "dropdownSelect1",
+        type: "dropdown-select",
+        position: { x: 500, y: 400 },
+        size: { width: 180, height: 120 },
+        data: { 
+          title: "Data Type", 
+          options: ["JSON", "XML", "CSV", "Plain Text"], 
+          selectedValue: "JSON", 
+          allowCustom: true 
+        },
+        ports: [
+          { id: "options", type: "input", label: "Options", nodeId: "dropdownSelect1", position: "left" },
+          { id: "selected", type: "output", label: "Selected", nodeId: "dropdownSelect1", position: "right" }
+        ],
+      },
+      checkboxGroup1: {
+        id: "checkboxGroup1",
+        type: "checkbox-group",
+        position: { x: 50, y: 560 },
+        size: { width: 200, height: 150 },
+        data: { 
+          title: "Features", 
+          options: ["Auto Save", "Dark Mode", "Notifications", "Advanced Mode"], 
+          selectedValues: ["Auto Save", "Dark Mode"], 
+          layout: "vertical" 
+        },
+        ports: [
+          { id: "options", type: "input", label: "Options", nodeId: "checkboxGroup1", position: "left" },
+          { id: "selected", type: "output", label: "Selected", nodeId: "checkboxGroup1", position: "right" }
+        ],
+      },
+      progressBar1: {
+        id: "progressBar1",
+        type: "progress-bar",
+        position: { x: 300, y: 560 },
+        size: { width: 200, height: 100 },
+        data: { 
+          title: "Loading Progress", 
+          value: 75, 
+          min: 0, 
+          max: 100, 
+          showValue: true, 
+          color: "#2196F3", 
+          animated: true 
+        },
+        ports: [
+          { id: "value", type: "input", label: "Value", nodeId: "progressBar1", position: "left" },
+          { id: "progress", type: "output", label: "Progress", nodeId: "progressBar1", position: "right" }
+        ],
+      },
+      // External Data Integration Test Section
+      externalDataLoader1: {
+        id: "externalDataLoader1",
+        type: "external-data-loader",
+        position: { x: 750, y: 400 },
+        size: { width: 220, height: 140 },
+        data: { 
+          title: "API Data Loader", 
+          dataType: "json", 
+          url: "https://jsonplaceholder.typicode.com/posts/1", 
+          autoRefresh: false, 
+          refreshInterval: 5000 
+        },
+        ports: [
+          { id: "trigger", type: "input", label: "Refresh", nodeId: "externalDataLoader1", position: "left" },
+          { id: "data", type: "output", label: "Data", nodeId: "externalDataLoader1", position: "right" },
+          { id: "loading", type: "output", label: "Loading", nodeId: "externalDataLoader1", position: "right" },
+          { id: "error", type: "output", label: "Error", nodeId: "externalDataLoader1", position: "right" }
+        ],
+      },
+      dataTransformer1: {
+        id: "dataTransformer1",
+        type: "data-transformer",
+        position: { x: 1000, y: 400 },
+        size: { width: 240, height: 160 },
+        data: { 
+          title: "JSON Processor", 
+          expression: "{ title: data.title?.toUpperCase(), id: data.id, processed: true }", 
+          errorHandling: "ignore" 
+        },
+        ports: [
+          { id: "input", type: "input", label: "Input Data", nodeId: "dataTransformer1", position: "left" },
+          { id: "output", type: "output", label: "Transformed", nodeId: "dataTransformer1", position: "right" },
+          { id: "error", type: "output", label: "Error", nodeId: "dataTransformer1", position: "right" }
+        ],
+      },
+      // Math Processing Test Section
       mathAdd: {
         id: "mathAdd",
         type: "math-add",
@@ -357,6 +219,7 @@ export const TestNodeEditor: React.FC = () => {
       },
     },
     connections: {
+      // WebGL Demo Connections
       colorConn: {
         id: "colorConn",
         fromNodeId: "colorPicker",
@@ -370,6 +233,22 @@ export const TestNodeEditor: React.FC = () => {
         fromPortId: "value",
         toNodeId: "teapot",
         toPortId: "scale",
+      },
+      // External Data Flow Connections
+      dataFlowConn: {
+        id: "dataFlowConn",
+        fromNodeId: "externalDataLoader1",
+        fromPortId: "data",
+        toNodeId: "dataTransformer1",
+        toPortId: "input",
+      },
+      // UI Integration Connections
+      buttonToProgressConn: {
+        id: "buttonToProgressConn",
+        fromNodeId: "buttonTrigger1",
+        fromPortId: "count",
+        toNodeId: "progressBar1",
+        toPortId: "value",
       },
     },
   };
