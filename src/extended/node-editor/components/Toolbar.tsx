@@ -4,6 +4,7 @@ import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import { useNodeEditor } from "../contexts/NodeEditorContext";
 import { FloatingContainer } from "./parts/FloatingContainer";
+import { Button } from "../../../form/Button";
 import styles from "./Toolbar.module.css";
 import editorStyles from "../NodeEditor.module.css";
 
@@ -86,7 +87,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     <>
       {/* Quick node creation buttons */}
       {commonNodeTypes.map(nodeType => (
-        <button
+        <Button
           key={nodeType.type}
           className={editorStyles.toolButton}
           onClick={() => handleToolbarNodeCreate(nodeType.type)}
@@ -100,7 +101,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
               {nodeType.displayName.charAt(0).toUpperCase()}
             </span>
           )}
-        </button>
+        </Button>
       ))}
       
       {/* Separator */}
@@ -109,7 +110,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
       )}
       
       {/* More nodes button - opens node search menu */}
-      <button
+      <Button
         className={editorStyles.toolButton}
         onClick={showNodeSearchMenu}
         title="Add Node..."
@@ -123,7 +124,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         >
           <path d="M8 3a1 1 0 0 1 1 1v3h3a1 1 0 1 1 0 2H9v3a1 1 0 1 1-2 0V9H4a1 1 0 0 1 0-2h3V4a1 1 0 0 1 1-1z"/>
         </svg>
-      </button>
+      </Button>
     </>
   );
 
