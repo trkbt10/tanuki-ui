@@ -11,6 +11,8 @@ export interface PortPositionContextValue {
   getPortPosition: (nodeId: string, portId: string) => PortPosition | undefined;
   /** Get all port positions for a node */
   getNodePortPositions: (nodeId: string) => NodePortPositions | undefined;
+  /** Compute port position dynamically */
+  computePortPosition: (node: any, port: any) => PortPosition;
 }
 
 /**
@@ -37,6 +39,19 @@ export const PortPositionProvider: React.FC<PortPositionProviderProps> = ({
     },
     getNodePortPositions: (nodeId: string) => {
       return portPositions.get(nodeId);
+    },
+    computePortPosition: (node: any, port: any) => {
+      // This will be implemented to compute positions on-the-fly
+      // For now, fallback to stored positions
+      const stored = portPositions.get(node.id)?.get(port.id);
+      if (stored) return stored;
+      
+      // Simple fallback
+      return {
+        portId: port.id,
+        renderPosition: { x: 0, y: 0 },
+        connectionPoint: { x: node.position.x, y: node.position.y },
+      };
     },
   }), [portPositions]);
 

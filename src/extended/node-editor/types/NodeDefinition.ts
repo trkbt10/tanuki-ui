@@ -2,18 +2,17 @@ import type { ReactNode, ReactElement } from "react";
 import type { Node, NodeId, Port, Connection, NodeEditorData, NodeData } from "./core";
 
 /**
- * Node data type map interface
- * Users can extend this interface to add their own node type definitions
+ * Base node data type map interface
+ * This can be extended through generic parameters instead of module augmentation
  * @example
- * declare module '@tanuki-ui/node-editor' {
- *   interface NodeDataTypeMap {
- *     'my-custom-node': { title: string; value: number; };
- *   }
- * }
+ * // Instead of module augmentation, use as generic parameter:
+ * type MyNodeTypes = {
+ *   'my-custom-node': { title: string; value: number; };
+ * };
+ * // Then use with NodeDefinitionProvider<MyNodeTypes>
  */
 export interface NodeDataTypeMap {
-  // This interface is intentionally empty to allow for module augmentation
-  // Users can extend it to add their own node types
+  // This interface is intentionally empty - users should use generic parameters
 }
 
 /**
@@ -33,14 +32,15 @@ export interface ExternalDataReference {
 
 /**
  * Node render props for custom node visualization
- * @template TNodeType - The specific node type from NodeDataTypeMap
+ * @template TNodeType - The specific node type
+ * @template TNodeDataTypeMap - The node data type map
  */
-export interface NodeRenderProps<TNodeType extends string = string> {
+export interface NodeRenderProps<TNodeType extends string = string, TNodeDataTypeMap = NodeDataTypeMap> {
   /** The node data with type-safe data property */
-  node: TNodeType extends keyof NodeDataTypeMap 
+  node: TNodeType extends keyof TNodeDataTypeMap 
     ? Node & {
         type: TNodeType;
-        data: NodeDataTypeMap[TNodeType];
+        data: TNodeDataTypeMap[TNodeType];
       }
     : Node;
   /** Whether the node is selected */
@@ -63,14 +63,15 @@ export interface NodeRenderProps<TNodeType extends string = string> {
 
 /**
  * Inspector panel render props
- * @template TNodeType - The specific node type from NodeDataTypeMap
+ * @template TNodeType - The specific node type
+ * @template TNodeDataTypeMap - The node data type map
  */
-export interface InspectorRenderProps<TNodeType extends string = string> {
+export interface InspectorRenderProps<TNodeType extends string = string, TNodeDataTypeMap = NodeDataTypeMap> {
   /** The selected node with type-safe data property */
-  node: TNodeType extends keyof NodeDataTypeMap 
+  node: TNodeType extends keyof TNodeDataTypeMap 
     ? Node & {
         type: TNodeType;
-        data: NodeDataTypeMap[TNodeType];
+        data: TNodeDataTypeMap[TNodeType];
       }
     : Node;
   /** External data if loaded */
@@ -173,9 +174,10 @@ export interface NodeConstraint {
 
 /**
  * Node type definition
- * @template TNodeType - The specific node type from NodeDataTypeMap
+ * @template TNodeType - The specific node type
+ * @template TNodeDataTypeMap - The node data type map
  */
-export interface NodeDefinition<TNodeType extends string = string> {
+export interface NodeDefinition<TNodeType extends string = string, TNodeDataTypeMap = NodeDataTypeMap> {
   /** Unique type identifier */
   type: TNodeType;
   /** Display name for the node type */
@@ -187,7 +189,7 @@ export interface NodeDefinition<TNodeType extends string = string> {
   /** Category for grouping in UI */
   category?: string;
   /** Default data when creating a new node */
-  defaultData?: TNodeType extends keyof NodeDataTypeMap ? NodeDataTypeMap[TNodeType] : Record<string, unknown>;
+  defaultData?: TNodeType extends keyof TNodeDataTypeMap ? TNodeDataTypeMap[TNodeType] : Record<string, unknown>;
   /** Default size for new nodes */
   defaultSize?: { width: number; height: number };
   /** Port definitions */
@@ -197,9 +199,9 @@ export interface NodeDefinition<TNodeType extends string = string> {
   /** When true, node can only be moved by dragging title or when multi-selected */
   interactive?: boolean;
   /** Custom render function for the node */
-  renderNode?: (props: NodeRenderProps<TNodeType>) => ReactElement;
+  renderNode?: (props: NodeRenderProps<TNodeType, TNodeDataTypeMap>) => ReactElement;
   /** Custom render function for the inspector panel */
-  renderInspector?: (props: InspectorRenderProps<TNodeType>) => ReactElement;
+  renderInspector?: (props: InspectorRenderProps<TNodeType, TNodeDataTypeMap>) => ReactElement;
   /** External data loader */
   loadExternalData?: (ref: ExternalDataReference) => unknown | Promise<unknown>;
   /** External data updater */
@@ -214,32 +216,34 @@ export interface NodeDefinition<TNodeType extends string = string> {
 
 /**
  * Node definitions registry
+ * @template TNodeDataTypeMap - The node data type map
  */
-export interface NodeDefinitionRegistry {
+export interface NodeDefinitionRegistry<TNodeDataTypeMap = NodeDataTypeMap> {
   /** Map of type to definition */
-  definitions: Map<string, NodeDefinition>;
+  definitions: Map<string, NodeDefinition<string, TNodeDataTypeMap>>;
   /** Register a new node type */
-  register: (definition: NodeDefinition) => void;
+  register: (definition: NodeDefinition<string, TNodeDataTypeMap>) => void;
   /** Unregister a node type */
   unregister: (type: string) => void;
   /** Get a node definition by type */
-  get: (type: string) => NodeDefinition | undefined;
+  get: (type: string) => NodeDefinition<string, TNodeDataTypeMap> | undefined;
   /** Get all definitions */
-  getAll: () => NodeDefinition[];
+  getAll: () => NodeDefinition<string, TNodeDataTypeMap>[];
   /** Get definitions by category */
-  getByCategory: (category: string) => NodeDefinition[];
+  getByCategory: (category: string) => NodeDefinition<string, TNodeDataTypeMap>[];
 }
 
 
 /**
  * Create a node definition registry
+ * @template TNodeDataTypeMap - The node data type map
  */
-export function createNodeDefinitionRegistry(): NodeDefinitionRegistry {
-  const definitions = new Map<string, NodeDefinition>();
+export function createNodeDefinitionRegistry<TNodeDataTypeMap = NodeDataTypeMap>(): NodeDefinitionRegistry<TNodeDataTypeMap> {
+  const definitions = new Map<string, NodeDefinition<string, TNodeDataTypeMap>>();
 
   return {
     definitions,
-    register(definition: NodeDefinition) {
+    register(definition: NodeDefinition<string, TNodeDataTypeMap>) {
       definitions.set(definition.type, definition);
     },
     unregister(type: string) {
@@ -347,32 +351,35 @@ export const MultiInputNodeDefinition: NodeDefinition = {
 
 /**
  * Helper function to create a type-safe node definition
- * @template TNodeType - The specific node type from NodeDataTypeMap
+ * @template TNodeType - The specific node type
+ * @template TNodeDataTypeMap - The node data type map
  */
-export function createNodeDefinition<TNodeType extends string>(
-  definition: NodeDefinition<TNodeType>
-): NodeDefinition<TNodeType> {
+export function createNodeDefinition<TNodeType extends string, TNodeDataTypeMap = NodeDataTypeMap>(
+  definition: NodeDefinition<TNodeType, TNodeDataTypeMap>
+): NodeDefinition<TNodeType, TNodeDataTypeMap> {
   return definition;
 }
 
 /**
  * Helper function to get typed node data
- * @template TNodeType - The specific node type from NodeDataTypeMap
+ * @template TNodeType - The specific node type
+ * @template TNodeDataTypeMap - The node data type map
  */
-export function getTypedNodeData<TNodeType extends keyof NodeDataTypeMap>(
+export function getTypedNodeData<TNodeType extends keyof TNodeDataTypeMap, TNodeDataTypeMap = NodeDataTypeMap>(
   node: Node & { type: TNodeType }
-): NodeDataTypeMap[TNodeType] {
-  return node.data as NodeDataTypeMap[TNodeType];
+): TNodeDataTypeMap[TNodeType] {
+  return node.data as TNodeDataTypeMap[TNodeType];
 }
 
 /**
  * Helper function to create a type-safe node data updater
- * @template TNodeType - The specific node type from NodeDataTypeMap
+ * @template TNodeType - The specific node type
+ * @template TNodeDataTypeMap - The node data type map
  */
-export function createNodeDataUpdater<TNodeType extends keyof NodeDataTypeMap>(
+export function createNodeDataUpdater<TNodeType extends keyof TNodeDataTypeMap, TNodeDataTypeMap = NodeDataTypeMap>(
   onUpdateNode: (updates: Partial<Node>) => void
 ) {
-  return (data: Partial<NodeDataTypeMap[TNodeType]>) => {
+  return (data: Partial<TNodeDataTypeMap[TNodeType]>) => {
     onUpdateNode({ data: data as NodeData });
   };
 }
