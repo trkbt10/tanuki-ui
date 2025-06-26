@@ -1,12 +1,10 @@
 import * as React from "react";
+import { calculateContextMenuPosition, getViewportInfo } from "../../../dialogs/utilities/positionUtils";
+import { classNames } from "../../../utilities/classNames";
 import type { NodeDefinition } from "../types/NodeDefinition";
 import type { Position } from "../types/core";
-import { classNames } from "../../../utilities/classNames";
-import { calculateContextMenuPosition, getViewportInfo } from "../../../dialogs/utilities/positionUtils";
 import { getNodeIcon } from "../utils/nodeUtils";
-import { Input } from "../../../form/Input";
 import styles from "./NodeSearchMenu.module.css";
-import editorStyles from "../NodeEditor.module.css";
 
 export interface NodeSearchMenuProps {
   position: Position;
@@ -41,8 +39,8 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
   // Group nodes by category
   const categories = React.useMemo(() => {
     const categoryMap = new Map<string, NodeDefinition[]>();
-    
-    nodeDefinitions.forEach(def => {
+
+    nodeDefinitions.forEach((def) => {
       const category = def.category || "Other";
       if (!categoryMap.has(category)) {
         categoryMap.set(category, []);
@@ -59,20 +57,19 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
   // Filter nodes based on search query
   const filteredResults = React.useMemo(() => {
     if (!searchQuery.trim()) {
-      return selectedCategory 
-        ? categories.filter(cat => cat.name === selectedCategory)
-        : categories;
+      return selectedCategory ? categories.filter((cat) => cat.name === selectedCategory) : categories;
     }
 
     const query = searchQuery.toLowerCase();
     const results: NodeCategory[] = [];
 
-    categories.forEach(category => {
-      const matchingNodes = category.nodes.filter(node => 
-        node.displayName.toLowerCase().includes(query) ||
-        node.description?.toLowerCase().includes(query) ||
-        node.type.toLowerCase().includes(query) ||
-        category.name.toLowerCase().includes(query)
+    categories.forEach((category) => {
+      const matchingNodes = category.nodes.filter(
+        (node) =>
+          node.displayName.toLowerCase().includes(query) ||
+          node.description?.toLowerCase().includes(query) ||
+          node.type.toLowerCase().includes(query) ||
+          category.name.toLowerCase().includes(query)
       );
 
       if (matchingNodes.length > 0) {
@@ -89,8 +86,8 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
   // Get all nodes in flat list for keyboard navigation
   const allNodes = React.useMemo(() => {
     const nodes: Array<{ category: string; node: NodeDefinition }> = [];
-    filteredResults.forEach(category => {
-      category.nodes.forEach(node => {
+    filteredResults.forEach((category) => {
+      category.nodes.forEach((node) => {
         nodes.push({ category: category.name, node });
       });
     });
@@ -110,19 +107,13 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
       setSearchQuery("");
       setSelectedIndex(0);
       setSelectedCategory(null);
-      
+
       // Calculate position after a brief delay to ensure menu dimensions are available
       setTimeout(() => {
         if (menuRef.current) {
           const rect = menuRef.current.getBoundingClientRect();
           const viewport = getViewportInfo();
-          const calculatedPosition = calculateContextMenuPosition(
-            position.x,
-            position.y,
-            rect.width,
-            rect.height,
-            viewport
-          );
+          const calculatedPosition = calculateContextMenuPosition(position.x, position.y, rect.width, rect.height, viewport);
           setMenuPosition(calculatedPosition);
         }
       }, 0);
@@ -130,58 +121,64 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
   }, [visible, position]);
 
   // Handle keyboard navigation
-  const handleKeyDown = React.useCallback((e: React.KeyboardEvent) => {
-    switch (e.key) {
-      case "ArrowDown":
-        e.preventDefault();
-        setSelectedIndex(prev => Math.min(prev + 1, allNodes.length - 1));
-        break;
-      case "ArrowUp":
-        e.preventDefault();
-        setSelectedIndex(prev => Math.max(prev - 1, 0));
-        break;
-      case "Enter":
-        e.preventDefault();
-        if (allNodes[selectedIndex]) {
-          const selectedNode = allNodes[selectedIndex].node;
-          onCreateNode(selectedNode.type, position);
+  const handleKeyDown = React.useCallback(
+    (e: React.KeyboardEvent) => {
+      switch (e.key) {
+        case "ArrowDown":
+          e.preventDefault();
+          setSelectedIndex((prev) => Math.min(prev + 1, allNodes.length - 1));
+          break;
+        case "ArrowUp":
+          e.preventDefault();
+          setSelectedIndex((prev) => Math.max(prev - 1, 0));
+          break;
+        case "Enter":
+          e.preventDefault();
+          if (allNodes[selectedIndex]) {
+            const selectedNode = allNodes[selectedIndex].node;
+            onCreateNode(selectedNode.type, position);
+            onClose();
+          }
+          break;
+        case "Escape":
+          e.preventDefault();
           onClose();
-        }
-        break;
-      case "Escape":
-        e.preventDefault();
-        onClose();
-        break;
-      case "Tab":
-        e.preventDefault();
-        // Cycle through categories
-        const currentCategoryIndex = categories.findIndex(cat => cat.name === selectedCategory);
-        const nextIndex = (currentCategoryIndex + 1) % categories.length;
-        setSelectedCategory(categories[nextIndex]?.name || null);
-        setSelectedIndex(0);
-        break;
-    }
-  }, [allNodes, selectedIndex, onCreateNode, position, onClose, categories, selectedCategory]);
+          break;
+        case "Tab":
+          e.preventDefault();
+          // Cycle through categories
+          const currentCategoryIndex = categories.findIndex((cat) => cat.name === selectedCategory);
+          const nextIndex = (currentCategoryIndex + 1) % categories.length;
+          setSelectedCategory(categories[nextIndex]?.name || null);
+          setSelectedIndex(0);
+          break;
+      }
+    },
+    [allNodes, selectedIndex, onCreateNode, position, onClose, categories, selectedCategory]
+  );
 
   // Handle node selection
-  const handleNodeSelect = React.useCallback((nodeType: string) => {
-    onCreateNode(nodeType, position);
-    onClose();
-  }, [onCreateNode, position, onClose]);
+  const handleNodeSelect = React.useCallback(
+    (nodeType: string) => {
+      onCreateNode(nodeType, position);
+      onClose();
+    },
+    [onCreateNode, position, onClose]
+  );
 
   // Handle click outside to close
   React.useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (visible && e.target instanceof Element) {
-        const menuElement = document.querySelector('[data-node-search-menu]');
+        const menuElement = document.querySelector("[data-node-search-menu]");
         if (menuElement && !menuElement.contains(e.target)) {
           onClose();
         }
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [visible, onClose]);
 
   if (!visible) return null;
@@ -189,7 +186,7 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
   return (
     <div
       ref={menuRef}
-      className={classNames(editorStyles.nodeSearchMenu, styles.nodeSearchMenuContainer)}
+      className={classNames(styles.nodeSearchMenu, styles.nodeSearchMenuContainer)}
       style={{
         left: menuPosition.x,
         top: menuPosition.y,
@@ -197,8 +194,8 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
       data-node-search-menu
       onKeyDown={handleKeyDown}
     >
-      <div className={editorStyles.searchHeader}>
-        <Input
+      <div className={styles.searchHeader}>
+        <input
           ref={searchInputRef}
           id="node-search"
           name="nodeSearch"
@@ -206,67 +203,51 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
           placeholder="Search nodes..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className={editorStyles.searchInput}
+          className={styles.searchInput}
           aria-label="Search for nodes"
           aria-describedby="search-hint"
         />
-        <div id="search-hint" className={editorStyles.searchHint}>
+        <div id="search-hint" className={styles.searchHint}>
           <kbd>↑↓</kbd> Navigate • <kbd>⏎</kbd> Create • <kbd>⇥</kbd> Category • <kbd>⎋</kbd> Close
         </div>
       </div>
 
-      <div className={editorStyles.searchResults}>
+      <div className={styles.searchResults}>
         {filteredResults.length === 0 ? (
-          <div className={editorStyles.noResults}>
-            <div className={editorStyles.noResultsIcon}>🔍</div>
+          <div className={styles.noResults}>
+            <div className={styles.noResultsIcon}>🔍</div>
             <div>No nodes found for "{searchQuery}"</div>
           </div>
         ) : (
-          <div className={editorStyles.categoryList}>
+          <div className={styles.categoryList}>
             {filteredResults.map((category, categoryIndex) => (
-              <div key={category.name} className={editorStyles.categoryGroup}>
-                <div 
-                  className={classNames(
-                    editorStyles.categoryHeader,
-                    selectedCategory === category.name && editorStyles.selectedCategory
-                  )}
-                  onClick={() => setSelectedCategory(
-                    selectedCategory === category.name ? null : category.name
-                  )}
+              <div key={category.name} className={styles.categoryGroup}>
+                <div
+                  className={classNames(styles.categoryHeader, selectedCategory === category.name && styles.selectedCategory)}
+                  onClick={() => setSelectedCategory(selectedCategory === category.name ? null : category.name)}
                 >
-                  <span className={editorStyles.categoryName}>{category.name}</span>
-                  <span className={editorStyles.nodeCount}>{category.nodes.length}</span>
+                  <span className={styles.categoryName}>{category.name}</span>
+                  <span className={styles.nodeCount}>{category.nodes.length}</span>
                 </div>
-                
-                <div className={editorStyles.nodeList}>
+
+                <div className={styles.nodeList}>
                   {category.nodes.map((node, nodeIndex) => {
-                    const globalIndex = allNodes.findIndex(
-                      item => item.node.type === node.type
-                    );
+                    const globalIndex = allNodes.findIndex((item) => item.node.type === node.type);
                     const isSelected = globalIndex === selectedIndex;
-                    
+
                     return (
                       <div
                         key={node.type}
-                        className={classNames(
-                          editorStyles.nodeItem,
-                          isSelected && editorStyles.selectedNode
-                        )}
+                        className={classNames(styles.nodeItem, isSelected && styles.selectedNode)}
                         onClick={() => handleNodeSelect(node.type)}
                         onMouseEnter={() => setSelectedIndex(globalIndex)}
                       >
-                        <div className={editorStyles.nodeIcon}>
-                          {getNodeIcon(node.type, nodeDefinitions)}
+                        <div className={styles.nodeIcon}>{getNodeIcon(node.type, nodeDefinitions)}</div>
+                        <div className={styles.nodeInfo}>
+                          <div className={styles.nodeName}>{node.displayName}</div>
+                          {node.description && <div className={styles.nodeDescription}>{node.description}</div>}
                         </div>
-                        <div className={editorStyles.nodeInfo}>
-                          <div className={editorStyles.nodeName}>{node.displayName}</div>
-                          {node.description && (
-                            <div className={editorStyles.nodeDescription}>
-                              {node.description}
-                            </div>
-                          )}
-                        </div>
-                        <div className={editorStyles.nodeType}>{node.type}</div>
+                        <div className={styles.nodeType}>{node.type}</div>
                       </div>
                     );
                   })}
@@ -278,8 +259,8 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
       </div>
 
       {allNodes.length > 0 && (
-        <div className={editorStyles.searchFooter}>
-          <div className={editorStyles.selectionInfo}>
+        <div className={styles.searchFooter}>
+          <div className={styles.selectionInfo}>
             {selectedIndex + 1} of {allNodes.length} • {filteredResults.length} categories
           </div>
         </div>
@@ -287,6 +268,5 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
     </div>
   );
 };
-
 
 NodeSearchMenu.displayName = "NodeSearchMenu";
