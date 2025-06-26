@@ -65,7 +65,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
   externalData,
   onUpdateNode,
 }) => {
-  const { dispatch: nodeEditorDispatch, actions: nodeEditorActions } = useNodeEditor();
+  const { dispatch: nodeEditorDispatch, actions: nodeEditorActions, getNodePorts } = useNodeEditor();
   const { state: actionState } = useEditorActionState();
   const { isEditing, startEditing, updateValue, confirmEdit, cancelEdit, state: editingState } = useInlineEditing();
   const nodeResize = useNodeResize();
@@ -345,44 +345,45 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
       )}
 
       {/* Render ports */}
-      {node.ports &&
-        node.ports.length > 0 &&
-        (() => {
-          const portsByPosition = node.ports.reduce((acc, port) => {
-            if (!acc[port.position]) {
-              acc[port.position] = [];
-            }
-            acc[port.position].push(port);
-            return acc;
-          }, {} as Record<string, typeof node.ports>);
+      {(() => {
+        const ports = getNodePorts(node.id);
+        if (!ports || ports.length === 0) return null;
 
-          return (
-            <div className={styles.nodePorts}>
-              {node.ports.map((port) => {
-                const portsOnSameSide = portsByPosition[port.position] || [];
-                const portIndexOnSide = portsOnSameSide.findIndex((p) => p.id === port.id);
+        const portsByPosition = ports.reduce((acc: Record<string, Port[]>, port: Port) => {
+          if (!acc[port.position]) {
+            acc[port.position] = [];
+          }
+          acc[port.position].push(port);
+          return acc;
+        }, {} as Record<string, Port[]>);
 
-                return (
-                  <PortView
-                    key={port.id}
-                    port={port}
-                    nodeWidth={size.width}
-                    nodeHeight={size.height}
-                    onPointerDown={onPortPointerDown}
-                    onPointerUp={onPortPointerUp}
-                    onPointerEnter={onPortPointerEnter}
-                    onPointerLeave={onPortPointerLeave}
-                    isConnecting={connectingPort?.id === port.id}
-                    isHovered={hoveredPort?.id === port.id}
-                    isConnected={connectedPorts?.has(port.id)}
-                    portIndexOnSide={portIndexOnSide}
-                    totalPortsOnSide={portsOnSameSide.length}
-                  />
-                );
-              })}
-            </div>
-          );
-        })()}
+        return (
+          <div className={styles.nodePorts}>
+            {ports.map((port: Port) => {
+              const portsOnSameSide = portsByPosition[port.position] || [];
+              const portIndexOnSide = portsOnSameSide.findIndex((p: Port) => p.id === port.id);
+
+              return (
+                <PortView
+                  key={port.id}
+                  port={port}
+                  nodeWidth={size.width}
+                  nodeHeight={size.height}
+                  onPointerDown={onPortPointerDown}
+                  onPointerUp={onPortPointerUp}
+                  onPointerEnter={onPortPointerEnter}
+                  onPointerLeave={onPortPointerLeave}
+                  isConnecting={connectingPort?.id === port.id}
+                  isHovered={hoveredPort?.id === port.id}
+                  isConnected={connectedPorts?.has(port.id)}
+                  portIndexOnSide={portIndexOnSide}
+                  totalPortsOnSide={portsOnSameSide.length}
+                />
+              );
+            })}
+          </div>
+        );
+      })()}
 
       {/* Render resize handle when selected and not locked */}
       {isSelected && !node.locked && (
