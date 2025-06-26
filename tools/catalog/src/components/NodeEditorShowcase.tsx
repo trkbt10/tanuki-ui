@@ -35,21 +35,21 @@ const basicNodeDefinitions: NodeDefinition[] = [
 // Initial demo data with some nodes
 const initialDemoData: NodeEditorData = {
   nodes: {
-    "node1": {
+    node1: {
       id: "node1",
       type: "data-source",
       position: { x: 100, y: 150 },
       size: { width: 180, height: 100 },
       data: { title: "Number Input", value: 10 },
     },
-    "node2": {
+    node2: {
       id: "node2",
       type: "data-source",
       position: { x: 100, y: 300 },
       size: { width: 180, height: 100 },
       data: { title: "Number Input", value: 5 },
     },
-    "node3": {
+    node3: {
       id: "node3",
       type: "math-add",
       position: { x: 400, y: 200 },
@@ -58,14 +58,14 @@ const initialDemoData: NodeEditorData = {
     },
   },
   connections: {
-    "conn1": {
+    conn1: {
       id: "conn1",
       fromNodeId: "node1",
       fromPortId: "output",
       toNodeId: "node3",
       toPortId: "a",
     },
-    "conn2": {
+    conn2: {
       id: "conn2",
       fromNodeId: "node2",
       fromPortId: "output",
@@ -78,14 +78,14 @@ const initialDemoData: NodeEditorData = {
 // Alternative demo data for testing controlled mode
 const alternativeDemoData: NodeEditorData = {
   nodes: {
-    "alt1": {
+    alt1: {
       id: "alt1",
       type: "data-source",
       position: { x: 200, y: 100 },
       size: { width: 180, height: 100 },
       data: { title: "Alternative Source", value: 20 },
     },
-    "alt2": {
+    alt2: {
       id: "alt2",
       type: "math-add",
       position: { x: 450, y: 100 },
@@ -146,22 +146,16 @@ const NodeEditorShowcase: React.FC = () => {
               />
               Controlled Mode (data prop) を使用する
             </Label>
-            
+
             {isControlled && (
               <>
-                <Button 
-                  onClick={() => setControlledData(initialDemoData)}
-                  style={{ fontSize: "12px", padding: "4px 8px" }}
-                >
+                <Button onClick={() => setControlledData(initialDemoData)} style={{ fontSize: "12px", padding: "4px 8px" }}>
                   データ A をロード
                 </Button>
-                <Button 
-                  onClick={() => setControlledData(alternativeDemoData)}
-                  style={{ fontSize: "12px", padding: "4px 8px" }}
-                >
+                <Button onClick={() => setControlledData(alternativeDemoData)} style={{ fontSize: "12px", padding: "4px 8px" }}>
                   データ B をロード
                 </Button>
-                <Button 
+                <Button
                   onClick={() => setControlledData({ nodes: {}, connections: {} })}
                   style={{ fontSize: "12px", padding: "4px 8px" }}
                 >
@@ -170,12 +164,11 @@ const NodeEditorShowcase: React.FC = () => {
               </>
             )}
           </div>
-          
+
           <P style={{ fontSize: "14px", color: "#666" }}>
-            {isControlled ? 
-              "Controlled Mode: コンポーネントの状態は親コンポーネントが管理します。上のボタンで即座にデータを切り替えられます。" : 
-              "Uncontrolled Mode: コンポーネントが内部的に状態を管理します (initialData)。"
-            }
+            {isControlled
+              ? "Controlled Mode: コンポーネントの状態は親コンポーネントが管理します。上のボタンで即座にデータを切り替えられます。"
+              : "Uncontrolled Mode: コンポーネントが内部的に状態を管理します (initialData)。"}
           </P>
         </Section>
 
@@ -196,11 +189,7 @@ const NodeEditorShowcase: React.FC = () => {
                 nodeDefinitions={basicNodeDefinitions}
               />
             ) : (
-              <NodeEditor
-                initialData={editorData}
-                onDataChange={setEditorData}
-                nodeDefinitions={basicNodeDefinitions}
-              />
+              <NodeEditor initialData={editorData} onDataChange={setEditorData} nodeDefinitions={basicNodeDefinitions} />
             )}
           </div>
         </Section>
@@ -231,7 +220,7 @@ const NodeEditorShowcase: React.FC = () => {
 
       <Section style={{ marginBottom: "24px" }}>
         <H3>🛠️ 使用方法</H3>
-        
+
         <Section style={{ marginBottom: "16px" }}>
           <H3 style={{ fontSize: "16px" }}>📝 Uncontrolled Mode (initialData)</H3>
           <P>コンポーネントが内部的に状態を管理する方式です。defaultValueのような動作をします。</P>
@@ -320,17 +309,21 @@ function ControlledNodeEditor() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
             <div>
               <H3 style={{ fontSize: "14px", color: "#28a745" }}>Uncontrolled Mode</H3>
-              <P style={{ fontSize: "13px", margin: "4px 0" }}>• <code>initialData</code> prop を使用</P>
-              <P style={{ fontSize: "13px", margin: "4px 0" }}>• コンポーネントが内部状態を管理</P>
-              <P style={{ fontSize: "13px", margin: "4px 0" }}>• 再レンダー時に initialData を変更しても無視される</P>
-              <P style={{ fontSize: "13px", margin: "4px 0" }}>• HTMLの defaultValue と同じ動作</P>
+              <P>
+                • <code>initialData</code> prop を使用
+              </P>
+              <P>• コンポーネントが内部状態を管理</P>
+              <P>• 再レンダー時に initialData を変更しても無視される</P>
+              <P>• HTMLの defaultValue と同じ動作</P>
             </div>
             <div>
               <H3 style={{ fontSize: "14px", color: "#007bff" }}>Controlled Mode</H3>
-              <P style={{ fontSize: "13px", margin: "4px 0" }}>• <code>data</code> prop を使用</P>
-              <P style={{ fontSize: "13px", margin: "4px 0" }}>• 親コンポーネントが状態を管理</P>
-              <P style={{ fontSize: "13px", margin: "4px 0" }}>• data prop の変更は即座に反映される</P>
-              <P style={{ fontSize: "13px", margin: "4px 0" }}>• HTMLの value と同じ動作</P>
+              <P>
+                • <code>data</code> prop を使用
+              </P>
+              <P>• 親コンポーネントが状態を管理</P>
+              <P>• data prop の変更は即座に反映される</P>
+              <P>• HTMLの value と同じ動作</P>
             </div>
           </div>
         </Section>
