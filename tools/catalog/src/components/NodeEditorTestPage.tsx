@@ -7,6 +7,7 @@ import {
   scenarioNodeDefinitions,
   MathEvaluatorContext,
 } from "../test-scenarios";
+import type { FeaturesNodeDataTypeMap } from "../test-scenarios/features/types";
 
 type ScenarioKey = keyof typeof testDataSets;
 
@@ -43,10 +44,9 @@ const NodeEditorTestPage: React.FC = () => {
     setEditorData({ nodes: {}, connections: {} });
   };
 
-  const renderNodeEditor = () => {
-    const nodeDefinitions = scenarioNodeDefinitions[selectedScenario];
-    
+  const renderNodeEditor = () => {    
     if (selectedScenario === "mathFlow") {
+      const nodeDefinitions = scenarioNodeDefinitions[selectedScenario];
       const mathContextValue = {
         getNodeValue: (nodeId: string) => {
           const node = editorData.nodes[nodeId];
@@ -69,6 +69,18 @@ const NodeEditorTestPage: React.FC = () => {
       );
     }
 
+    if (selectedScenario === "features") {
+      const nodeDefinitions = scenarioNodeDefinitions[selectedScenario];
+      return (
+        <NodeEditor<FeaturesNodeDataTypeMap>
+          data={editorData}
+          onDataChange={setEditorData}
+          nodeDefinitions={nodeDefinitions}
+        />
+      );
+    }
+
+    const nodeDefinitions = scenarioNodeDefinitions[selectedScenario];
     return (
       <NodeEditor
         data={editorData}

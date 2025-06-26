@@ -3,7 +3,7 @@
  */
 
 // Main component export
-export { Panel, default } from './Panel';
+export { Panel } from "./Panel";
 
 // Context exports
 export {
@@ -16,7 +16,7 @@ export {
   useTabOperations,
   usePanelOperations,
   useDragOperations,
-} from './context';
+} from "./context";
 
 // Type exports
 export type {
@@ -38,23 +38,15 @@ export type {
   Orientation,
   SplitDirection,
   KeyBindingMap,
-} from './types';
+} from "./types";
 
 // Action exports
-export {
-  PanelActionType,
-  createPanelActions,
-} from './actions';
+export { PanelActionType, createPanelActions } from "./actions";
 
-export type {
-  PanelAction,
-} from './actions';
+export type { PanelAction } from "./actions";
 
 // Reducer exports
-export {
-  panelReducer,
-  createInitialState,
-} from './reducer';
+export { panelReducer, createInitialState } from "./reducer";
 
 // Hook exports
-export * from './hooks';
+export { useKeyboardShortcuts } from "./hooks";
