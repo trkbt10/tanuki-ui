@@ -2,11 +2,39 @@ import React, { useState } from "react";
 import { NodeEditor } from "tanuki-ui/extended/node-editor";
 import type { NodeEditorData, NodeDefinition, NodeRenderProps, InspectorRenderProps } from "tanuki-ui/extended/node-editor";
 import { H1, H2, H3, P, Section, Article, Button, Label, Input, Select, Ol } from "tanuki-ui";
+import { useMathEvaluator } from "../../../playground/components/MathEvaluator";
+
+// Context for sharing calculated values
+const MathEvaluatorContext = React.createContext<{
+  getNodeValue: (nodeId: string) => any;
+  triggerEvaluation: () => void;
+} | null>(null);
+
+// Hook to use math evaluator context
+const useMathEvaluatorContext = () => {
+  const context = React.useContext(MathEvaluatorContext);
+  if (!context) {
+    throw new Error("useMathEvaluatorContext must be used within MathEvaluatorContext.Provider");
+  }
+  return context;
+};
+
+// Wrapper for renderers that need math evaluation context
+const withMathEvaluator = (Component: React.FC<NodeRenderProps>) => {
+  return (props: NodeRenderProps) => {
+    const context = React.useContext(MathEvaluatorContext);
+    if (!context) {
+      // If no context, render without calculation
+      return <Component {...props} />;
+    }
+    return <Component {...props} />;
+  };
+};
 
 // カスタムノードレンダラー
-const MathNodeRenderer = ({ node, isSelected, onUpdateNode }: NodeRenderProps) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const value = (node.data.value as number) || 0;
+const MathNodeRendererBase = ({ node, isSelected, onUpdateNode }: NodeRenderProps) => {
+  const context = React.useContext(MathEvaluatorContext);
+  const calculatedValue = context ? context.getNodeValue(node.id) : undefined;
   const operation = (node.data.operation as string) || "+";
 
   return (
@@ -29,27 +57,26 @@ const MathNodeRenderer = ({ node, isSelected, onUpdateNode }: NodeRenderProps) =
           {operation === "add" ? "➕" : operation === "multiply" ? "✖️" : operation === "divide" ? "➗" : "🔢"}
         </span>
       </div>
-      {isEditing ? (
-        <input
-          type="number"
-          value={value}
-          onChange={(e) => onUpdateNode({ data: { ...node.data, value: Number(e.target.value) } })}
-          onBlur={() => setIsEditing(false)}
-          style={{ fontSize: "10px", width: "100%" }}
-          autoFocus
-        />
-      ) : (
-        <div onClick={() => setIsEditing(true)} style={{ fontSize: "10px", textAlign: "center", cursor: "pointer" }}>
-          Result: {value}
-        </div>
-      )}
+      <div style={{ fontSize: "14px", textAlign: "center", fontWeight: "bold", color: "#1b5e20" }}>
+        Result: {calculatedValue !== undefined ? calculatedValue : "..."}
+      </div>
     </div>
   );
 };
 
-const DataSourceRenderer = ({ node, isSelected, onUpdateNode }: NodeRenderProps) => {
+const MathNodeRenderer = MathNodeRendererBase;
+
+const DataSourceRendererBase = ({ node, isSelected, onUpdateNode }: NodeRenderProps) => {
   const [isEditing, setIsEditing] = useState(false);
+  const context = React.useContext(MathEvaluatorContext);
+  const triggerEvaluation = context ? context.triggerEvaluation : () => {};
   const value = (node.data.value as number) || 0;
+
+  const handleValueChange = (newValue: number) => {
+    onUpdateNode({ data: { ...node.data, value: newValue } });
+    // Trigger re-evaluation after value change
+    setTimeout(() => triggerEvaluation(), 0);
+  };
 
   return (
     <div
@@ -71,7 +98,7 @@ const DataSourceRenderer = ({ node, isSelected, onUpdateNode }: NodeRenderProps)
           <input
             type="number"
             value={value}
-            onChange={(e) => onUpdateNode({ data: { ...node.data, value: Number(e.target.value) } })}
+            onChange={(e) => handleValueChange(Number(e.target.value))}
             onBlur={() => setIsEditing(false)}
             style={{ fontSize: "14px", width: "80%", textAlign: "center" }}
             autoFocus
@@ -95,10 +122,20 @@ const DataSourceRenderer = ({ node, isSelected, onUpdateNode }: NodeRenderProps)
   );
 };
 
-const DisplayNodeRenderer = ({ node }: NodeRenderProps) => {
-  const text = (node.data.text as string) || "No data";
-  const value = node.data.value as number;
+const DataSourceRenderer = DataSourceRendererBase;
+
+const DisplayNodeRendererBase = ({ node }: NodeRenderProps) => {
+  const context = React.useContext(MathEvaluatorContext);
+  const calculatedValue = context ? context.getNodeValue(node.id) : undefined;
   const isNumberDisplay = node.type === "number-display";
+
+  // Use calculated value if available, otherwise fall back to node data
+  let displayValue;
+  if (isNumberDisplay) {
+    displayValue = calculatedValue !== undefined ? calculatedValue : "N/A";
+  } else {
+    displayValue = calculatedValue !== undefined ? calculatedValue : (node.data.text || "No data");
+  }
 
   return (
     <div
@@ -135,12 +172,14 @@ const DisplayNodeRenderer = ({ node }: NodeRenderProps) => {
             fontFamily: "monospace",
           }}
         >
-          {isNumberDisplay ? (value !== undefined ? value : "N/A") : text}
+          {displayValue}
         </div>
       </div>
     </div>
   );
 };
+
+const DisplayNodeRenderer = DisplayNodeRendererBase;
 
 // カスタムインスペクターパネル
 const MathNodeInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
@@ -191,10 +230,19 @@ const MathNodeInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
 };
 
 const DataSourceInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
+  const context = React.useContext(MathEvaluatorContext);
+  const triggerEvaluation = context ? context.triggerEvaluation : () => {};
   const value = (node.data.value as number) || 0;
   const min = (node.data.min as number) || 0;
   const max = (node.data.max as number) || 100;
   const step = (node.data.step as number) || 1;
+
+  const handleUpdate = (newData: any) => {
+    onUpdateNode({ data: newData });
+    if (context) {
+      setTimeout(() => triggerEvaluation(), 0);
+    }
+  };
 
   return (
     <div style={{ padding: "16px" }}>
@@ -205,7 +253,7 @@ const DataSourceInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
         <Input
           type="number"
           value={value}
-          onChange={(e) => onUpdateNode({ data: { ...node.data, value: Number(e.target.value) } })}
+          onChange={(e) => handleUpdate({ ...node.data, value: Number(e.target.value) })}
           style={{ width: "100%", marginTop: "4px" }}
         />
       </div>
@@ -235,7 +283,7 @@ const DataSourceInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
           <Button
             onClick={() => {
               const newValue = Math.random() * (max - min) + min;
-              onUpdateNode({ data: { ...node.data, value: Math.round(newValue * 100) / 100 } });
+              handleUpdate({ ...node.data, value: Math.round(newValue * 100) / 100 });
             }}
             style={{ width: "100%", marginTop: "8px" }}
           >
@@ -712,6 +760,10 @@ const NodeEditorTestPage: React.FC = () => {
   const [isControlledMode, setIsControlledMode] = useState(false);
   const [selectedTestData, setSelectedTestData] = useState<keyof typeof testDataSets>("simple");
 
+  // Use math evaluator for the current data
+  const currentData = isControlledMode ? controlledData : uncontrolledData;
+  const { getNodeValue, triggerEvaluation } = useMathEvaluator(currentData);
+
   const handleLoadTestData = (dataKey: keyof typeof testDataSets) => {
     setSelectedTestData(dataKey);
     if (isControlledMode) {
@@ -815,32 +867,34 @@ const NodeEditorTestPage: React.FC = () => {
       <Section style={{ marginBottom: "24px" }}>
         <H2>🎛️ NodeEditor</H2>
 
-        <div
-          style={{
-            width: "100%",
-            height: "600px",
-            border: "2px solid #ddd",
-            borderRadius: "8px",
-            overflow: "hidden",
-            position: "relative",
-          }}
-        >
-          {isControlledMode ? (
-            <NodeEditor
-              key="controlled"
-              data={controlledData}
-              onDataChange={setControlledData}
-              nodeDefinitions={basicNodeDefinitions}
-            />
-          ) : (
-            <NodeEditor
-              key={`uncontrolled-${selectedTestData}`} // Force remount when test data changes
-              initialData={uncontrolledData}
-              onDataChange={setUncontrolledData}
-              nodeDefinitions={basicNodeDefinitions}
-            />
-          )}
-        </div>
+        <MathEvaluatorContext.Provider value={{ getNodeValue, triggerEvaluation }}>
+          <div
+            style={{
+              width: "100%",
+              height: "600px",
+              border: "2px solid #ddd",
+              borderRadius: "8px",
+              overflow: "hidden",
+              position: "relative",
+            }}
+          >
+            {isControlledMode ? (
+              <NodeEditor
+                key="controlled"
+                data={controlledData}
+                onDataChange={setControlledData}
+                nodeDefinitions={basicNodeDefinitions}
+              />
+            ) : (
+              <NodeEditor
+                key={`uncontrolled-${selectedTestData}`} // Force remount when test data changes
+                initialData={uncontrolledData}
+                onDataChange={setUncontrolledData}
+                nodeDefinitions={basicNodeDefinitions}
+              />
+            )}
+          </div>
+        </MathEvaluatorContext.Provider>
       </Section>
 
       <Section style={{ marginBottom: "24px" }}>

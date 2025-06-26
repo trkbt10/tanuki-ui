@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Panel, TabMeta, PanelState, PanelID } from '../../src/layouts';
+import { Panel, TabMeta, PanelState, PanelID } from '../../src/extended/panel';
 import { H1, H2, Button, Input, Textarea } from '../../src';
 
 // Mock file content for different tabs
