@@ -36,6 +36,9 @@ export { useSettings } from "./useSettings";
 export { useVisibleNodes } from "./useVisibleNodes";
 export { useBatchedUpdates } from "./useBatchedUpdates";
 
+// Port position hooks
+export { useDynamicPortPosition, useDynamicConnectionPoint } from "./usePortPosition";
+
 // Type exports for custom layers
 export type { UseNodeResizeResult } from "./useNodeResize";
 export type { UseGroupManagementResult } from "./useGroupManagement";
