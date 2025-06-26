@@ -1,33 +1,31 @@
 import React, { useState } from "react";
 import { NodeEditor } from "tanuki-ui/extended/node-editor";
 import type { NodeEditorData, NodeDefinition, NodeRenderProps, InspectorRenderProps } from "tanuki-ui/extended/node-editor";
-import { H1, H2, H3, P, Section, Article, Button, Label, Input, Select } from "tanuki-ui";
+import { H1, H2, H3, P, Section, Article, Button, Label, Input, Select, Ol } from "tanuki-ui";
 
 // カスタムノードレンダラー
 const MathNodeRenderer = ({ node, isSelected, onUpdateNode }: NodeRenderProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const value = node.data.value as number || 0;
-  const operation = node.data.operation as string || '+';
-  
+  const value = (node.data.value as number) || 0;
+  const operation = (node.data.operation as string) || "+";
+
   return (
     <div
       style={{
-        width: '100%',
-        height: '100%',
-        border: `2px solid ${isSelected ? '#007bff' : '#28a745'}`,
-        borderRadius: '8px',
-        background: 'linear-gradient(135deg, #e8f5e9, #c8e6c9)',
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '8px',
+        width: "100%",
+        height: "100%",
+        border: `2px solid ${isSelected ? "#007bff" : "#28a745"}`,
+        borderRadius: "8px",
+        background: "linear-gradient(135deg, #e8f5e9, #c8e6c9)",
+        display: "flex",
+        flexDirection: "column",
+        padding: "8px",
       }}
     >
-      <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#2e7d32' }}>
-        {node.data.title || node.type}
-      </div>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <span style={{ fontSize: '20px', color: '#1b5e20' }}>
-          {operation === 'add' ? '➕' : operation === 'multiply' ? '✖️' : operation === 'divide' ? '➗' : '🔢'}
+      <div style={{ fontSize: "12px", fontWeight: "bold", color: "#2e7d32" }}>{node.data.title || node.type}</div>
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <span style={{ fontSize: "20px", color: "#1b5e20" }}>
+          {operation === "add" ? "➕" : operation === "multiply" ? "✖️" : operation === "divide" ? "➗" : "🔢"}
         </span>
       </div>
       {isEditing ? (
@@ -36,14 +34,11 @@ const MathNodeRenderer = ({ node, isSelected, onUpdateNode }: NodeRenderProps) =
           value={value}
           onChange={(e) => onUpdateNode({ data: { ...node.data, value: Number(e.target.value) } })}
           onBlur={() => setIsEditing(false)}
-          style={{ fontSize: '10px', width: '100%' }}
+          style={{ fontSize: "10px", width: "100%" }}
           autoFocus
         />
       ) : (
-        <div
-          onClick={() => setIsEditing(true)}
-          style={{ fontSize: '10px', textAlign: 'center', cursor: 'pointer' }}
-        >
+        <div onClick={() => setIsEditing(true)} style={{ fontSize: "10px", textAlign: "center", cursor: "pointer" }}>
           Result: {value}
         </div>
       )}
@@ -53,43 +48,41 @@ const MathNodeRenderer = ({ node, isSelected, onUpdateNode }: NodeRenderProps) =
 
 const DataSourceRenderer = ({ node, isSelected, onUpdateNode }: NodeRenderProps) => {
   const [isEditing, setIsEditing] = useState(false);
-  const value = node.data.value as number || 0;
-  
+  const value = (node.data.value as number) || 0;
+
   return (
     <div
       style={{
-        width: '100%',
-        height: '100%',
-        border: `2px solid ${isSelected ? '#007bff' : '#17a2b8'}`,
-        borderRadius: '8px',
-        background: 'linear-gradient(135deg, #e3f2fd, #b3e5fc)',
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '8px',
+        width: "100%",
+        height: "100%",
+        border: `2px solid ${isSelected ? "#007bff" : "#17a2b8"}`,
+        borderRadius: "8px",
+        background: "linear-gradient(135deg, #e3f2fd, #b3e5fc)",
+        display: "flex",
+        flexDirection: "column",
+        padding: "8px",
       }}
     >
-      <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#0277bd' }}>
-        📊 {node.data.title || 'Data Source'}
-      </div>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ fontSize: "12px", fontWeight: "bold", color: "#0277bd" }}>📊 {node.data.title || "Data Source"}</div>
+      <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center" }}>
         {isEditing ? (
           <input
             type="number"
             value={value}
             onChange={(e) => onUpdateNode({ data: { ...node.data, value: Number(e.target.value) } })}
             onBlur={() => setIsEditing(false)}
-            style={{ fontSize: '14px', width: '80%', textAlign: 'center' }}
+            style={{ fontSize: "14px", width: "80%", textAlign: "center" }}
             autoFocus
           />
         ) : (
           <div
             onClick={() => setIsEditing(true)}
             style={{
-              fontSize: '16px',
-              fontWeight: 'bold',
-              color: '#01579b',
-              cursor: 'pointer',
-              textAlign: 'center'
+              fontSize: "16px",
+              fontWeight: "bold",
+              color: "#01579b",
+              cursor: "pointer",
+              textAlign: "center",
             }}
           >
             {value}
@@ -101,43 +94,45 @@ const DataSourceRenderer = ({ node, isSelected, onUpdateNode }: NodeRenderProps)
 };
 
 const DisplayNodeRenderer = ({ node }: NodeRenderProps) => {
-  const text = node.data.text as string || 'No data';
+  const text = (node.data.text as string) || "No data";
   const value = node.data.value as number;
-  const isNumberDisplay = node.type === 'number-display';
-  
+  const isNumberDisplay = node.type === "number-display";
+
   return (
     <div
       style={{
-        width: '100%',
-        height: '100%',
-        border: '2px solid #6c757d',
-        borderRadius: '8px',
-        background: 'linear-gradient(135deg, #f8f9fa, #e9ecef)',
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '8px',
+        width: "100%",
+        height: "100%",
+        border: "2px solid #6c757d",
+        borderRadius: "8px",
+        background: "linear-gradient(135deg, #f8f9fa, #e9ecef)",
+        display: "flex",
+        flexDirection: "column",
+        padding: "8px",
       }}
     >
-      <div style={{ fontSize: '12px', fontWeight: 'bold', color: '#495057' }}>
-        📺 {node.data.title || 'Display'}
-      </div>
-      <div style={{
-        flex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        background: '#ffffff',
-        margin: '4px 0',
-        borderRadius: '4px',
-        border: '1px solid #dee2e6'
-      }}>
-        <div style={{
-          fontSize: '14px',
-          color: '#212529',
-          textAlign: 'center',
-          fontFamily: 'monospace'
-        }}>
-          {isNumberDisplay ? (value !== undefined ? value : 'N/A') : text}
+      <div style={{ fontSize: "12px", fontWeight: "bold", color: "#495057" }}>📺 {node.data.title || "Display"}</div>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#ffffff",
+          margin: "4px 0",
+          borderRadius: "4px",
+          border: "1px solid #dee2e6",
+        }}
+      >
+        <div
+          style={{
+            fontSize: "14px",
+            color: "#212529",
+            textAlign: "center",
+            fontFamily: "monospace",
+          }}
+        >
+          {isNumberDisplay ? (value !== undefined ? value : "N/A") : text}
         </div>
       </div>
     </div>
@@ -146,27 +141,27 @@ const DisplayNodeRenderer = ({ node }: NodeRenderProps) => {
 
 // カスタムインスペクターパネル
 const MathNodeInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
-  const operation = node.data.operation as string || 'add';
-  const precision = node.data.precision as number || 2;
-  
+  const operation = (node.data.operation as string) || "add";
+  const precision = (node.data.precision as number) || 2;
+
   return (
-    <div style={{ padding: '16px' }}>
+    <div style={{ padding: "16px" }}>
       <H3>Math Node Settings</H3>
-      
-      <div style={{ marginBottom: '12px' }}>
+
+      <div style={{ marginBottom: "12px" }}>
         <Label>Operation Type:</Label>
         <Select
           value={operation}
           onChange={(e) => onUpdateNode({ data: { ...node.data, operation: e.target.value } })}
-          style={{ width: '100%', marginTop: '4px' }}
+          style={{ width: "100%", marginTop: "4px" }}
         >
           <option value="add">Addition (+)</option>
           <option value="multiply">Multiplication (×)</option>
           <option value="divide">Division (÷)</option>
         </Select>
       </div>
-      
-      <div style={{ marginBottom: '12px' }}>
+
+      <div style={{ marginBottom: "12px" }}>
         <Label>Decimal Precision:</Label>
         <Input
           type="number"
@@ -174,18 +169,18 @@ const MathNodeInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
           onChange={(e) => onUpdateNode({ data: { ...node.data, precision: Number(e.target.value) } })}
           min={0}
           max={10}
-          style={{ width: '100%', marginTop: '4px' }}
+          style={{ width: "100%", marginTop: "4px" }}
         />
       </div>
-      
+
       <div>
         <Label>Node Title:</Label>
         <Input
           type="text"
-          value={node.data.title as string || ''}
+          value={(node.data.title as string) || ""}
           onChange={(e) => onUpdateNode({ data: { ...node.data, title: e.target.value } })}
           placeholder="Enter title..."
-          style={{ width: '100%', marginTop: '4px' }}
+          style={{ width: "100%", marginTop: "4px" }}
         />
       </div>
     </div>
@@ -193,67 +188,67 @@ const MathNodeInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
 };
 
 const DataSourceInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
-  const value = node.data.value as number || 0;
-  const min = node.data.min as number || 0;
-  const max = node.data.max as number || 100;
-  const step = node.data.step as number || 1;
-  
+  const value = (node.data.value as number) || 0;
+  const min = (node.data.min as number) || 0;
+  const max = (node.data.max as number) || 100;
+  const step = (node.data.step as number) || 1;
+
   return (
-    <div style={{ padding: '16px' }}>
+    <div style={{ padding: "16px" }}>
       <H3>Data Source Settings</H3>
-      
-      <div style={{ marginBottom: '12px' }}>
+
+      <div style={{ marginBottom: "12px" }}>
         <Label>Current Value:</Label>
         <Input
           type="number"
           value={value}
           onChange={(e) => onUpdateNode({ data: { ...node.data, value: Number(e.target.value) } })}
-          style={{ width: '100%', marginTop: '4px' }}
+          style={{ width: "100%", marginTop: "4px" }}
         />
       </div>
-      
-      {node.type === 'random-generator' && (
+
+      {node.type === "random-generator" && (
         <>
-          <div style={{ marginBottom: '12px' }}>
+          <div style={{ marginBottom: "12px" }}>
             <Label>Minimum Value:</Label>
             <Input
               type="number"
               value={min}
               onChange={(e) => onUpdateNode({ data: { ...node.data, min: Number(e.target.value) } })}
-              style={{ width: '100%', marginTop: '4px' }}
+              style={{ width: "100%", marginTop: "4px" }}
             />
           </div>
-          
-          <div style={{ marginBottom: '12px' }}>
+
+          <div style={{ marginBottom: "12px" }}>
             <Label>Maximum Value:</Label>
             <Input
               type="number"
               value={max}
               onChange={(e) => onUpdateNode({ data: { ...node.data, max: Number(e.target.value) } })}
-              style={{ width: '100%', marginTop: '4px' }}
+              style={{ width: "100%", marginTop: "4px" }}
             />
           </div>
-          
+
           <Button
             onClick={() => {
               const newValue = Math.random() * (max - min) + min;
               onUpdateNode({ data: { ...node.data, value: Math.round(newValue * 100) / 100 } });
             }}
-            style={{ width: '100%', marginTop: '8px' }}
+            style={{ width: "100%", marginTop: "8px" }}
           >
             🎲 Generate Random
           </Button>
         </>
       )}
-      
-      <div style={{ marginTop: '12px' }}>
+
+      <div style={{ marginTop: "12px" }}>
         <Label>Title:</Label>
         <Input
           type="text"
-          value={node.data.title as string || ''}
+          value={(node.data.title as string) || ""}
           onChange={(e) => onUpdateNode({ data: { ...node.data, title: e.target.value } })}
           placeholder="Enter title..."
-          style={{ width: '100%', marginTop: '4px' }}
+          style={{ width: "100%", marginTop: "4px" }}
         />
       </div>
     </div>
@@ -311,7 +306,7 @@ const basicNodeDefinitions: NodeDefinition[] = [
     renderNode: MathNodeRenderer,
     renderInspector: MathNodeInspector,
   },
-  
+
   // Data Sources with custom renderers
   {
     type: "data-source",
@@ -351,7 +346,7 @@ const basicNodeDefinitions: NodeDefinition[] = [
     renderNode: DataSourceRenderer,
     renderInspector: DataSourceInspector,
   },
-  
+
   // Display and Output with custom renderers
   {
     type: "text-display",
@@ -388,7 +383,7 @@ const basicNodeDefinitions: NodeDefinition[] = [
       { id: "label", type: "input", label: "Label", position: "left", dataType: "string" },
     ],
   },
-  
+
   // Logic and Control
   {
     type: "condition",
@@ -419,7 +414,7 @@ const basicNodeDefinitions: NodeDefinition[] = [
       { id: "tick", type: "output", label: "Tick", position: "right", dataType: "number" },
     ],
   },
-  
+
   // String Operations
   {
     type: "string-concat",
@@ -454,7 +449,7 @@ const basicNodeDefinitions: NodeDefinition[] = [
 const testDataSets: Record<string, NodeEditorData> = {
   simple: {
     nodes: {
-      "node1": {
+      node1: {
         id: "node1",
         type: "data-source",
         position: { x: 100, y: 200 },
@@ -466,56 +461,56 @@ const testDataSets: Record<string, NodeEditorData> = {
   },
   mathFlow: {
     nodes: {
-      "input1": {
+      input1: {
         id: "input1",
         type: "data-source",
         position: { x: 50, y: 100 },
         size: { width: 180, height: 100 },
         data: { title: "Input A", value: 10 },
       },
-      "input2": {
+      input2: {
         id: "input2",
         type: "data-source",
         position: { x: 50, y: 250 },
         size: { width: 180, height: 100 },
         data: { title: "Input B", value: 5 },
       },
-      "add": {
+      add: {
         id: "add",
         type: "math-add",
         position: { x: 350, y: 175 },
         size: { width: 150, height: 80 },
         data: { title: "Add Operation", result: 0, operation: "add", precision: 2 },
       },
-      "multiply": {
+      multiply: {
         id: "multiply",
         type: "math-multiply",
         position: { x: 600, y: 100 },
         size: { width: 150, height: 80 },
         data: { title: "Multiply by 2", result: 0, operation: "multiply", precision: 2 },
       },
-      "multiplier": {
+      multiplier: {
         id: "multiplier",
         type: "data-source",
         position: { x: 350, y: 50 },
         size: { width: 180, height: 100 },
         data: { title: "Multiplier", value: 2 },
       },
-      "converter": {
+      converter: {
         id: "converter",
         type: "number-to-string",
         position: { x: 850, y: 175 },
         size: { width: 160, height: 80 },
         data: { title: "Num→Str" },
       },
-      "display": {
+      display: {
         id: "display",
         type: "text-display",
         position: { x: 1100, y: 175 },
         size: { width: 160, height: 90 },
         data: { title: "Final Result", text: "30" },
       },
-      "numberDisplay": {
+      numberDisplay: {
         id: "numberDisplay",
         type: "number-display",
         position: { x: 600, y: 250 },
@@ -524,49 +519,49 @@ const testDataSets: Record<string, NodeEditorData> = {
       },
     },
     connections: {
-      "conn1": {
+      conn1: {
         id: "conn1",
         fromNodeId: "input1",
         fromPortId: "output",
         toNodeId: "add",
         toPortId: "a",
       },
-      "conn2": {
+      conn2: {
         id: "conn2",
         fromNodeId: "input2",
         fromPortId: "output",
         toNodeId: "add",
         toPortId: "b",
       },
-      "conn3": {
+      conn3: {
         id: "conn3",
         fromNodeId: "add",
         fromPortId: "result",
         toNodeId: "multiply",
         toPortId: "a",
       },
-      "conn4": {
+      conn4: {
         id: "conn4",
         fromNodeId: "multiplier",
         fromPortId: "output",
         toNodeId: "multiply",
         toPortId: "b",
       },
-      "conn5": {
+      conn5: {
         id: "conn5",
         fromNodeId: "multiply",
         fromPortId: "result",
         toNodeId: "converter",
         toPortId: "input",
       },
-      "conn6": {
+      conn6: {
         id: "conn6",
         fromNodeId: "converter",
         fromPortId: "output",
         toNodeId: "display",
         toPortId: "input",
       },
-      "conn7": {
+      conn7: {
         id: "conn7",
         fromNodeId: "add",
         fromPortId: "result",
@@ -579,52 +574,52 @@ const testDataSets: Record<string, NodeEditorData> = {
     nodes: {},
     connections: {},
   },
-  
+
   complexFlow: {
     nodes: {
-      "rand1": {
+      rand1: {
         id: "rand1",
         type: "random-generator",
         position: { x: 50, y: 100 },
         size: { width: 180, height: 100 },
         data: { title: "Random A", min: 1, max: 50, value: 25 },
       },
-      "rand2": {
+      rand2: {
         id: "rand2",
         type: "random-generator",
         position: { x: 50, y: 250 },
         size: { width: 180, height: 100 },
         data: { title: "Random B", min: 1, max: 50, value: 35 },
       },
-      "condition": {
+      condition: {
         id: "condition",
         type: "condition",
         position: { x: 350, y: 175 },
         size: { width: 180, height: 120 },
         data: { title: "A > B?", condition: "greater" },
       },
-      "winner": {
+      winner: {
         id: "winner",
         type: "string-source",
         position: { x: 600, y: 100 },
         size: { width: 180, height: 100 },
         data: { title: "Winner Text", value: "A Wins!" },
       },
-      "loser": {
+      loser: {
         id: "loser",
         type: "string-source",
         position: { x: 600, y: 250 },
         size: { width: 180, height: 100 },
         data: { title: "Loser Text", value: "B Wins!" },
       },
-      "result": {
+      result: {
         id: "result",
         type: "text-display",
         position: { x: 850, y: 175 },
         size: { width: 160, height: 90 },
         data: { title: "Result", text: "Click to compare!" },
       },
-      "chart": {
+      chart: {
         id: "chart",
         type: "chart-display",
         position: { x: 350, y: 350 },
@@ -633,35 +628,35 @@ const testDataSets: Record<string, NodeEditorData> = {
       },
     },
     connections: {
-      "conn1": {
+      conn1: {
         id: "conn1",
         fromNodeId: "rand1",
         fromPortId: "output",
         toNodeId: "condition",
         toPortId: "a",
       },
-      "conn2": {
+      conn2: {
         id: "conn2",
         fromNodeId: "rand2",
         fromPortId: "output",
         toNodeId: "condition",
         toPortId: "b",
       },
-      "conn3": {
+      conn3: {
         id: "conn3",
         fromNodeId: "condition",
         fromPortId: "true",
         toNodeId: "result",
         toPortId: "input",
       },
-      "conn4": {
+      conn4: {
         id: "conn4",
         fromNodeId: "condition",
         fromPortId: "false",
         toNodeId: "result",
         toPortId: "input",
       },
-      "conn5": {
+      conn5: {
         id: "conn5",
         fromNodeId: "rand1",
         fromPortId: "output",
@@ -701,29 +696,27 @@ const NodeEditorTestPage: React.FC = () => {
   return (
     <Article style={{ padding: "24px", maxWidth: "1200px", margin: "0 auto" }}>
       <H1>🧪 NodeEditor Props テストページ</H1>
-      <P>
-        このページでは、NodeEditorコンポーネントの新しいprops API（initialData vs data）をテストできます。
-      </P>
+      <P>このページでは、NodeEditorコンポーネントの新しいprops API（initialData vs data）をテストできます。</P>
 
       <Section style={{ marginBottom: "24px" }}>
         <H2>⚙️ テスト設定</H2>
-        
-        <div style={{ 
-          display: "grid", 
-          gridTemplateColumns: "auto 1fr", 
-          gap: "16px", 
-          alignItems: "center",
-          marginBottom: "16px",
-          padding: "16px",
-          background: "#f8f9fa",
-          borderRadius: "8px",
-        }}>
-          <Label style={{ fontWeight: "bold" }}>
-            モード:
-          </Label>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "auto 1fr",
+            gap: "16px",
+            alignItems: "center",
+            marginBottom: "16px",
+            padding: "16px",
+            background: "#f8f9fa",
+            borderRadius: "8px",
+          }}
+        >
+          <Label style={{ fontWeight: "bold" }}>モード:</Label>
           <div>
             <Label style={{ marginRight: "16px" }}>
-              <input
+              <Input
                 type="radio"
                 name="mode"
                 checked={!isControlledMode}
@@ -733,7 +726,7 @@ const NodeEditorTestPage: React.FC = () => {
               Uncontrolled (initialData)
             </Label>
             <Label>
-              <input
+              <Input
                 type="radio"
                 name="mode"
                 checked={isControlledMode}
@@ -744,9 +737,7 @@ const NodeEditorTestPage: React.FC = () => {
             </Label>
           </div>
 
-          <Label style={{ fontWeight: "bold" }}>
-            テストデータ:
-          </Label>
+          <Label style={{ fontWeight: "bold" }}>テストデータ:</Label>
           <div style={{ display: "flex", gap: "8px" }}>
             {Object.keys(testDataSets).map((key) => (
               <Button
@@ -765,24 +756,26 @@ const NodeEditorTestPage: React.FC = () => {
           </div>
         </div>
 
-        <div style={{
-          padding: "12px",
-          background: isControlledMode ? "#e3f2fd" : "#e8f5e9",
-          borderRadius: "6px",
-          fontSize: "14px",
-        }}>
+        <div
+          style={{
+            padding: "12px",
+            background: isControlledMode ? "#e3f2fd" : "#e8f5e9",
+            borderRadius: "6px",
+            fontSize: "14px",
+          }}
+        >
           <strong>現在のモード:</strong> {isControlledMode ? "Controlled" : "Uncontrolled"}
           <br />
-          <strong>動作:</strong> {isControlledMode 
+          <strong>動作:</strong>{" "}
+          {isControlledMode
             ? "親コンポーネントがdata propで状態を管理。データボタンで即座に切り替わります。"
-            : "コンポーネントがinitialDataを初期値として内部で状態を管理。データボタンは次回マウント時に適用されます。"
-          }
+            : "コンポーネントがinitialDataを初期値として内部で状態を管理。データボタンは次回マウント時に適用されます。"}
         </div>
       </Section>
 
       <Section style={{ marginBottom: "24px" }}>
         <H2>🎛️ NodeEditor</H2>
-        
+
         <div
           style={{
             width: "100%",
@@ -799,7 +792,6 @@ const NodeEditorTestPage: React.FC = () => {
               initialData={controlledData}
               onDataChange={setControlledData}
               nodeDefinitions={basicNodeDefinitions}
-              showInspector={true}
             />
           ) : (
             <NodeEditor
@@ -807,7 +799,6 @@ const NodeEditorTestPage: React.FC = () => {
               initialData={uncontrolledData}
               onDataChange={setUncontrolledData}
               nodeDefinitions={basicNodeDefinitions}
-              showInspector={true}
             />
           )}
         </div>
@@ -815,41 +806,48 @@ const NodeEditorTestPage: React.FC = () => {
 
       <Section style={{ marginBottom: "24px" }}>
         <H2>📊 状態デバッグ</H2>
-        
+
         <div style={{ marginBottom: "16px", padding: "12px", background: "#f0f8ff", borderRadius: "6px" }}>
-          <strong>🔍 接続状況:</strong> {isControlledMode ? Object.keys(controlledData.connections).length : Object.keys(uncontrolledData.connections).length} 個の接続
+          <strong>🔍 接続状況:</strong>{" "}
+          {isControlledMode ? Object.keys(controlledData.connections).length : Object.keys(uncontrolledData.connections).length}{" "}
+          個の接続
           {selectedTestData === "mathFlow" && (
             <div style={{ marginTop: "8px", fontSize: "12px" }}>
-              <strong>Math Flow 接続:</strong> input1→add, input2→add, add→multiply, add→numberDisplay, multiplier→multiply, multiply→converter, converter→display
+              <strong>Math Flow 接続:</strong> input1→add, input2→add, add→multiply, add→numberDisplay, multiplier→multiply,
+              multiply→converter, converter→display
             </div>
           )}
         </div>
-        
+
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
           <div>
             <H3 style={{ fontSize: "16px" }}>Uncontrolled State</H3>
-            <pre style={{
-              background: "#f8f9fa",
-              padding: "12px",
-              borderRadius: "6px",
-              fontSize: "12px",
-              overflow: "auto",
-              maxHeight: "200px",
-            }}>
+            <pre
+              style={{
+                background: "#f8f9fa",
+                padding: "12px",
+                borderRadius: "6px",
+                fontSize: "12px",
+                overflow: "auto",
+                maxHeight: "200px",
+              }}
+            >
               {JSON.stringify(uncontrolledData, null, 2)}
             </pre>
           </div>
-          
+
           <div>
             <H3 style={{ fontSize: "16px" }}>Controlled State</H3>
-            <pre style={{
-              background: "#f8f9fa",
-              padding: "12px",
-              borderRadius: "6px",
-              fontSize: "12px",
-              overflow: "auto",
-              maxHeight: "200px",
-            }}>
+            <pre
+              style={{
+                background: "#f8f9fa",
+                padding: "12px",
+                borderRadius: "6px",
+                fontSize: "12px",
+                overflow: "auto",
+                maxHeight: "200px",
+              }}
+            >
               {JSON.stringify(controlledData, null, 2)}
             </pre>
           </div>
@@ -858,10 +856,10 @@ const NodeEditorTestPage: React.FC = () => {
 
       <Section>
         <H2>🎯 テスト手順</H2>
-        
+
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px" }}>
           <div>
-            <H3 style={{ fontSize: "16px", color: "#28a745" }}>Uncontrolled Mode</H3>
+            <H3>Uncontrolled Mode</H3>
             <ol style={{ fontSize: "14px" }}>
               <li>「Uncontrolled (initialData)」を選択</li>
               <li>エディター内でノードを追加・移動・接続</li>
@@ -869,15 +867,15 @@ const NodeEditorTestPage: React.FC = () => {
               <li>状態はコンポーネント内部で管理される</li>
             </ol>
           </div>
-          
+
           <div>
-            <H3 style={{ fontSize: "16px", color: "#007bff" }}>Controlled Mode</H3>
-            <ol style={{ fontSize: "14px" }}>
+            <H3>Controlled Mode</H3>
+            <Ol>
               <li>「Controlled (data)」を選択</li>
               <li>「テストデータ」ボタンで即座にエディターが更新される</li>
               <li>エディター内で変更すると右側の状態も更新される</li>
               <li>親コンポーネントが完全に状態を制御</li>
-            </ol>
+            </Ol>
           </div>
         </div>
       </Section>

@@ -13,7 +13,7 @@ import { EditorActionStateProvider } from "./contexts/EditorActionStateContext";
 import { KeyboardShortcutProvider } from "./contexts/KeyboardShortcutContext";
 import { HistoryProvider } from "./contexts/HistoryContext";
 import { InlineEditingProvider } from "./contexts/InlineEditingContext";
-import { NodeEditorProvider, useNodeEditor, type NodeEditorData } from "./contexts/NodeEditorContext";
+import { NodeEditorProvider, useNodeEditor, nodeEditorReducer, type NodeEditorData } from "./contexts/NodeEditorContext";
 import { NodeDefinitionProvider, useNodeDefinitions, useNodeDefinitionList } from "./contexts/NodeDefinitionContext";
 import { ExternalDataProvider } from "./contexts/ExternalDataContext";
 import { useEditorActionState } from "./contexts/EditorActionStateContext";
@@ -25,7 +25,10 @@ import { classNames } from "../../utilities/classNames";
 import styles from "./NodeEditor.module.css";
 
 export interface NodeEditorProps {
+  /** Initial data for uncontrolled mode (like defaultValue) */
   initialData?: Partial<NodeEditorData>;
+  /** Data for controlled mode (like value) */
+  data?: NodeEditorData;
   onDataChange?: (data: NodeEditorData) => void;
   onSave?: (data: NodeEditorData) => void | Promise<void>;
   onLoad?: () => NodeEditorData | Promise<NodeEditorData>;
@@ -76,6 +79,7 @@ export interface NodeEditorProps {
  */
 export const NodeEditor: React.FC<NodeEditorProps> = ({
   initialData,
+  data,
   onDataChange,
   onSave,
   onLoad,
@@ -101,18 +105,16 @@ export const NodeEditor: React.FC<NodeEditorProps> = ({
   onRightSidebarWidthChange,
 }) => {
   return (
-    <NodeDefinitionProvider 
-      nodeDefinitions={nodeDefinitions}
-      includeDefaults={includeDefaultDefinitions}
-    >
+    <NodeDefinitionProvider nodeDefinitions={nodeDefinitions} includeDefaults={includeDefaultDefinitions}>
       <ExternalDataProvider refs={externalDataRefs}>
-        <NodeEditorProvider initialState={initialData}>
+        <NodeEditorProvider initialState={initialData} controlledData={data} onDataChange={onDataChange}>
           <EditorActionStateProvider>
             <NodeCanvasProvider>
               <HistoryProvider>
                 <InlineEditingProvider>
                   <KeyboardShortcutProvider>
                     <NodeEditorContent
+                      data={data}
                       onDataChange={onDataChange}
                       onSave={onSave}
                       onLoad={onLoad}
@@ -146,6 +148,7 @@ export const NodeEditor: React.FC<NodeEditorProps> = ({
 };
 
 const NodeEditorContent: React.FC<{
+  data?: NodeEditorData;
   onDataChange?: (data: NodeEditorData) => void;
   onSave?: (data: NodeEditorData) => void | Promise<void>;
   onLoad?: () => NodeEditorData | Promise<NodeEditorData>;
@@ -166,16 +169,17 @@ const NodeEditorContent: React.FC<{
   rightSidebarMaxWidth?: number;
   onLeftSidebarWidthChange?: (width: number) => void;
   onRightSidebarWidthChange?: (width: number) => void;
-}> = ({ 
-  onDataChange, 
-  onSave, 
-  onLoad, 
-  className, 
-  showInspector, 
-  overlayLayers, 
-  backgroundLayers, 
-  uiOverlayLayers, 
-  settingsManager, 
+}> = ({
+  data,
+  onDataChange,
+  onSave,
+  onLoad,
+  className,
+  showInspector,
+  overlayLayers,
+  backgroundLayers,
+  uiOverlayLayers,
+  settingsManager,
   toolbar,
   leftSidebar,
   rightSidebar,
@@ -194,30 +198,31 @@ const NodeEditorContent: React.FC<{
   const nodeDefinitions = useNodeDefinitionList();
   const [isLoading, setIsLoading] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
-  
+
   // Use settings hook for clean state management
   const settings = useSettings(settingsManager);
-  const { 
-    showGrid, 
-    showMinimap, 
-    showStatusBar, 
-    theme, 
-    autoSave, 
-    autoSaveInterval, 
-    smoothAnimations, 
+  const {
+    showGrid,
+    showMinimap,
+    showStatusBar,
+    theme,
+    autoSave,
+    autoSaveInterval,
+    smoothAnimations,
     doubleClickToEdit,
     fontSize,
     gridSize,
     gridOpacity,
-    canvasBackground
+    canvasBackground,
   } = settings;
-
-  // Report data changes to parent
+  const onDataChangeRef = React.useRef(onDataChange);
+  onDataChangeRef.current = onDataChange;
+  // Report data changes to parent (only in uncontrolled mode)
   React.useEffect(() => {
-    if (onDataChange) {
-      onDataChange(state);
+    if (onDataChangeRef.current && !data) {
+      onDataChangeRef.current(state);
     }
-  }, [state, onDataChange]);
+  }, [state, data]);
 
   // Load data on mount if onLoad is provided
   React.useEffect(() => {
@@ -275,72 +280,76 @@ const NodeEditorContent: React.FC<{
   }, [fontSize, gridSize, gridOpacity, canvasBackground]);
 
   // Node creation handler for context menu
-  const handleCreateNode = React.useCallback((nodeType: string, position: { x: number; y: number }) => {
-    const nodeDefinition = nodeDefinitions.find(def => def.type === nodeType);
-    if (!nodeDefinition) {
-      console.warn(`Node definition not found for type: ${nodeType}`);
-      return;
-    }
+  const handleCreateNode = React.useCallback(
+    (nodeType: string, position: { x: number; y: number }) => {
+      const nodeDefinition = nodeDefinitions.find((def) => def.type === nodeType);
+      if (!nodeDefinition) {
+        console.warn(`Node definition not found for type: ${nodeType}`);
+        return;
+      }
 
-    // Use canvas position from context menu state (preferred)
-    // If not available, use canvas utils to convert screen coordinates
-    let canvasPosition = actionState.contextMenu.canvasPosition;
-    
-    if (!canvasPosition) {
-      // Convert screen coordinates to canvas coordinates using canvas utils
-      canvasPosition = utils.screenToCanvas(position.x, position.y);
-    }
+      // Use canvas position from context menu state (preferred)
+      // If not available, use canvas utils to convert screen coordinates
+      let canvasPosition = actionState.contextMenu.canvasPosition;
 
-    // Create unique node ID
-    const nodeId = `${nodeType}-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
-    
-    // Get node size
-    const nodeSize = nodeDefinition.defaultSize || { width: 150, height: 50 };
-    
-    // Adjust position so node center is at click position
-    const centeredPosition = {
-      x: canvasPosition.x - nodeSize.width / 2,
-      y: canvasPosition.y - nodeSize.height / 2,
-    };
-    
-    // Create new node with definition defaults
-    const newNode = {
-      id: nodeId,
-      type: nodeType,
-      position: centeredPosition,
-      size: nodeSize,
-      data: nodeDefinition.defaultData || { title: nodeDefinition.displayName },
-      ports: nodeDefinition.ports?.map(portDef => ({
-        ...portDef,
-        nodeId,
-      })) || [],
-    };
+      if (!canvasPosition) {
+        // Convert screen coordinates to canvas coordinates using canvas utils
+        canvasPosition = utils.screenToCanvas(position.x, position.y);
+      }
 
-    // Add node to editor
-    dispatch(actions.addNode(newNode));
-    
-    // Select the new node
-    actionDispatch(actionActions.selectNode(nodeId, false));
-    
-    // Hide context menu
-    actionDispatch(actionActions.hideContextMenu());
-  }, [nodeDefinitions, dispatch, actions, actionDispatch, actionActions, actionState.contextMenu.canvasPosition, utils]);
+      // Create unique node ID
+      const nodeId = `${nodeType}-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+
+      // Get node size
+      const nodeSize = nodeDefinition.defaultSize || { width: 150, height: 50 };
+
+      // Adjust position so node center is at click position
+      const centeredPosition = {
+        x: canvasPosition.x - nodeSize.width / 2,
+        y: canvasPosition.y - nodeSize.height / 2,
+      };
+
+      // Create new node with definition defaults
+      const newNode = {
+        id: nodeId,
+        type: nodeType,
+        position: centeredPosition,
+        size: nodeSize,
+        data: nodeDefinition.defaultData || { title: nodeDefinition.displayName },
+        ports:
+          nodeDefinition.ports?.map((portDef) => ({
+            ...portDef,
+            nodeId,
+          })) || [],
+      };
+
+      // Add node to editor
+      dispatch(actions.addNode(newNode));
+
+      // Select the new node
+      actionDispatch(actionActions.selectNode(nodeId, false));
+
+      // Hide context menu
+      actionDispatch(actionActions.hideContextMenu());
+    },
+    [nodeDefinitions, dispatch, actions, actionDispatch, actionActions, actionState.contextMenu.canvasPosition, utils]
+  );
 
   // Register save keyboard shortcut
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+      if ((e.ctrlKey || e.metaKey) && e.key === "s") {
         e.preventDefault();
         handleSave();
       }
       // Hide context menu on Escape
-      if (e.key === 'Escape') {
+      if (e.key === "Escape") {
         actionDispatch(actionActions.hideContextMenu());
       }
     };
 
-    document.addEventListener('keydown', handleKeyDown);
-    return () => document.removeEventListener('keydown', handleKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
   }, [handleSave, actionDispatch, actionActions]);
 
   // Determine sidebar content
@@ -348,23 +357,15 @@ const NodeEditorContent: React.FC<{
   const rightSidebarContent = rightSidebar || (showInspector && <InspectorPanel />);
 
   return (
-    <NodeEditorBase 
-      className={classNames(
-        className,
-        theme === "dark" && styles.darkTheme,
-        smoothAnimations && styles.smoothAnimations
-      )} 
+    <NodeEditorBase
+      className={classNames(className, theme === "dark" && styles.darkTheme, smoothAnimations && styles.smoothAnimations)}
       data-testid="node-editor"
       data-theme={theme}
     >
       <div className={styles.editorLayout}>
         {/* Top toolbar */}
-        {toolbar && (
-          <div className={styles.editorToolbar}>
-            {toolbar}
-          </div>
-        )}
-        
+        {toolbar && <div className={styles.editorToolbar}>{toolbar}</div>}
+
         <div className={styles.editorContent}>
           <ColumnLayout
             leftSidebar={leftSidebarContent}
@@ -382,30 +383,19 @@ const NodeEditorContent: React.FC<{
               <CanvasBase showGrid={showGrid}>
                 {/* Background layers render behind everything */}
                 {backgroundLayers?.map((layer, index) => (
-                  <React.Fragment key={`background-layer-${index}`}>
-                    {layer}
-                  </React.Fragment>
+                  <React.Fragment key={`background-layer-${index}`}>{layer}</React.Fragment>
                 ))}
-                
+
                 <ConnectionLayer />
                 <NodeLayer doubleClickToEdit={doubleClickToEdit} />
-                
+
                 {/* Overlay layers render on top of everything */}
                 {overlayLayers?.map((layer, index) => (
-                  <React.Fragment key={`overlay-layer-${index}`}>
-                    {layer}
-                  </React.Fragment>
+                  <React.Fragment key={`overlay-layer-${index}`}>{layer}</React.Fragment>
                 ))}
-                
               </CanvasBase>
-              
-              {showStatusBar && (
-                <StatusBar 
-                  autoSave={autoSave}
-                  isSaving={isSaving}
-                  settingsManager={settingsManager}
-                />
-              )}
+
+              {showStatusBar && <StatusBar autoSave={autoSave} isSaving={isSaving} settingsManager={settingsManager} />}
             </div>
           </ColumnLayout>
         </div>
@@ -413,12 +403,10 @@ const NodeEditorContent: React.FC<{
       {/* Loading/Saving indicators */}
       {(isLoading || isSaving) && (
         <div className={styles.loadingOverlay}>
-          <div className={styles.loadingIndicator}>
-            {isLoading ? "Loading..." : "Saving..."}
-          </div>
+          <div className={styles.loadingIndicator}>{isLoading ? "Loading..." : "Saving..."}</div>
         </div>
       )}
-      
+
       {/* Context Menu */}
       <NodeSearchMenu
         position={actionState.contextMenu.position}
@@ -427,14 +415,12 @@ const NodeEditorContent: React.FC<{
         onClose={() => actionDispatch(actionActions.hideContextMenu())}
         visible={actionState.contextMenu.visible}
       />
-      
+
       {/* UI Overlay Layers - Fixed position, non-interactive, for UI customization */}
       {uiOverlayLayers && uiOverlayLayers.length > 0 && (
         <div className={styles.uiOverlayContainer}>
           {uiOverlayLayers.map((layer, index) => (
-            <React.Fragment key={`ui-overlay-layer-${index}`}>
-              {layer}
-            </React.Fragment>
+            <React.Fragment key={`ui-overlay-layer-${index}`}>{layer}</React.Fragment>
           ))}
         </div>
       )}

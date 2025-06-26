@@ -439,11 +439,15 @@ export const NodeEditorContext = React.createContext<NodeEditorContextValue | nu
 export interface NodeEditorProviderProps {
   children: React.ReactNode;
   initialState?: Partial<NodeEditorData>;
+  controlledData?: NodeEditorData;
+  onDataChange?: (data: NodeEditorData) => void;
 }
 
 export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
   children,
   initialState,
+  controlledData,
+  onDataChange,
 }) => {
   // Deep merge initial state with defaults
   const initialData: NodeEditorData = React.useMemo(() => ({
@@ -451,10 +455,26 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
     connections: initialState?.connections || defaultNodeEditorData.connections,
   }), [initialState]);
 
-  const [state, dispatch] = React.useReducer(
+  const [internalState, internalDispatch] = React.useReducer(
     nodeEditorReducer,
     initialData
   );
+
+  // Use controlled data if provided, otherwise use internal state
+  const state = controlledData || internalState;
+  
+  // Wrap dispatch to handle controlled mode
+  const dispatch: React.Dispatch<NodeEditorAction> = React.useCallback((action) => {
+    if (!controlledData) {
+      // Uncontrolled mode: use internal dispatch
+      internalDispatch(action);
+    } else if (onDataChange) {
+      // Controlled mode: calculate new state and call onDataChange
+      const newState = nodeEditorReducer(state, action);
+      onDataChange(newState);
+    }
+    // If controlled but no onDataChange, dispatch does nothing
+  }, [controlledData, state, onDataChange]);
 
   const contextValue: NodeEditorContextValue = {
     state,
