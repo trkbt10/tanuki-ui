@@ -61,11 +61,11 @@ export type { MinimapProps, DebugOverlayProps, GridToolboxProps } from "./compon
 
 // UI components
 export { Toolbar } from "./components/Toolbar";
-export { FloatingContainer } from "./components/FloatingContainer";
+export { FloatingContainer } from "./components/parts/FloatingContainer";
 export { ColumnLayout } from "./components/ColumnLayout";
 export { InspectorPanel } from "./components/InspectorPanel";
 export type { ToolbarProps } from "./components/Toolbar";
-export type { FloatingContainerProps } from "./components/FloatingContainer";
+export type { FloatingContainerProps } from "./components/parts/FloatingContainer";
 export type { ColumnLayoutProps } from "./components/ColumnLayout";
 export type { InspectorPanelProps } from "./components/InspectorPanel";
 
