@@ -8,6 +8,8 @@ import { DefaultInspectorRenderer } from "../components/node/renderers/DefaultRe
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
 import { classNames } from "../../../utilities/classNames";
 import { Button } from "../../../form/Button";
+import { Input } from "../../../form/Input";
+import { Label } from "../../../form/Label";
 import styles from "../NodeEditor.module.css";
 
 export interface InspectorPanelProps {
@@ -142,8 +144,8 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({
             <div className={styles.inspectorSection}>
               <h4>Grid Settings</h4>
               <div className={styles.inspectorField}>
-                <label>
-                  <input
+                <Label>
+                  <Input
                     id="grid-show"
                     name="showGrid"
                     type="checkbox"
@@ -155,11 +157,11 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({
                     }}
                   />
                   Show Grid
-                </label>
+                </Label>
               </div>
               <div className={styles.inspectorField}>
-                <label>
-                  <input
+                <Label>
+                  <Input
                     id="grid-snap"
                     name="snapToGrid"
                     type="checkbox"
@@ -171,11 +173,11 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({
                     }}
                   />
                   Snap to Grid
-                </label>
+                </Label>
               </div>
               <div className={styles.inspectorField}>
-                <label htmlFor="grid-size">Grid Size:</label>
-                <input
+                <Label htmlFor="grid-size">Grid Size:</Label>
+                <Input
                   id="grid-size"
                   name="gridSize"
                   type="number"
@@ -196,8 +198,8 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({
                 />
               </div>
               <div className={styles.inspectorField}>
-                <label htmlFor="snap-threshold">Snap Threshold:</label>
-                <input
+                <Label htmlFor="snap-threshold">Snap Threshold:</Label>
+                <Input
                   id="snap-threshold"
                   name="snapThreshold"
                   type="number"
