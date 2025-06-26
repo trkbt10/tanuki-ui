@@ -142,17 +142,7 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({ className }) =
   };
 
   return (
-    <svg
-      className={classNames(styles.connectionLayer, className)}
-      width="100%"
-      height="100%"
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        pointerEvents: "none",
-      }}
-    >
+    <svg className={classNames(styles.connectionLayer, className)}>
       {/* Render all connections */}
       {Object.values(nodeEditorState.connections).map((connection) => {
         const fromNode = nodeEditorState.nodes[connection.fromNodeId];
