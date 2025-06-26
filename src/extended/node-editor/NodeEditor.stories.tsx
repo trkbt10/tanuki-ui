@@ -67,7 +67,7 @@ export const Default: Story = {
 export const WithConnections: Story = {
   args: {
     initialData: initialStateWithConnections,
-    onDataChange: (data) => {
+    onDataChange: (data: NodeEditorData) => {
       console.log("Data changed:", data);
       // Make data available globally for debugging
       if (typeof window !== "undefined") {
@@ -86,7 +86,7 @@ export const Empty: Story = {
 export const WithSaveLoad: Story = {
   args: {
     initialData: initialStateWithConnections,
-    onSave: async (data) => {
+    onSave: async (data: NodeEditorData) => {
       console.log("Saving data:", data);
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1000));

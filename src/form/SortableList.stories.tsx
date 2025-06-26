@@ -27,7 +27,7 @@ export const Basic = (args: ComponentProps<typeof SortableList>) => {
   const [isDragging, setIsDragging] = React.useState(false);
   return (
     <List style={{ overflowX: isDragging ? "hidden" : "auto" }}>
-      <SortableList items={items} setItems={setItems} element={ListItemRenderer}></SortableList>
+      <SortableList items={items} setItems={setItems} element={(item, index) => <ListItemRenderer {...item} />}></SortableList>
     </List>
   );
 };

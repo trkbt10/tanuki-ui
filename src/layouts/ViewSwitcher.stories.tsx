@@ -64,7 +64,7 @@ export const ManyViews: Story = {
 export const WithCallback: Story = {
   args: {
     items: BasicViews,
-    onViewChange: (index) => {
+    onViewChange: (index: number) => {
       console.log("View changed to:", index);
     },
   },

@@ -22,6 +22,9 @@ const generateItems = (count: number) => {
 };
 
 export const VerticalScroll: Story = {
+  args: {
+    children: null,
+  },
   render: () => {
     const items = generateItems(1000);
     return (
@@ -47,6 +50,9 @@ export const VerticalScroll: Story = {
 };
 
 export const HorizontalScroll: Story = {
+  args: {
+    children: null,
+  },
   render: () => {
     const items = generateItems(500);
     return (
@@ -78,6 +84,9 @@ export const HorizontalScroll: Story = {
 };
 
 export const WindowScroll: Story = {
+  args: {
+    children: null,
+  },
   render: () => {
     const items = generateItems(2000);
     return (
@@ -101,6 +110,9 @@ export const WindowScroll: Story = {
 };
 
 export const ChunkedVertical: Story = {
+  args: {
+    children: null,
+  },
   render: () => {
     const items = generateItems(1000);
     return (
@@ -126,6 +138,9 @@ export const ChunkedVertical: Story = {
 };
 
 export const ChunkedHorizontal: Story = {
+  args: {
+    children: null,
+  },
   render: () => {
     const items = generateItems(500);
     return (
@@ -157,6 +172,9 @@ export const ChunkedHorizontal: Story = {
 };
 
 export const MixedContent: Story = {
+  args: {
+    children: null,
+  },
   render: () => {
     return (
       <div style={{ height: "400px", overflow: "auto", border: "1px solid #ccc" }}>

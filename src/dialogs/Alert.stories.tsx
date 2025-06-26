@@ -109,7 +109,7 @@ export const multipleOptions = (props: ComponentProps<typeof Alert>) => {
             discard: 'Changes discarded',
             cancel: 'Action cancelled'
           };
-          setResult(actions[action] || 'Unknown action');
+          setResult(actions[action as string] || 'Unknown action');
           toggle(false);
         }}
         onClose={() => toggle(false)}

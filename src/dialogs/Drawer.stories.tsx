@@ -1,4 +1,4 @@
-import { ComponentProps } from "react";
+import React, { ComponentProps } from "react";
 import { useToggle } from "react-use";
 import { Button } from "../form/Button";
 import { BarItems, Toolbar } from "..";

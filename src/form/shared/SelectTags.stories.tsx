@@ -1,3 +1,4 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { SelectTags } from './SelectTags';
 
@@ -86,7 +87,7 @@ export const CustomRenderer: Story = {
     getOptionLabel: mockGetOptionLabel,
     multiple: false,
     disabled: false,
-    renderSelected: (value) => (
+    renderSelected: (value: string) => (
       <span style={{ fontWeight: 'bold', color: '#007acc' }}>
         🚀 {mockGetOptionLabel(value)}
       </span>
