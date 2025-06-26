@@ -1,3 +1,7 @@
+/**
+ * Panel System - Main exports
+ */
+
 // Main component export
 export { Panel, default } from './Panel';
 
@@ -51,3 +55,6 @@ export {
   panelReducer,
   createInitialState,
 } from './reducer';
+
+// Hook exports
+export * from './hooks';
