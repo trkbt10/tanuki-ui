@@ -269,15 +269,12 @@ const NodeEditorContent: React.FC<{
   }, [autoSave, autoSaveInterval, handleSave, isSaving]);
 
   // Apply settings-based CSS custom properties
-  React.useEffect(() => {
-    const editorElement = document.querySelector('[data-testid="node-editor"]') as HTMLElement;
-    if (editorElement) {
-      editorElement.style.setProperty("--editor-font-size", `${fontSize}px`);
-      editorElement.style.setProperty("--editor-grid-size", `${gridSize}px`);
-      editorElement.style.setProperty("--editor-grid-opacity", `${gridOpacity}`);
-      editorElement.style.setProperty("--editor-canvas-background", canvasBackground);
-    }
-  }, [fontSize, gridSize, gridOpacity, canvasBackground]);
+  const editorStyles = React.useMemo(() => ({
+    "--editor-font-size": `${fontSize}px`,
+    "--editor-grid-size": `${gridSize}px`,
+    "--editor-grid-opacity": `${gridOpacity}`,
+    "--editor-canvas-background": canvasBackground,
+  } as React.CSSProperties), [fontSize, gridSize, gridOpacity, canvasBackground]);
 
   // Node creation handler for context menu
   const handleCreateNode = React.useCallback(
@@ -359,7 +356,7 @@ const NodeEditorContent: React.FC<{
   return (
     <NodeEditorBase
       className={classNames(className, theme === "dark" && styles.darkTheme, smoothAnimations && styles.smoothAnimations)}
-      data-testid="node-editor"
+      style={editorStyles}
       data-theme={theme}
     >
       <div className={styles.editorLayout}>
