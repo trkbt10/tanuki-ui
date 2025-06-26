@@ -1,0 +1,431 @@
+/* Main panel container */
+.panel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--windowBackgroundColor, #ffffff);
+  font-family: var(--themeDefaultFontFamily, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif);
+  font-size: 13px;
+  color: var(--textColor, #333333);
+}
+
+.panelContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Split container styles */
+.splitContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.panelChild {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Splitter styles */
+.splitter {
+  position: relative;
+  background: var(--separatorColor, #e0e0e0);
+  transition: background-color 0.15s ease;
+  user-select: none;
+  z-index: 10;
+}
+
+.splitter:hover {
+  background: var(--selectedContentBackgroundColor, #d0d0d0);
+}
+
+.verticalSplitter {
+  width: 4px;
+  cursor: col-resize;
+}
+
+.horizontalSplitter {
+  height: 4px;
+  cursor: row-resize;
+}
+
+.splitterDragging {
+  background: var(--accentColor, #007acc) !important;
+}
+
+/* Leaf container styles */
+.leafContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--controlColor, #f5f5f5);
+  border: 1px solid var(--separatorColor, #e0e0e0);
+}
+
+.leafContainer.dropTarget {
+  border-color: var(--accentColor, #007acc);
+  box-shadow: 0 0 0 1px var(--accentColor, #007acc);
+}
+
+/* Tab bar styles */
+.tabBar {
+  display: flex;
+  align-items: center;
+  background: var(--tabBarBackground, var(--controlColor, #f8f8f8));
+  border-bottom: 1px solid var(--separatorColor, #e0e0e0);
+  padding: 0;
+  min-height: 35px;
+  overflow: hidden;
+}
+
+.tabs {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-width: 80px;
+  max-width: 200px;
+  height: 35px;
+  padding: var(--controlPadding, 0 12px 0 16px);
+  background: var(--controlColor, #efefef);
+  border: 1px solid var(--separatorColor, #e0e0e0);
+  border-bottom: none;
+  border-radius: var(--controlBorderRadius, 4px) var(--controlBorderRadius, 4px) 0 0;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+  margin-right: -1px;
+  will-change: transform, opacity;
+  font: var(--controlTextFont, normal normal 400 13px/1.23 var(--themeControlFontFamily));
+  color: var(--controlTextColor, #333);
+  /* Ensure draggable elements work properly */
+  touch-action: none;
+}
+
+.tab:hover {
+  background: var(--controlHoverBackground, #e8e8e8);
+}
+
+.tab.activeTab {
+  background: var(--selectedContentBackgroundColor, #ffffff);
+  border-color: var(--separatorColor, #e0e0e0);
+  color: var(--selectedControlTextColor, #000);
+  z-index: 1;
+}
+
+.tab.tabDragging {
+  transform: scale(0.95) rotate(2deg);
+  opacity: 0.8;
+  z-index: 1000;
+  cursor: grabbing !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  /* Keep pointer events enabled for drop detection */
+  pointer-events: auto;
+}
+
+.tab.tabDragOver {
+  transform: translateX(2px);
+  box-shadow: 2px 0 4px var(--keyboardFocusIndicatorColor, rgba(0, 122, 204, 0.3));
+  border-left-color: var(--accentColor, #007acc);
+}
+
+.tabDropZone {
+  width: 4px;
+  height: 35px;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+}
+
+.tabDropZone.tabDragOver {
+  width: 20px;
+  background: var(--keyboardFocusIndicatorColor, rgba(0, 122, 204, 0.3));
+  border-radius: 2px;
+}
+
+.tabTitle {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+  line-height: 1;
+}
+
+.tabCloseButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 6px;
+  background: none;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--secondaryLabelColor, #666666);
+  transition: all 0.15s ease;
+  opacity: 0;
+}
+
+.tab:hover .tabCloseButton {
+  opacity: 1;
+}
+
+.tabCloseButton:hover {
+  background: var(--controlHoverBackground, #e0e0e0);
+  color: var(--controlTextColor, #333333);
+}
+
+.newTabButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin: 0 8px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  color: var(--secondaryLabelColor, #666666);
+  transition: all 0.15s ease;
+}
+
+.newTabButton:hover {
+  background: var(--controlHoverBackground, #e0e0e0);
+  border-color: var(--separatorColor, #e0e0e0);
+  color: var(--controlTextColor, #333333);
+}
+
+/* Tab content styles */
+.tabContent {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  background: var(--windowBackgroundColor, #ffffff);
+}
+
+/* Drop zone layer */
+.dropZoneLayer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+/* Enable drop zone layer when dragging globally */
+.panelContainer.dragActive .dropZoneLayer {
+  pointer-events: auto;
+}
+
+/* Improve drop zone visibility during drag */
+.panelContainer.dragActive .leafContainer {
+  position: relative;
+}
+
+.panelContainer.dragActive .leafContainer:not(.dropTarget) {
+  opacity: 0.8;
+}
+
+.panelContainer.dragActive .leafContainer.dropTarget {
+  border-color: var(--accentColor, #007acc);
+  box-shadow: 0 0 0 2px var(--keyboardFocusIndicatorColor, rgba(0, 122, 204, 0.3));
+  background: var(--keyboardFocusIndicatorColor, rgba(0, 122, 204, 0.05));
+}
+
+.dropZone {
+  position: absolute;
+  pointer-events: none;
+  background: var(--keyboardFocusIndicatorColor, rgba(0, 122, 204, 0.2));
+  border: 2px dashed var(--accentColor, #007acc);
+  opacity: 0;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+  z-index: 100;
+  box-shadow: 0 0 8px var(--keyboardFocusIndicatorColor, rgba(0, 122, 204, 0.3));
+}
+
+.dropZone:hover,
+.dropZone.active {
+  opacity: 1;
+}
+
+/* Show drop zones when dragging globally */
+.panelContainer.dragActive .leafContainer .dropZone {
+  opacity: 0.6;
+  pointer-events: auto;
+  display: block;
+}
+
+.panelContainer.dragActive .leafContainer .dropZone:hover,
+.panelContainer.dragActive .leafContainer .dropZone.active {
+  opacity: 1;
+  background: var(--keyboardFocusIndicatorColor, rgba(0, 122, 204, 0.25));
+  border-color: var(--accentColor, #007acc);
+}
+
+/* Hide drop zones when not dragging */
+.panelContainer:not(.dragActive) .dropZone {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dropZone.active {
+  background: var(--keyboardFocusIndicatorColor, rgba(0, 122, 204, 0.2));
+  border-color: var(--accentColor, #007acc);
+}
+
+.dropZoneLeft {
+  top: 0;
+  left: 0;
+  width: 30%;
+  height: 100%;
+}
+
+.dropZoneRight {
+  top: 0;
+  right: 0;
+  width: 30%;
+  height: 100%;
+}
+
+.dropZoneTop {
+  top: 0;
+  left: 30%;
+  right: 30%;
+  height: 30%;
+}
+
+.dropZoneBottom {
+  bottom: 0;
+  left: 30%;
+  right: 30%;
+  height: 30%;
+}
+
+.dropZoneCenter {
+  top: 30%;
+  left: 30%;
+  right: 30%;
+  bottom: 30%;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .tab {
+    min-width: 60px;
+    max-width: 120px;
+    padding: 0 8px 0 12px;
+  }
+  
+  .tabTitle {
+    font-size: 12px;
+  }
+  
+  .newTabButton {
+    width: 24px;
+    height: 24px;
+    margin: 0 4px;
+  }
+  
+  .dropZoneLeft,
+  .dropZoneRight {
+    width: 40%;
+  }
+  
+  .dropZoneTop,
+  .dropZoneBottom {
+    left: 40%;
+    right: 40%;
+    height: 40%;
+  }
+  
+  .dropZoneCenter {
+    top: 40%;
+    left: 40%;
+    right: 40%;
+    bottom: 40%;
+  }
+}
+
+/* Dark theme support - handled by theme CSS files */
+/* Dark theme specific overrides can be added here if needed */
+
+/* Animation classes */
+.tab {
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.tab.dragging {
+  transform: scale(0.95);
+  opacity: 0.7;
+  z-index: 100;
+}
+
+.splitContainer {
+  transition: opacity 0.15s ease;
+}
+
+.splitContainer.resizing {
+  user-select: none;
+}
+
+/* Focus styles */
+.leafContainer:focus-within {
+  border-color: var(--accentColor, #007acc);
+}
+
+.tab:focus {
+  outline: 2px solid var(--accentColor, #007acc);
+  outline-offset: -2px;
+}
+
+.newTabButton:focus,
+.tabCloseButton:focus {
+  outline: 2px solid var(--accentColor, #007acc);
+  outline-offset: -2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .tab {
+    border-width: 2px;
+  }
+  
+  .dropZone {
+    border-width: 3px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .tab,
+  .splitter,
+  .dropZone,
+  .splitContainer {
+    transition: none;
+  }
+}
