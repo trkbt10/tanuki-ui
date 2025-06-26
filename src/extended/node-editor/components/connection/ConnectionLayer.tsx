@@ -34,14 +34,14 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({ className }) =
 ConnectionLayer.displayName = "ConnectionLayer";
 const DragConnection = React.memo(() => {
   const { state: actionState } = useEditorActionState();
-  const { state: nodeEditorState } = useNodeEditor();
+  const { state: nodeEditorState, getPort } = useNodeEditor();
   if (actionState.connectionDragState) {
     const fromPort = actionState.connectionDragState.fromPort;
     const fromNode = nodeEditorState.nodes[fromPort.nodeId];
     if (!fromNode) return null;
 
-    // Find the actual port data
-    const port = fromNode.ports?.find((p) => p.id === fromPort.id);
+    // Find the actual port data using context method
+    const port = getPort(fromPort.nodeId, fromPort.id);
     if (!port) return null;
 
     const fromPos = getPortPosition(fromNode, port);
@@ -71,7 +71,7 @@ const DragConnection = React.memo(() => {
     const fixedNode = nodeEditorState.nodes[disconnectState.fixedPort.nodeId];
     if (!fixedNode) return null;
 
-    const fixedPort = fixedNode.ports?.find((p) => p.id === disconnectState.fixedPort.id);
+    const fixedPort = getPort(disconnectState.fixedPort.nodeId, disconnectState.fixedPort.id);
     if (!fixedPort) return null;
 
     const fixedPos = getPortPosition(fixedNode, fixedPort);
@@ -98,7 +98,7 @@ const DragConnection = React.memo(() => {
   return null;
 });
 const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
-  const { state: nodeEditorState } = useNodeEditor();
+  const { state: nodeEditorState, getPort } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState } = useNodeCanvas();
 
@@ -107,8 +107,8 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
     (e: React.PointerEvent, connectionId: string) => {
       const fromNode = nodeEditorState.nodes[connection.fromNodeId];
       const toNode = nodeEditorState.nodes[connection.toNodeId];
-      const fromPort = fromNode?.ports?.find((p) => p.id === connection.fromPortId);
-      const toPort = toNode?.ports?.find((p) => p.id === connection.toPortId);
+      const fromPort = getPort(connection.fromNodeId, connection.fromPortId);
+      const toPort = getPort(connection.toNodeId, connection.toPortId);
 
       if (!fromNode || !toNode || !fromPort || !toPort) return;
 
@@ -138,7 +138,7 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
       const isMultiSelect = e.shiftKey || e.metaKey || e.ctrlKey;
       actionDispatch(actionActions.selectConnection(connectionId, isMultiSelect));
     },
-    [connection, nodeEditorState, actionDispatch, actionActions, canvasState.viewport]
+    [connection, nodeEditorState, getPort, actionDispatch, actionActions, canvasState.viewport]
   );
 
   const handleConnectionPointerEnter = React.useCallback(
@@ -157,8 +157,8 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
   const fromNode = nodeEditorState.nodes[connection.fromNodeId];
   const toNode = nodeEditorState.nodes[connection.toNodeId];
 
-  const fromPort = fromNode?.ports?.find((p) => p.id === connection.fromPortId);
-  const toPort = toNode?.ports?.find((p) => p.id === connection.toPortId);
+  const fromPort = getPort(connection.fromNodeId, connection.fromPortId);
+  const toPort = getPort(connection.toNodeId, connection.toPortId);
   // Skip if nodes or ports are missing
   if (!fromNode || !toNode || !fromPort || !toPort) return null;
 
