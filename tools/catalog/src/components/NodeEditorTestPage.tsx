@@ -671,8 +671,8 @@ const testDataSets: Record<string, NodeEditorData> = {
 } as const;
 
 const NodeEditorTestPage: React.FC = () => {
-  const [uncontrolledData, setUncontrolledData] = useState<NodeEditorData>(testDataSets.simple);
-  const [controlledData, setControlledData] = useState<NodeEditorData>(testDataSets.mathFlow);
+  const [uncontrolledData, setUncontrolledData] = useState<NodeEditorData>(() => testDataSets.mathFlow);
+  const [controlledData, setControlledData] = useState<NodeEditorData>(() => testDataSets.mathFlow);
   const [isControlledMode, setIsControlledMode] = useState(false);
   const [selectedTestData, setSelectedTestData] = useState<keyof typeof testDataSets>("simple");
 
