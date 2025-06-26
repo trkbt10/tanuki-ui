@@ -33,9 +33,10 @@ const withMathEvaluator = (Component: React.FC<NodeRenderProps>) => {
 
 // カスタムノードレンダラー
 const MathNodeRendererBase = ({ node, isSelected, onUpdateNode }: NodeRenderProps) => {
-  const context = React.useContext(MathEvaluatorContext);
-  const calculatedValue = context ? context.getNodeValue(node.id) : undefined;
+  // Use calculatedValue from node data
+  const calculatedValue = node.data.calculatedValue;
   const operation = (node.data.operation as string) || "+";
+  
 
   return (
     <div
@@ -74,8 +75,6 @@ const DataSourceRendererBase = ({ node, isSelected, onUpdateNode }: NodeRenderPr
 
   const handleValueChange = (newValue: number) => {
     onUpdateNode({ data: { ...node.data, value: newValue } });
-    // Trigger re-evaluation after value change
-    setTimeout(() => triggerEvaluation(), 0);
   };
 
   return (
@@ -125,8 +124,8 @@ const DataSourceRendererBase = ({ node, isSelected, onUpdateNode }: NodeRenderPr
 const DataSourceRenderer = DataSourceRendererBase;
 
 const DisplayNodeRendererBase = ({ node }: NodeRenderProps) => {
-  const context = React.useContext(MathEvaluatorContext);
-  const calculatedValue = context ? context.getNodeValue(node.id) : undefined;
+  // Use calculatedValue from node data
+  const calculatedValue = node.data.calculatedValue;
   const isNumberDisplay = node.type === "number-display";
 
   // Use calculated value if available, otherwise fall back to node data
@@ -239,9 +238,6 @@ const DataSourceInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
 
   const handleUpdate = (newData: any) => {
     onUpdateNode({ data: newData });
-    if (context) {
-      setTimeout(() => triggerEvaluation(), 0);
-    }
   };
 
   return (
@@ -762,7 +758,48 @@ const NodeEditorTestPage: React.FC = () => {
 
   // Use math evaluator for the current data
   const currentData = isControlledMode ? controlledData : uncontrolledData;
-  const { getNodeValue, triggerEvaluation } = useMathEvaluator(currentData);
+  const { getNodeValue, triggerEvaluation, calculatedValues } = useMathEvaluator(currentData);
+  const [updateVersion, setUpdateVersion] = useState(0);
+
+  // Update node data with calculated values
+  React.useEffect(() => {
+    if (Object.keys(calculatedValues).length === 0) return;
+    
+    const updatedData = isControlledMode ? { ...controlledData } : { ...uncontrolledData };
+    let hasChanges = false;
+    
+    Object.entries(calculatedValues).forEach(([nodeId, value]) => {
+      const node = updatedData.nodes[nodeId];
+      if (node && node.data.calculatedValue !== value) {
+        updatedData.nodes[nodeId] = {
+          ...node,
+          data: { ...node.data, calculatedValue: value }
+        };
+        hasChanges = true;
+      }
+    });
+    
+    if (hasChanges) {
+      if (isControlledMode) {
+        setControlledData(updatedData);
+      } else {
+        setUncontrolledData(updatedData);
+      }
+    }
+  }, [calculatedValues, isControlledMode, controlledData, uncontrolledData]);
+
+  // Handle data changes and trigger evaluation
+  const handleControlledDataChange = React.useCallback((newData: NodeEditorData) => {
+    setControlledData(newData);
+    triggerEvaluation();
+    setUpdateVersion(v => v + 1);
+  }, [triggerEvaluation]);
+
+  const handleUncontrolledDataChange = React.useCallback((newData: NodeEditorData) => {
+    setUncontrolledData(newData);
+    triggerEvaluation();
+    setUpdateVersion(v => v + 1);
+  }, [triggerEvaluation]);
 
   const handleLoadTestData = (dataKey: keyof typeof testDataSets) => {
     setSelectedTestData(dataKey);
@@ -867,7 +904,9 @@ const NodeEditorTestPage: React.FC = () => {
       <Section style={{ marginBottom: "24px" }}>
         <H2>🎛️ NodeEditor</H2>
 
-        <MathEvaluatorContext.Provider value={{ getNodeValue, triggerEvaluation }}>
+        <MathEvaluatorContext.Provider 
+          value={{ getNodeValue, triggerEvaluation }}
+        >
           <div
             style={{
               width: "100%",
@@ -882,14 +921,14 @@ const NodeEditorTestPage: React.FC = () => {
               <NodeEditor
                 key="controlled"
                 data={controlledData}
-                onDataChange={setControlledData}
+                onDataChange={handleControlledDataChange}
                 nodeDefinitions={basicNodeDefinitions}
               />
             ) : (
               <NodeEditor
                 key={`uncontrolled-${selectedTestData}`} // Force remount when test data changes
                 initialData={uncontrolledData}
-                onDataChange={setUncontrolledData}
+                onDataChange={handleUncontrolledDataChange}
                 nodeDefinitions={basicNodeDefinitions}
               />
             )}

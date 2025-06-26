@@ -8,6 +8,7 @@ interface EvaluationContext {
 
 export const useMathEvaluator = (editorData: NodeEditorData | null) => {
   const [calculatedValues, setCalculatedValues] = React.useState<Record<string, any>>({});
+  const [evaluationTrigger, setEvaluationTrigger] = React.useState(0);
 
   // Topological sort to determine evaluation order
   const getEvaluationOrder = React.useCallback((data: NodeEditorData): string[] => {
@@ -181,6 +182,7 @@ export const useMathEvaluator = (editorData: NodeEditorData | null) => {
       return;
     }
     
+    console.log("Evaluating nodes...");
     const evaluationOrder = getEvaluationOrder(editorData);
     const nodeValues = new Map<string, any>();
     const context: EvaluationContext = { editorData, nodeValues };
@@ -191,6 +193,7 @@ export const useMathEvaluator = (editorData: NodeEditorData | null) => {
       if (node) {
         const value = evaluateNode(node, context);
         nodeValues.set(nodeId, value);
+        console.log(`Node ${nodeId} (${node.type}): ${value}`);
       }
     });
     
@@ -200,13 +203,14 @@ export const useMathEvaluator = (editorData: NodeEditorData | null) => {
       valuesObject[key] = value;
     });
     
+    console.log("Final calculated values:", valuesObject);
     setCalculatedValues(valuesObject);
   }, [editorData, evaluateNode, getEvaluationOrder]);
 
-  // Re-evaluate when editor data changes
+  // Re-evaluate when editor data changes or trigger changes
   React.useEffect(() => {
     evaluate();
-  }, [evaluate]);
+  }, [evaluate, evaluationTrigger]);
 
   // Function to get calculated value for a node
   const getNodeValue = React.useCallback((nodeId: string) => {
@@ -215,8 +219,8 @@ export const useMathEvaluator = (editorData: NodeEditorData | null) => {
 
   // Function to manually trigger evaluation
   const triggerEvaluation = React.useCallback(() => {
-    evaluate();
-  }, [evaluate]);
+    setEvaluationTrigger(prev => prev + 1);
+  }, []);
 
   return {
     calculatedValues,
