@@ -13,9 +13,10 @@ import {
   ImageGalleryInspector,
   DataVisualizationInspector,
 } from "./inspectors";
+import type { FeaturesNodeDataTypeMap } from "./types";
 
-export const featuresNodeDefinitions: NodeDefinition[] = [
-  createNodeDefinition({
+export const featuresNodeDefinitions: NodeDefinition<keyof FeaturesNodeDataTypeMap, FeaturesNodeDataTypeMap>[] = [
+  createNodeDefinition<"custom-card", FeaturesNodeDataTypeMap>({
     type: "custom-card",
     displayName: "Custom Card",
     description: "A customizable card node with icon, status and description",
@@ -36,7 +37,7 @@ export const featuresNodeDefinitions: NodeDefinition[] = [
     renderNode: CustomCardRenderer,
     renderInspector: CustomCardInspector,
   }),
-  createNodeDefinition({
+  createNodeDefinition<"progress-bar", FeaturesNodeDataTypeMap>({
     type: "progress-bar",
     displayName: "Progress Bar",
     description: "Visual progress indicator with customizable ranges",
@@ -55,7 +56,7 @@ export const featuresNodeDefinitions: NodeDefinition[] = [
     renderNode: ProgressBarRenderer,
     renderInspector: ProgressBarInspector,
   }),
-  createNodeDefinition({
+  createNodeDefinition<"code-block", FeaturesNodeDataTypeMap>({
     type: "code-block",
     displayName: "Code Block",
     description: "Code snippet with syntax highlighting and execution simulation",
@@ -77,7 +78,7 @@ export const featuresNodeDefinitions: NodeDefinition[] = [
     renderNode: CodeBlockRenderer,
     renderInspector: CodeBlockInspector,
   }),
-  createNodeDefinition({
+  createNodeDefinition<"image-gallery", FeaturesNodeDataTypeMap>({
     type: "image-gallery",
     displayName: "Image Gallery",
     description: "Interactive image gallery with navigation controls",
@@ -103,7 +104,7 @@ export const featuresNodeDefinitions: NodeDefinition[] = [
     renderNode: ImageGalleryRenderer,
     renderInspector: ImageGalleryInspector,
   }),
-  createNodeDefinition({
+  createNodeDefinition<"data-visualization", FeaturesNodeDataTypeMap>({
     type: "data-visualization",
     displayName: "Data Chart",
     description: "Live data visualization with bar chart representation",
@@ -124,7 +125,7 @@ export const featuresNodeDefinitions: NodeDefinition[] = [
     renderInspector: DataVisualizationInspector,
   }),
   // Standard utility nodes for connecting to custom nodes
-  createNodeDefinition({
+  createNodeDefinition<"data-source", FeaturesNodeDataTypeMap>({
     type: "data-source",
     displayName: "Data Source",
     description: "Provides configurable data output",
@@ -138,7 +139,7 @@ export const featuresNodeDefinitions: NodeDefinition[] = [
     },
     ports: [{ id: "output", type: "output", label: "Value", position: "right", dataType: "any" }],
   }),
-  createNodeDefinition({
+  createNodeDefinition<"trigger-button", FeaturesNodeDataTypeMap>({
     type: "trigger-button",
     displayName: "Trigger",
     description: "Manual trigger for events and updates",
@@ -151,7 +152,7 @@ export const featuresNodeDefinitions: NodeDefinition[] = [
     },
     ports: [{ id: "trigger-output", type: "output", label: "Trigger", position: "right", dataType: "boolean" }],
   }),
-  createNodeDefinition({
+  createNodeDefinition<"text-input", FeaturesNodeDataTypeMap>({
     type: "text-input",
     displayName: "Text Input",
     description: "Configurable text input source",
@@ -164,7 +165,7 @@ export const featuresNodeDefinitions: NodeDefinition[] = [
     },
     ports: [{ id: "text-output", type: "output", label: "Text", position: "right", dataType: "string" }],
   }),
-  createNodeDefinition({
+  createNodeDefinition<"data-monitor", FeaturesNodeDataTypeMap>({
     type: "data-monitor",
     displayName: "Monitor",
     description: "Displays incoming data for debugging",

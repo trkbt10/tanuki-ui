@@ -1,8 +1,9 @@
 import React from "react";
 import type { NodeRenderProps } from "tanuki-ui/extended/node-editor";
+import type { FeaturesNodeDataTypeMap } from "./types";
 
 // Type-safe Custom Card Renderer using enhanced NodeRenderProps
-export const CustomCardRenderer: React.FC<NodeRenderProps<"custom-card">> = ({ node, isSelected }) => {
+export const CustomCardRenderer: React.FC<NodeRenderProps<"custom-card", FeaturesNodeDataTypeMap>> = ({ node, isSelected }) => {
   // node.data is automatically typed as CustomCardData
   const { title, description, icon, status } = node.data;
 
@@ -43,7 +44,7 @@ export const CustomCardRenderer: React.FC<NodeRenderProps<"custom-card">> = ({ n
 };
 
 // Type-safe Progress Bar Renderer using enhanced NodeRenderProps
-export const ProgressBarRenderer: React.FC<NodeRenderProps<"progress-bar">> = ({ node, isSelected }) => {
+export const ProgressBarRenderer: React.FC<NodeRenderProps<"progress-bar", FeaturesNodeDataTypeMap>> = ({ node, isSelected }) => {
   // node.data is automatically typed as ProgressBarData
   const { title, progress } = node.data;
   const progressValue = Math.min(100, Math.max(0, progress));
@@ -90,7 +91,7 @@ export const ProgressBarRenderer: React.FC<NodeRenderProps<"progress-bar">> = ({
 };
 
 // Type-safe Code Block Renderer using enhanced NodeRenderProps
-export const CodeBlockRenderer: React.FC<NodeRenderProps<"code-block">> = ({ node, isSelected }) => {
+export const CodeBlockRenderer: React.FC<NodeRenderProps<"code-block", FeaturesNodeDataTypeMap>> = ({ node, isSelected }) => {
   // node.data is automatically typed as CodeBlockData
   const { title, language, code, output } = node.data;
 
@@ -144,7 +145,7 @@ export const CodeBlockRenderer: React.FC<NodeRenderProps<"code-block">> = ({ nod
 };
 
 // Type-safe Image Gallery Renderer using enhanced NodeRenderProps
-export const ImageGalleryRenderer: React.FC<NodeRenderProps<"image-gallery">> = ({ node, isSelected }) => {
+export const ImageGalleryRenderer: React.FC<NodeRenderProps<"image-gallery", FeaturesNodeDataTypeMap>> = ({ node, isSelected }) => {
   // node.data is automatically typed as ImageGalleryData
   const { title, images, currentIndex } = node.data;
   const currentImageIndex = currentIndex || 0;
@@ -193,7 +194,7 @@ export const ImageGalleryRenderer: React.FC<NodeRenderProps<"image-gallery">> = 
 };
 
 // Type-safe Data Visualization Renderer using enhanced NodeRenderProps
-export const DataVisualizationRenderer: React.FC<NodeRenderProps<"data-visualization">> = ({ node, isSelected }) => {
+export const DataVisualizationRenderer: React.FC<NodeRenderProps<"data-visualization", FeaturesNodeDataTypeMap>> = ({ node, isSelected }) => {
   // node.data is automatically typed as DataVisualizationData
   const { title, chartData } = node.data;
   const maxValue = Math.max(...chartData, 1);

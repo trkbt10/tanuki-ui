@@ -1,8 +1,9 @@
 import React from "react";
 import type { InspectorRenderProps } from "tanuki-ui/extended/node-editor";
 import { Input, Label, Button, Select } from "tanuki-ui";
+import type { FeaturesNodeDataTypeMap } from "./types";
 
-export const CustomCardInspector: React.FC<InspectorRenderProps<"custom-card">> = ({ node, onUpdateNode }) => {
+export const CustomCardInspector: React.FC<InspectorRenderProps<"custom-card", FeaturesNodeDataTypeMap>> = ({ node, onUpdateNode }) => {
   const data = node.data;
   const icons = ["📄", "⚙️", "🔧", "📊", "💡", "🎯", "🚀", "⭐"];
   const statuses = ["active", "inactive", "pending", "completed"];
@@ -85,7 +86,7 @@ export const CustomCardInspector: React.FC<InspectorRenderProps<"custom-card">> 
   );
 };
 
-export const ProgressBarInspector: React.FC<InspectorRenderProps<"progress-bar">> = ({ node, onUpdateNode }) => {
+export const ProgressBarInspector: React.FC<InspectorRenderProps<"progress-bar", FeaturesNodeDataTypeMap>> = ({ node, onUpdateNode }) => {
   const data = node.data;
   const min = data.min ?? 0;
   const max = data.max ?? 100;
@@ -182,7 +183,7 @@ export const ProgressBarInspector: React.FC<InspectorRenderProps<"progress-bar">
   );
 };
 
-export const CodeBlockInspector: React.FC<InspectorRenderProps<"code-block">> = ({ node, onUpdateNode }) => {
+export const CodeBlockInspector: React.FC<InspectorRenderProps<"code-block", FeaturesNodeDataTypeMap>> = ({ node, onUpdateNode }) => {
   const data = node.data;
   const languages = ["javascript", "typescript", "python", "java", "csharp", "cpp", "html", "css"];
   const themes = ["light", "dark", "monokai", "github"];
@@ -301,7 +302,7 @@ export const CodeBlockInspector: React.FC<InspectorRenderProps<"code-block">> = 
   );
 };
 
-export const ImageGalleryInspector: React.FC<InspectorRenderProps<"image-gallery">> = ({ node, onUpdateNode }) => {
+export const ImageGalleryInspector: React.FC<InspectorRenderProps<"image-gallery", FeaturesNodeDataTypeMap>> = ({ node, onUpdateNode }) => {
   const data = node.data;
   const images = Array.isArray(data.images) ? data.images : [];
   const currentIndex = data.currentIndex ?? 0;
@@ -425,7 +426,7 @@ export const ImageGalleryInspector: React.FC<InspectorRenderProps<"image-gallery
   );
 };
 
-export const DataVisualizationInspector: React.FC<InspectorRenderProps<"data-visualization">> = ({ node, onUpdateNode }) => {
+export const DataVisualizationInspector: React.FC<InspectorRenderProps<"data-visualization", FeaturesNodeDataTypeMap>> = ({ node, onUpdateNode }) => {
   const data = node.data;
   const chartData = Array.isArray(data.chartData) ? data.chartData : [];
   const chartTypes = ["bar", "line", "area", "scatter"];
