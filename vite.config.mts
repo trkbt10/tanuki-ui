@@ -6,21 +6,25 @@ import dts from "vite-plugin-dts";
 import { generateShortClassName } from "./tools/build/css-modules";
 
 const entryRoot = path.resolve(__dirname, "src");
+const extendedEntrypoints = {
+  // Node Editor module (JS + CSS automatically included)
+  "extended/node-editor": path.resolve(entryRoot, "extended/node-editor/index.ts"),
+  // Panel module (JS + CSS automatically included)
+  "extended/panel": path.resolve(entryRoot, "extended/panel/index.ts"),
+  // Main library entry point
+  index: path.resolve(entryRoot, "index.tsx"),
+
+  // Layouts module (JS + CSS automatically included)
+  layouts: path.resolve(entryRoot, "layouts/index.tsx"),
+};
 const defaultConfig = defineConfig({
   build: {
     outDir: "dist/lib",
     cssCodeSplit: true,
     lib: {
       entry: {
-        // Main library entry point
-        index: path.resolve(entryRoot, "index.tsx"),
-
-        // Layouts module (JS + CSS automatically included)
-        layouts: path.resolve(entryRoot, "layouts/index.tsx"),
-
-        // Node Editor module (JS + CSS automatically included)
-        "extended/node-editor": path.resolve(entryRoot, "extended/node-editor/index.ts"),
-
+        // Extended modules
+        ...extendedEntrypoints,
         // Theme modules
         "themes/LiquidGlassFilter": path.resolve(entryRoot, "themes/LiquidGlassFilter.tsx"),
       },
@@ -41,15 +45,70 @@ const defaultConfig = defineConfig({
       external: ["react", "react-dom", "react/jsx-runtime"],
       output: {
         chunkFileNames: "vendor/[name]-[hash].js",
+        manualChunks: (id) => {
+          // 各エントリーポイント専用のファイルはそのエントリーポイントのチャンクに含める
+          for (const key of Object.keys(extendedEntrypoints)) {
+            if (id.includes(`src/${key}/`)) {
+              return key.replace("/", "-");
+            }
+          }
+
+          // layoutsディレクトリのファイル
+          if (id.includes("src/layouts/")) {
+            return "layouts";
+          }
+
+          // themesディレクトリのファイル
+          if (id.includes("src/themes/")) {
+            const match = id.match(/src\/themes\/([^\/]+)/);
+            if (match) {
+              return `themes-${match[1]}`;
+            }
+          }
+
+          // その他の共通ファイルは自動分割を許可
+          return undefined;
+        },
         assetFileNames: (assetInfo) => {
           if (assetInfo.names?.some((name) => name.endsWith(".css"))) {
-            const isLayoutDir = assetInfo.originalFileNames?.some((name) => name.startsWith("src/layouts/"));
-            if (isLayoutDir) {
+            // チャンク名ベースでCSSファイル名を決定
+            const chunkName = assetInfo.names?.[0]?.replace(/\.css$/, "");
+
+            // extended entry points
+            for (const key of Object.keys(extendedEntrypoints)) {
+              const chunkKey = key.replace("/", "-");
+              if (
+                chunkName?.includes(chunkKey) ||
+                assetInfo.originalFileNames?.some((name) => name.startsWith(`src/${key}/`))
+              ) {
+                return `${key}/style.css`;
+              }
+            }
+
+            // layouts
+            if (
+              chunkName?.includes("layouts") ||
+              assetInfo.originalFileNames?.some((name) => name.startsWith("src/layouts/"))
+            ) {
               return "layouts/style.css";
             }
-            if (assetInfo.originalFileNames?.some((name) => name.startsWith("src/extended/node-editor/"))) {
-              return "extended/node-editor/style.css";
+
+            // themes
+            if (
+              chunkName?.startsWith("themes-") ||
+              assetInfo.originalFileNames?.some((name) => name.startsWith("src/themes/"))
+            ) {
+              const themeName =
+                chunkName?.replace("themes-", "") ||
+                assetInfo.originalFileNames
+                  ?.find((name) => name.startsWith("src/themes/"))
+                  ?.replace("src/themes/", "")
+                  ?.replace(/\.(tsx|ts)$/, "");
+              if (themeName) {
+                return `themes/${themeName}/style.css`;
+              }
             }
+
             return "style.css";
           }
           return "assets/[name]-[hash].[ext]";
@@ -66,15 +125,13 @@ const defaultConfig = defineConfig({
       generateScopedName: (name, filename) => {
         const relativePath = path.relative(entryRoot, filename);
         // Normalize path separators for consistent naming across platforms
-        const normalizedPath = relativePath.replace(/\\/g, '/');
+        const normalizedPath = relativePath.replace(/\\/g, "/");
         // Remove file extension and "src/" prefix
-        const cleanPath = normalizedPath
-          .replace(/\.module\.(css|scss|sass|less)$/, '')
-          .replace(/^src\//, '');
-        
+        const cleanPath = normalizedPath.replace(/\.module\.(css|scss|sass|less)$/, "").replace(/^src\//, "");
+
         return generateShortClassName(name, cleanPath);
       },
-      localsConvention: 'camelCaseOnly',
+      localsConvention: "camelCaseOnly",
     },
   },
   plugins: [
