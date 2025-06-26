@@ -36,7 +36,6 @@ const MathNodeRendererBase = ({ node, isSelected, onUpdateNode }: NodeRenderProp
   // Use calculatedValue from node data
   const calculatedValue = node.data.calculatedValue;
   const operation = (node.data.operation as string) || "+";
-  
 
   return (
     <div
@@ -133,7 +132,7 @@ const DisplayNodeRendererBase = ({ node }: NodeRenderProps) => {
   if (isNumberDisplay) {
     displayValue = calculatedValue !== undefined ? calculatedValue : "N/A";
   } else {
-    displayValue = calculatedValue !== undefined ? calculatedValue : (node.data.text || "No data");
+    displayValue = calculatedValue !== undefined ? calculatedValue : node.data.text || "No data";
   }
 
   return (
@@ -438,8 +437,8 @@ const LogicNodeInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
           onChange={(e) => onUpdateNode({ data: { ...node.data, condition: e.target.value } })}
           style={{ width: "100%", marginTop: "4px" }}
         >
-          <option value="greater">Greater Than (>)</option>
-          <option value="less">Less Than (<)</option>
+          <option value="greater">Greater Than (＞)</option>
+          <option value="less">Less Than (＜)</option>
           <option value="equal">Equal To (=)</option>
           <option value="notEqual">Not Equal To (≠)</option>
           <option value="greaterEqual">Greater or Equal (≥)</option>
@@ -1132,21 +1131,21 @@ const NodeEditorTestPage: React.FC = () => {
   // Update node data with calculated values
   React.useEffect(() => {
     if (Object.keys(calculatedValues).length === 0) return;
-    
+
     const updatedData = isControlledMode ? { ...controlledData } : { ...uncontrolledData };
     let hasChanges = false;
-    
+
     Object.entries(calculatedValues).forEach(([nodeId, value]) => {
       const node = updatedData.nodes[nodeId];
       if (node && node.data.calculatedValue !== value) {
         updatedData.nodes[nodeId] = {
           ...node,
-          data: { ...node.data, calculatedValue: value }
+          data: { ...node.data, calculatedValue: value },
         };
         hasChanges = true;
       }
     });
-    
+
     if (hasChanges) {
       if (isControlledMode) {
         setControlledData(updatedData);
@@ -1157,17 +1156,23 @@ const NodeEditorTestPage: React.FC = () => {
   }, [calculatedValues, isControlledMode, controlledData, uncontrolledData]);
 
   // Handle data changes and trigger evaluation
-  const handleControlledDataChange = React.useCallback((newData: NodeEditorData) => {
-    setControlledData(newData);
-    triggerEvaluation();
-    setUpdateVersion(v => v + 1);
-  }, [triggerEvaluation]);
+  const handleControlledDataChange = React.useCallback(
+    (newData: NodeEditorData) => {
+      setControlledData(newData);
+      triggerEvaluation();
+      setUpdateVersion((v) => v + 1);
+    },
+    [triggerEvaluation]
+  );
 
-  const handleUncontrolledDataChange = React.useCallback((newData: NodeEditorData) => {
-    setUncontrolledData(newData);
-    triggerEvaluation();
-    setUpdateVersion(v => v + 1);
-  }, [triggerEvaluation]);
+  const handleUncontrolledDataChange = React.useCallback(
+    (newData: NodeEditorData) => {
+      setUncontrolledData(newData);
+      triggerEvaluation();
+      setUpdateVersion((v) => v + 1);
+    },
+    [triggerEvaluation]
+  );
 
   const handleLoadTestData = (dataKey: keyof typeof testDataSets) => {
     setSelectedTestData(dataKey);
@@ -1272,9 +1277,7 @@ const NodeEditorTestPage: React.FC = () => {
       <Section style={{ marginBottom: "24px" }}>
         <H2>🎛️ NodeEditor</H2>
 
-        <MathEvaluatorContext.Provider 
-          value={{ getNodeValue, triggerEvaluation }}
-        >
+        <MathEvaluatorContext.Provider value={{ getNodeValue, triggerEvaluation }}>
           <div
             style={{
               width: "100%",
