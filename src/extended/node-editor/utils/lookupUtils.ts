@@ -6,12 +6,18 @@ import type { Node, NodeId, Connection, ConnectionId, Port, PortId } from "../ty
 
 /**
  * Create a lookup map from port ID to node ID
+ * @param nodes - The nodes object
+ * @param getNodePorts - Optional function to get ports for a node. If not provided, will use node.ports directly
  */
-export function createPortToNodeMap(nodes: Record<NodeId, Node>): Map<PortId, NodeId> {
+export function createPortToNodeMap(
+  nodes: Record<NodeId, Node>,
+  getNodePorts?: (nodeId: NodeId) => Port[]
+): Map<PortId, NodeId> {
   const map = new Map<PortId, NodeId>();
 
   Object.entries(nodes).forEach(([nodeId, node]) => {
-    node.ports?.forEach((port) => {
+    const ports = getNodePorts ? getNodePorts(nodeId) : node.ports || [];
+    ports.forEach((port) => {
       map.set(port.id, nodeId);
     });
   });
