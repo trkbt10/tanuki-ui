@@ -314,10 +314,10 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
     );
 
     return (
-      <div>
-        <h4 style={{ margin: "0 0 16px", fontSize: "14px" }}>Node Properties</h4>
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        <h4 style={{ margin: 0, fontSize: "14px" }}>Node Properties</h4>
 
-        <div style={{ marginBottom: "12px" }}>
+        <div>
           <Label htmlFor={`node-${node.id}-title`} style={labelStyles}>
             Title:
           </Label>
@@ -331,7 +331,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         </div>
 
         {node.data.content !== undefined && (
-          <div style={{ marginBottom: "12px" }}>
+          <div>
             <Label htmlFor={`node-${node.id}-content`} style={labelStyles}>
               Content:
             </Label>
@@ -347,7 +347,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
 
         <AlignmentControls selectedNodes={selectedNodes} onAlign={handleAlignment} />
 
-        <div style={{ marginBottom: "12px" }}>
+        <div>
           <Label style={labelStyles}>Position & Size:</Label>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px" }}>
             <InspectorNumberInput
@@ -385,7 +385,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
           </div>
         </div>
 
-        <div style={{ marginBottom: "12px" }}>
+        <div>
           <Label style={labelStyles}>Type:</Label>
           <div
             style={{
@@ -400,29 +400,19 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         </div>
 
         {node.type === "group" && (
-          <>
-            <div style={{ marginBottom: "12px" }}>
-              <InspectorCheckbox checked={node.locked || false} onChange={handleLockedChange} label="Lock Layer" />
-            </div>
-            <div style={{ marginBottom: "12px" }}>
-              <InspectorCheckbox checked={node.visible !== false} onChange={handleVisibleChange} label="Visible" />
-            </div>
-          </>
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <InspectorCheckbox checked={node.locked || false} onChange={handleLockedChange} label="Lock Layer" />
+            <InspectorCheckbox checked={node.visible !== false} onChange={handleVisibleChange} label="Visible" />
+          </div>
         )}
 
-        <div style={{ marginTop: "16px", paddingTop: "16px", borderTop: "1px solid #eee" }}>
+        <div style={{ paddingTop: "16px", borderTop: "1px solid #eee" }}>
           <Button
             onClick={onDeleteNode}
             style={{
-              padding: "8px 16px",
-              backgroundColor: "#dc3545",
-              color: "white",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              fontSize: "13px",
               width: "100%",
             }}
+            variant="danger"
           >
             Delete Node
           </Button>
