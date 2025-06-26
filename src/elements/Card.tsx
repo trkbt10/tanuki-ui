@@ -7,13 +7,13 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
    * @default "elevated"
    */
   variant?: "elevated" | "outlined" | "filled";
-  
+
   /**
    * Whether the card is interactive/clickable
    * @default false
    */
   clickable?: boolean;
-  
+
   /**
    * Whether the card is disabled
    * @default false
@@ -22,7 +22,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 export const Card: React.FC<React.PropsWithChildren<CardProps>> = ({
-  variant = "elevated",
+  variant,
   clickable = false,
   disabled = false,
   className,
@@ -40,7 +40,7 @@ export const Card: React.FC<React.PropsWithChildren<CardProps>> = ({
       aria-disabled={clickable && disabled ? true : undefined}
       style={{
         ...inlineStyle,
-        ...(clickable && !disabled ? { cursor: "pointer" } : {})
+        ...(clickable && !disabled ? { cursor: "pointer" } : {}),
       }}
       {...props}
     />
