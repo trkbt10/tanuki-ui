@@ -33,8 +33,6 @@ export interface NodeEditorProps {
   onSave?: (data: NodeEditorData) => void | Promise<void>;
   onLoad?: () => NodeEditorData | Promise<NodeEditorData>;
   className?: string;
-  /** @deprecated Use rightSidebar prop instead */
-  showInspector?: boolean;
   /** Custom node definitions */
   nodeDefinitions?: NodeDefinition[];
   /** Whether to include default node definitions */
@@ -84,7 +82,6 @@ export const NodeEditor: React.FC<NodeEditorProps> = ({
   onSave,
   onLoad,
   className,
-  showInspector = true,
   nodeDefinitions,
   includeDefaultDefinitions = true,
   externalDataRefs,
@@ -119,7 +116,6 @@ export const NodeEditor: React.FC<NodeEditorProps> = ({
                       onSave={onSave}
                       onLoad={onLoad}
                       className={className}
-                      showInspector={showInspector}
                       overlayLayers={overlayLayers}
                       backgroundLayers={backgroundLayers}
                       uiOverlayLayers={uiOverlayLayers}
@@ -153,7 +149,6 @@ const NodeEditorContent: React.FC<{
   onSave?: (data: NodeEditorData) => void | Promise<void>;
   onLoad?: () => NodeEditorData | Promise<NodeEditorData>;
   className?: string;
-  showInspector?: boolean;
   overlayLayers?: React.ReactNode[];
   backgroundLayers?: React.ReactNode[];
   uiOverlayLayers?: React.ReactNode[];
@@ -175,7 +170,6 @@ const NodeEditorContent: React.FC<{
   onSave,
   onLoad,
   className,
-  showInspector,
   overlayLayers,
   backgroundLayers,
   uiOverlayLayers,
@@ -269,12 +263,16 @@ const NodeEditorContent: React.FC<{
   }, [autoSave, autoSaveInterval, handleSave, isSaving]);
 
   // Apply settings-based CSS custom properties
-  const editorStyles = React.useMemo(() => ({
-    "--editor-font-size": `${fontSize}px`,
-    "--editor-grid-size": `${gridSize}px`,
-    "--editor-grid-opacity": `${gridOpacity}`,
-    "--editor-canvas-background": canvasBackground,
-  } as React.CSSProperties), [fontSize, gridSize, gridOpacity, canvasBackground]);
+  const editorStyles = React.useMemo(
+    () =>
+      ({
+        "--editor-font-size": `${fontSize}px`,
+        "--editor-grid-size": `${gridSize}px`,
+        "--editor-grid-opacity": `${gridOpacity}`,
+        "--editor-canvas-background": canvasBackground,
+      } as React.CSSProperties),
+    [fontSize, gridSize, gridOpacity, canvasBackground]
+  );
 
   // Node creation handler for context menu
   const handleCreateNode = React.useCallback(
@@ -351,7 +349,7 @@ const NodeEditorContent: React.FC<{
 
   // Determine sidebar content
   const leftSidebarContent = leftSidebar;
-  const rightSidebarContent = rightSidebar || (showInspector && <InspectorPanel />);
+  const rightSidebarContent = rightSidebar === undefined ? <InspectorPanel /> : rightSidebar;
 
   return (
     <NodeEditorBase

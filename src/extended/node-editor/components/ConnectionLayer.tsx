@@ -19,63 +19,63 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({ className }) =
   const { state: nodeEditorState } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState } = useNodeCanvas();
-  
-  
 
   // Handle connection pointer events
-  const handleConnectionPointerDown = React.useCallback((e: React.PointerEvent, connectionId: string) => {
-    // Check if clicking near the middle of the connection for disconnect
-    const connection = nodeEditorState.connections[connectionId];
-    if (!connection) return;
+  const handleConnectionPointerDown = React.useCallback(
+    (e: React.PointerEvent, connectionId: string) => {
+      // Check if clicking near the middle of the connection for disconnect
+      const connection = nodeEditorState.connections[connectionId];
+      if (!connection) return;
 
-    const fromNode = nodeEditorState.nodes[connection.fromNodeId];
-    const toNode = nodeEditorState.nodes[connection.toNodeId];
-    const fromPort = fromNode?.ports?.find(p => p.id === connection.fromPortId);
-    const toPort = toNode?.ports?.find(p => p.id === connection.toPortId);
+      const fromNode = nodeEditorState.nodes[connection.fromNodeId];
+      const toNode = nodeEditorState.nodes[connection.toNodeId];
+      const fromPort = fromNode?.ports?.find((p) => p.id === connection.fromPortId);
+      const toPort = toNode?.ports?.find((p) => p.id === connection.toPortId);
 
-    if (!fromNode || !toNode || !fromPort || !toPort) return;
+      if (!fromNode || !toNode || !fromPort || !toPort) return;
 
-    // Calculate positions
-    const fromPos = getPortPosition(fromNode, fromPort);
-    const toPos = getPortPosition(toNode, toPort);
-    const midPoint = {
-      x: (fromPos.x + toPos.x) / 2,
-      y: (fromPos.y + toPos.y) / 2,
-    };
+      // Calculate positions
+      const fromPos = getPortPosition(fromNode, fromPort);
+      const toPos = getPortPosition(toNode, toPort);
+      const midPoint = {
+        x: (fromPos.x + toPos.x) / 2,
+        y: (fromPos.y + toPos.y) / 2,
+      };
 
-    // Get click position in canvas coordinates
-    const rect = e.currentTarget.closest('svg')?.getBoundingClientRect();
-    if (!rect) return;
+      // Get click position in canvas coordinates
+      const rect = e.currentTarget.closest("svg")?.getBoundingClientRect();
+      if (!rect) return;
 
-    const clickPos = {
-      x: (e.clientX - rect.left) / canvasState.viewport.scale - canvasState.viewport.offset.x,
-      y: (e.clientY - rect.top) / canvasState.viewport.scale - canvasState.viewport.offset.y,
-    };
+      const clickPos = {
+        x: (e.clientX - rect.left) / canvasState.viewport.scale - canvasState.viewport.offset.x,
+        y: (e.clientY - rect.top) / canvasState.viewport.scale - canvasState.viewport.offset.y,
+      };
 
-    // Calculate distance from midpoint
-    const distance = Math.sqrt(
-      Math.pow(clickPos.x - midPoint.x, 2) + 
-      Math.pow(clickPos.y - midPoint.y, 2)
-    );
+      // Calculate distance from midpoint
+      const distance = Math.sqrt(Math.pow(clickPos.x - midPoint.x, 2) + Math.pow(clickPos.y - midPoint.y, 2));
 
-    const connectionLength = Math.sqrt(
-      Math.pow(toPos.x - fromPos.x, 2) + 
-      Math.pow(toPos.y - fromPos.y, 2)
-    );
+      const connectionLength = Math.sqrt(Math.pow(toPos.x - fromPos.x, 2) + Math.pow(toPos.y - fromPos.y, 2));
 
-    // Select the connection
-    const isMultiSelect = e.shiftKey || e.metaKey || e.ctrlKey;
-    actionDispatch(actionActions.selectConnection(connectionId, isMultiSelect));
-  }, [nodeEditorState, actionDispatch, actionActions, canvasState.viewport]);
+      // Select the connection
+      const isMultiSelect = e.shiftKey || e.metaKey || e.ctrlKey;
+      actionDispatch(actionActions.selectConnection(connectionId, isMultiSelect));
+    },
+    [nodeEditorState, actionDispatch, actionActions, canvasState.viewport]
+  );
 
-  const handleConnectionPointerEnter = React.useCallback((e: React.PointerEvent, connectionId: string) => {
-    actionDispatch(actionActions.setHoveredConnection(connectionId));
-  }, [actionDispatch, actionActions]);
+  const handleConnectionPointerEnter = React.useCallback(
+    (e: React.PointerEvent, connectionId: string) => {
+      actionDispatch(actionActions.setHoveredConnection(connectionId));
+    },
+    [actionDispatch, actionActions]
+  );
 
-  const handleConnectionPointerLeave = React.useCallback((e: React.PointerEvent, connectionId: string) => {
-    actionDispatch(actionActions.setHoveredConnection(null));
-  }, [actionDispatch, actionActions]);
-
+  const handleConnectionPointerLeave = React.useCallback(
+    (e: React.PointerEvent, connectionId: string) => {
+      actionDispatch(actionActions.setHoveredConnection(null));
+    },
+    [actionDispatch, actionActions]
+  );
   // Render temporary connection during drag
   const renderDragConnection = () => {
     if (actionState.connectionDragState) {
@@ -84,13 +84,13 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({ className }) =
       if (!fromNode) return null;
 
       // Find the actual port data
-      const port = fromNode.ports?.find(p => p.id === fromPort.id);
+      const port = fromNode.ports?.find((p) => p.id === fromPort.id);
       if (!port) return null;
 
       const fromPos = getPortPosition(fromNode, port);
       const toPos = actionState.connectionDragState.toPosition;
 
-      const pathData = calculateBezierPath(fromPos, toPos, port.position, 'left');
+      const pathData = calculateBezierPath(fromPos, toPos, port.position, "left");
 
       return (
         <g className={styles.dragConnection}>
@@ -114,13 +114,13 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({ className }) =
       const fixedNode = nodeEditorState.nodes[disconnectState.fixedPort.nodeId];
       if (!fixedNode) return null;
 
-      const fixedPort = fixedNode.ports?.find(p => p.id === disconnectState.fixedPort.id);
+      const fixedPort = fixedNode.ports?.find((p) => p.id === disconnectState.fixedPort.id);
       if (!fixedPort) return null;
 
       const fixedPos = getPortPosition(fixedNode, fixedPort);
       const draggingPos = disconnectState.draggingPosition;
 
-      const pathData = calculateBezierPath(fixedPos, draggingPos, fixedPort.position, 'left');
+      const pathData = calculateBezierPath(fixedPos, draggingPos, fixedPort.position, "left");
 
       return (
         <g className={styles.dragConnection}>
@@ -147,18 +147,18 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({ className }) =
       width="100%"
       height="100%"
       style={{
-        position: 'absolute',
+        position: "absolute",
         top: 0,
         left: 0,
-        pointerEvents: 'none',
+        pointerEvents: "none",
       }}
     >
       {/* Render all connections */}
-      {Object.values(nodeEditorState.connections).map(connection => {
+      {Object.values(nodeEditorState.connections).map((connection) => {
         const fromNode = nodeEditorState.nodes[connection.fromNodeId];
         const toNode = nodeEditorState.nodes[connection.toNodeId];
-        const fromPort = fromNode?.ports?.find(p => p.id === connection.fromPortId);
-        const toPort = toNode?.ports?.find(p => p.id === connection.toPortId);
+        const fromPort = fromNode?.ports?.find((p) => p.id === connection.fromPortId);
+        const toPort = toNode?.ports?.find((p) => p.id === connection.toPortId);
 
         // Skip if nodes or ports are missing
         if (!fromNode || !toNode || !fromPort || !toPort) return null;
@@ -170,11 +170,11 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({ className }) =
         const getNodePreviewData = (node: EditorNode, nodeId: string) => {
           let previewPosition = null;
           let previewSize = null;
-          
+
           // Check for drag state
           if (actionState.dragState) {
             const { nodeIds, offset, affectedChildNodes } = actionState.dragState;
-            
+
             // Check if this node is directly being dragged
             if (nodeIds.includes(nodeId)) {
               previewPosition = {
@@ -183,10 +183,10 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({ className }) =
               };
             } else {
               // Check if this node is a child of a dragging group
-              const isChildOfDraggingGroup = Object.entries(affectedChildNodes).some(([groupId, childIds]) => 
+              const isChildOfDraggingGroup = Object.entries(affectedChildNodes).some(([groupId, childIds]) =>
                 childIds.includes(nodeId)
               );
-              
+
               if (isChildOfDraggingGroup) {
                 previewPosition = {
                   x: node.position.x + offset.x,
@@ -195,12 +195,12 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({ className }) =
               }
             }
           }
-          
+
           // Check for resize state
           if (actionState.resizeState && actionState.resizeState.nodeId === nodeId) {
             previewSize = actionState.resizeState.currentSize;
           }
-          
+
           return { previewPosition, previewSize };
         };
 

@@ -67,24 +67,28 @@ describe("NodeEditor", () => {
     expect(screen.getByText("Custom Toolbar")).toBeTruthy();
   });
 
-  test("should show inspector when showInspector is true", () => {
-    render(<NodeEditor initialData={mockInitialState} showInspector={true} />);
+  test("should show inspector by default", () => {
+    render(<NodeEditor initialData={mockInitialState} />);
 
     // Check if Properties tab exists (unique text that indicates inspector is present)
     const propertiesTab = screen.getByText("Properties");
     expect(propertiesTab).toBeTruthy();
     
-    // Check if Layers tab also exists (another unique identifier for inspector)
-    const layersTab = screen.getByText("Layers");
-    expect(layersTab).toBeTruthy();
+    // Check if Layers title exists (another unique identifier for inspector)
+    const layersTabs = screen.getAllByText("Layers");
+    expect(layersTabs.length).toBeGreaterThan(0);
   });
 
-  test("should not show inspector when showInspector is false", () => {
-    render(<NodeEditor initialData={mockInitialState} showInspector={false} />);
+  test("should hide inspector when rightSidebar is null", () => {
+    render(<NodeEditor initialData={mockInitialState} rightSidebar={null} />);
 
-    // Check if inspector panel doesn't exist
-    const inspector = screen.queryByText(/Inspector/i);
-    expect(inspector).toBeFalsy();
+    // Check if Properties tab doesn't exist
+    const propertiesTab = screen.queryByText("Properties");
+    expect(propertiesTab).toBeFalsy();
+    
+    // Check if Layers tab also doesn't exist
+    const layersTab = screen.queryByText("Layers");
+    expect(layersTab).toBeFalsy();
   });
 
   test("should handle zoom with wheel event", () => {

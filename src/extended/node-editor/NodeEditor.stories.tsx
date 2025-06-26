@@ -61,14 +61,12 @@ const initialStateWithConnections: Partial<NodeEditorData> = {
 export const Default: Story = {
   args: {
     initialData: initialStateWithConnections,
-    showInspector: true,
   },
 };
 
 export const WithConnections: Story = {
   args: {
     initialData: initialStateWithConnections,
-    showInspector: true,
     onDataChange: (data) => {
       console.log("Data changed:", data);
       // Make data available globally for debugging
@@ -81,14 +79,13 @@ export const WithConnections: Story = {
 
 export const Empty: Story = {
   args: {
-    showInspector: false,
+    rightSidebar: null,
   },
 };
 
 export const WithSaveLoad: Story = {
   args: {
     initialData: initialStateWithConnections,
-    showInspector: true,
     onSave: async (data) => {
       console.log("Saving data:", data);
       // Simulate API call
@@ -201,7 +198,6 @@ export const ComplexFlow: Story = {
         },
       },
     },
-    showInspector: true,
   },
 };
 

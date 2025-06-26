@@ -932,7 +932,8 @@
 }
 
 .interactiveDragHandle .nodeTitle {
-  padding-left: 20px; /* Make room for the drag handle icon */
+  padding-left: 20px;
+  /* Make room for the drag handle icon */
 }
 
 .nodeTitleInput {
