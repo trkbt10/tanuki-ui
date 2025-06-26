@@ -1,5 +1,5 @@
 import * as React from "react";
-import { NodeId, ConnectionId, PortId, Position, Size, Port, Node, Connection, NodeEditorData } from "../types/core";
+import { Connection, ConnectionId, Node, NodeEditorData, NodeId, Position } from "../types/core";
 
 import { useSettings } from "../hooks";
 import { SettingsManager } from "../settings/SettingsManager";
@@ -437,7 +437,6 @@ export interface NodeEditorProviderProps {
   onLoad?: () => NodeEditorData | Promise<NodeEditorData>;
   settingsManager?: SettingsManager;
 }
-import { useDepsChecker } from "../../../hooks/useDepsChecker";
 export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
   children,
   initialState,
@@ -447,18 +446,6 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
   onSave,
   settingsManager,
 }) => {
-  useDepsChecker(
-    {
-      children,
-      initialState,
-      controlledData,
-      onDataChange,
-      onLoad,
-      onSave,
-      settingsManager,
-    },
-    { componentName: "NodeEditorProvider" }
-  );
   // Deep merge initial state with defaults
   const initialData: NodeEditorData = React.useMemo(() => {
     return {
