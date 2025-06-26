@@ -8,11 +8,23 @@ import { useGroupManagement } from "../../hooks/useGroupManagement";
 import { useNodeResize } from "../../hooks/useNodeResize";
 import { useVisibleNodes } from "../../hooks/useVisibleNodes";
 import { usePointerInteraction } from "../../hooks/usePointerInteraction";
-import { usePortPositions } from "../../contexts/PortPositionContext";
+import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
+import { computeNodePortPositions } from "../../utils/computePortPositions";
+import { PORT_INTERACTION_THRESHOLD } from "../../constants/interaction";
 import styles from "../../NodeEditor.module.css";
 import type { Port } from "../../types/core";
 import { snapMultipleToGrid } from "../../utils/gridSnap";
 import { NodeView } from "./NodeView";
+import { 
+  getPortConnections, 
+  getNodesToDrag, 
+  createConnection, 
+  isValidReconnection,
+  collectInitialPositions,
+  calculateNewPositions,
+  handleGroupMovement,
+  getOtherPortInfo
+} from "../../utils/nodeLayerHelpers";
 
 export interface NodeLayerProps {
   className?: string;
@@ -23,10 +35,9 @@ export interface NodeLayerProps {
  * NodeLayer - Renders all nodes with optimized performance
  */
 export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEdit = true }) => {
-  const { state: nodeEditorState, dispatch: nodeEditorDispatch, actions: nodeEditorActions } = useNodeEditor();
+  const { state: nodeEditorState, dispatch: nodeEditorDispatch, actions: nodeEditorActions, getNodePorts } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState } = useNodeCanvas();
-  const { getPortPosition } = usePortPositions();
 
   // Helper to get node definition
   const getNodeDef = useNodeDefinitions();
@@ -104,7 +115,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
 
       // Get node definition to check if it's interactive
       const nodeDefinition = clickedNode ? getNodeDef.registry.get(clickedNode.type) : undefined;
-      const isInteractive = nodeDefinition?.interactive;
+      const isInteractive = nodeDefinition?.interactive || false;
 
       // For interactive nodes, check if dragging is allowed
       if (isInteractive && !isDragAllowed && !actionState.selectedNodeIds.includes(nodeId)) {
@@ -113,44 +124,19 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         return;
       }
 
-      // Determine nodes to drag
-      let nodesToDrag: string[];
+      // Determine nodes to drag using helper function
+      const nodesToDrag = getNodesToDrag(
+        nodeId,
+        isMultiSelect,
+        actionState.selectedNodeIds,
+        nodeEditorState.nodes,
+        isInteractive,
+        isDragAllowed
+      );
 
-      if (actionState.selectedNodeIds.includes(nodeId)) {
-        // Filter out locked nodes and child nodes of selected groups
-        nodesToDrag = actionState.selectedNodeIds.filter((id) => {
-          const node = nodeEditorState.nodes[id];
-          if (!node || node.locked) return false;
-
-          // Skip children if parent is selected
-          if (node.parentId && actionState.selectedNodeIds.includes(node.parentId)) {
-            return false;
-          }
-
-          return true;
-        });
-      } else {
+      // Handle selection if not already selected
+      if (!actionState.selectedNodeIds.includes(nodeId)) {
         actionDispatch(actionActions.selectNode(nodeId, isMultiSelect));
-
-        if (isMultiSelect) {
-          const allSelected = [...actionState.selectedNodeIds, nodeId];
-          nodesToDrag = allSelected.filter((id) => {
-            const node = nodeEditorState.nodes[id];
-            if (!node || node.locked) return false;
-
-            if (node.parentId && allSelected.includes(node.parentId)) {
-              return false;
-            }
-
-            return true;
-          });
-        } else {
-          // For single node, check if it's interactive and drag is not allowed
-          if (isInteractive && !isDragAllowed) {
-            return; // Don't start drag
-          }
-          nodesToDrag = [nodeId];
-        }
       }
 
       if (nodesToDrag.length === 0) return;
@@ -160,30 +146,20 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         y: e.clientY,
       };
 
-      // Collect initial positions
-      const initialPositions: Record<string, { x: number; y: number }> = {};
-      const affectedChildNodes: Record<string, string[]> = {};
-
-      nodesToDrag.forEach((id) => {
-        const node = nodeEditorState.nodes[id];
-        if (node) {
-          initialPositions[id] = { ...node.position };
-
-          if (node.type === "group") {
-            const children = groupManager.getGroupChildren(id);
-            affectedChildNodes[id] = children.map((child) => child.id);
-
-            children.forEach((child) => {
-              initialPositions[child.id] = { ...child.position };
-            });
-          }
-        }
-      });
+      // Collect initial positions using helper
+      const { initialPositions, affectedChildNodes } = collectInitialPositions(
+        nodesToDrag,
+        nodeEditorState.nodes,
+        groupManager.getGroupChildren
+      );
 
       actionDispatch(actionActions.startNodeDrag(nodesToDrag, startPosition, initialPositions, affectedChildNodes));
     },
     [actionDispatch, actionActions, actionState.selectedNodeIds, nodeEditorState.nodes, groupManager, getNodeDef]
   );
+
+  // Track drag start for disconnect threshold
+  const portDragStartRef = React.useRef<{ x: number; y: number; port: Port; hasConnection: boolean } | null>(null);
 
   // Port event handlers
   const handlePortPointerDown = React.useCallback(
@@ -193,56 +169,28 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       const node = nodeEditorState.nodes[port.nodeId];
       if (!node) return;
 
-      const portPositionData = getPortPosition(port.nodeId, port.id);
-      if (!portPositionData) return;
-      
-      const portPosition = portPositionData.connectionPoint;
+      // Calculate port position dynamically
+      const nodeWithPorts = {
+        ...node,
+        ports: getNodePorts(port.nodeId),
+      };
+      const positions = computeNodePortPositions(nodeWithPorts);
+      const portPositionData = positions.get(port.id);
+      const portPosition = portPositionData?.connectionPoint || { x: node.position.x, y: node.position.y };
 
       // Check if port is connected
-      const existingConnections = Object.values(nodeEditorState.connections).filter(
-        (conn) =>
-          (conn.fromPortId === port.id && conn.fromNodeId === port.nodeId) ||
-          (conn.toPortId === port.id && conn.toNodeId === port.nodeId)
-      );
+      const existingConnections = getPortConnections(port, nodeEditorState.connections);
 
-      if (existingConnections.length > 0) {
-        // Handle disconnect
-        const connection = existingConnections[0];
-        const isFromPort = connection.fromPortId === port.id && connection.fromNodeId === port.nodeId;
+      // Store drag start info
+      portDragStartRef.current = {
+        x: e.clientX,
+        y: e.clientY,
+        port,
+        hasConnection: existingConnections.length > 0,
+      };
 
-        const otherNodeId = isFromPort ? connection.toNodeId : connection.fromNodeId;
-        const otherPortId = isFromPort ? connection.toPortId : connection.fromPortId;
-        const otherNode = nodeEditorState.nodes[otherNodeId];
-        const otherPort = otherNode?.ports?.find((p) => p.id === otherPortId);
-
-        if (otherNode && otherPort) {
-          const fixedPort: Port = {
-            id: otherPort.id,
-            nodeId: otherNode.id,
-            type: otherPort.type,
-            label: otherPort.label,
-            position: otherPort.position,
-          };
-
-          actionDispatch(
-            actionActions.startConnectionDisconnect(
-              {
-                id: connection.id,
-                fromNodeId: connection.fromNodeId,
-                fromPortId: connection.fromPortId,
-                toNodeId: connection.toNodeId,
-                toPortId: connection.toPortId,
-              },
-              isFromPort ? "from" : "to",
-              fixedPort,
-              portPosition
-            )
-          );
-
-          nodeEditorDispatch(nodeEditorActions.deleteConnection(connection.id));
-        }
-      } else {
-        // Start new connection
+      // Handle new connection if not connected
+      if (existingConnections.length === 0) {
         const actionPort: Port = {
           id: port.id,
           nodeId: port.nodeId,
@@ -252,9 +200,85 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         };
         actionDispatch(actionActions.startConnectionDrag(actionPort));
         actionDispatch(actionActions.updateConnectionDrag(portPosition, null));
+        return;
       }
+
+      // Setup drag tracking for disconnect threshold
+      const handlePointerMove = (e: PointerEvent) => {
+        if (!portDragStartRef.current) return;
+
+        const dx = e.clientX - portDragStartRef.current.x;
+        const dy = e.clientY - portDragStartRef.current.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+
+        // Check if we've exceeded the disconnect threshold
+        if (distance > PORT_INTERACTION_THRESHOLD.DISCONNECT_THRESHOLD) {
+          // Remove listeners
+          document.removeEventListener("pointermove", handlePointerMove);
+          document.removeEventListener("pointerup", handlePointerUp);
+
+          // Start disconnect process
+          startDisconnect();
+        }
+      };
+
+      const handlePointerUp = () => {
+        // Clean up
+        portDragStartRef.current = null;
+        document.removeEventListener("pointermove", handlePointerMove);
+        document.removeEventListener("pointerup", handlePointerUp);
+      };
+
+      const startDisconnect = () => {
+        // Handle disconnect
+        const connection = existingConnections[0];
+        const portInfo = getOtherPortInfo(connection, port, nodeEditorState.nodes, getNodePorts);
+        
+        if (!portInfo) return;
+
+        const { otherNode, otherPort, isFromPort } = portInfo;
+        const fixedPort: Port = {
+          id: otherPort.id,
+          nodeId: otherNode.id,
+          type: otherPort.type,
+          label: otherPort.label,
+          position: otherPort.position,
+        };
+
+        actionDispatch(
+          actionActions.startConnectionDisconnect(
+            {
+              id: connection.id,
+              fromNodeId: connection.fromNodeId,
+              fromPortId: connection.fromPortId,
+              toNodeId: connection.toNodeId,
+              toPortId: connection.toPortId,
+            },
+            isFromPort ? "from" : "to",
+            fixedPort,
+            portPosition
+          )
+        );
+
+        nodeEditorDispatch(nodeEditorActions.deleteConnection(connection.id));
+
+        // Clear drag ref
+        portDragStartRef.current = null;
+      };
+
+      // Add listeners
+      document.addEventListener("pointermove", handlePointerMove);
+      document.addEventListener("pointerup", handlePointerUp);
     },
-    [nodeEditorState.connections, nodeEditorState.nodes, actionDispatch, actionActions, nodeEditorDispatch, nodeEditorActions]
+    [
+      nodeEditorState.connections,
+      nodeEditorState.nodes,
+      actionDispatch,
+      actionActions,
+      nodeEditorDispatch,
+      nodeEditorActions,
+      getNodePorts,
+    ]
   );
 
   const handlePortPointerUp = React.useCallback(
@@ -266,28 +290,11 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         const disconnectState = actionState.connectionDisconnectState;
         const fixedPort = disconnectState.fixedPort;
 
-        const isCompatible = fixedPort.type !== port.type;
-        const isSameNode = fixedPort.nodeId === port.nodeId;
-
-        if (isCompatible && !isSameNode) {
-          let newConnection;
-          if (fixedPort.type === "output") {
-            newConnection = {
-              fromNodeId: fixedPort.nodeId,
-              fromPortId: fixedPort.id,
-              toNodeId: port.nodeId,
-              toPortId: port.id,
-            };
-          } else {
-            newConnection = {
-              fromNodeId: port.nodeId,
-              fromPortId: port.id,
-              toNodeId: fixedPort.nodeId,
-              toPortId: fixedPort.id,
-            };
+        if (isValidReconnection(fixedPort, port)) {
+          const newConnection = createConnection(fixedPort, port);
+          if (newConnection) {
+            nodeEditorDispatch(nodeEditorActions.addConnection(newConnection));
           }
-
-          nodeEditorDispatch(nodeEditorActions.addConnection(newConnection));
         }
 
         actionDispatch(actionActions.endConnectionDisconnect());
@@ -295,36 +302,16 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       }
 
       // Handle new connection
-      if (actionState.connectionDragState) {
-        const fromPort = actionState.connectionDragState.fromPort;
-        const fromNodeId = fromPort.nodeId;
-        const toNodeId = port.nodeId;
+      if (!actionState.connectionDragState) return;
 
-        const isCompatible = fromPort.type !== port.type;
-
-        if (fromNodeId !== toNodeId && isCompatible) {
-          let connection;
-          if (fromPort.type === "output") {
-            connection = {
-              fromNodeId: fromNodeId,
-              fromPortId: fromPort.id,
-              toNodeId: toNodeId,
-              toPortId: port.id,
-            };
-          } else {
-            connection = {
-              fromNodeId: toNodeId,
-              fromPortId: port.id,
-              toNodeId: fromNodeId,
-              toPortId: fromPort.id,
-            };
-          }
-
-          nodeEditorDispatch(nodeEditorActions.addConnection(connection));
-        }
-
-        actionDispatch(actionActions.endConnectionDrag());
+      const fromPort = actionState.connectionDragState.fromPort;
+      const connection = createConnection(fromPort, port);
+      
+      if (connection) {
+        nodeEditorDispatch(nodeEditorActions.addConnection(connection));
       }
+
+      actionDispatch(actionActions.endConnectionDrag());
     },
     [
       actionState.connectionDragState,
@@ -370,17 +357,8 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       if (!actionState.dragState) return;
       const { nodeIds, initialPositions, offset } = actionState.dragState;
 
-      // Calculate new positions
-      const newPositions: Record<string, { x: number; y: number }> = {};
-      nodeIds.forEach((nodeId) => {
-        const initialPos = initialPositions[nodeId];
-        if (initialPos) {
-          newPositions[nodeId] = {
-            x: initialPos.x + offset.x,
-            y: initialPos.y + offset.y,
-          };
-        }
-      });
+      // Calculate new positions using helper
+      const newPositions = calculateNewPositions(nodeIds, initialPositions, offset);
 
       // Apply grid snapping if enabled
       const snappedPositions = canvasState.gridSettings.snapToGrid
@@ -388,38 +366,16 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         : newPositions;
 
       // Handle group movement
-      const groupsToMove = nodeIds.filter((nodeId) => {
-        const node = nodeEditorState.nodes[nodeId];
-        return node && node.type === "group";
-      });
+      const finalPositions = handleGroupMovement(
+        nodeIds,
+        nodeEditorState.nodes,
+        snappedPositions,
+        initialPositions,
+        groupManager.moveGroupWithChildren
+      );
 
-      if (groupsToMove.length > 0) {
-        groupsToMove.forEach((groupId) => {
-          const initialPos = initialPositions[groupId];
-          const finalPos = snappedPositions[groupId];
-          if (initialPos && finalPos) {
-            const delta = {
-              x: finalPos.x - initialPos.x,
-              y: finalPos.y - initialPos.y,
-            };
-            groupManager.moveGroupWithChildren(groupId, delta);
-          }
-        });
-
-        // Update non-group nodes
-        const nonGroupPositions: Record<string, { x: number; y: number }> = {};
-        nodeIds.forEach((nodeId) => {
-          const node = nodeEditorState.nodes[nodeId];
-          if (node && node.type !== "group" && snappedPositions[nodeId]) {
-            nonGroupPositions[nodeId] = snappedPositions[nodeId];
-          }
-        });
-
-        if (Object.keys(nonGroupPositions).length > 0) {
-          nodeEditorDispatch(nodeEditorActions.moveNodes(nonGroupPositions));
-        }
-      } else {
-        nodeEditorDispatch(nodeEditorActions.moveNodes(snappedPositions));
+      if (Object.keys(finalPositions).length > 0) {
+        nodeEditorDispatch(nodeEditorActions.moveNodes(finalPositions));
       }
 
       actionDispatch(actionActions.endNodeDrag());
