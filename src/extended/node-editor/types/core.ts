@@ -170,8 +170,10 @@ export interface NodeEditorPointerEvent extends PointerEvent {
 }
 
 // Utility type helpers
-export type DeepPartial<T> = T extends object ? {
-  [P in keyof T]?: DeepPartial<T[P]>;
-} : T;
+export type DeepPartial<T> = T extends object
+  ? {
+      [P in keyof T]?: DeepPartial<T[P]>;
+    }
+  : T;
 
 export type RequiredKeys<T, K extends keyof T> = T & Required<Pick<T, K>>;
