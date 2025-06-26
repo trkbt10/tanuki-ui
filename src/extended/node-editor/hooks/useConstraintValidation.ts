@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { Node, NodeId, Connection } from "../types/core";
+import type { Node, NodeId, Connection, Port } from "../types/core";
 import type { NodeEditorAction } from "../contexts/NodeEditorContext";
 import type { NodeDefinition, ConstraintViolation } from "../types/NodeDefinition";
 import { validateNodeConstraints, validateConnectionConstraints, hasBlockingViolations } from "../utils/constraintUtils";
@@ -35,7 +35,9 @@ export interface ConstraintValidationHook {
 /**
  * Hook for constraint validation
  */
-export const useConstraintValidation = (): ConstraintValidationHook => {
+export const useConstraintValidation = (
+  getNodePorts?: (nodeId: NodeId) => Port[]
+): ConstraintValidationHook => {
   const { registry } = useNodeDefinitions();
 
   const validateNodeOperation = React.useCallback(
@@ -187,12 +189,36 @@ export const useConstraintValidation = (): ConstraintValidationHook => {
         }
 
         case "ADD_CONNECTION": {
-          const fromNode = Object.values(currentState.nodes).find((node) =>
-            node.ports?.some((port) => port.id === action.payload.connection.fromPortId)
-          );
-          const toNode = Object.values(currentState.nodes).find((node) =>
-            node.ports?.some((port) => port.id === action.payload.connection.toPortId)
-          );
+          let fromNode: Node | undefined;
+          let toNode: Node | undefined;
+
+          if (getNodePorts) {
+            // Use port resolver if available
+            fromNode = currentState.nodes[action.payload.connection.fromNodeId];
+            toNode = currentState.nodes[action.payload.connection.toNodeId];
+            
+            // Verify ports exist
+            if (fromNode) {
+              const fromPorts = getNodePorts(fromNode.id);
+              if (!fromPorts.some(port => port.id === action.payload.connection.fromPortId)) {
+                fromNode = undefined;
+              }
+            }
+            if (toNode) {
+              const toPorts = getNodePorts(toNode.id);
+              if (!toPorts.some(port => port.id === action.payload.connection.toPortId)) {
+                toNode = undefined;
+              }
+            }
+          } else {
+            // Fall back to legacy method
+            fromNode = Object.values(currentState.nodes).find((node) =>
+              node.ports?.some((port) => port.id === action.payload.connection.fromPortId)
+            );
+            toNode = Object.values(currentState.nodes).find((node) =>
+              node.ports?.some((port) => port.id === action.payload.connection.toPortId)
+            );
+          }
 
           if (!fromNode || !toNode) {
             return {
@@ -217,7 +243,7 @@ export const useConstraintValidation = (): ConstraintValidationHook => {
           return { allowed: true, violations: [] };
       }
     },
-    [validateNodeOperation, validateConnectionOperation]
+    [validateNodeOperation, validateConnectionOperation, getNodePorts]
   );
 
   return {
