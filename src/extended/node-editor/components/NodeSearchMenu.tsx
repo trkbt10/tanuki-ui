@@ -3,6 +3,7 @@ import type { NodeDefinition } from "../types/NodeDefinition";
 import type { Position } from "../types/core";
 import { classNames } from "../../../utilities/classNames";
 import { calculateContextMenuPosition, getViewportInfo } from "../../../dialogs/utilities/positionUtils";
+import { getNodeIcon } from "../utils/nodeUtils";
 import styles from "./NodeSearchMenu.module.css";
 import editorStyles from "../NodeEditor.module.css";
 
@@ -254,7 +255,7 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
                         onMouseEnter={() => setSelectedIndex(globalIndex)}
                       >
                         <div className={editorStyles.nodeIcon}>
-                          {getNodeIcon(node.type)}
+                          {getNodeIcon(node.type, nodeDefinitions)}
                         </div>
                         <div className={editorStyles.nodeInfo}>
                           <div className={editorStyles.nodeName}>{node.displayName}</div>
@@ -286,24 +287,5 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
   );
 };
 
-// Helper function to get icon for node types
-const getNodeIcon = (nodeType: string): string => {
-  switch (nodeType) {
-    case "code-editor":
-      return "💻";
-    case "chart":
-      return "📊";
-    case "form-builder":
-      return "📝";
-    case "task":
-      return "✅";
-    case "group":
-      return "📁";
-    case "standard":
-      return "🔗";
-    default:
-      return "⚪";
-  }
-};
 
 NodeSearchMenu.displayName = "NodeSearchMenu";

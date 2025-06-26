@@ -1,7 +1,9 @@
 import * as React from "react";
 import { useNodeEditor } from "../contexts/NodeEditorContext";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
+import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
 import { Node, NodeId } from "../types/core";
+import { getNodeIcon } from "../utils/nodeUtils";
 import styles from "./NodeTreeList.module.css";
 
 interface DragState {
@@ -35,6 +37,7 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
   onNodeDrop,
   onDragStateChange
 }) => {
+  const nodeDefinitions = useNodeDefinitionList();
   const hasChildren = node.type === "group" && childNodes.length > 0;
   const isExpanded = node.type === "group" && node.expanded !== false;
   const isGroup = node.type === "group";
@@ -62,20 +65,6 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
     }
   };
   
-  const getNodeIcon = () => {
-    switch (node.type) {
-      case "group":
-        return "📁";
-      case "input":
-        return "📥";
-      case "output":
-        return "📤";
-      case "process":
-        return "⚙️";
-      default:
-        return "📦";
-    }
-  };
   
   const handleDragStart = (e: React.DragEvent) => {
     e.dataTransfer.effectAllowed = "move";
@@ -181,7 +170,7 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
           </button>
         )}
         
-        <span className={styles.nodeIcon}>{getNodeIcon()}</span>
+        <span className={styles.nodeIcon}>{getNodeIcon(node.type, nodeDefinitions)}</span>
         
         <span className={styles.nodeName}>
           {node.data?.title || node.type}
