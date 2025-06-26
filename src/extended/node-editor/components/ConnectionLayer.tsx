@@ -4,7 +4,7 @@ import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import { ConnectionView } from "./ConnectionView";
 import { calculateBezierPath, getPortPosition } from "../utils/connectionUtils";
-import type { Node as EditorNode } from "../types/core";
+import type { Connection, Node as EditorNode } from "../types/core";
 import { classNames } from "../../../utilities/classNames";
 import styles from "../NodeEditor.module.css";
 
@@ -17,16 +17,94 @@ export interface ConnectionLayerProps {
  */
 export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({ className }) => {
   const { state: nodeEditorState } = useNodeEditor();
+
+  return (
+    <svg className={classNames(styles.connectionLayer, className)}>
+      {/* Render all connections */}
+      {Object.values(nodeEditorState.connections).map((connection) => {
+        return <ConnectionRenderer key={connection.id} connection={connection} />;
+      })}
+
+      {/* Render drag connection */}
+      <DragConnection />
+    </svg>
+  );
+};
+
+ConnectionLayer.displayName = "ConnectionLayer";
+const DragConnection = React.memo(() => {
+  const { state: actionState } = useEditorActionState();
+  const { state: nodeEditorState } = useNodeEditor();
+  if (actionState.connectionDragState) {
+    const fromPort = actionState.connectionDragState.fromPort;
+    const fromNode = nodeEditorState.nodes[fromPort.nodeId];
+    if (!fromNode) return null;
+
+    // Find the actual port data
+    const port = fromNode.ports?.find((p) => p.id === fromPort.id);
+    if (!port) return null;
+
+    const fromPos = getPortPosition(fromNode, port);
+    const toPos = actionState.connectionDragState.toPosition;
+
+    const pathData = calculateBezierPath(fromPos, toPos, port.position, "left");
+
+    return (
+      <g className={styles.dragConnection}>
+        <path
+          d={pathData}
+          fill="none"
+          stroke="var(--accentColor, #0066cc)"
+          strokeWidth={2}
+          strokeDasharray="5,5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ pointerEvents: "none" }}
+        />
+      </g>
+    );
+  }
+
+  // Render disconnect drag connection
+  if (actionState.connectionDisconnectState) {
+    const disconnectState = actionState.connectionDisconnectState;
+    const fixedNode = nodeEditorState.nodes[disconnectState.fixedPort.nodeId];
+    if (!fixedNode) return null;
+
+    const fixedPort = fixedNode.ports?.find((p) => p.id === disconnectState.fixedPort.id);
+    if (!fixedPort) return null;
+
+    const fixedPos = getPortPosition(fixedNode, fixedPort);
+    const draggingPos = disconnectState.draggingPosition;
+
+    const pathData = calculateBezierPath(fixedPos, draggingPos, fixedPort.position, "left");
+
+    return (
+      <g className={styles.dragConnection}>
+        <path
+          d={pathData}
+          fill="none"
+          stroke="var(--cautionColor, #ff3b30)"
+          strokeWidth={3}
+          strokeDasharray="8,4"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{ pointerEvents: "none" }}
+        />
+      </g>
+    );
+  }
+
+  return null;
+});
+const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
+  const { state: nodeEditorState } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState } = useNodeCanvas();
 
   // Handle connection pointer events
   const handleConnectionPointerDown = React.useCallback(
     (e: React.PointerEvent, connectionId: string) => {
-      // Check if clicking near the middle of the connection for disconnect
-      const connection = nodeEditorState.connections[connectionId];
-      if (!connection) return;
-
       const fromNode = nodeEditorState.nodes[connection.fromNodeId];
       const toNode = nodeEditorState.nodes[connection.toNodeId];
       const fromPort = fromNode?.ports?.find((p) => p.id === connection.fromPortId);
@@ -60,7 +138,7 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({ className }) =
       const isMultiSelect = e.shiftKey || e.metaKey || e.ctrlKey;
       actionDispatch(actionActions.selectConnection(connectionId, isMultiSelect));
     },
-    [nodeEditorState, actionDispatch, actionActions, canvasState.viewport]
+    [connection, nodeEditorState, actionDispatch, actionActions, canvasState.viewport]
   );
 
   const handleConnectionPointerEnter = React.useCallback(
@@ -76,152 +154,74 @@ export const ConnectionLayer: React.FC<ConnectionLayerProps> = ({ className }) =
     },
     [actionDispatch, actionActions]
   );
-  // Render temporary connection during drag
-  const renderDragConnection = () => {
-    if (actionState.connectionDragState) {
-      const fromPort = actionState.connectionDragState.fromPort;
-      const fromNode = nodeEditorState.nodes[fromPort.nodeId];
-      if (!fromNode) return null;
+  const fromNode = nodeEditorState.nodes[connection.fromNodeId];
+  const toNode = nodeEditorState.nodes[connection.toNodeId];
 
-      // Find the actual port data
-      const port = fromNode.ports?.find((p) => p.id === fromPort.id);
-      if (!port) return null;
+  const fromPort = fromNode?.ports?.find((p) => p.id === connection.fromPortId);
+  const toPort = toNode?.ports?.find((p) => p.id === connection.toPortId);
+  // Skip if nodes or ports are missing
+  if (!fromNode || !toNode || !fromPort || !toPort) return null;
 
-      const fromPos = getPortPosition(fromNode, port);
-      const toPos = actionState.connectionDragState.toPosition;
+  // Skip if nodes are not visible
+  if (fromNode.visible === false || toNode.visible === false) return null;
 
-      const pathData = calculateBezierPath(fromPos, toPos, port.position, "left");
+  // Get preview position and size for nodes during drag or resize
+  const getNodePreviewData = (node: EditorNode, nodeId: string) => {
+    let previewPosition = null;
+    let previewSize = null;
 
-      return (
-        <g className={styles.dragConnection}>
-          <path
-            d={pathData}
-            fill="none"
-            stroke="var(--accentColor, #0066cc)"
-            strokeWidth={2}
-            strokeDasharray="5,5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{ pointerEvents: "none" }}
-          />
-        </g>
-      );
+    // Check for drag state
+    if (actionState.dragState) {
+      const { nodeIds, offset, affectedChildNodes } = actionState.dragState;
+
+      // Check if this node is directly being dragged
+      if (nodeIds.includes(nodeId)) {
+        previewPosition = {
+          x: node.position.x + offset.x,
+          y: node.position.y + offset.y,
+        };
+      } else {
+        // Check if this node is a child of a dragging group
+        const isChildOfDraggingGroup = Object.entries(affectedChildNodes).some(([groupId, childIds]) =>
+          childIds.includes(nodeId)
+        );
+
+        if (isChildOfDraggingGroup) {
+          previewPosition = {
+            x: node.position.x + offset.x,
+            y: node.position.y + offset.y,
+          };
+        }
+      }
     }
 
-    // Render disconnect drag connection
-    if (actionState.connectionDisconnectState) {
-      const disconnectState = actionState.connectionDisconnectState;
-      const fixedNode = nodeEditorState.nodes[disconnectState.fixedPort.nodeId];
-      if (!fixedNode) return null;
-
-      const fixedPort = fixedNode.ports?.find((p) => p.id === disconnectState.fixedPort.id);
-      if (!fixedPort) return null;
-
-      const fixedPos = getPortPosition(fixedNode, fixedPort);
-      const draggingPos = disconnectState.draggingPosition;
-
-      const pathData = calculateBezierPath(fixedPos, draggingPos, fixedPort.position, "left");
-
-      return (
-        <g className={styles.dragConnection}>
-          <path
-            d={pathData}
-            fill="none"
-            stroke="var(--cautionColor, #ff3b30)"
-            strokeWidth={3}
-            strokeDasharray="8,4"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{ pointerEvents: "none" }}
-          />
-        </g>
-      );
+    // Check for resize state
+    if (actionState.resizeState && actionState.resizeState.nodeId === nodeId) {
+      previewSize = actionState.resizeState.currentSize;
     }
 
-    return null;
+    return { previewPosition, previewSize };
   };
 
+  const fromNodeData = getNodePreviewData(fromNode, connection.fromNodeId);
+  const toNodeData = getNodePreviewData(toNode, connection.toNodeId);
   return (
-    <svg className={classNames(styles.connectionLayer, className)}>
-      {/* Render all connections */}
-      {Object.values(nodeEditorState.connections).map((connection) => {
-        const fromNode = nodeEditorState.nodes[connection.fromNodeId];
-        const toNode = nodeEditorState.nodes[connection.toNodeId];
-        const fromPort = fromNode?.ports?.find((p) => p.id === connection.fromPortId);
-        const toPort = toNode?.ports?.find((p) => p.id === connection.toPortId);
-
-        // Skip if nodes or ports are missing
-        if (!fromNode || !toNode || !fromPort || !toPort) return null;
-
-        // Skip if nodes are not visible
-        if (fromNode.visible === false || toNode.visible === false) return null;
-
-        // Get preview position and size for nodes during drag or resize
-        const getNodePreviewData = (node: EditorNode, nodeId: string) => {
-          let previewPosition = null;
-          let previewSize = null;
-
-          // Check for drag state
-          if (actionState.dragState) {
-            const { nodeIds, offset, affectedChildNodes } = actionState.dragState;
-
-            // Check if this node is directly being dragged
-            if (nodeIds.includes(nodeId)) {
-              previewPosition = {
-                x: node.position.x + offset.x,
-                y: node.position.y + offset.y,
-              };
-            } else {
-              // Check if this node is a child of a dragging group
-              const isChildOfDraggingGroup = Object.entries(affectedChildNodes).some(([groupId, childIds]) =>
-                childIds.includes(nodeId)
-              );
-
-              if (isChildOfDraggingGroup) {
-                previewPosition = {
-                  x: node.position.x + offset.x,
-                  y: node.position.y + offset.y,
-                };
-              }
-            }
-          }
-
-          // Check for resize state
-          if (actionState.resizeState && actionState.resizeState.nodeId === nodeId) {
-            previewSize = actionState.resizeState.currentSize;
-          }
-
-          return { previewPosition, previewSize };
-        };
-
-        const fromNodeData = getNodePreviewData(fromNode, connection.fromNodeId);
-        const toNodeData = getNodePreviewData(toNode, connection.toNodeId);
-
-        return (
-          <ConnectionView
-            key={connection.id}
-            connection={connection}
-            fromNode={fromNode}
-            toNode={toNode}
-            fromPort={fromPort}
-            toPort={toPort}
-            fromNodePosition={fromNodeData.previewPosition || undefined}
-            toNodePosition={toNodeData.previewPosition || undefined}
-            fromNodeSize={fromNodeData.previewSize || undefined}
-            toNodeSize={toNodeData.previewSize || undefined}
-            isSelected={actionState.selectedConnectionIds.includes(connection.id)}
-            isHovered={actionState.hoveredConnectionId === connection.id}
-            onPointerDown={handleConnectionPointerDown}
-            onPointerEnter={handleConnectionPointerEnter}
-            onPointerLeave={handleConnectionPointerLeave}
-          />
-        );
-      })}
-
-      {/* Render drag connection */}
-      {renderDragConnection()}
-    </svg>
+    <ConnectionView
+      key={connection.id}
+      connection={connection}
+      fromNode={fromNode}
+      toNode={toNode}
+      fromPort={fromPort}
+      toPort={toPort}
+      fromNodePosition={fromNodeData.previewPosition || undefined}
+      toNodePosition={toNodeData.previewPosition || undefined}
+      fromNodeSize={fromNodeData.previewSize || undefined}
+      toNodeSize={toNodeData.previewSize || undefined}
+      isSelected={actionState.selectedConnectionIds.includes(connection.id)}
+      isHovered={actionState.hoveredConnectionId === connection.id}
+      onPointerDown={handleConnectionPointerDown}
+      onPointerEnter={handleConnectionPointerEnter}
+      onPointerLeave={handleConnectionPointerLeave}
+    />
   );
 };
-
-ConnectionLayer.displayName = "ConnectionLayer";

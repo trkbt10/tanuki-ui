@@ -47,43 +47,32 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
 }) => {
   // Calculate port positions (use override positions for drag preview)
   const fromPosition = React.useMemo(() => {
-    const nodeForCalc = fromNodePosition ? {
-      ...fromNode,
-      position: fromNodePosition,
-      size: fromNodeSize || fromNode.size
-    } : fromNode;
+    const nodeForCalc = fromNodePosition
+      ? {
+          ...fromNode,
+          position: fromNodePosition,
+          size: fromNodeSize || fromNode.size,
+        }
+      : fromNode;
     return getPortPosition(nodeForCalc, fromPort);
-  }, [
-    fromNode, 
-    fromPort, 
-    fromNodePosition?.x, 
-    fromNodePosition?.y, 
-    fromNodeSize?.width, 
-    fromNodeSize?.height
-  ]);
-  
+  }, [fromNode, fromPort, fromNodePosition?.x, fromNodePosition?.y, fromNodeSize?.width, fromNodeSize?.height]);
+
   const toPosition = React.useMemo(() => {
-    const nodeForCalc = toNodePosition ? {
-      ...toNode,
-      position: toNodePosition,
-      size: toNodeSize || toNode.size
-    } : toNode;
+    const nodeForCalc = toNodePosition
+      ? {
+          ...toNode,
+          position: toNodePosition,
+          size: toNodeSize || toNode.size,
+        }
+      : toNode;
     return getPortPosition(nodeForCalc, toPort);
-  }, [
-    toNode, 
-    toPort, 
-    toNodePosition?.x, 
-    toNodePosition?.y, 
-    toNodeSize?.width, 
-    toNodeSize?.height
-  ]);
+  }, [toNode, toPort, toNodePosition?.x, toNodePosition?.y, toNodeSize?.width, toNodeSize?.height]);
 
   // Calculate bezier path (recalculate when positions change)
   const pathData = React.useMemo(
     () => calculateBezierPath(fromPosition, toPosition, fromPort.position, toPort.position),
     [fromPosition.x, fromPosition.y, toPosition.x, toPosition.y, fromPort.position, toPort.position]
   );
-
   // Calculate color based on state
   const strokeColor = React.useMemo(() => {
     if (isDragging && dragProgress > 0) {
@@ -131,7 +120,7 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
       />
-      
+
       {/* Visible connection line */}
       <path
         d={pathData}
@@ -145,7 +134,7 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
           pointerEvents: "none",
         }}
       />
-      
+
       {/* Arrow marker at the end */}
       <defs>
         <marker
@@ -157,14 +146,10 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
           markerHeight="6"
           orient="auto"
         >
-          <path
-            d="M 0 0 L 10 5 L 0 10 z"
-            fill={strokeColor}
-            style={{ transition: "fill 0.2s" }}
-          />
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={strokeColor} style={{ transition: "fill 0.2s" }} />
         </marker>
       </defs>
-      
+
       {/* Apply arrow marker to the visible path */}
       <path
         d={pathData}
@@ -219,10 +204,7 @@ const areEqual = (prevProps: ConnectionViewProps, nextProps: ConnectionViewProps
   }
 
   // Check port position changes
-  if (
-    prevProps.fromPort.position !== nextProps.fromPort.position ||
-    prevProps.toPort.position !== nextProps.toPort.position
-  ) {
+  if (prevProps.fromPort.position !== nextProps.fromPort.position || prevProps.toPort.position !== nextProps.toPort.position) {
     return false;
   }
 

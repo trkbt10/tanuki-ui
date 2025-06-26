@@ -91,7 +91,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
       x: node.position.x,
       y: node.position.y,
     }),
-    [node.position.x, node.position.y],
+    [node.position.x, node.position.y]
   );
 
   // Apply drag transform via CSS for performance
@@ -109,7 +109,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
       // Check if this is a child being dragged
       const { affectedChildNodes, offset } = actionState.dragState;
       const isChildOfDraggingGroup = Object.entries(affectedChildNodes).some(([groupId, childIds]) =>
-        childIds.includes(node.id),
+        childIds.includes(node.id)
       );
 
       if (isChildOfDraggingGroup) {
@@ -163,14 +163,14 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
         startEditing(node.id, "title", currentTitle);
       }
     },
-    [node.id, node.data.title, node.locked, startEditing],
+    [node.id, node.data.title, node.locked, startEditing]
   );
 
   const handleEditingChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       updateValue(e.target.value);
     },
-    [updateValue],
+    [updateValue]
   );
 
   const handleEditingKeyDown = React.useCallback(
@@ -184,7 +184,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
               ...node.data,
               title: editingState.currentValue,
             },
-          }),
+          })
         );
         confirmEdit();
       } else if (e.key === "Escape") {
@@ -193,7 +193,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
         cancelEdit();
       }
     },
-    [editingState.currentValue, node.id, node.data, nodeEditorDispatch, nodeEditorActions, confirmEdit, cancelEdit],
+    [editingState.currentValue, node.id, node.data, nodeEditorDispatch, nodeEditorActions, confirmEdit, cancelEdit]
   );
 
   const handleEditingBlur = React.useCallback(() => {
@@ -203,7 +203,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
           ...node.data,
           title: editingState.currentValue,
         },
-      }),
+      })
     );
     confirmEdit();
   }, [editingState.currentValue, node.id, node.data, nodeEditorDispatch, nodeEditorActions, confirmEdit]);
@@ -212,7 +212,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
     (updates: Partial<Node>) => {
       nodeEditorDispatch(nodeEditorActions.updateNode(node.id, updates));
     },
-    [node.id, nodeEditorDispatch, nodeEditorActions],
+    [node.id, nodeEditorDispatch, nodeEditorActions]
   );
 
   const handleResizeStart = React.useCallback(
@@ -229,7 +229,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
 
       nodeResize.startResize(node.id, handle, { x: e.clientX, y: e.clientY }, currentSize);
     },
-    [node.id, node.size, node.locked, nodeResize],
+    [node.id, node.size, node.locked, nodeResize]
   );
 
   // Check if we should use custom renderer
@@ -248,7 +248,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
       onStartEdit: () => startEditing(node.id, "title", node.data.title || ""),
       onUpdateNode: handleUpdateNode,
     }),
-    [node, isSelected, isDragging, externalDataState, startEditing, handleUpdateNode, isEditing],
+    [node, isSelected, isDragging, externalDataState, startEditing, handleUpdateNode, isEditing]
   );
 
   // Calculate child dragging state
@@ -263,12 +263,12 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
     (e: React.PointerEvent) => {
       // Check if this is an interactive node from the definition
       const isInteractive = nodeDefinition?.interactive;
-      
+
       // For interactive nodes, check if we're clicking on the drag handle area
       if (isInteractive && !isSelected) {
         const target = e.target as HTMLElement;
         const isDragHandle = target.closest('[data-drag-handle="true"]');
-        
+
         // Only allow dragging from drag handle for interactive nodes when not multi-selected
         onPointerDown(e, node.id, !!isDragHandle);
       } else {
@@ -290,7 +290,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
         (isDragging || isChildDragging) && styles.dragging,
         isResizing && styles.resizing,
         node.locked && styles.locked,
-        visualStyleClass || undefined,
+        visualStyleClass || undefined
       )}
       style={{
         width: size.width,
@@ -305,7 +305,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
         <div className={styles.customNodeContent}>{nodeDefinition.renderNode(customRenderProps)}</div>
       ) : (
         <>
-          <div 
+          <div
             className={classNames(
               styles.nodeHeader,
               nodeDefinition?.interactive && !isSelected && styles.interactiveDragHandle
@@ -348,16 +348,13 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
       {node.ports &&
         node.ports.length > 0 &&
         (() => {
-          const portsByPosition = node.ports.reduce(
-            (acc, port) => {
-              if (!acc[port.position]) {
-                acc[port.position] = [];
-              }
-              acc[port.position].push(port);
-              return acc;
-            },
-            {} as Record<string, typeof node.ports>,
-          );
+          const portsByPosition = node.ports.reduce((acc, port) => {
+            if (!acc[port.position]) {
+              acc[port.position] = [];
+            }
+            acc[port.position].push(port);
+            return acc;
+          }, {} as Record<string, typeof node.ports>);
 
           return (
             <div className={styles.nodePorts}>

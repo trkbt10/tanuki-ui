@@ -84,7 +84,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
 
       actionDispatch(actionActions.showContextMenu(position, nodeId));
     },
-    [actionDispatch, actionActions],
+    [actionDispatch, actionActions]
   );
 
   const handleNodePointerDown = React.useCallback(
@@ -181,7 +181,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
 
       actionDispatch(actionActions.startNodeDrag(nodesToDrag, startPosition, initialPositions, affectedChildNodes));
     },
-    [actionDispatch, actionActions, actionState.selectedNodeIds, nodeEditorState.nodes, groupManager, getNodeDef],
+    [actionDispatch, actionActions, actionState.selectedNodeIds, nodeEditorState.nodes, groupManager, getNodeDef]
   );
 
   // Port event handlers
@@ -198,7 +198,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       const existingConnections = Object.values(nodeEditorState.connections).filter(
         (conn) =>
           (conn.fromPortId === port.id && conn.fromNodeId === port.nodeId) ||
-          (conn.toPortId === port.id && conn.toNodeId === port.nodeId),
+          (conn.toPortId === port.id && conn.toNodeId === port.nodeId)
       );
 
       if (existingConnections.length > 0) {
@@ -231,8 +231,8 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
               },
               isFromPort ? "from" : "to",
               fixedPort,
-              portPosition,
-            ),
+              portPosition
+            )
           );
 
           nodeEditorDispatch(nodeEditorActions.deleteConnection(connection.id));
@@ -250,7 +250,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         actionDispatch(actionActions.updateConnectionDrag(portPosition, null));
       }
     },
-    [nodeEditorState.connections, nodeEditorState.nodes, actionDispatch, actionActions, nodeEditorDispatch, nodeEditorActions],
+    [nodeEditorState.connections, nodeEditorState.nodes, actionDispatch, actionActions, nodeEditorDispatch, nodeEditorActions]
   );
 
   const handlePortPointerUp = React.useCallback(
@@ -329,7 +329,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       actionActions,
       nodeEditorDispatch,
       nodeEditorActions,
-    ],
+    ]
   );
 
   const handlePortPointerEnter = React.useCallback(
@@ -343,7 +343,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       };
       actionDispatch(actionActions.setHoveredPort(actionPort));
     },
-    [actionDispatch, actionActions],
+    [actionDispatch, actionActions]
   );
 
   const handlePortPointerLeave = React.useCallback(() => {
