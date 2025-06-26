@@ -33,6 +33,7 @@ export interface EditorActionState {
   connectionDisconnectState: ConnectionDisconnectState | null;
   hoveredPort: BasePort | null;
   connectedPorts: Set<PortId>;
+  connectablePortIds: Set<PortId>;
   contextMenu: ContextMenuState;
 }
 
@@ -61,6 +62,7 @@ export type EditorActionStateAction =
   | { type: "END_CONNECTION_DISCONNECT" }
   | { type: "SET_HOVERED_PORT"; payload: { port: BasePort | null } }
   | { type: "UPDATE_CONNECTED_PORTS"; payload: { connectedPorts: Set<PortId> } }
+  | { type: "UPDATE_CONNECTABLE_PORTS"; payload: { connectablePortIds: Set<PortId> } }
   | { type: "START_NODE_RESIZE"; payload: { nodeId: NodeId; startPosition: Position; startSize: Size; handle: ResizeHandle } }
   | { type: "UPDATE_NODE_RESIZE"; payload: { currentSize: Size } }
   | { type: "END_NODE_RESIZE" }
@@ -249,6 +251,12 @@ export const editorActionStateReducer = (
         connectedPorts: action.payload.connectedPorts,
       };
 
+    case "UPDATE_CONNECTABLE_PORTS":
+      return {
+        ...state,
+        connectablePortIds: action.payload.connectablePortIds,
+      };
+
     case "START_NODE_RESIZE": {
       const { nodeId, startPosition, startSize, handle } = action.payload;
       return {
@@ -322,6 +330,7 @@ export const defaultEditorActionState: EditorActionState = {
   connectionDisconnectState: null,
   hoveredPort: null,
   connectedPorts: new Set<PortId>(),
+  connectablePortIds: new Set<PortId>(),
   contextMenu: {
     visible: false,
     position: { x: 0, y: 0 },
@@ -388,6 +397,10 @@ export const editorActionStateActions = {
   updateConnectedPorts: (connectedPorts: Set<PortId>): EditorActionStateAction => ({
     type: "UPDATE_CONNECTED_PORTS",
     payload: { connectedPorts },
+  }),
+  updateConnectablePorts: (connectablePortIds: Set<PortId>): EditorActionStateAction => ({
+    type: "UPDATE_CONNECTABLE_PORTS",
+    payload: { connectablePortIds },
   }),
   startConnectionDisconnect: (
     originalConnection: { id: ConnectionId; fromNodeId: NodeId; fromPortId: PortId; toNodeId: NodeId; toPortId: PortId },
