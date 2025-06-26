@@ -7,6 +7,7 @@ import { useNodeEditor } from "../contexts/NodeEditorContext";
 import { useGroupManagement } from "../hooks/useGroupManagement";
 import { useNodeResize } from "../hooks/useNodeResize";
 import { useVisibleNodes } from "../hooks/useVisibleNodes";
+import { usePointerInteraction } from "../hooks/usePointerInteraction";
 import styles from "../NodeEditor.module.css";
 import type { Port } from "../types/core";
 import { getPortPosition } from "../utils/connectionUtils";
@@ -440,60 +441,28 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
   ]);
 
   // Global connection drag handler
-  React.useEffect(() => {
-    if (!actionState.connectionDragState) return;
-
-    const canvasElement = document.querySelector('[role="application"]');
-    if (!canvasElement) return;
-
-    const handlePointerMove = (e: PointerEvent) => {
-      const rect = canvasElement.getBoundingClientRect();
-      const canvasX = (e.clientX - rect.left - canvasState.viewport.offset.x) / canvasState.viewport.scale;
-      const canvasY = (e.clientY - rect.top - canvasState.viewport.offset.y) / canvasState.viewport.scale;
-
-      actionDispatch(actionActions.updateConnectionDrag({ x: canvasX, y: canvasY }, null));
-    };
-
-    const handlePointerUp = () => {
+  usePointerInteraction({
+    interactionState: actionState.connectionDragState,
+    viewport: canvasState.viewport,
+    onPointerMove: (canvasPosition) => {
+      actionDispatch(actionActions.updateConnectionDrag(canvasPosition, null));
+    },
+    onPointerUp: () => {
       actionDispatch(actionActions.endConnectionDrag());
-    };
-
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    window.addEventListener("pointerup", handlePointerUp, { once: true });
-
-    return () => {
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerup", handlePointerUp);
-    };
-  }, [actionState.connectionDragState, canvasState.viewport, actionDispatch, actionActions]);
+    },
+  });
 
   // Global connection disconnect handler
-  React.useEffect(() => {
-    if (!actionState.connectionDisconnectState) return;
-
-    const canvasElement = document.querySelector('[role="application"]');
-    if (!canvasElement) return;
-
-    const handlePointerMove = (e: PointerEvent) => {
-      const rect = canvasElement.getBoundingClientRect();
-      const canvasX = (e.clientX - rect.left - canvasState.viewport.offset.x) / canvasState.viewport.scale;
-      const canvasY = (e.clientY - rect.top - canvasState.viewport.offset.y) / canvasState.viewport.scale;
-
-      actionDispatch(actionActions.updateConnectionDisconnect({ x: canvasX, y: canvasY }, null));
-    };
-
-    const handlePointerUp = () => {
+  usePointerInteraction({
+    interactionState: actionState.connectionDisconnectState,
+    viewport: canvasState.viewport,
+    onPointerMove: (canvasPosition) => {
+      actionDispatch(actionActions.updateConnectionDisconnect(canvasPosition, null));
+    },
+    onPointerUp: () => {
       actionDispatch(actionActions.endConnectionDisconnect());
-    };
-
-    window.addEventListener("pointermove", handlePointerMove, { passive: true });
-    window.addEventListener("pointerup", handlePointerUp, { once: true });
-
-    return () => {
-      window.removeEventListener("pointermove", handlePointerMove);
-      window.removeEventListener("pointerup", handlePointerUp);
-    };
-  }, [actionState.connectionDisconnectState, canvasState.viewport, actionDispatch, actionActions]);
+    },
+  });
 
   return (
     <div className={classNames(styles.nodeLayer, className)}>
