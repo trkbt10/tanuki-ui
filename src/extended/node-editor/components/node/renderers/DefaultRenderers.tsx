@@ -9,6 +9,10 @@ import { AlignMiddleIcon } from "../../../../../blocks/AlignMiddleIcon";
 import { AlignBottomIcon } from "../../../../../blocks/AlignBottomIcon";
 import { DistributeHorizontalIcon } from "../../../../../blocks/DistributeHorizontalIcon";
 import { DistributeVerticalIcon } from "../../../../../blocks/DistributeVerticalIcon";
+import { Button } from "../../../../../form/Button";
+import { Input } from "../../../../../form/Input";
+import { Label } from "../../../../../form/Label";
+import { Textarea } from "../../../../../form/Textarea";
 import alignmentStyles from "./AlignmentControls.module.css";
 
 /**
@@ -43,7 +47,7 @@ const InspectorInput = React.memo<{
   name?: string;
   "aria-label"?: string;
 }>(({ value, onChange, style, type = "text", placeholder, id, name, "aria-label": ariaLabel }) => (
-  <input
+  <Input
     type={type}
     value={value}
     onChange={(e) => onChange(e.target.value)}
@@ -109,7 +113,7 @@ const InspectorNumberInput = React.memo<{
   return (
     <div style={containerStyles}>
       <span style={labelStyles}>{label}</span>
-      <input
+      <Input
         type="number"
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
@@ -158,14 +162,14 @@ const AlignmentControls = React.memo<{
 
   return (
     <div className={alignmentStyles.alignmentControls}>
-      <label className={alignmentStyles.alignmentLabel}>
+      <Label className={alignmentStyles.alignmentLabel}>
         Alignment {selectedNodes.length > 1 ? `(${selectedNodes.length} nodes)` : "(select 2+ nodes)"}:
-      </label>
+      </Label>
       <div className={alignmentStyles.alignmentGrid}>
         {alignmentButtons.map((button) => {
           const IconComponent = button.icon;
           return (
-            <button
+            <Button
               key={button.type}
               onClick={() => !isDisabled && onAlign(button.type)}
               className={alignmentStyles.alignmentButton}
@@ -173,7 +177,7 @@ const AlignmentControls = React.memo<{
               disabled={isDisabled}
             >
               <IconComponent size={14} />
-            </button>
+            </Button>
           );
         })}
       </div>
@@ -314,9 +318,9 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         <h4 style={{ margin: "0 0 16px", fontSize: "14px" }}>Node Properties</h4>
 
         <div style={{ marginBottom: "12px" }}>
-          <label htmlFor={`node-${node.id}-title`} style={labelStyles}>
+          <Label htmlFor={`node-${node.id}-title`} style={labelStyles}>
             Title:
-          </label>
+          </Label>
           <InspectorInput
             id={`node-${node.id}-title`}
             name="nodeTitle"
@@ -328,9 +332,9 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
 
         {node.data.content !== undefined && (
           <div style={{ marginBottom: "12px" }}>
-            <label htmlFor={`node-${node.id}-content`} style={labelStyles}>
+            <Label htmlFor={`node-${node.id}-content`} style={labelStyles}>
               Content:
-            </label>
+            </Label>
             <InspectorTextarea
               id={`node-${node.id}-content`}
               name="nodeContent"
@@ -344,7 +348,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         <AlignmentControls selectedNodes={selectedNodes} onAlign={handleAlignment} />
 
         <div style={{ marginBottom: "12px" }}>
-          <label style={labelStyles}>Position & Size:</label>
+          <Label style={labelStyles}>Position & Size:</Label>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px" }}>
             <InspectorNumberInput
               label="X"
@@ -382,7 +386,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         </div>
 
         <div style={{ marginBottom: "12px" }}>
-          <label style={labelStyles}>Type:</label>
+          <Label style={labelStyles}>Type:</Label>
           <div
             style={{
               padding: "4px 8px",
@@ -407,7 +411,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         )}
 
         <div style={{ marginTop: "16px", paddingTop: "16px", borderTop: "1px solid #eee" }}>
-          <button
+          <Button
             onClick={onDeleteNode}
             style={{
               padding: "8px 16px",
@@ -421,7 +425,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
             }}
           >
             Delete Node
-          </button>
+          </Button>
         </div>
       </div>
     );
