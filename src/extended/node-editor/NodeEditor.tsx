@@ -27,7 +27,7 @@ import { useSettings } from "./hooks/useSettings";
 import { classNames } from "../../utilities/classNames";
 import styles from "./NodeEditor.module.css";
 
-export interface NodeEditorProps {
+export interface NodeEditorProps<TNodeDataTypeMap = {}> {
   /** Initial data for uncontrolled mode (like defaultValue) */
   initialData?: Partial<NodeEditorData>;
   /** Data for controlled mode (like value) */
@@ -37,7 +37,7 @@ export interface NodeEditorProps {
   onLoad?: () => NodeEditorData | Promise<NodeEditorData>;
   className?: string;
   /** Custom node definitions */
-  nodeDefinitions?: NodeDefinition[];
+  nodeDefinitions?: NodeDefinition<string, TNodeDataTypeMap>[];
   /** Whether to include default node definitions */
   includeDefaultDefinitions?: boolean;
   /** External data references for nodes */
@@ -78,7 +78,7 @@ export interface NodeEditorProps {
  * NodeEditor - Main component that integrates all node editor functionality
  * Provides three separate contexts for managing different aspects of the editor
  */
-export const NodeEditor: React.FC<NodeEditorProps> = ({
+export const NodeEditor = <TNodeDataTypeMap = {}>({
   initialData,
   data,
   onDataChange,
@@ -103,9 +103,9 @@ export const NodeEditor: React.FC<NodeEditorProps> = ({
   rightSidebarMaxWidth,
   onLeftSidebarWidthChange,
   onRightSidebarWidthChange,
-}) => {
+}: NodeEditorProps<TNodeDataTypeMap>) => {
   return (
-    <NodeDefinitionProvider nodeDefinitions={nodeDefinitions} includeDefaults={includeDefaultDefinitions}>
+    <NodeDefinitionProvider<TNodeDataTypeMap> nodeDefinitions={nodeDefinitions} includeDefaults={includeDefaultDefinitions}>
       <ExternalDataProvider refs={externalDataRefs}>
         <NodeEditorProvider
           initialState={initialData}
@@ -191,53 +191,50 @@ const NodeEditorContent: React.FC<{
   const nodeDefinitions = useNodeDefinitionList();
   
   // Compute port positions whenever nodes change
-  const portPositions = React.useMemo(() => {
-    // Ensure nodes exist
-    if (!editorState.nodes) {
-      return new Map();
-    }
+  const [portPositions, setPortPositions] = React.useState<EditorPortPositions>(() => new Map());
+  
+  // Track previous nodes state for change detection
+  const prevNodesRef = React.useRef<typeof editorState.nodes>(editorState.nodes);
+  
+  React.useEffect(() => {
+    if (!editorState.nodes) return;
     
-    // Get dragging nodes from action state
-    const draggingNodeIds = actionState.dragState ? 
-      Object.keys(actionState.dragState.draggedOffsets) : [];
+    // Check if nodes have actually changed
+    const prevNodes = prevNodesRef.current;
+    let hasChanged = false;
     
-    // Compute port positions for all nodes
-    const nodes = Object.values(editorState.nodes).map(node => {
-      // Apply drag offset if node is being dragged
-      if (draggingNodeIds.includes(node.id) && actionState.dragState) {
-        const offset = actionState.dragState.draggedOffsets[node.id];
-        if (offset) {
-          return {
-            ...node,
-            position: {
-              x: actionState.dragState.startPosition.x + offset.x,
-              y: actionState.dragState.startPosition.y + offset.y,
-            },
-            ports: getNodePorts(node.id),
-          };
+    if (!prevNodes || Object.keys(prevNodes).length !== Object.keys(editorState.nodes).length) {
+      hasChanged = true;
+    } else {
+      // Check each node for changes
+      for (const nodeId in editorState.nodes) {
+        const node = editorState.nodes[nodeId];
+        const prevNode = prevNodes[nodeId];
+        
+        if (!prevNode || 
+            node.position.x !== prevNode.position.x || 
+            node.position.y !== prevNode.position.y ||
+            node.size?.width !== prevNode.size?.width ||
+            node.size?.height !== prevNode.size?.height) {
+          hasChanged = true;
+          break;
         }
       }
-      
-      return {
+    }
+    
+    if (hasChanged) {
+      // Compute port positions for all nodes
+      const nodes = Object.values(editorState.nodes).map(node => ({
         ...node,
         ports: getNodePorts(node.id),
-      };
-    });
-    
-    return computeAllPortPositions(nodes);
-  }, [
-    // Re-compute when nodes are added/removed
-    editorState.nodes ? Object.keys(editorState.nodes).length : 0,
-    // Re-compute when node positions change (but not during drag)
-    actionState.dragState ? null : (editorState.nodes ? Object.values(editorState.nodes).map(n => `${n.position.x},${n.position.y}`).join('|') : ''),
-    // Re-compute when node sizes change
-    editorState.nodes ? Object.values(editorState.nodes).map(n => `${n.size?.width},${n.size?.height}`).join('|') : '',
-    // Re-compute during drag
-    actionState.dragState?.startPosition.x,
-    actionState.dragState?.startPosition.y,
-    JSON.stringify(actionState.dragState?.draggedOffsets),
-    getNodePorts
-  ]);
+      }));
+      const newPortPositions = computeAllPortPositions(nodes);
+      setPortPositions(newPortPositions);
+      
+      // Update ref
+      prevNodesRef.current = editorState.nodes;
+    }
+  }, [editorState.nodes, getNodePorts]);
 
   // Use settings hook for clean state management
   const settings = useSettings(settingsManager);
