@@ -171,22 +171,13 @@ export const defaultSettings: SettingDefinition[] = [
     order: 10,
   },
   {
-    key: "appearance.showInspector",
-    label: "Show Inspector",
-    description: "Display inspector panel",
-    category: "appearance",
-    type: "boolean",
-    defaultValue: true,
-    order: 11,
-  },
-  {
     key: "appearance.canvasBackground",
     label: "Canvas Background",
     description: "Canvas background color",
     category: "appearance",
     type: "color",
     defaultValue: "#ffffff",
-    order: 12,
+    order: 11,
   },
 
   // Behavior settings

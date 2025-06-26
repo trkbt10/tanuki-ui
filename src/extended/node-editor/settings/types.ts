@@ -200,7 +200,6 @@ export interface EditorSettings {
   "appearance.showMinimap": boolean;
   "appearance.showStatusBar": boolean;
   "appearance.showToolbar": boolean;
-  "appearance.showInspector": boolean;
   "appearance.canvasBackground": string;
 
   // Behavior
