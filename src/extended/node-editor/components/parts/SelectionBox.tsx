@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { classNames } from "../../../../utilities/classNames";
-import styles from "../../NodeEditor.module.css";
+import styles from "./SelectionBox.module.css";
 
 export interface SelectionBoxProps {
   className?: string;

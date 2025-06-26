@@ -1,6 +1,6 @@
 import * as React from "react";
 import { classNames } from "../../../../utilities/classNames";
-import styles from "../../NodeEditor.module.css";
+import styles from "./ResizeHandle.module.css";
 
 export interface ResizeHandleProps {
   /** The resize handle position - now only 'se' (bottom-right) is supported */
@@ -9,6 +9,8 @@ export interface ResizeHandleProps {
   onResizeStart: (e: React.PointerEvent, handle: 'se') => void;
   /** Whether this handle is currently being used for resizing */
   isResizing?: boolean;
+  /** Whether the handle should be visible (when parent node is hovered or selected) */
+  isVisible?: boolean;
 }
 
 /**
@@ -18,6 +20,7 @@ export const ResizeHandle: React.FC<ResizeHandleProps> = ({
   position,
   onResizeStart,
   isResizing = false,
+  isVisible = false,
 }) => {
   const handlePointerDown = React.useCallback((e: React.PointerEvent) => {
     e.stopPropagation();
@@ -43,6 +46,7 @@ export const ResizeHandle: React.FC<ResizeHandleProps> = ({
     <div
       className={classNames(
         styles.resizeHandle,
+        isVisible && styles.resizeHandleVisible,
         isResizing && styles.resizeHandleActive
       )}
       style={{
