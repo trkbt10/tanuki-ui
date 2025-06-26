@@ -1,15 +1,8 @@
 import * as React from "react";
-import {
-  NodeId,
-  ConnectionId,
-  PortId,
-  Position,
-  Size,
-  Port,
-  Node,
-  Connection,
-  NodeEditorData,
-} from "../types/core";
+import { NodeId, ConnectionId, PortId, Position, Size, Port, Node, Connection, NodeEditorData } from "../types/core";
+
+import { useSettings } from "../hooks";
+import { SettingsManager } from "../settings/SettingsManager";
 
 // Re-export NodeEditorData for external use
 export type { NodeEditorData };
@@ -33,10 +26,7 @@ export type NodeEditorAction =
   | { type: "AUTO_LAYOUT"; payload: { layoutType: "force" | "hierarchical" | "grid"; selectedOnly?: boolean } };
 
 // Node editor reducer
-export const nodeEditorReducer = (
-  state: NodeEditorData,
-  action: NodeEditorAction
-): NodeEditorData => {
+export const nodeEditorReducer = (state: NodeEditorData, action: NodeEditorAction): NodeEditorData => {
   switch (action.type) {
     case "ADD_NODE": {
       const id = generateId();
@@ -78,15 +68,12 @@ export const nodeEditorReducer = (
       const { [nodeId]: deleted, ...remainingNodes } = state.nodes;
 
       // Delete all connections related to this node
-      const remainingConnections = Object.entries(state.connections).reduce(
-        (acc, [connId, conn]) => {
-          if (conn.fromNodeId !== nodeId && conn.toNodeId !== nodeId) {
-            acc[connId] = conn;
-          }
-          return acc;
-        },
-        {} as typeof state.connections
-      );
+      const remainingConnections = Object.entries(state.connections).reduce((acc, [connId, conn]) => {
+        if (conn.fromNodeId !== nodeId && conn.toNodeId !== nodeId) {
+          acc[connId] = conn;
+        }
+        return acc;
+      }, {} as typeof state.connections);
 
       return {
         ...state,
@@ -112,7 +99,7 @@ export const nodeEditorReducer = (
     case "MOVE_NODES": {
       const { updates } = action.payload;
       const updatedNodes = { ...state.nodes };
-      
+
       Object.entries(updates).forEach(([nodeId, position]) => {
         const node = updatedNodes[nodeId];
         if (node) {
@@ -196,11 +183,12 @@ export const nodeEditorReducer = (
             createdAt: Date.now(), // Track creation time for selection
           },
           // Duplicate ports with new IDs
-          ports: originalNode.ports?.map(port => ({
-            ...port,
-            id: `${port.id}-copy-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-            nodeId: newId,
-          })) || [],
+          ports:
+            originalNode.ports?.map((port) => ({
+              ...port,
+              id: `${port.id}-copy-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+              nodeId: newId,
+            })) || [],
         };
 
         // Handle group nodes
@@ -274,7 +262,7 @@ export const nodeEditorReducer = (
     case "UPDATE_GROUP_MEMBERSHIP": {
       const { updates } = action.payload;
       const updatedNodes = { ...state.nodes };
-      
+
       Object.entries(updates).forEach(([nodeId, update]) => {
         const node = updatedNodes[nodeId];
         if (node) {
@@ -291,7 +279,7 @@ export const nodeEditorReducer = (
     case "MOVE_GROUP_WITH_CHILDREN": {
       const { groupId, delta } = action.payload;
       const updatedNodes = { ...state.nodes };
-      
+
       // Move the group node
       const groupNode = updatedNodes[groupId];
       if (groupNode) {
@@ -304,7 +292,7 @@ export const nodeEditorReducer = (
         };
 
         // Move all child nodes
-        Object.values(updatedNodes).forEach(node => {
+        Object.values(updatedNodes).forEach((node) => {
           if (node.parentId === groupId) {
             updatedNodes[node.id] = {
               ...node,
@@ -325,17 +313,18 @@ export const nodeEditorReducer = (
 
     case "AUTO_LAYOUT": {
       const { layoutType, selectedOnly = false } = action.payload;
-      
+
       // Import layout functions dynamically to avoid circular dependency
-      const layoutData = selectedOnly 
-        ? { 
+      const layoutData = selectedOnly
+        ? {
             nodes: Object.fromEntries(
-              Object.entries(state.nodes).filter(([_, node]) => 
-                // This will be filtered by selected nodes in the hook
-                true
+              Object.entries(state.nodes).filter(
+                ([_, node]) =>
+                  // This will be filtered by selected nodes in the hook
+                  true
               )
             ),
-            connections: state.connections 
+            connections: state.connections,
           }
         : state;
 
@@ -431,6 +420,9 @@ export interface NodeEditorContextValue {
   state: NodeEditorData;
   dispatch: React.Dispatch<NodeEditorAction>;
   actions: typeof nodeEditorActions;
+  isLoading: boolean;
+  isSaving: boolean;
+  handleSave: () => Promise<void>;
 }
 
 export const NodeEditorContext = React.createContext<NodeEditorContextValue | null>(null);
@@ -441,52 +433,121 @@ export interface NodeEditorProviderProps {
   initialState?: Partial<NodeEditorData>;
   controlledData?: NodeEditorData;
   onDataChange?: (data: NodeEditorData) => void;
+  onSave?: (data: NodeEditorData) => void | Promise<void>;
+  onLoad?: () => NodeEditorData | Promise<NodeEditorData>;
+  settingsManager?: SettingsManager;
 }
-
+import { useDepsChecker } from "../../../hooks/useDepsChecker";
 export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
   children,
   initialState,
   controlledData,
   onDataChange,
+  onLoad,
+  onSave,
+  settingsManager,
 }) => {
-  // Deep merge initial state with defaults
-  const initialData: NodeEditorData = React.useMemo(() => ({
-    nodes: initialState?.nodes || defaultNodeEditorData.nodes,
-    connections: initialState?.connections || defaultNodeEditorData.connections,
-  }), [initialState]);
-
-  const [internalState, internalDispatch] = React.useReducer(
-    nodeEditorReducer,
-    initialData
+  useDepsChecker(
+    {
+      children,
+      initialState,
+      controlledData,
+      onDataChange,
+      onLoad,
+      onSave,
+      settingsManager,
+    },
+    { componentName: "NodeEditorProvider" }
   );
+  // Deep merge initial state with defaults
+  const initialData: NodeEditorData = React.useMemo(() => {
+    return {
+      nodes: initialState?.nodes || defaultNodeEditorData.nodes,
+      connections: initialState?.connections || defaultNodeEditorData.connections,
+    };
+  }, [initialState]);
 
+  const [internalState, internalDispatch] = React.useReducer(nodeEditorReducer, initialData);
   // Use controlled data if provided, otherwise use internal state
   const state = controlledData || internalState;
-  
+  const onDataChangeRef = React.useRef(onDataChange);
+  onDataChangeRef.current = onDataChange;
+
   // Wrap dispatch to handle controlled mode
-  const dispatch: React.Dispatch<NodeEditorAction> = React.useCallback((action) => {
-    if (!controlledData) {
-      // Uncontrolled mode: use internal dispatch
-      internalDispatch(action);
-    } else if (onDataChange) {
-      // Controlled mode: calculate new state and call onDataChange
-      const newState = nodeEditorReducer(state, action);
-      onDataChange(newState);
-    }
-    // If controlled but no onDataChange, dispatch does nothing
-  }, [controlledData, state, onDataChange]);
-
-  const contextValue: NodeEditorContextValue = {
-    state,
-    dispatch,
-    actions: nodeEditorActions,
-  };
-
-  return (
-    <NodeEditorContext.Provider value={contextValue}>
-      {children}
-    </NodeEditorContext.Provider>
+  const dispatch: React.Dispatch<NodeEditorAction> = React.useCallback(
+    (action) => {
+      if (!controlledData) {
+        // Uncontrolled mode: use internal dispatch
+        internalDispatch(action);
+      } else if (onDataChangeRef.current) {
+        // Controlled mode: calculate new state and call onDataChange
+        const newState = nodeEditorReducer(state, action);
+        onDataChangeRef.current(newState);
+      }
+      // If controlled but no onDataChange, dispatch does nothing
+    },
+    [controlledData, state]
   );
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isSaving, setIsSaving] = React.useState(false);
+
+  const settings = useSettings(settingsManager);
+  const { autoSave, autoSaveInterval } = settings;
+  // Load data on mount if onLoad is provided
+  React.useEffect(() => {
+    if (onLoad && !isLoading) {
+      setIsLoading(true);
+      Promise.resolve(onLoad())
+        .then((data) => {
+          dispatch(nodeEditorActions.setNodeData(data));
+        })
+        .catch((error) => {
+          console.error("Failed to load node editor data:", error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+  }, []);
+
+  // Save handler
+  const handleSave = React.useCallback(async () => {
+    if (onSave && !isSaving) {
+      setIsSaving(true);
+      try {
+        await Promise.resolve(onSave(state));
+      } catch (error) {
+        console.error("Failed to save node editor data:", error);
+      } finally {
+        setIsSaving(false);
+      }
+    }
+  }, [onSave, state, isSaving]);
+
+  // Auto-save functionality based on settings
+  React.useEffect(() => {
+    if (!autoSave || !onSave) return;
+    const intervalId = setInterval(() => {
+      if (!isSaving) {
+        handleSave();
+      }
+    }, autoSaveInterval * 1000);
+
+    return () => clearInterval(intervalId);
+  }, [autoSave, autoSaveInterval, handleSave, isSaving]);
+
+  const contextValue: NodeEditorContextValue = React.useMemo(() => {
+    return {
+      state,
+      dispatch,
+      actions: nodeEditorActions,
+      isLoading,
+      isSaving,
+      handleSave,
+    };
+  }, [state, dispatch, isLoading, isSaving, handleSave]);
+
+  return <NodeEditorContext.Provider value={contextValue}>{children}</NodeEditorContext.Provider>;
 };
 
 // Hook

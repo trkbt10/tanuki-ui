@@ -104,17 +104,20 @@ export const NodeEditor: React.FC<NodeEditorProps> = ({
   return (
     <NodeDefinitionProvider nodeDefinitions={nodeDefinitions} includeDefaults={includeDefaultDefinitions}>
       <ExternalDataProvider refs={externalDataRefs}>
-        <NodeEditorProvider initialState={initialData} controlledData={data} onDataChange={onDataChange}>
+        <NodeEditorProvider
+          initialState={initialData}
+          controlledData={data}
+          onDataChange={onDataChange}
+          onSave={onSave}
+          onLoad={onLoad}
+          settingsManager={settingsManager}
+        >
           <EditorActionStateProvider>
             <NodeCanvasProvider>
               <HistoryProvider>
                 <InlineEditingProvider>
                   <KeyboardShortcutProvider>
                     <NodeEditorContent
-                      data={data}
-                      onDataChange={onDataChange}
-                      onSave={onSave}
-                      onLoad={onLoad}
                       className={className}
                       overlayLayers={overlayLayers}
                       backgroundLayers={backgroundLayers}
@@ -144,10 +147,6 @@ export const NodeEditor: React.FC<NodeEditorProps> = ({
 };
 
 const NodeEditorContent: React.FC<{
-  data?: NodeEditorData;
-  onDataChange?: (data: NodeEditorData) => void;
-  onSave?: (data: NodeEditorData) => void | Promise<void>;
-  onLoad?: () => NodeEditorData | Promise<NodeEditorData>;
   className?: string;
   overlayLayers?: React.ReactNode[];
   backgroundLayers?: React.ReactNode[];
@@ -165,10 +164,6 @@ const NodeEditorContent: React.FC<{
   onLeftSidebarWidthChange?: (width: number) => void;
   onRightSidebarWidthChange?: (width: number) => void;
 }> = ({
-  data,
-  onDataChange,
-  onSave,
-  onLoad,
   className,
   overlayLayers,
   backgroundLayers,
@@ -186,12 +181,11 @@ const NodeEditorContent: React.FC<{
   onLeftSidebarWidthChange,
   onRightSidebarWidthChange,
 }) => {
-  const { state, dispatch, actions } = useNodeEditor();
+  const { handleSave, dispatch, actions, isLoading, isSaving } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
-  const { state: canvasState, utils } = useNodeCanvas();
+  const { utils } = useNodeCanvas();
+
   const nodeDefinitions = useNodeDefinitionList();
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isSaving, setIsSaving] = React.useState(false);
 
   // Use settings hook for clean state management
   const settings = useSettings(settingsManager);
@@ -209,59 +203,6 @@ const NodeEditorContent: React.FC<{
     gridOpacity,
     canvasBackground,
   } = settings;
-  const onDataChangeRef = React.useRef(onDataChange);
-  onDataChangeRef.current = onDataChange;
-  // Report data changes to parent (only in uncontrolled mode)
-  React.useEffect(() => {
-    if (onDataChangeRef.current && !data) {
-      onDataChangeRef.current(state);
-    }
-  }, [state, data]);
-
-  // Load data on mount if onLoad is provided
-  React.useEffect(() => {
-    if (onLoad && !isLoading) {
-      setIsLoading(true);
-      Promise.resolve(onLoad())
-        .then((data) => {
-          dispatch(actions.setNodeData(data));
-        })
-        .catch((error) => {
-          console.error("Failed to load node editor data:", error);
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
-    }
-  }, [onLoad, dispatch, actions]);
-
-  // Save handler
-  const handleSave = React.useCallback(async () => {
-    if (onSave && !isSaving) {
-      setIsSaving(true);
-      try {
-        await Promise.resolve(onSave(state));
-      } catch (error) {
-        console.error("Failed to save node editor data:", error);
-      } finally {
-        setIsSaving(false);
-      }
-    }
-  }, [onSave, state, isSaving]);
-
-  // Auto-save functionality based on settings
-  React.useEffect(() => {
-    if (!autoSave || !onSave) return;
-
-    const intervalId = setInterval(() => {
-      if (!isSaving) {
-        handleSave();
-      }
-    }, autoSaveInterval * 1000);
-
-    return () => clearInterval(intervalId);
-  }, [autoSave, autoSaveInterval, handleSave, isSaving]);
-
   // Apply settings-based CSS custom properties
   const editorStyles = React.useMemo(
     () =>
