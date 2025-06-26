@@ -7,9 +7,9 @@ import { NodeTreeList } from "./NodeTreeList";
 import { DefaultInspectorRenderer } from "../components/node/renderers/DefaultRenderers";
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
 import { classNames } from "../../../utilities/classNames";
-import { Button } from "../../../form/Button";
 import { Input } from "../../../form/Input";
 import { Label } from "../../../form/Label";
+import { SegmentedControl } from "../../../controls/SegmentedControl";
 import styles from "../NodeEditor.module.css";
 import { H4 } from "../../../elements/Heading";
 
@@ -25,7 +25,8 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
   const { state: nodeEditorState, actions: nodeEditorActions, dispatch: nodeEditorDispatch } = useNodeEditor();
   const { state: actionState } = useEditorActionState();
   const { state: canvasState, dispatch: canvasDispatch, actions: canvasActions } = useNodeCanvas();
-  const [activeTab, setActiveTab] = React.useState<"layers" | "properties">("layers");
+  const [activeTabIndex, setActiveTabIndex] = React.useState(0);
+  const tabItems = ["Layers", "Properties"];
 
   // Get selected node (for now, just show the first one)
   const selectedNode = actionState.selectedNodeIds.length > 0 ? nodeEditorState.nodes[actionState.selectedNodeIds[0]] : null;
@@ -61,26 +62,16 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
   return (
     <div className={classNames(styles.inspectorPanel, className)}>
       <div className={styles.inspectorHeader}>
-        <div className={styles.inspectorTabs}>
-          <Button
-            className={classNames(styles.inspectorTab, activeTab === "layers" && styles.active)}
-            onClick={() => setActiveTab("layers")}
-            data-variant="cta"
-          >
-            Layers
-          </Button>
-          <Button
-            className={classNames(styles.inspectorTab, activeTab === "properties" && styles.active)}
-            onClick={() => setActiveTab("properties")}
-            data-variant="cta"
-          >
-            Properties
-          </Button>
-        </div>
+        <SegmentedControl
+          items={tabItems}
+          selectedIndex={activeTabIndex}
+          controlled={true}
+          onSelect={setActiveTabIndex}
+        />
       </div>
 
       <div className={styles.inspectorContent}>
-        {activeTab === "layers" ? (
+        {activeTabIndex === 0 ? (
           <NodeTreeList />
         ) : (
           <>
