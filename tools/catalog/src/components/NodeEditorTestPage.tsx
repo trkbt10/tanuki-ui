@@ -228,6 +228,312 @@ const MathNodeInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
   );
 };
 
+// Display Node Inspector
+const DisplayNodeInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
+  const fontSize = (node.data.fontSize as number) || 14;
+  const fontWeight = (node.data.fontWeight as string) || "normal";
+  const textAlign = (node.data.textAlign as string) || "center";
+  const showBorder = (node.data.showBorder as boolean) ?? true;
+
+  return (
+    <div style={{ padding: "16px" }}>
+      <H3>Display Settings</H3>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>Font Size:</Label>
+        <Input
+          type="number"
+          value={fontSize}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, fontSize: Number(e.target.value) } })}
+          min={8}
+          max={32}
+          style={{ width: "100%", marginTop: "4px" }}
+        />
+      </div>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>Font Weight:</Label>
+        <Select
+          value={fontWeight}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, fontWeight: e.target.value } })}
+          style={{ width: "100%", marginTop: "4px" }}
+        >
+          <option value="normal">Normal</option>
+          <option value="bold">Bold</option>
+          <option value="lighter">Light</option>
+        </Select>
+      </div>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>Text Align:</Label>
+        <Select
+          value={textAlign}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, textAlign: e.target.value } })}
+          style={{ width: "100%", marginTop: "4px" }}
+        >
+          <option value="left">Left</option>
+          <option value="center">Center</option>
+          <option value="right">Right</option>
+        </Select>
+      </div>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>
+          <Input
+            type="checkbox"
+            checked={showBorder}
+            onChange={(e) => onUpdateNode({ data: { ...node.data, showBorder: e.target.checked } })}
+            style={{ marginRight: "8px" }}
+          />
+          Show Border
+        </Label>
+      </div>
+
+      <div>
+        <Label>Title:</Label>
+        <Input
+          type="text"
+          value={(node.data.title as string) || ""}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, title: e.target.value } })}
+          placeholder="Enter title..."
+          style={{ width: "100%", marginTop: "4px" }}
+        />
+      </div>
+    </div>
+  );
+};
+
+// String Operations Inspector
+const StringOperationInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
+  const separator = (node.data.separator as string) || "";
+  const toUpperCase = (node.data.toUpperCase as boolean) || false;
+  const trim = (node.data.trim as boolean) || false;
+
+  return (
+    <div style={{ padding: "16px" }}>
+      <H3>String Operation Settings</H3>
+
+      {node.type === "string-concat" && (
+        <div style={{ marginBottom: "12px" }}>
+          <Label>Separator:</Label>
+          <Input
+            type="text"
+            value={separator}
+            onChange={(e) => onUpdateNode({ data: { ...node.data, separator: e.target.value } })}
+            placeholder="e.g., space, comma, etc."
+            style={{ width: "100%", marginTop: "4px" }}
+          />
+        </div>
+      )}
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>
+          <Input
+            type="checkbox"
+            checked={toUpperCase}
+            onChange={(e) => onUpdateNode({ data: { ...node.data, toUpperCase: e.target.checked } })}
+            style={{ marginRight: "8px" }}
+          />
+          Convert to Uppercase
+        </Label>
+      </div>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>
+          <Input
+            type="checkbox"
+            checked={trim}
+            onChange={(e) => onUpdateNode({ data: { ...node.data, trim: e.target.checked } })}
+            style={{ marginRight: "8px" }}
+          />
+          Trim Whitespace
+        </Label>
+      </div>
+
+      <div>
+        <Label>Title:</Label>
+        <Input
+          type="text"
+          value={(node.data.title as string) || ""}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, title: e.target.value } })}
+          placeholder="Enter title..."
+          style={{ width: "100%", marginTop: "4px" }}
+        />
+      </div>
+    </div>
+  );
+};
+
+// Converter Inspector
+const ConverterInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
+  const decimalPlaces = (node.data.decimalPlaces as number) || 2;
+  const prefix = (node.data.prefix as string) || "";
+  const suffix = (node.data.suffix as string) || "";
+
+  return (
+    <div style={{ padding: "16px" }}>
+      <H3>Converter Settings</H3>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>Decimal Places:</Label>
+        <Input
+          type="number"
+          value={decimalPlaces}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, decimalPlaces: Number(e.target.value) } })}
+          min={0}
+          max={10}
+          style={{ width: "100%", marginTop: "4px" }}
+        />
+      </div>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>Prefix:</Label>
+        <Input
+          type="text"
+          value={prefix}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, prefix: e.target.value } })}
+          placeholder="e.g., $, €, etc."
+          style={{ width: "100%", marginTop: "4px" }}
+        />
+      </div>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>Suffix:</Label>
+        <Input
+          type="text"
+          value={suffix}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, suffix: e.target.value } })}
+          placeholder="e.g., %, px, etc."
+          style={{ width: "100%", marginTop: "4px" }}
+        />
+      </div>
+
+      <div>
+        <Label>Title:</Label>
+        <Input
+          type="text"
+          value={(node.data.title as string) || ""}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, title: e.target.value } })}
+          placeholder="Enter title..."
+          style={{ width: "100%", marginTop: "4px" }}
+        />
+      </div>
+    </div>
+  );
+};
+
+// Logic Node Inspector
+const LogicNodeInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
+  const condition = (node.data.condition as string) || "greater";
+  const threshold = (node.data.threshold as number) || 0;
+
+  return (
+    <div style={{ padding: "16px" }}>
+      <H3>Logic Settings</H3>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>Condition Type:</Label>
+        <Select
+          value={condition}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, condition: e.target.value } })}
+          style={{ width: "100%", marginTop: "4px" }}
+        >
+          <option value="greater">Greater Than (>)</option>
+          <option value="less">Less Than (<)</option>
+          <option value="equal">Equal To (=)</option>
+          <option value="notEqual">Not Equal To (≠)</option>
+          <option value="greaterEqual">Greater or Equal (≥)</option>
+          <option value="lessEqual">Less or Equal (≤)</option>
+        </Select>
+      </div>
+
+      {node.type === "condition" && condition !== "equal" && condition !== "notEqual" && (
+        <div style={{ marginBottom: "12px" }}>
+          <Label>Threshold Value:</Label>
+          <Input
+            type="number"
+            value={threshold}
+            onChange={(e) => onUpdateNode({ data: { ...node.data, threshold: Number(e.target.value) } })}
+            style={{ width: "100%", marginTop: "4px" }}
+          />
+        </div>
+      )}
+
+      <div>
+        <Label>Title:</Label>
+        <Input
+          type="text"
+          value={(node.data.title as string) || ""}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, title: e.target.value } })}
+          placeholder="Enter title..."
+          style={{ width: "100%", marginTop: "4px" }}
+        />
+      </div>
+    </div>
+  );
+};
+
+// Timer Inspector
+const TimerInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
+  const interval = (node.data.interval as number) || 1000;
+  const autoStart = (node.data.autoStart as boolean) || false;
+  const repeat = (node.data.repeat as boolean) || true;
+
+  return (
+    <div style={{ padding: "16px" }}>
+      <H3>Timer Settings</H3>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>Interval (ms):</Label>
+        <Input
+          type="number"
+          value={interval}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, interval: Number(e.target.value) } })}
+          min={100}
+          max={60000}
+          step={100}
+          style={{ width: "100%", marginTop: "4px" }}
+        />
+      </div>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>
+          <Input
+            type="checkbox"
+            checked={autoStart}
+            onChange={(e) => onUpdateNode({ data: { ...node.data, autoStart: e.target.checked } })}
+            style={{ marginRight: "8px" }}
+          />
+          Auto Start
+        </Label>
+      </div>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>
+          <Input
+            type="checkbox"
+            checked={repeat}
+            onChange={(e) => onUpdateNode({ data: { ...node.data, repeat: e.target.checked } })}
+            style={{ marginRight: "8px" }}
+          />
+          Repeat
+        </Label>
+      </div>
+
+      <div>
+        <Label>Title:</Label>
+        <Input
+          type="text"
+          value={(node.data.title as string) || ""}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, title: e.target.value } })}
+          placeholder="Enter title..."
+          style={{ width: "100%", marginTop: "4px" }}
+        />
+      </div>
+    </div>
+  );
+};
+
 const DataSourceInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
   const context = React.useContext(MathEvaluatorContext);
   const triggerEvaluation = context ? context.triggerEvaluation : () => {};
@@ -289,6 +595,61 @@ const DataSourceInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
       )}
 
       <div style={{ marginTop: "12px" }}>
+        <Label>Title:</Label>
+        <Input
+          type="text"
+          value={(node.data.title as string) || ""}
+          onChange={(e) => onUpdateNode({ data: { ...node.data, title: e.target.value } })}
+          placeholder="Enter title..."
+          style={{ width: "100%", marginTop: "4px" }}
+        />
+      </div>
+    </div>
+  );
+};
+
+// String Source Inspector
+const StringSourceInspector = ({ node, onUpdateNode }: InspectorRenderProps) => {
+  const value = (node.data.value as string) || "";
+  const multiline = (node.data.multiline as boolean) || false;
+
+  return (
+    <div style={{ padding: "16px" }}>
+      <H3>String Source Settings</H3>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>Value:</Label>
+        {multiline ? (
+          <textarea
+            value={value}
+            onChange={(e) => onUpdateNode({ data: { ...node.data, value: e.target.value } })}
+            style={{ width: "100%", marginTop: "4px", minHeight: "80px" }}
+            placeholder="Enter text..."
+          />
+        ) : (
+          <Input
+            type="text"
+            value={value}
+            onChange={(e) => onUpdateNode({ data: { ...node.data, value: e.target.value } })}
+            placeholder="Enter text..."
+            style={{ width: "100%", marginTop: "4px" }}
+          />
+        )}
+      </div>
+
+      <div style={{ marginBottom: "12px" }}>
+        <Label>
+          <Input
+            type="checkbox"
+            checked={multiline}
+            onChange={(e) => onUpdateNode({ data: { ...node.data, multiline: e.target.checked } })}
+            style={{ marginRight: "8px" }}
+          />
+          Multiline Input
+        </Label>
+      </div>
+
+      <div>
         <Label>Title:</Label>
         <Input
           type="text"
@@ -376,6 +737,7 @@ const basicNodeDefinitions: NodeDefinition[] = [
     defaultSize: { width: 180, height: 100 },
     defaultData: { title: "String Source", value: "Hello" },
     ports: [{ id: "output", type: "output", label: "Text", position: "right", dataType: "string" }],
+    renderInspector: StringSourceInspector,
   },
   {
     type: "random-generator",
@@ -405,6 +767,7 @@ const basicNodeDefinitions: NodeDefinition[] = [
     defaultData: { title: "Display", text: "Hello World" },
     ports: [{ id: "input", type: "input", label: "Text", position: "left", dataType: "string" }],
     renderNode: DisplayNodeRenderer,
+    renderInspector: DisplayNodeInspector,
   },
   {
     type: "number-display",
@@ -416,6 +779,7 @@ const basicNodeDefinitions: NodeDefinition[] = [
     defaultData: { title: "Number", value: 0 },
     ports: [{ id: "input", type: "input", label: "Number", position: "left", dataType: "number" }],
     renderNode: DisplayNodeRenderer,
+    renderInspector: DisplayNodeInspector,
   },
   {
     type: "chart-display",
@@ -446,6 +810,7 @@ const basicNodeDefinitions: NodeDefinition[] = [
       { id: "true", type: "output", label: "True", position: "right", dataType: "any" },
       { id: "false", type: "output", label: "False", position: "right", dataType: "any" },
     ],
+    renderInspector: LogicNodeInspector,
   },
   {
     type: "timer",
@@ -460,6 +825,7 @@ const basicNodeDefinitions: NodeDefinition[] = [
       { id: "interval", type: "input", label: "Interval", position: "left", dataType: "number" },
       { id: "tick", type: "output", label: "Tick", position: "right", dataType: "number" },
     ],
+    renderInspector: TimerInspector,
   },
 
   // String Operations
@@ -476,6 +842,7 @@ const basicNodeDefinitions: NodeDefinition[] = [
       { id: "b", type: "input", label: "String B", position: "left", dataType: "string" },
       { id: "result", type: "output", label: "Result", position: "right", dataType: "string" },
     ],
+    renderInspector: StringOperationInspector,
   },
   {
     type: "number-to-string",
@@ -489,6 +856,7 @@ const basicNodeDefinitions: NodeDefinition[] = [
       { id: "input", type: "input", label: "Number", position: "left", dataType: "number" },
       { id: "output", type: "output", label: "String", position: "right", dataType: "string" },
     ],
+    renderInspector: ConverterInspector,
   },
   {
     type: "simple",
