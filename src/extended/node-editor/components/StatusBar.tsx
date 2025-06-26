@@ -4,6 +4,7 @@ import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import type { SettingsManager } from "../settings/SettingsManager";
 import { classNames } from "../../../utilities/classNames";
+import { StatusSection, statusSectionStyles } from "./parts";
 import styles from "../NodeEditor.module.css";
 
 export interface StatusBarProps {
@@ -50,73 +51,71 @@ export const StatusBar: React.FC<StatusBarProps> = ({ className, autoSave, isSav
   return (
     <div className={classNames(styles.statusBar, className)} data-testid="status-bar">
       {/* Selection info */}
-      <div className={styles.statusSection}>
-        <span className={styles.statusLabel}>Selection:</span>
-        <span className={styles.statusValue}>
-          {selectedNodeCount > 0 && `${selectedNodeCount} node${selectedNodeCount !== 1 ? 's' : ''}`}
-          {selectedNodeCount > 0 && selectedConnectionCount > 0 && ', '}
-          {selectedConnectionCount > 0 && `${selectedConnectionCount} connection${selectedConnectionCount !== 1 ? 's' : ''}`}
-          {selectedNodeCount === 0 && selectedConnectionCount === 0 && 'None'}
-        </span>
-      </div>
+      <StatusSection
+        label="Selection"
+        value={
+          <>
+            {selectedNodeCount > 0 && `${selectedNodeCount} node${selectedNodeCount !== 1 ? 's' : ''}`}
+            {selectedNodeCount > 0 && selectedConnectionCount > 0 && ', '}
+            {selectedConnectionCount > 0 && `${selectedConnectionCount} connection${selectedConnectionCount !== 1 ? 's' : ''}`}
+            {selectedNodeCount === 0 && selectedConnectionCount === 0 && 'None'}
+          </>
+        }
+      />
 
       {/* Total counts */}
-      <div className={styles.statusSection}>
-        <span className={styles.statusLabel}>Total:</span>
-        <span className={styles.statusValue}>
-          {totalNodes} nodes, {totalConnections} connections
-        </span>
-      </div>
+      <StatusSection
+        label="Total"
+        value={`${totalNodes} nodes, ${totalConnections} connections`}
+      />
 
       {/* Operation mode */}
-      <div className={styles.statusSection}>
-        <span className={styles.statusLabel}>Mode:</span>
-        <span className={classNames(styles.statusValue, styles.statusMode)}>
-          {operationMode}
-        </span>
-      </div>
+      <StatusSection
+        label="Mode"
+        value={operationMode}
+        valueClassName={statusSectionStyles.statusMode}
+      />
 
       {/* Zoom level */}
-      <div className={styles.statusSection}>
-        <span className={styles.statusLabel}>Zoom:</span>
-        <span className={styles.statusValue}>{zoomPercentage}%</span>
-      </div>
+      <StatusSection
+        label="Zoom"
+        value={`${zoomPercentage}%`}
+      />
 
       {/* Position */}
-      <div className={styles.statusSection}>
-        <span className={styles.statusLabel}>Position:</span>
-        <span className={styles.statusValue}>{getCursorPosition()}</span>
-      </div>
+      <StatusSection
+        label="Position"
+        value={getCursorPosition()}
+      />
 
       {/* Grid info */}
       {canvasState.gridSettings.showGrid && (
-        <div className={styles.statusSection}>
-          <span className={styles.statusLabel}>Grid:</span>
-          <span className={styles.statusValue}>
-            {canvasState.gridSettings.size}px
-            {canvasState.gridSettings.snapToGrid && ' (Snap ON)'}
-          </span>
-        </div>
+        <StatusSection
+          label="Grid"
+          value={
+            <>
+              {canvasState.gridSettings.size}px
+              {canvasState.gridSettings.snapToGrid && ' (Snap ON)'}
+            </>
+          }
+        />
       )}
 
       {/* Auto-save status */}
       {autoSave && (
-        <div className={styles.statusSection}>
-          <span className={styles.statusLabel}>Auto-save:</span>
-          <span className={classNames(styles.statusValue, isSaving && styles.statusSaving)}>
-            {isSaving ? 'Saving...' : 'ON'}
-          </span>
-        </div>
+        <StatusSection
+          label="Auto-save"
+          value={isSaving ? 'Saving...' : 'ON'}
+          valueClassName={isSaving ? statusSectionStyles.statusSaving : undefined}
+        />
       )}
 
       {/* Theme info */}
       {settingsManager && (
-        <div className={styles.statusSection}>
-          <span className={styles.statusLabel}>Theme:</span>
-          <span className={styles.statusValue}>
-            {settingsManager.getValue("appearance.theme") || "light"}
-          </span>
-        </div>
+        <StatusSection
+          label="Theme"
+          value={settingsManager.getValue("appearance.theme") || "light"}
+        />
       )}
     </div>
   );
