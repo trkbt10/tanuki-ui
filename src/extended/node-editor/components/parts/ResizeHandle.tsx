@@ -1,6 +1,6 @@
 import * as React from "react";
-import { classNames } from "../../../utilities/classNames";
-import styles from "../NodeEditor.module.css";
+import { classNames } from "../../../../utilities/classNames";
+import styles from "../../NodeEditor.module.css";
 
 export interface ResizeHandleProps {
   /** The resize handle position - now only 'se' (bottom-right) is supported */
