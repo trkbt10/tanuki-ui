@@ -15,7 +15,6 @@ export const SelectionOverlay: React.FC<SelectionOverlayProps> = ({ className })
   return (
     <div
       className={classNames(styles.selectionOverlay, className)}
-      data-testid="selection-overlay"
     >
       <SelectionBox />
     </div>

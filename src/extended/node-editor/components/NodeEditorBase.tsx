@@ -6,7 +6,6 @@ import styles from "../NodeEditor.module.css";
 interface NodeEditorBaseProps {
   children: React.ReactNode;
   className?: string;
-  'data-testid'?: string;
 }
 
 /**
@@ -15,8 +14,7 @@ interface NodeEditorBaseProps {
  */
 export const NodeEditorBase: React.FC<NodeEditorBaseProps> = ({ 
   children, 
-  className,
-  'data-testid': dataTestId = 'node-editor-base'
+  className
 }) => {
   // Initialize keyboard shortcuts
   useNodeEditorShortcuts();
@@ -24,7 +22,6 @@ export const NodeEditorBase: React.FC<NodeEditorBaseProps> = ({
   return (
     <div 
       className={classNames(styles.nodeEditorBase, className)}
-      data-testid={dataTestId}
       tabIndex={0} // Make focusable for keyboard events
     >
       {children}

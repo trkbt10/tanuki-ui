@@ -36,7 +36,6 @@ export const SelectionBox: React.FC<SelectionBoxProps> = ({ className }) => {
         width,
         height,
       }}
-      data-testid="selection-box"
     />
   );
 };
