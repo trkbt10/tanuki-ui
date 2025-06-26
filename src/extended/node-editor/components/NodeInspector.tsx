@@ -1,10 +1,12 @@
 import * as React from "react";
 import type { Node } from "../types/core";
 import { useNodeEditor } from "../contexts/NodeEditorContext";
+import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeDefinition } from "../contexts/NodeDefinitionContext";
 import { useExternalDataRef } from "../contexts/ExternalDataContext";
 import { useExternalData } from "../hooks/useExternalData";
 import { DefaultInspectorRenderer } from "../components/node/renderers/DefaultRenderers";
+import { calculateAlignmentPositions } from "../utils/alignmentUtils";
 
 export interface NodeInspectorProps {
   node: Node;
@@ -12,7 +14,8 @@ export interface NodeInspectorProps {
 
 export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
   ({ node }) => {
-    const { dispatch: nodeEditorDispatch, actions: nodeEditorActions } = useNodeEditor();
+    const { state: nodeEditorState, dispatch: nodeEditorDispatch, actions: nodeEditorActions } = useNodeEditor();
+    const { state: actionState } = useEditorActionState();
     const nodeDefinition = useNodeDefinition(node.type);
     const externalDataRef = useExternalDataRef(node.id);
     const externalDataState = useExternalData(node, externalDataRef);
@@ -39,6 +42,20 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
       nodeEditorDispatch(nodeEditorActions.deleteNode(node.id));
     }, [node.id, nodeEditorDispatch, nodeEditorActions]);
 
+    // Get all selected nodes for alignment
+    const selectedNodes = actionState.selectedNodeIds.map((id) => nodeEditorState.nodes[id]).filter(Boolean);
+
+    // Handle alignment operations
+    const handleAlignNodes = React.useCallback(
+      (alignmentType: string, nodes: Node[]) => {
+        const positionUpdates = calculateAlignmentPositions(nodes, alignmentType);
+        if (Object.keys(positionUpdates).length > 0) {
+          nodeEditorDispatch(nodeEditorActions.moveNodes(positionUpdates));
+        }
+      },
+      [nodeEditorDispatch, nodeEditorActions]
+    );
+
     // Inspector render props - Only recreate when dependencies actually change
     const inspectorProps = React.useMemo(
       () => ({
@@ -49,6 +66,8 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
         onUpdateNode: handleUpdateNode,
         onUpdateExternalData: handleUpdateExternalData,
         onDeleteNode: handleDeleteNode,
+        selectedNodes,
+        onAlignNodes: handleAlignNodes,
       }),
       [
         node,
@@ -58,15 +77,23 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
         handleUpdateNode,
         handleUpdateExternalData,
         handleDeleteNode,
+        selectedNodes,
+        handleAlignNodes,
       ]
     );
 
-    // Use custom renderer if available
-    if (nodeDefinition?.renderInspector) {
-      return <>{nodeDefinition.renderInspector(inspectorProps)}</>;
-    }
-    // Use default renderer
-    return <DefaultInspectorRenderer {...inspectorProps} />;
+    return (
+      <>
+        {/* Custom inspector first */}
+        {nodeDefinition?.renderInspector && (
+          <div style={{ marginBottom: "16px" }}>
+            {nodeDefinition.renderInspector(inspectorProps)}
+          </div>
+        )}
+        {/* Always show default Node Properties */}
+        <DefaultInspectorRenderer {...inspectorProps} />
+      </>
+    );
   },
   (prevProps, nextProps) => {
     // Custom comparison function for memo

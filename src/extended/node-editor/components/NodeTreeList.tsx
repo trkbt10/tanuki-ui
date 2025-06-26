@@ -4,6 +4,7 @@ import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
 import { Node, NodeId } from "../types/core";
 import { getNodeIcon } from "../utils/nodeUtils";
+import { CloseIcon } from "../../../blocks/Icon";
 import styles from "./NodeTreeList.module.css";
 
 interface DragState {
@@ -19,6 +20,7 @@ interface NodeTreeItemProps {
   onSelect: (nodeId: NodeId, multiSelect: boolean) => void;
   onToggleVisibility?: (nodeId: NodeId) => void;
   onToggleExpand?: (nodeId: NodeId) => void;
+  onDeleteNode?: (nodeId: NodeId) => void;
   childNodes: Node[];
   dragState: DragState;
   onNodeDrop: (draggedNodeId: NodeId, targetNodeId: NodeId, position: "before" | "inside" | "after") => void;
@@ -32,6 +34,7 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
   onSelect,
   onToggleVisibility,
   onToggleExpand,
+  onDeleteNode,
   childNodes,
   dragState,
   onNodeDrop,
@@ -62,6 +65,13 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
     e.stopPropagation();
     if (onToggleVisibility) {
       onToggleVisibility(node.id);
+    }
+  };
+  
+  const handleDeleteNode = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onDeleteNode) {
+      onDeleteNode(node.id);
     }
   };
   
@@ -192,6 +202,14 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
             )}
           </svg>
         </button>
+        
+        <button
+          className={styles.deleteButton}
+          onClick={handleDeleteNode}
+          aria-label="Delete node"
+        >
+          <CloseIcon size={12} />
+        </button>
       </div>
       
       {hasChildren && isExpanded && (
@@ -255,6 +273,10 @@ const ConnectedNodeTreeItem: React.FC<ConnectedNodeTreeItemProps> = ({
     }
   }, [editorState.nodes, dispatch, actions]);
   
+  const handleDeleteNode = React.useCallback((nodeId: NodeId) => {
+    dispatch(actions.deleteNode(nodeId));
+  }, [dispatch, actions]);
+  
   return (
     <NodeTreeItem
       node={node}
@@ -263,6 +285,7 @@ const ConnectedNodeTreeItem: React.FC<ConnectedNodeTreeItemProps> = ({
       onSelect={handleSelect}
       onToggleVisibility={handleToggleVisibility}
       onToggleExpand={handleToggleExpand}
+      onDeleteNode={handleDeleteNode}
       childNodes={childNodes}
       dragState={dragState}
       onNodeDrop={onNodeDrop}

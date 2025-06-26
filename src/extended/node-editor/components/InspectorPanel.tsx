@@ -70,28 +70,14 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
         />
       </div>
 
-      <div className={styles.inspectorContent}>
+      <div className={classNames(styles.inspectorContent, activeTabIndex === 0 && styles.inspectorContentNoPadding)}>
         {activeTabIndex === 0 ? (
           <NodeTreeList />
         ) : (
           <>
             {selectedNode && (
               <div className={styles.inspectorSection}>
-                <DefaultInspectorRenderer
-                  node={selectedNode}
-                  selectedNodes={selectedNodes}
-                  onAlignNodes={handleAlignNodes}
-                  externalData={null}
-                  isLoadingExternalData={false}
-                  externalDataError={null}
-                  onUpdateNode={(updates) => {
-                    nodeEditorDispatch(nodeEditorActions.updateNode(selectedNode.id, updates));
-                  }}
-                  onUpdateExternalData={async () => {}}
-                  onDeleteNode={() => {
-                    nodeEditorDispatch(nodeEditorActions.deleteNode(selectedNode.id));
-                  }}
-                />
+                <NodeInspector node={selectedNode} />
               </div>
             )}
 
