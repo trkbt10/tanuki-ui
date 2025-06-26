@@ -2,6 +2,22 @@ import type { Position } from "../../../types/core";
 import { getDistance } from "../../../utils/vectorUtils";
 
 /**
+ * Get the opposite port position for connection drawing
+ * Used when dragging to predict where the connection will end
+ */
+export const getOppositePortPosition = (
+  portPosition: "left" | "right" | "top" | "bottom"
+): "left" | "right" | "top" | "bottom" => {
+  const oppositeMap: Record<string, "left" | "right" | "top" | "bottom"> = {
+    left: "right",
+    right: "left",
+    top: "bottom",
+    bottom: "top",
+  };
+  return oppositeMap[portPosition] || "left";
+};
+
+/**
  * Calculate a bezier curve path between two points
  * Creates a smooth curve that enters/exits ports horizontally or vertically based on port position
  */

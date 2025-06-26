@@ -3,8 +3,8 @@ import { useNodeEditor } from "../../contexts/NodeEditorContext";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
 import { ConnectionView } from "./ConnectionView";
-import { calculateBezierPath } from "./utils/connectionUtils";
-import { usePortPositions } from "../../contexts/PortPositionContext";
+import { calculateBezierPath, getOppositePortPosition } from "./utils/connectionUtils";
+import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
 import type { Connection, Node as EditorNode } from "../../types/core";
 import { classNames } from "../../../../utilities/classNames";
 import styles from "../../NodeEditor.module.css";
@@ -36,7 +36,16 @@ ConnectionLayer.displayName = "ConnectionLayer";
 const DragConnection = React.memo(() => {
   const { state: actionState } = useEditorActionState();
   const { state: nodeEditorState, getPort } = useNodeEditor();
-  const { getPortPosition } = usePortPositions();
+  
+  // Get port IDs for hooks (always call hooks, even if not used)
+  const dragFromPortId = actionState.connectionDragState?.fromPort.id;
+  const dragFromNodeId = actionState.connectionDragState?.fromPort.nodeId;
+  const disconnectPortId = actionState.connectionDisconnectState?.fixedPort.id;
+  const disconnectNodeId = actionState.connectionDisconnectState?.fixedPort.nodeId;
+  
+  // Always call hooks (React rules)
+  const dragFromPos = useDynamicConnectionPoint(dragFromNodeId || '', dragFromPortId || '');
+  const disconnectPos = useDynamicConnectionPoint(disconnectNodeId || '', disconnectPortId || '');
   
   if (actionState.connectionDragState) {
     const fromPort = actionState.connectionDragState.fromPort;
@@ -47,13 +56,15 @@ const DragConnection = React.memo(() => {
     const port = getPort(fromPort.nodeId, fromPort.id);
     if (!port) return null;
 
-    const portPosition = getPortPosition(fromNode.id, port.id);
-    if (!portPosition) return null;
-    
-    const fromPos = portPosition.connectionPoint;
+    if (!dragFromPos) return null;
     const toPos = actionState.connectionDragState.toPosition;
 
-    const pathData = calculateBezierPath(fromPos, toPos, port.position, "left");
+    const pathData = calculateBezierPath(
+      dragFromPos, 
+      toPos, 
+      port.position, 
+      getOppositePortPosition(port.position)
+    );
 
     return (
       <g className={styles.dragConnection}>
@@ -80,13 +91,15 @@ const DragConnection = React.memo(() => {
     const fixedPort = getPort(disconnectState.fixedPort.nodeId, disconnectState.fixedPort.id);
     if (!fixedPort) return null;
 
-    const portPosition = getPortPosition(fixedNode.id, fixedPort.id);
-    if (!portPosition) return null;
-    
-    const fixedPos = portPosition.connectionPoint;
+    if (!disconnectPos) return null;
     const draggingPos = disconnectState.draggingPosition;
 
-    const pathData = calculateBezierPath(fixedPos, draggingPos, fixedPort.position, "left");
+    const pathData = calculateBezierPath(
+      disconnectPos, 
+      draggingPos, 
+      fixedPort.position, 
+      getOppositePortPosition(fixedPort.position)
+    );
 
     return (
       <g className={styles.dragConnection}>
@@ -110,7 +123,10 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
   const { state: nodeEditorState, getPort } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState } = useNodeCanvas();
-  const { getPortPosition } = usePortPositions();
+  
+  // Get dynamic port positions
+  const fromPortPos = useDynamicConnectionPoint(connection.fromNodeId, connection.fromPortId);
+  const toPortPos = useDynamicConnectionPoint(connection.toNodeId, connection.toPortId);
 
   // Handle connection pointer events
   const handleConnectionPointerDown = React.useCallback(
@@ -122,14 +138,11 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
 
       if (!fromNode || !toNode || !fromPort || !toPort) return;
 
-      // Calculate positions
-      const fromPortPos = getPortPosition(fromNode.id, fromPort.id);
-      const toPortPos = getPortPosition(toNode.id, toPort.id);
-      
+      // Use pre-calculated positions
       if (!fromPortPos || !toPortPos) return;
       
-      const fromPos = fromPortPos.connectionPoint;
-      const toPos = toPortPos.connectionPoint;
+      const fromPos = fromPortPos;
+      const toPos = toPortPos;
       
       const midPoint = {
         x: (fromPos.x + toPos.x) / 2,

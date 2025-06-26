@@ -6,6 +6,7 @@ import { useNodeCanvas } from "../../../contexts/NodeCanvasContext";
 import { useNodeDefinitions } from "../../../contexts/NodeDefinitionContext";
 import { usePointerDrag } from "../../../hooks/usePointerDrag";
 import { calculateConnectablePorts } from "../../../utils/connectionValidation";
+import { PORT_INTERACTION_THRESHOLD } from "../../../constants/interaction";
 
 export interface PortInteractionHandlerProps {
   port: Port;
@@ -132,7 +133,7 @@ export const PortInteractionHandler: React.FC<PortInteractionHandlerProps> = ({
     onStart: handleConnectionDragStart,
     onMove: handleConnectionDragMove,
     onEnd: handleConnectionDragEnd,
-    threshold: 2,
+    threshold: PORT_INTERACTION_THRESHOLD.NEW_CONNECTION_THRESHOLD,
   });
 
   // Event handlers

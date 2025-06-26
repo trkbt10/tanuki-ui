@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { Connection, Node, Port } from "../../types/core";
 import { calculateBezierPath } from "./utils/connectionUtils";
-import { usePortPositions } from "../../contexts/PortPositionContext";
+import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
 import { classNames } from "../../../../utilities/classNames";
 import styles from "../../NodeEditor.module.css";
 
@@ -46,13 +46,13 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
   onPointerEnter,
   onPointerLeave,
 }) => {
-  // Get pre-computed port positions from context
-  const { getPortPosition } = usePortPositions();
+  // Get dynamic port positions
+  const baseFromPosition = useDynamicConnectionPoint(fromNode.id, fromPort.id);
+  const baseToPosition = useDynamicConnectionPoint(toNode.id, toPort.id);
   
   // Calculate port positions (use override positions for drag preview)
   const fromPosition = React.useMemo(() => {
-    const basePosition = getPortPosition(fromNode.id, fromPort.id)?.connectionPoint;
-    if (!basePosition) {
+    if (!baseFromPosition) {
       // Fallback if position not found
       return { x: fromNode.position.x, y: fromNode.position.y };
     }
@@ -62,17 +62,16 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
       const deltaX = fromNodePosition.x - fromNode.position.x;
       const deltaY = fromNodePosition.y - fromNode.position.y;
       return {
-        x: basePosition.x + deltaX,
-        y: basePosition.y + deltaY,
+        x: baseFromPosition.x + deltaX,
+        y: baseFromPosition.y + deltaY,
       };
     }
     
-    return basePosition;
-  }, [getPortPosition, fromNode.id, fromNode.position.x, fromNode.position.y, fromPort.id, fromNodePosition?.x, fromNodePosition?.y]);
+    return baseFromPosition;
+  }, [baseFromPosition, fromNode.position.x, fromNode.position.y, fromNodePosition?.x, fromNodePosition?.y]);
 
   const toPosition = React.useMemo(() => {
-    const basePosition = getPortPosition(toNode.id, toPort.id)?.connectionPoint;
-    if (!basePosition) {
+    if (!baseToPosition) {
       // Fallback if position not found
       return { x: toNode.position.x, y: toNode.position.y };
     }
@@ -82,13 +81,13 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
       const deltaX = toNodePosition.x - toNode.position.x;
       const deltaY = toNodePosition.y - toNode.position.y;
       return {
-        x: basePosition.x + deltaX,
-        y: basePosition.y + deltaY,
+        x: baseToPosition.x + deltaX,
+        y: baseToPosition.y + deltaY,
       };
     }
     
-    return basePosition;
-  }, [getPortPosition, toNode.id, toNode.position.x, toNode.position.y, toPort.id, toNodePosition?.x, toNodePosition?.y]);
+    return baseToPosition;
+  }, [baseToPosition, toNode.position.x, toNode.position.y, toNodePosition?.x, toNodePosition?.y]);
 
   // Calculate bezier path (recalculate when positions change)
   const pathData = React.useMemo(

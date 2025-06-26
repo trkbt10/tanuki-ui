@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { Port } from "../../../types/core";
 import { classNames } from "../../../../../utilities/classNames";
-import { usePortPosition } from "../../../contexts/PortPositionContext";
+import { useDynamicPortPosition } from "../../../hooks/usePortPosition";
 import styles from "./PortView.module.css";
 
 export interface PortViewProps {
@@ -33,8 +33,8 @@ export const PortView: React.FC<PortViewProps> = ({
   isHovered = false,
   isConnected = false,
 }) => {
-  // Get pre-computed port position from context
-  const portPosition = usePortPosition(port.nodeId, port.id);
+  // Get dynamic port position
+  const portPosition = useDynamicPortPosition(port.nodeId, port.id);
   
   const getPortPosition = (): React.CSSProperties => {
     if (!portPosition) {
