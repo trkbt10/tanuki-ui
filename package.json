@@ -50,9 +50,10 @@
       "require": "./dist/lib/themes/LiquidGlassFilter.cjs",
       "default": "./dist/lib/themes/LiquidGlassFilter.js"
     },
-    "./style.css": "./dist/lib/style.css",
+    "./style.css": "./dist/lib/index/style.css",
     "./layouts/style.css": "./dist/lib/layouts/style.css",
     "./extended/node-editor/style.css": "./dist/lib/extended/node-editor/style.css",
+    "./extended/panel/style.css": "./dist/lib/extended/panel/style.css",
     "./styles/*.css": "./public/styles/*.css"
   },
   "version": "1.211.56",
