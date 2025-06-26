@@ -2,6 +2,8 @@ import * as React from "react";
 import { NodeEditor } from "../NodeEditor";
 import type { NodeDefinition, NodeRenderProps, InspectorRenderProps, ExternalDataReference } from "../types/NodeDefinition";
 import type { NodeEditorData } from "../types/core";
+import { Button } from "../../../form/Button";
+import { Textarea } from "../../../form/Textarea";
 
 // =============================================
 // Code Editor Node
@@ -83,7 +85,7 @@ const CodeEditorRenderer = ({ node, isSelected, isDragging, externalData, onUpda
 
       {isEditing ? (
         <div>
-          <textarea
+          <Textarea
             id="code-editor-textarea"
             name="codeEditorContent"
             aria-label="Code editor"
@@ -102,7 +104,7 @@ const CodeEditorRenderer = ({ node, isSelected, isDragging, externalData, onUpda
             placeholder="Enter your code here..."
           />
           <div style={{ marginTop: "8px", display: "flex", gap: "4px" }}>
-            <button
+            <Button
               onClick={handleSave}
               style={{
                 padding: "4px 8px",
@@ -115,8 +117,8 @@ const CodeEditorRenderer = ({ node, isSelected, isDragging, externalData, onUpda
               }}
             >
               Save
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setIsEditing(false)}
               style={{
                 padding: "4px 8px",
@@ -129,7 +131,7 @@ const CodeEditorRenderer = ({ node, isSelected, isDragging, externalData, onUpda
               }}
             >
               Cancel
-            </button>
+            </Button>
           </div>
         </div>
       ) : (
@@ -146,7 +148,7 @@ const CodeEditorRenderer = ({ node, isSelected, isDragging, externalData, onUpda
           >
             {codeData?.code || "// Click to edit code"}
           </pre>
-          <button
+          <Button
             onClick={() => setIsEditing(true)}
             style={{
               marginTop: "8px",
@@ -160,7 +162,7 @@ const CodeEditorRenderer = ({ node, isSelected, isDragging, externalData, onUpda
             }}
           >
             Edit Code
-          </button>
+          </Button>
           {codeData?.errors && codeData.errors.length > 0 && (
             <div style={{ marginTop: "4px", fontSize: "10px", color: "#ef4444" }}>{codeData.errors.length} error(s)</div>
           )}
