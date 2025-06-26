@@ -1,0 +1,146 @@
+.migrationDialog {
+  max-width: 600px;
+}
+
+.content {
+  padding: var(--spacing-md);
+}
+
+.alreadyMigrated {
+  text-align: center;
+  padding: var(--spacing-lg);
+}
+
+.alreadyMigrated p {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-secondary);
+}
+
+.prompt p {
+  margin-bottom: var(--spacing-md);
+  color: var(--text-primary);
+}
+
+.benefits {
+  background: var(--surface-secondary);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.benefits h4 {
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.benefits ul {
+  margin: 0;
+  padding-left: var(--spacing-md);
+  list-style: none;
+}
+
+.benefits li {
+  position: relative;
+  padding-left: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.benefits li::before {
+  content: "✓";
+  position: absolute;
+  left: -12px;
+  color: var(--color-success);
+}
+
+.results h3 {
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: var(--font-size-lg);
+  color: var(--text-primary);
+}
+
+.statistics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+  padding: var(--spacing-md);
+  background: var(--surface-secondary);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.statLabel {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xs);
+}
+
+.statValue {
+  font-size: var(--font-size-xl);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.warnings,
+.errors {
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-sm);
+}
+
+.warnings {
+  background: var(--color-warning-bg);
+  border: 1px solid var(--color-warning-border);
+}
+
+.errors {
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
+}
+
+.warnings h4,
+.errors h4 {
+  margin: 0 0 var(--spacing-sm) 0;
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+}
+
+.warnings h4 {
+  color: var(--color-warning);
+}
+
+.errors h4 {
+  color: var(--color-error);
+}
+
+.warnings ul,
+.errors ul {
+  margin: 0;
+  padding-left: var(--spacing-md);
+  list-style: disc;
+}
+
+.warnings li,
+.errors li {
+  margin-bottom: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+}
+
+.actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: flex-end;
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+}
