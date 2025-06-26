@@ -7,6 +7,7 @@ import { NodeTreeList } from "./NodeTreeList";
 import { DefaultInspectorRenderer } from "../components/node/renderers/DefaultRenderers";
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
 import { classNames } from "../../../utilities/classNames";
+import { Button } from "../../../form/Button";
 import styles from "../NodeEditor.module.css";
 
 export interface InspectorPanelProps {
@@ -64,18 +65,18 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({
     >
       <div className={styles.inspectorHeader}>
         <div className={styles.inspectorTabs}>
-          <button
+          <Button
             className={classNames(styles.inspectorTab, activeTab === "layers" && styles.active)}
             onClick={() => setActiveTab("layers")}
           >
             Layers
-          </button>
-          <button
+          </Button>
+          <Button
             className={classNames(styles.inspectorTab, activeTab === "properties" && styles.active)}
             onClick={() => setActiveTab("properties")}
           >
             Properties
-          </button>
+          </Button>
         </div>
       </div>
       
