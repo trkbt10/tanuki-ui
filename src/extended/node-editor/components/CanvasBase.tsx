@@ -2,7 +2,7 @@ import * as React from "react";
 import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeEditor } from "../contexts/NodeEditorContext";
-import { SelectionOverlay } from "./SelectionOverlay";
+import { SelectionOverlay } from "./parts/SelectionOverlay";
 import { classNames } from "../../../utilities/classNames";
 import styles from "../NodeEditor.module.css";
 

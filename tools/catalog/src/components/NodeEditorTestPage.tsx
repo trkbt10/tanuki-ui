@@ -20,6 +20,7 @@ const MathNodeRenderer = ({ node, isSelected, onUpdateNode }: NodeRenderProps) =
         display: "flex",
         flexDirection: "column",
         padding: "8px",
+        boxSizing: "border-box",
       }}
     >
       <div style={{ fontSize: "12px", fontWeight: "bold", color: "#2e7d32" }}>{node.data.title || node.type}</div>
@@ -61,6 +62,7 @@ const DataSourceRenderer = ({ node, isSelected, onUpdateNode }: NodeRenderProps)
         display: "flex",
         flexDirection: "column",
         padding: "8px",
+        boxSizing: "border-box",
       }}
     >
       <div style={{ fontSize: "12px", fontWeight: "bold", color: "#0277bd" }}>📊 {node.data.title || "Data Source"}</div>
@@ -109,6 +111,7 @@ const DisplayNodeRenderer = ({ node }: NodeRenderProps) => {
         display: "flex",
         flexDirection: "column",
         padding: "8px",
+        boxSizing: "border-box",
       }}
     >
       <div style={{ fontSize: "12px", fontWeight: "bold", color: "#495057" }}>📺 {node.data.title || "Display"}</div>
@@ -750,7 +753,7 @@ const NodeEditorTestPage: React.FC = () => {
                   color: selectedTestData === key ? "white" : "#495057",
                 }}
               >
-                {key === "simple" ? "シンプル" : key === "mathFlow" ? "計算フロー" : "空"}
+                {key}
               </Button>
             ))}
           </div>
@@ -789,7 +792,7 @@ const NodeEditorTestPage: React.FC = () => {
           {isControlledMode ? (
             <NodeEditor
               key="controlled"
-              initialData={controlledData}
+              data={controlledData}
               onDataChange={setControlledData}
               nodeDefinitions={basicNodeDefinitions}
             />

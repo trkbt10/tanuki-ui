@@ -201,7 +201,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         borderRadius: "4px",
         fontSize: "13px",
       }),
-      [],
+      []
     );
 
     const labelStyles: React.CSSProperties = React.useMemo(
@@ -212,7 +212,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         fontWeight: 500,
         color: "#666",
       }),
-      [],
+      []
     );
 
     // Memoized update handlers
@@ -222,7 +222,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
           data: { ...node.data, title },
         });
       },
-      [node.data, onUpdateNode],
+      [node.data, onUpdateNode]
     );
 
     const handleContentChange = React.useCallback(
@@ -231,7 +231,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
           data: { ...node.data, content },
         });
       },
-      [node.data, onUpdateNode],
+      [node.data, onUpdateNode]
     );
 
     const handlePositionXChange = React.useCallback(
@@ -240,7 +240,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
           position: { ...node.position, x },
         });
       },
-      [node.position, onUpdateNode],
+      [node.position, onUpdateNode]
     );
 
     const handlePositionYChange = React.useCallback(
@@ -249,7 +249,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
           position: { ...node.position, y },
         });
       },
-      [node.position, onUpdateNode],
+      [node.position, onUpdateNode]
     );
 
     const handleWidthChange = React.useCallback(
@@ -258,7 +258,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
           size: { ...node.size, width, height: node.size?.height ?? 0 },
         });
       },
-      [node.size, onUpdateNode],
+      [node.size, onUpdateNode]
     );
 
     const handleHeightChange = React.useCallback(
@@ -267,21 +267,21 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
           size: { ...node.size, height, width: node.size?.width ?? 0 },
         });
       },
-      [node.size, onUpdateNode],
+      [node.size, onUpdateNode]
     );
 
     const handleLockedChange = React.useCallback(
       (locked: boolean) => {
         onUpdateNode({ locked });
       },
-      [onUpdateNode],
+      [onUpdateNode]
     );
 
     const handleVisibleChange = React.useCallback(
       (visible: boolean) => {
         onUpdateNode({ visible });
       },
-      [onUpdateNode],
+      [onUpdateNode]
     );
 
     const handleAlignment = React.useCallback(
@@ -289,7 +289,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         if (!onAlignNodes || selectedNodes.length < 2) return;
         onAlignNodes(alignmentType, selectedNodes);
       },
-      [onAlignNodes, selectedNodes],
+      [onAlignNodes, selectedNodes]
     );
 
     const textareaStyles = React.useMemo(
@@ -298,7 +298,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         minHeight: "60px",
         resize: "vertical" as const,
       }),
-      [inputStyles],
+      [inputStyles]
     );
 
     const halfWidthInputStyles = React.useMemo(
@@ -306,7 +306,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         ...inputStyles,
         width: "50%",
       }),
-      [inputStyles],
+      [inputStyles]
     );
 
     return (
@@ -425,7 +425,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         </div>
       </div>
     );
-  },
+  }
 );
 
 DefaultInspectorRenderer.displayName = "DefaultInspectorRenderer";

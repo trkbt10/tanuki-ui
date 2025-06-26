@@ -2,7 +2,7 @@ import * as React from "react";
 import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
 import { useNodeEditor } from "../../contexts/NodeEditorContext";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
-import { FloatingContainer } from "../FloatingContainer";
+import { FloatingContainer } from "../parts/FloatingContainer";
 import styles from "./GridToolbox.module.css";
 
 export interface GridToolboxProps {
