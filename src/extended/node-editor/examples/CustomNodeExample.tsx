@@ -333,7 +333,6 @@ export const CustomNodeExample: React.FC = () => {
             setSavedData(data);
             alert("Data saved successfully!");
           }}
-          showInspector={true}
         />
       </div>
 

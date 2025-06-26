@@ -484,7 +484,6 @@ export const TestNodeEditor: React.FC = () => {
         <NodeEditor
           initialData={initialData}
           onDataChange={setEditorData}
-          showInspector={true}
           settingsManager={settingsManager}
           uiOverlayLayers={uiOverlayLayers}
           toolbar={<Toolbar />}

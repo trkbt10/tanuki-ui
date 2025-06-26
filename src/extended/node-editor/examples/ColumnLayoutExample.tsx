@@ -39,8 +39,7 @@ export const ColumnLayoutExample: React.FC = () => {
         rightSidebarMaxWidth={600}
         onLeftSidebarWidthChange={setLeftSidebarWidth}
         onRightSidebarWidthChange={setRightSidebarWidth}
-        // Backward compatibility: showInspector is deprecated but still works
-        showInspector={false} // Use rightSidebar prop instead
+        // Use rightSidebar prop instead of deprecated showInspector
       />
     </div>
   );
@@ -92,7 +91,6 @@ export const SingleColumnExample: React.FC = () => {
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
       <NodeEditor
-        showInspector={false}
         // No leftSidebar or rightSidebar props = single column layout
       />
     </div>

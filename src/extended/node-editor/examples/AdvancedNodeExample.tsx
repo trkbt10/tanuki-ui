@@ -1180,7 +1180,6 @@ export const AdvancedNodeExample: React.FC = () => {
             await new Promise(resolve => setTimeout(resolve, 1000));
             alert("Advanced editor data saved!");
           }}
-          showInspector={true}
         />
       </div>
     </div>

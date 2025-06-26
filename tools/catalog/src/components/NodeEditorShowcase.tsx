@@ -194,14 +194,12 @@ const NodeEditorShowcase: React.FC = () => {
                 initialData={controlledData}
                 onDataChange={setControlledData}
                 nodeDefinitions={basicNodeDefinitions}
-                showInspector={true}
               />
             ) : (
               <NodeEditor
                 initialData={editorData}
                 onDataChange={setEditorData}
                 nodeDefinitions={basicNodeDefinitions}
-                showInspector={true}
               />
             )}
           </div>
@@ -266,7 +264,6 @@ function UncontrolledNodeEditor() {
         // 変更通知を受け取る（オプション）
         console.log("Data changed:", data);
       }}
-      showInspector={true}
     />
   );
 }`}
@@ -302,7 +299,6 @@ function ControlledNodeEditor() {
     <NodeEditor
       data={data}              // 状態を直接制御
       onDataChange={setData}   // 必須：状態更新ハンドラー
-      showInspector={true}
     />
   );
 }`}
