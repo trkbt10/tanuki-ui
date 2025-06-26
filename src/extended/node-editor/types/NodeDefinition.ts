@@ -1,5 +1,20 @@
 import type { ReactNode, ReactElement } from "react";
-import type { Node, NodeId, Port, Connection, NodeEditorData } from "./core";
+import type { Node, NodeId, Port, Connection, NodeEditorData, NodeData } from "./core";
+
+/**
+ * Node data type map interface
+ * Users can extend this interface to add their own node type definitions
+ * @example
+ * declare module '@tanuki-ui/node-editor' {
+ *   interface NodeDataTypeMap {
+ *     'my-custom-node': { title: string; value: number; };
+ *   }
+ * }
+ */
+export interface NodeDataTypeMap {
+  // This interface is intentionally empty to allow for module augmentation
+  // Users can extend it to add their own node types
+}
 
 /**
  * External data reference for nodes
@@ -18,10 +33,16 @@ export interface ExternalDataReference {
 
 /**
  * Node render props for custom node visualization
+ * @template TNodeType - The specific node type from NodeDataTypeMap
  */
-export interface NodeRenderProps {
-  /** The node data */
-  node: Node;
+export interface NodeRenderProps<TNodeType extends string = string> {
+  /** The node data with type-safe data property */
+  node: TNodeType extends keyof NodeDataTypeMap 
+    ? Node & {
+        type: TNodeType;
+        data: NodeDataTypeMap[TNodeType];
+      }
+    : Node;
   /** Whether the node is selected */
   isSelected: boolean;
   /** Whether the node is being dragged */
@@ -42,10 +63,16 @@ export interface NodeRenderProps {
 
 /**
  * Inspector panel render props
+ * @template TNodeType - The specific node type from NodeDataTypeMap
  */
-export interface InspectorRenderProps {
-  /** The selected node */
-  node: Node;
+export interface InspectorRenderProps<TNodeType extends string = string> {
+  /** The selected node with type-safe data property */
+  node: TNodeType extends keyof NodeDataTypeMap 
+    ? Node & {
+        type: TNodeType;
+        data: NodeDataTypeMap[TNodeType];
+      }
+    : Node;
   /** External data if loaded */
   externalData: unknown;
   /** Loading state for external data */
@@ -146,10 +173,11 @@ export interface NodeConstraint {
 
 /**
  * Node type definition
+ * @template TNodeType - The specific node type from NodeDataTypeMap
  */
-export interface NodeDefinition {
+export interface NodeDefinition<TNodeType extends string = string> {
   /** Unique type identifier */
-  type: string;
+  type: TNodeType;
   /** Display name for the node type */
   displayName: string;
   /** Description of the node type */
@@ -159,7 +187,7 @@ export interface NodeDefinition {
   /** Category for grouping in UI */
   category?: string;
   /** Default data when creating a new node */
-  defaultData?: Record<string, unknown>;
+  defaultData?: TNodeType extends keyof NodeDataTypeMap ? NodeDataTypeMap[TNodeType] : Record<string, unknown>;
   /** Default size for new nodes */
   defaultSize?: { width: number; height: number };
   /** Port definitions */
@@ -169,9 +197,9 @@ export interface NodeDefinition {
   /** When true, node can only be moved by dragging title or when multi-selected */
   interactive?: boolean;
   /** Custom render function for the node */
-  renderNode?: (props: NodeRenderProps) => ReactElement;
+  renderNode?: (props: NodeRenderProps<TNodeType>) => ReactElement;
   /** Custom render function for the inspector panel */
-  renderInspector?: (props: InspectorRenderProps) => ReactElement;
+  renderInspector?: (props: InspectorRenderProps<TNodeType>) => ReactElement;
   /** External data loader */
   loadExternalData?: (ref: ExternalDataReference) => unknown | Promise<unknown>;
   /** External data updater */
@@ -316,4 +344,56 @@ export const MultiInputNodeDefinition: NodeDefinition = {
     },
   ],
 };
+
+/**
+ * Helper function to create a type-safe node definition
+ * @template TNodeType - The specific node type from NodeDataTypeMap
+ */
+export function createNodeDefinition<TNodeType extends string>(
+  definition: NodeDefinition<TNodeType>
+): NodeDefinition<TNodeType> {
+  return definition;
+}
+
+/**
+ * Helper function to get typed node data
+ * @template TNodeType - The specific node type from NodeDataTypeMap
+ */
+export function getTypedNodeData<TNodeType extends keyof NodeDataTypeMap>(
+  node: Node & { type: TNodeType }
+): NodeDataTypeMap[TNodeType] {
+  return node.data as NodeDataTypeMap[TNodeType];
+}
+
+/**
+ * Helper function to create a type-safe node data updater
+ * @template TNodeType - The specific node type from NodeDataTypeMap
+ */
+export function createNodeDataUpdater<TNodeType extends keyof NodeDataTypeMap>(
+  onUpdateNode: (updates: Partial<Node>) => void
+) {
+  return (data: Partial<NodeDataTypeMap[TNodeType]>) => {
+    onUpdateNode({ data: data as NodeData });
+  };
+}
+
+/**
+ * Compatibility bridge: Convert typed node render to original interface
+ * @template TNodeType - The specific node type from NodeDataTypeMap
+ */
+export function asOriginalNodeRender<TNodeType extends string>(
+  render: (props: NodeRenderProps<TNodeType>) => ReactElement
+): (props: NodeRenderProps) => ReactElement {
+  return render as any;
+}
+
+/**
+ * Compatibility bridge: Convert typed inspector render to original interface
+ * @template TNodeType - The specific node type from NodeDataTypeMap
+ */
+export function asOriginalInspectorRender<TNodeType extends string>(
+  render: (props: InspectorRenderProps<TNodeType>) => ReactElement
+): (props: InspectorRenderProps) => ReactElement {
+  return render as any;
+}
 
