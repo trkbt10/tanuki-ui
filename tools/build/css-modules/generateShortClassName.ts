@@ -1,6 +1,6 @@
-import * as crypto from 'node:crypto';
-import { generateFolderPrefix } from './generateFolderPrefix';
-import { abbreviations } from './abbreviations';
+import * as crypto from "node:crypto";
+import { generateFolderPrefix } from "./generateFolderPrefix";
+import { abbreviations } from "./abbreviations";
 
 // Cache for generated class names and folder prefixes
 const classNameCache = new Map<string, string>();
@@ -22,10 +22,10 @@ export function generateShortClassName(name: string, filePath: string): string {
   }
 
   // Extract folder structure from path
-  const pathParts = filePath.split('/').filter(Boolean);
+  const pathParts = filePath.split("/").filter(Boolean);
 
   // Find the most specific folder to use as prefix
-  let prefix = 'ui'; // default prefix
+  let prefix = "ui"; // default prefix
 
   // Try to use the most specific (deepest) folder
   if (pathParts.length > 0) {
@@ -33,9 +33,9 @@ export function generateShortClassName(name: string, filePath: string): string {
     const immediateFolder = pathParts[pathParts.length - 2] || pathParts[0];
 
     // For special deep paths, use combination
-    if (pathParts.length > 2 && pathParts[0] === 'extended') {
+    if (pathParts.length > 2 && pathParts[0] === "extended") {
       // e.g., extended/node-editor -> ne
-      const folderKey = pathParts.slice(0, 2).join('-');
+      const folderKey = pathParts.slice(0, 2).join("-");
       prefix = getFolderPrefix(folderKey);
     } else {
       prefix = getFolderPrefix(immediateFolder);
@@ -47,18 +47,18 @@ export function generateShortClassName(name: string, filePath: string): string {
 
   // Apply abbreviations
   for (const [full, abbr] of Object.entries(abbreviations)) {
-    shortName = shortName.replace(new RegExp(full, 'gi'), abbr);
+    shortName = shortName.replace(new RegExp(full, "gi"), abbr);
   }
 
   // If still too long, use first letter of each word
   if (shortName.length > 8) {
     shortName = shortName
-      .replace(/([A-Z])/g, '-$1')
+      .replace(/([A-Z])/g, "-$1")
       .toLowerCase()
-      .replace(/^-/, '')
+      .replace(/^-/, "")
       .split(/[-_]/)
-      .map(part => part.slice(0, 3))
-      .join('');
+      .map((part) => part.slice(0, 3))
+      .join("");
   }
 
   // Create base class name
@@ -69,7 +69,7 @@ export function generateShortClassName(name: string, filePath: string): string {
     const existingPath = collisionCheck.get(className)!;
     if (existingPath !== cacheKey) {
       // Collision detected, add a short hash instead of counter
-      const hash = crypto.createHash('md5').update(cacheKey).digest('base64url').slice(0, 3);
+      const hash = crypto.createHash("md5").update(cacheKey).digest("base64url").slice(0, 3);
       className = `${prefix}${shortName}${hash}`;
     }
   }
