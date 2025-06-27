@@ -2,12 +2,13 @@ name: Deploy Component Catalog
 
 on:
   push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
+    branches: [main]
+    paths:
+      - 'package.json'
+  workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -16,7 +17,38 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  check-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version-changed: ${{ steps.check.outputs.changed }}
+      new-version: ${{ steps.check.outputs.version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check if version changed
+        id: check
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+            echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+          else
+            CURRENT_VERSION=$(node -p "require('./package.json').version")
+            PREVIOUS_VERSION=$(git show HEAD~1:package.json | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')).version")
+            
+            if [ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ]; then
+              echo "changed=true" >> $GITHUB_OUTPUT
+              echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+            else
+              echo "changed=false" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+  build-and-deploy:
+    needs: check-version
+    if: needs.check-version.outputs.version-changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -35,27 +67,45 @@ jobs:
       - name: Build main library
         run: bun run build
         
-        
       - name: Build catalog site
         run: cd tools/catalog && bun run build
         
+      - name: Create catalog branch
+        run: |
+          CATALOG_BRANCH="catalog-v${{ needs.check-version.outputs.new-version }}"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Create orphan branch for catalog
+          git checkout --orphan "$CATALOG_BRANCH"
+          git rm -rf .
+          
+          # Copy catalog build files
+          cp -r tools/catalog/dist/* .
+          
+          # Create .nojekyll to ensure GitHub Pages works with SPA
+          touch .nojekyll
+          
+          git add .
+          git commit -m "Deploy catalog v${{ needs.check-version.outputs.new-version }}"
+          git push origin "$CATALOG_BRANCH"
+          
+          echo "Created catalog branch: $CATALOG_BRANCH"
+        
       - name: Setup Pages
-        if: github.ref == 'refs/heads/main'
         uses: actions/configure-pages@v4
         
       - name: Upload artifact
-        if: github.ref == 'refs/heads/main'
         uses: actions/upload-pages-artifact@v3
         with:
           path: './tools/catalog/dist'
 
   deploy:
-    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: build
+    needs: build-and-deploy
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

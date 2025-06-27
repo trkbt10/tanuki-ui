@@ -1,8 +1,9 @@
 name: Publish to NPM
 
 on:
-  release:
-    types: [published]
+  push:
+    branches:
+      - 'release/**'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -45,11 +46,7 @@ jobs:
         run: bun run build
         
       - name: Check build output
-        run: |
-          echo "Checking dist folder contents:"
-          ls -la dist/
-          ls -la dist/lib/
-          ls -la dist/types/
+        run: bun run verify:exports
           
       - name: Dry run publish
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'true'
@@ -58,13 +55,13 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           
       - name: Publish to NPM
-        if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false')
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false')
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           
       - name: Create GitHub deployment
-        if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false')
+        if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && github.event.inputs.dry_run == 'false')
         uses: actions/github-script@v7
         with:
           script: |
