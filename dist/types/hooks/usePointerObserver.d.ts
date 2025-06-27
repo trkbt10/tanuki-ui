@@ -1,0 +1,27 @@
+import { ObservePointerCallback } from './pointer-utilities/ObservePointerCallback';
+import * as React from "react";
+export type { ObservePointerCallback };
+export type PointerInfo = {
+    pointerId: string;
+    type: "pointerdown" | "pointerend" | "pointermove";
+    timestamp: number;
+    elapsedtime: number;
+    pageX: number;
+    pageY: number;
+    deltaX: number;
+    deltaY: number;
+    startX: number;
+    startY: number;
+    clientX: number;
+    clientY: number;
+    offsetX: number;
+    offsetY: number;
+    button: number;
+    isFinal: boolean;
+    target: Element;
+    defaultPrevented: boolean;
+    ZIndexList: number[];
+};
+export declare const useObservePointer: <T extends HTMLElement | SVGElement>(ref: React.RefObject<T | null>, callback: ObservePointerCallback) => void;
+export declare const observePointer: <T extends HTMLElement | SVGElement>(ref: React.RefObject<T | null>, callback: ObservePointerCallback) => void;
+export declare const usePointerObserver: <T extends HTMLElement | SVGElement>(ref: React.RefObject<T>) => (PointerInfo | undefined)[];

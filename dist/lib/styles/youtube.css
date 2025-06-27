@@ -1,0 +1,420 @@
+/**
+ * @theme YouTube
+ * @description Modern, clean design inspired by YouTube's interface with rounded corners, subtle shadows, and video-centric aesthetics
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Media
+ */
+
+/* Import YouTube-style fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+  /* YouTube Color Palette */
+  --youtube-red: #ff0000;
+  --youtube-red-dark: #cc0000;
+  --youtube-red-light: #ff4444;
+  --youtube-black: #0f0f0f;
+  --youtube-dark-gray: #212121;
+  --youtube-medium-gray: #303030;
+  --youtube-light-gray: #f9f9f9;
+  --youtube-text-primary: #0f0f0f;
+  --youtube-text-secondary: #606060;
+  --youtube-text-disabled: #909090;
+  --youtube-border: #e0e0e0;
+  --youtube-hover: #f2f2f2;
+  --youtube-focus: #065fd4;
+  --youtube-white: #ffffff;
+  
+  /* Base System Colors */
+  --textColor: var(--youtube-text-primary);
+  --accentColor: var(--youtube-red);
+  --cautionColor: var(--youtube-red);
+  --windowBackgroundColor: var(--youtube-white);
+  
+  /* YouTube Typography System */
+  --themeDefaultFontFamily: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --themeControlFontFamily: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --themeLabelFontFamily: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  
+  /* Smooth font rendering */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: auto;
+  text-rendering: optimizeLegibility;
+  
+  /* YouTube Text Hierarchy */
+  --textFont: normal normal 400 14px/1.4 var(--themeDefaultFontFamily);
+  --labelFont: normal normal 500 12px/1.33 var(--themeLabelFontFamily);
+  --titleFont: normal normal 600 20px/1.3 var(--themeDefaultFontFamily);
+  --subtitleFont: normal normal 500 16px/1.375 var(--themeDefaultFontFamily);
+  --captionFont: normal normal 400 12px/1.33 var(--themeDefaultFontFamily);
+  
+  /* YouTube Text Colors */
+  --labelColor: var(--youtube-text-primary);
+  --secondaryLabelColor: var(--youtube-text-secondary);
+  --tertiaryLabelColor: var(--youtube-text-disabled);
+  --quaternaryLabelColor: #c0c0c0;
+  --placeholderTextColor: var(--youtube-text-secondary);
+  
+  /* YouTube Selection Colors */
+  --selectedTextColor: var(--youtube-white);
+  --selectedTextBackgroundColor: var(--youtube-focus);
+  --textBackgroundColor: var(--youtube-white);
+  --unemphasizedSelectedTextColor: var(--youtube-text-primary);
+  --unemphasizedSelectedTextBackgroundColor: var(--youtube-hover);
+  
+  /* YouTube System Colors */
+  --systemBlueColor: #065fd4;
+  --systemGreenColor: #00a152;
+  --systemRedColor: var(--youtube-red);
+  --systemOrangeColor: #ff6d00;
+  --systemYellowColor: #ffab00;
+  --systemPurpleColor: #7c4dff;
+  --systemPinkColor: #e91e63;
+  --systemTealColor: #00bcd4;
+  --systemIndigoColor: #3f51b5;
+  --systemBrownColor: #8d6e63;
+  --systemGrayColor: var(--youtube-text-secondary);
+  
+  /* YouTube Elevation System */
+  --youtube-shadow-1: 0 1px 2px rgba(0, 0, 0, 0.1);
+  --youtube-shadow-2: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --youtube-shadow-3: 0 4px 8px rgba(0, 0, 0, 0.12);
+  --youtube-shadow-4: 0 8px 16px rgba(0, 0, 0, 0.15);
+  --youtube-shadow-menu: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  /* YouTube Border Radius */
+  --youtube-radius-small: 4px;
+  --youtube-radius-medium: 8px;
+  --youtube-radius-large: 12px;
+  --youtube-radius-round: 50%;
+  
+  /* YouTube Control Properties */
+  --controlAccentColor: var(--youtube-red);
+  --controlBackground: var(--youtube-white);
+  --controlTextColor: var(--youtube-text-primary);
+  --controlHoverBackground: var(--youtube-hover);
+  --controlActiveBackground: #e8e8e8;
+  --controlFocusBackground: var(--youtube-white);
+  --controlDisabledBackground: #f5f5f5;
+  --disabledControlTextColor: var(--youtube-text-disabled);
+  
+  /* YouTube Control Styling */
+  --controlBorder: 1px solid var(--youtube-border);
+  --controlBoxShadow: none;
+  --controlHoverBoxShadow: var(--youtube-shadow-1);
+  --controlActiveBoxShadow: var(--youtube-shadow-2);
+  --controlFocusBoxShadow: 0 0 0 2px var(--youtube-focus);
+  --controlBorderRadius: var(--youtube-radius-small);
+  --controlPadding: 10px 16px;
+  --controlTextFont: normal normal 500 14px/1.4 var(--themeControlFontFamily);
+  --controlTextLetterSpacing: 0;
+  
+  /* YouTube Primary Controls (Subscribe button style) */
+  --controlBackground--primary: var(--youtube-red);
+  --controlTextColor--primary: var(--youtube-white);
+  --controlHoverBackground--primary: var(--youtube-red-dark);
+  --controlActiveBackground--primary: #990000;
+  --controlBorder--primary: none;
+  --controlBoxShadow--primary: none;
+  
+  /* YouTube Secondary Controls */
+  --controlBackground--secondary: transparent;
+  --controlTextColor--secondary: var(--youtube-text-primary);
+  --controlHoverBackground--secondary: var(--youtube-hover);
+  --controlActiveBackground--secondary: #e8e8e8;
+  --controlBorder--secondary: 1px solid var(--youtube-border);
+  --controlBoxShadow--secondary: none;
+  
+  /* YouTube Input Elements */
+  --inputPadding: 12px 16px;
+  --inputFont: var(--textFont);
+  --inputBorder: 1px solid var(--youtube-border);
+  --inputBorderRadius: var(--youtube-radius-small);
+  --inputBackground: var(--youtube-white);
+  --inputBoxShadow: none;
+  --inputFocusBorder: 2px solid var(--youtube-focus);
+  --inputFocusBoxShadow: none;
+  
+  /* YouTube Dialog & Windows */
+  --dialogBackground: var(--youtube-white);
+  --dialogBorderRadius: var(--youtube-radius-medium);
+  --dialogBorder: none;
+  --dialogBoxShadow: var(--youtube-shadow-4);
+  --dialogBackdrop: rgba(0, 0, 0, 0.8);
+  --dialogPadding: 24px;
+  --windowBorder: none;
+  --windowBoxShadow: var(--youtube-shadow-3);
+  --windowBorderRadius: var(--youtube-radius-medium);
+  --windowPadding: 16px;
+  --windowBackdropFilter: none;
+  
+  /* YouTube Table Styles */
+  --tableBackgroundColor: var(--youtube-white);
+  --tableBorderColor: var(--youtube-border);
+  --tableHeaderTextColor: var(--youtube-text-primary);
+  --tableHeaderBackgroundColor: #fafafa;
+  --tableHeaderBorderColor: var(--youtube-border);
+  --tableHeaderFont: normal normal 500 14px/1.4 var(--themeDefaultFontFamily);
+  --tableRowTextColor: var(--youtube-text-primary);
+  --tableRowBackgroundColor: var(--youtube-white);
+  --tableRowBorderColor: var(--youtube-border);
+  --tableRowAlternateBackgroundColor: #fafafa;
+  --tableHoverBackground: var(--youtube-hover);
+  --tableHoverTextColor: var(--youtube-text-primary);
+  --tableCellPadding: 12px 16px;
+  --tableBorder: 1px solid var(--youtube-border);
+  --tableBorderStyle: solid;
+  --tableBorderWidth: 1px;
+  --tableHeaderBorder: 1px solid var(--youtube-border);
+  --tableHeaderBorderStyle: solid;
+  --tableHeaderBorderWidth: 1px;
+  --tableCellBorder: none;
+  --tableCellBorderStyle: none;
+  --tableCellBorderWidth: 0;
+  --tableRowBorder: 1px solid var(--youtube-border);
+  --tableRowBorderStyle: solid;
+  --tableRowBorderWidth: 1px;
+  
+  /* YouTube Tab System */
+  --tabBarBackground: var(--youtube-white);
+  --tabBarBorder: none;
+  --tabBarBoxShadow: 0 1px 0 var(--youtube-border);
+  --tabBarLayout: horizontal;
+  --tabItemBackground: transparent;
+  --tabItemTextColor: var(--youtube-text-secondary);
+  --tabItemFont: var(--textFont);
+  --tabItemPadding: 12px 16px;
+  --tabItemBorderRadius: 0;
+  --tabItemBorder: none;
+  --tabItemBoxShadow: none;
+  --tabItemBackground-hover: var(--youtube-hover);
+  --tabItemTextColor-hover: var(--youtube-text-primary);
+  --tabItemBorder-hover: none;
+  --tabItemBoxShadow-hover: none;
+  --tabItemBackground-selected: transparent;
+  --tabItemTextColor-selected: var(--youtube-text-primary);
+  --tabItemFont-selected: normal normal 500 14px/1.4 var(--themeDefaultFontFamily);
+  --tabItemBorder-selected: none;
+  --tabItemBoxShadow-selected: inset 0 -2px 0 var(--youtube-red);
+  
+  /* YouTube Sidebar */
+  --sidebarBackground: var(--youtube-white);
+  --sidebarWidth: 240px;
+  --sidebarBorder: none;
+  --sidebarListItemPadding: 8px 12px;
+  --sidebarListItemHeight: auto;
+  --sidebarListItemFont: var(--textFont);
+  --sidebarListItemBorderRadius: var(--youtube-radius-small);
+  --sidebarListItemTextColor: var(--youtube-text-primary);
+  --sidebarListItemHoverBackground: var(--youtube-hover);
+  --sidebarListItemHoverColor: var(--youtube-text-primary);
+  --selectedSidebarListItemBackground: #e5e5e5;
+  --selectedSidebarListItemTextColor: var(--youtube-text-primary);
+  --selectedSidebarListItemMarker: none;
+  --sidebarSectionTitleFont: normal normal 500 12px/1.33 var(--themeLabelFontFamily);
+  --sidebarSectionTitleLetterSpacing: 0.5px;
+  --sidebarSectionTitleMargin: 16px 0 8px 0;
+  --sidebarSectionTitlePadding: 0 12px;
+  --sidebarSectionTitleColor: var(--youtube-text-secondary);
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
+  
+  /* YouTube Cards (Video thumbnails style) */
+  --cardBackground: var(--youtube-white);
+  --cardBorderRadius: var(--youtube-radius-medium);
+  --cardBorder: none;
+  --cardBoxShadow: var(--youtube-shadow-1);
+  --cardPadding: 0;
+  --cardHoverTransform: none;
+  --cardHoverBorder: none;
+  --cardHoverBoxShadow: var(--youtube-shadow-2);
+  
+  /* YouTube Toolbar */
+  --toolbarBackground: var(--youtube-white);
+  --toolbarHeight: 56px;
+  --toolbarPadding: 8px 16px;
+  --toolbarBorder: none;
+  --toolbarBoxShadow: var(--youtube-shadow-1);
+  
+  /* YouTube Bar Items */
+  --barItemsFontFamily: var(--themeDefaultFontFamily);
+  --barItemsTextColor: var(--youtube-text-primary);
+  --barItemsLabelTextColor: var(--youtube-text-secondary);
+  --barItemsDisabledLabelTextColor: var(--youtube-text-disabled);
+  --barItemsDisabledLabelBackgroundColor: #f5f5f5;
+  --barItemsBorderRadius: var(--youtube-radius-small);
+  --barItemsControlMarkerBorderRadius: var(--youtube-radius-small);
+  --barItemsControlPlaceholderTextColor: var(--youtube-text-secondary);
+  --barItemsControlMarkerBackgroundColor: var(--youtube-white);
+  --barItemsControlsBorder: 1px solid var(--youtube-border);
+  --barItemsSegmentControlBackground: #f0f0f0;
+  --barItemsHoverSegmentControlBackground: var(--youtube-hover);
+  --barItemsActiveSegmentControlBackground: var(--youtube-red);
+  --barItemsAccentColor: var(--youtube-red);
+  
+  /* YouTube Segment Controls */
+  --segmentControlBackgroundColor: #f0f0f0;
+  --segmentControlPadding: 4px;
+  --segmentControlSegmentPadding: 8px 12px;
+  --segmentControlBoxShadow: none;
+  --segmentControlBackground: #f0f0f0;
+  --segmentControlBorderRadius: var(--youtube-radius-large);
+  --segmentControlIndicatorBoxShadow: var(--youtube-shadow-1);
+  --segmentControlIndicatorBackground: var(--youtube-white);
+  
+  /* YouTube Contextual Menu */
+  --contextualMenuBackground: var(--youtube-white);
+  --contextualMenuBorder: none;
+  --contextualMenuBorderRadius: var(--youtube-radius-medium);
+  --contextualMenuBoxShadow: var(--youtube-shadow-menu);
+  --contextualMenuPadding: 8px 0;
+  --contextualMenuItemPadding: 8px 16px;
+  --contextualMenuItemFont: var(--textFont);
+  --contextualMenuItemHoverBackground: var(--youtube-hover);
+  --contextualMenuItemHoverColor: var(--youtube-text-primary);
+  --contextualMenuSeparatorColor: var(--youtube-border);
+  --contextualMenuSeparatorHeight: 1px;
+  
+  /* YouTube Progress Bars */
+  --progressBackground: #e0e0e0;
+  --progressForeground: var(--youtube-red);
+  --progressBorderRadius: 2px;
+  --progressHeight: 4px;
+  --progressBoxShadow: none;
+  
+  /* YouTube Scrollbars */
+  --scrollBarBackgroundColor: transparent;
+  --scrollBarThumbColor: #c1c1c1;
+  --activeScrollBarThumbColor: #a1a1a1;
+  --scrollbarWidth: 12px;
+  --scrollbarThumbBoxShadow: none;
+  --scrollbarButtonBackground: transparent;
+  --scrollbarButtonBoxShadow: none;
+  
+  /* YouTube Form Elements */
+  --checkboxSize: 18px;
+  --checkboxBackground: var(--youtube-white);
+  --checkboxBorder: 2px solid var(--youtube-border);
+  --checkboxBoxShadow: none;
+  --checkboxCheckedBackground: var(--youtube-focus);
+  --checkboxCheckmarkColor: var(--youtube-white);
+  --checkboxBorderRadius: 2px;
+  --selectBoxSplitButtonWidth: 32px;
+  --selectBoxSplitButtonBorderColor: var(--youtube-border);
+  --selectBoxSplitButtonBorderWidth: 1px;
+  --selectBoxSplitButtonBackground: var(--youtube-white);
+  
+  /* YouTube Focus & Links */
+  --keyboardFocusIndicatorColor: var(--youtube-focus);
+  --focusRingWidth: 2px;
+  --focusRingOffset: 2px;
+  --focusRingStyle: solid;
+  --linkColor: var(--youtube-focus);
+  --separatorColor: var(--youtube-border);
+  --gridColor: var(--youtube-border);
+  --headerTextColor: var(--youtube-text-primary);
+  --controlColor: var(--youtube-text-primary);
+  --selectedControlColor: var(--youtube-white);
+  --selectedControlTextColor: var(--youtube-text-primary);
+  --alternateSelectedControlTextColor: var(--youtube-white);
+  --scrubberTexturedBackgroundColor: #f5f5f5;
+  --windowFrameTextColor: var(--youtube-text-primary);
+  --underPageBackgroundColor: var(--youtube-white);
+  --findHighlightColor: #ffeb3b;
+  --highlightColor: var(--youtube-focus);
+  --shadowColor: rgba(0, 0, 0, 0.2);
+  
+  /* YouTube Animation */
+  --animationDuration: 200ms;
+  --animationEasing: cubic-bezier(0.4, 0.0, 0.2, 1);
+}
+
+/* Dark mode - YouTube Dark Theme */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --youtube-text-primary: #ffffff;
+    --youtube-text-secondary: #aaaaaa;
+    --youtube-text-disabled: #717171;
+    --youtube-border: #3f3f3f;
+    --youtube-hover: #272727;
+    --youtube-white: var(--youtube-dark-gray);
+    --youtube-light-gray: var(--youtube-medium-gray);
+    
+    --textColor: var(--youtube-text-primary);
+    --windowBackgroundColor: var(--youtube-black);
+    --labelColor: var(--youtube-text-primary);
+    --secondaryLabelColor: var(--youtube-text-secondary);
+    --controlBackground: var(--youtube-medium-gray);
+    --controlTextColor: var(--youtube-text-primary);
+    --controlHoverBackground: var(--youtube-hover);
+    --inputBackground: var(--youtube-dark-gray);
+    --dialogBackground: var(--youtube-dark-gray);
+    --tableBackgroundColor: var(--youtube-dark-gray);
+    --tableHeaderBackgroundColor: var(--youtube-medium-gray);
+    --tableRowAlternateBackgroundColor: var(--youtube-medium-gray);
+    --cardBackground: var(--youtube-dark-gray);
+    --tabBarBackground: var(--youtube-black);
+    --sidebarBackground: var(--youtube-black);
+    --toolbarBackground: var(--youtube-black);
+    --contextualMenuBackground: var(--youtube-dark-gray);
+    --segmentControlBackgroundColor: var(--youtube-medium-gray);
+    --segmentControlIndicatorBackground: var(--youtube-dark-gray);
+  }
+}
+
+/* Smooth scrollbar styling */
+body ::-webkit-scrollbar {
+  width: var(--scrollbarWidth);
+  height: var(--scrollbarWidth);
+  background: var(--scrollBarBackgroundColor);
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: var(--scrollBarThumbColor);
+  border-radius: 6px;
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: var(--activeScrollBarThumbColor);
+}
+
+body ::-webkit-scrollbar-track {
+  background: var(--scrollBarBackgroundColor);
+}
+
+body ::-webkit-scrollbar-corner {
+  background: var(--scrollBarBackgroundColor);
+}
+
+/* YouTube-style button hover effects */
+@keyframes youtube-button-hover {
+  from { transform: scale(1); }
+  to { transform: scale(1.02); }
+}
+
+/* YouTube-style focus animations */
+@keyframes youtube-focus-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(6, 95, 212, 0.4); }
+  100% { box-shadow: 0 0 0 4px rgba(6, 95, 212, 0); }
+}
+
+/* Apply smooth transitions */
+* {
+  transition: background-color var(--animationDuration) var(--animationEasing),
+              border-color var(--animationDuration) var(--animationEasing),
+              box-shadow var(--animationDuration) var(--animationEasing),
+              transform var(--animationDuration) var(--animationEasing);
+}
+
+/* YouTube-style elevation on hover */
+button:hover, .card:hover {
+  animation: youtube-button-hover var(--animationDuration) var(--animationEasing);
+}
+
+/* YouTube-style focus rings */
+*:focus-visible {
+  animation: youtube-focus-pulse 0.6s ease-out;
+}

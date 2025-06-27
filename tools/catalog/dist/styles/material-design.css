@@ -1,0 +1,478 @@
+/**
+ * @theme Material Design
+ * @description Google's Material Design system with elevation layers and dynamic color palette
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Google
+ */
+
+:root {
+  /* Fonts - Material Design uses Roboto */
+  --themeDefaultFontFamily: "Roboto", "Noto Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica", "Arial", sans-serif;
+  --themeControlFontFamily: var(--themeDefaultFontFamily);
+  --themeLabelFontFamily: var(--themeDefaultFontFamily);
+  --themeMonospaceFont: "Roboto Mono", "Source Code Pro", "Fira Code", "Courier New", monospace;
+  --themeSystemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --textFont: normal normal 400 16px/1.5 var(--themeDefaultFontFamily);
+  --labelFont: normal normal 500 14px/1.428571 var(--themeLabelFontFamily);
+
+  /* Material Design 3 Color Palette - Light Mode */
+  /* Primary Colors */
+  --mdPrimary: #6750a4;
+  --mdOnPrimary: #ffffff;
+  --mdPrimaryContainer: #eaddff;
+  --mdOnPrimaryContainer: #21005d;
+  
+  /* Secondary Colors */
+  --mdSecondary: #625b71;
+  --mdOnSecondary: #ffffff;
+  --mdSecondaryContainer: #e8def8;
+  --mdOnSecondaryContainer: #1d192b;
+  
+  /* Tertiary Colors */
+  --mdTertiary: #7d5260;
+  --mdOnTertiary: #ffffff;
+  --mdTertiaryContainer: #ffd8e4;
+  --mdOnTertiaryContainer: #31111d;
+  
+  /* Error Colors */
+  --mdError: #ba1a1a;
+  --mdOnError: #ffffff;
+  --mdErrorContainer: #ffdad6;
+  --mdOnErrorContainer: #410002;
+  
+  /* Background Colors */
+  --mdBackground: #fffbfe;
+  --mdOnBackground: #1c1b1f;
+  --mdSurface: #fffbfe;
+  --mdOnSurface: #1c1b1f;
+  --mdSurfaceVariant: #e7e0ec;
+  --mdOnSurfaceVariant: #49454f;
+  
+  /* Outline Colors */
+  --mdOutline: #79747e;
+  --mdOutlineVariant: #cac4d0;
+  
+  /* Inverse Colors */
+  --mdInverseSurface: #313033;
+  --mdInverseOnSurface: #f4eff4;
+  --mdInversePrimary: #d0bcff;
+  
+  /* Shadow */
+  --mdShadow: #000000;
+  --mdSurfaceTint: var(--mdPrimary);
+  
+  /* Scrim */
+  --mdScrim: #000000;
+
+  /* Core Colors */
+  --textColor: var(--mdOnBackground);
+  --accentColor: var(--mdPrimary);
+  --cautionColor: var(--mdError);
+  accent-color: var(--accentColor);
+  
+  /* Background Colors */
+  --windowBackgroundColor: var(--mdBackground);
+  --backgroundSecondary: var(--mdSurface);
+  --backgroundTertiary: var(--mdSurfaceVariant);
+  --backgroundHover: rgba(103, 80, 164, 0.08);
+  --backgroundActive: rgba(103, 80, 164, 0.12);
+
+  /* No backdrop filters for Material Design */
+  --backgroundBackdropFilter: none;
+  --windowBackdropFilter: none;
+  
+  /* Elevation System - Material Design 3 */
+  --elevation0: none;
+  --elevation1: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --elevation2: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 2px 6px 2px rgba(0, 0, 0, 0.15);
+  --elevation3: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  --elevation4: 0 6px 10px 4px rgba(0, 0, 0, 0.15), 0 2px 3px 0 rgba(0, 0, 0, 0.3);
+  --elevation5: 0 8px 12px 6px rgba(0, 0, 0, 0.15), 0 4px 4px 0 rgba(0, 0, 0, 0.3);
+  
+  /* Window Shadow */
+  --windowBoxShadow: var(--elevation3);
+
+  /* Scrollbar Colors */
+  --scrollBarBackgroundColor: transparent;
+  --scrollBarThumbColor: rgba(0, 0, 0, 0.2);
+  --activeScrollBarThumbColor: rgba(0, 0, 0, 0.4);
+
+  /* Text Colors */
+  --labelColor: var(--mdOnBackground);
+  --secondaryLabelColor: var(--mdOnSurfaceVariant);
+  --tertiaryLabelColor: rgba(28, 27, 31, 0.6);
+  --quaternaryLabelColor: rgba(28, 27, 31, 0.38);
+  --placeholderTextColor: var(--mdOnSurfaceVariant);
+  --selectedTextColor: var(--mdOnPrimary);
+  --textBackgroundColor: var(--mdBackground);
+  --selectedTextBackgroundColor: var(--mdPrimary);
+  --keyboardFocusIndicatorColor: rgba(103, 80, 164, 0.12);
+  --unemphasizedSelectedTextColor: var(--mdOnSecondaryContainer);
+  --unemphasizedSelectedTextBackgroundColor: var(--mdSecondaryContainer);
+  --linkColor: var(--mdPrimary);
+  --separatorColor: var(--mdOutlineVariant);
+  --selectedContentBackgroundColor: var(--mdPrimaryContainer);
+  --unemphasizedSelectedContentBackgroundColor: var(--mdSecondaryContainer);
+  --selectedMenuItemTextColor: var(--mdOnSecondaryContainer);
+  --gridColor: var(--mdOutlineVariant);
+  --headerTextColor: var(--mdOnBackground);
+
+  /* Control Colors */
+  --controlAccentColor: var(--mdPrimary);
+  --controlColor: var(--mdSurface);
+  --controlTextColor: var(--mdOnSurface);
+  --disabledControlTextColor: rgba(28, 27, 31, 0.38);
+  --selectedControlColor: var(--mdPrimaryContainer);
+  --selectedControlTextColor: var(--mdOnPrimaryContainer);
+  --alternateSelectedControlTextColor: var(--mdOnPrimary);
+  --scrubberTexturedBackgroundColor: var(--mdSurfaceVariant);
+  --windowFrameTextColor: var(--mdOnSurface);
+  --underPageBackgroundColor: var(--mdBackground);
+  --findHighlightColor: #fff59d;
+  --highlightColor: var(--mdOnPrimary);
+  --shadowColor: var(--mdShadow);
+
+  /* System Colors */
+  --systemBrownColor: #795548;
+  --systemGrayColor: #9e9e9e;
+  --systemGreenColor: #4caf50;
+  --systemIndigoColor: #3f51b5;
+  --systemOrangeColor: #ff9800;
+  --systemPinkColor: #e91e63;
+  --systemPurpleColor: var(--mdPrimary);
+  --systemRedColor: var(--mdError);
+  --systemTealColor: #009688;
+  --systemYellowColor: #ffeb3b;
+  --systemBlueColor: #2196f3;
+
+  /* Table */
+  --tableBackgroundColor: var(--mdSurface);
+  --tableBorderColor: var(--mdOutlineVariant);
+  --tableHeaderTextColor: var(--mdOnSurfaceVariant);
+  --tableHeaderBackgroundColor: var(--mdSurfaceVariant);
+  --tableHeaderBorderColor: var(--mdOutlineVariant);
+  --tableRowTextColor: var(--mdOnSurface);
+  --tableRowBackgroundColor: var(--mdSurface);
+  --tableRowBorderColor: var(--mdOutlineVariant);
+  --tableRowAlternateTextColor: var(--mdOnSurface);
+  --tableRowAlternateBackgroundColor: rgba(103, 80, 164, 0.04);
+  --tableRowAlternateBorderColor: var(--mdOutlineVariant);
+
+  /* Dialog */
+  --dialogBackground: var(--mdSurface);
+  --dialogBoxShadow: var(--elevation5);
+  --dialogBorderRadius: 28px;
+  
+  /* Control - Material Design style */
+  --controlBoxShadow: none;
+  --controlFocusBoxShadow: none;
+  --controlTextFont: normal normal 500 14px/20px var(--themeControlFontFamily);
+  --controlBorderRadius: 20px;
+  --controlPadding: 10px 24px;
+  --controlTextLetterSpacing: 0.1px;
+  --controlTextColor: var(--mdOnSurface);
+  --controlBackground: var(--mdSurface);
+  --controlBorder: 1px solid var(--mdOutline);
+  --controlHoverBackground: var(--mdSurface);
+  --controlHoverStateLayer: rgba(103, 80, 164, 0.08);
+  --controlActiveBackground: var(--mdSurface);
+  --controlActiveStateLayer: rgba(103, 80, 164, 0.12);
+
+  /* Button Primary - Filled button */
+  --controlBoxShadow--primary: var(--elevation1);
+  --controlBackground--primary: var(--mdPrimary);
+  --controlBorder--primary: none;
+  --controlTextColor--primary: var(--mdOnPrimary);
+  --controlHoverTextColor--primary: var(--mdOnPrimary);
+  --controlHoverBackground--primary: var(--mdPrimary);
+  --controlHoverBoxShadow--primary: var(--elevation2);
+  --controlFocusBackground--primary: var(--mdPrimary);
+  --controlFocusTextColor--primary: var(--mdOnPrimary);
+
+  /* Button Secondary - Outlined button */
+  --controlBoxShadow--secondary: none;
+  --controlBackground--secondary: transparent;
+  --controlBorder--secondary: 1px solid var(--mdOutline);
+  --controlTextColor--secondary: var(--mdPrimary);
+  --controlHoverBackground--secondary: rgba(103, 80, 164, 0.08);
+  --controlHoverBorder--secondary: 1px solid var(--mdOutline);
+  --controlHoverTextColor--secondary: var(--mdPrimary);
+
+  /* Button Tertiary - Text button */
+  --controlBoxShadow--tertiary: none;
+  --controlBackground--tertiary: transparent;
+  --controlBorder--tertiary: none;
+  --controlTextColor--tertiary: var(--mdPrimary);
+  --controlHoverBackground--tertiary: rgba(103, 80, 164, 0.08);
+  --controlPadding--tertiary: 10px 12px;
+
+  /* Input - Material Design style */
+  --inputPadding: 16px;
+  --inputBoxShadow: none;
+  --inputBorder: 1px solid var(--mdOutline);
+  --inputBorderRadius: 4px;
+  --inputFont: normal normal 400 16px/24px var(--themeControlFontFamily);
+  --inputBackground: var(--mdSurfaceVariant);
+  --inputFocusBorder: 2px solid var(--mdPrimary);
+  --inputFocusBoxShadow: none;
+  --inputHoverBorder: 1px solid var(--mdOnSurface);
+  --inputLabelFont: normal normal 400 12px/16px var(--themeControlFontFamily);
+  --inputLabelColor: var(--mdOnSurfaceVariant);
+
+  /* Select Box */
+  --selectBoxSplitButtonWidth: 24px;
+  --selectBoxSplitButtonBorderColor: transparent;
+  --selectBoxSplitButtonBorderWidth: 0;
+
+  /* Checkbox - Material style */
+  --checkboxSize: 18px;
+  --checkboxBorderRadius: 2px;
+  --checkboxBorder: 2px solid var(--mdOnSurfaceVariant);
+  --checkboxBackground: transparent;
+  --checkboxCheckedBackground: var(--mdPrimary);
+  --checkboxCheckedBorder: 2px solid var(--mdPrimary);
+
+  /* Radio button */
+  --radioSize: 20px;
+  --radioBorder: 2px solid var(--mdOnSurfaceVariant);
+  --radioBackground: transparent;
+  --radioCheckedBackground: var(--mdPrimary);
+  --radioCheckedBorder: 2px solid var(--mdPrimary);
+
+  /* Switch */
+  --switchWidth: 52px;
+  --switchHeight: 32px;
+  --switchThumbSize: 24px;
+  --switchTrackBackground: var(--mdSurfaceVariant);
+  --switchTrackBorder: 2px solid var(--mdOutline);
+  --switchCheckedTrackBackground: var(--mdPrimaryContainer);
+  --switchCheckedTrackBorder: 2px solid var(--mdPrimary);
+  --switchThumbBackground: var(--mdOutline);
+  --switchCheckedThumbBackground: var(--mdOnPrimaryContainer);
+
+  /* Toolbar */
+  --barItemsFontFamily: var(--themeLabelFontFamily);
+  --barItemsTextColor: var(--mdOnSurface);
+  --barItemsLabelTextColor: var(--mdOnSurfaceVariant);
+  --barItemsDisabledLabelTextColor: rgba(28, 27, 31, 0.38);
+  --barItemsDisabledLabelBackgroundColor: transparent;
+  --barItemsBorderRadius: 16px;
+  --barItemsControlMarkerBorderRadius: 8px;
+  --barItemsControlPlaceholderTextColor: var(--mdOnSurfaceVariant);
+  --barItemsControlMarkerBackgroundColor: var(--mdSecondaryContainer);
+  --barItemsControlsBorder: none;
+  --barItemsSegmentControlBackground: var(--mdSurfaceVariant);
+  --barItemsHoverSegmentControlBackground: rgba(103, 80, 164, 0.08);
+  --barItemsActiveSegmentControlBackground: var(--mdSecondaryContainer);
+  --segmentControlBackgroundColor: var(--mdSurface);
+  
+  /* Sidebar - Material Navigation Rail/Drawer */
+  --sidebarBackground: var(--mdSurface);
+  --sidebarListItemFont: normal normal 500 14px/20px var(--themeDefaultFontFamily);
+  --sidebarListItemBorderRadius: 28px;
+  --selectedSidebarListItemBackground: var(--mdSecondaryContainer);
+  --selectedSidebarListItemTextColor: var(--mdOnSecondaryContainer);
+  --sidebarListItemTextColor: var(--mdOnSurface);
+  --selectedSidebarListItemMarker: none;
+  --sidebarItemPadding: 12px 24px;
+  --sidebarItemHoverBackground: rgba(103, 80, 164, 0.08);
+  --sidebarListItemDetailsBackground: var(--mdSurfaceVariant);
+  --sidebarListItemHoverBackground: rgba(103, 80, 164, 0.08);
+  --sidebarListItemIconSize: 24px;
+  --sidebarListItemChildrenPadding: 0 0 0 32px;
+  --sidebarSectionTitleColor: var(--mdOnSurfaceVariant);
+  --sidebarSectionTitlePadding: 16px 24px 8px 24px;
+  --sidebarListItemPadding: 12px 24px;
+  
+  /* Sidebar Section Title - Material Design Style */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.01em;
+  --sidebarSectionTitleMargin: 24px 0 8px 0;
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
+
+  /* App Layout */
+  --appMainToolbarFloatingBackground: var(--mdSurface);
+  --appMainToolbarHeight: 64px;
+
+  /* Tab Bar - Material tabs */
+  --tabBarBackground: var(--mdSurface);
+  --tabBarBoxShadow: inset 0 -1px 0 0 var(--mdOutlineVariant);
+  --tabItemHeight: 48px;
+  --tabItemTextColor: var(--mdOnSurfaceVariant);
+  --tabItemBoxShadow: none;
+  --tabItemIconSize: 24px;
+  --tabItemFont: normal normal 500 14px/20px var(--themeLabelFontFamily);
+  --tabBarLayout: start;
+  --tabItemBackground-selected: transparent;
+  --tabItemBoxShadow-selected: inset 0 -3px 0 0 var(--mdPrimary);
+  --tabItemTextColor-selected: var(--mdPrimary);
+  --tabItemFont-selected: var(--tabItemFont);
+
+  /* Scrolled State */
+  --scrolledAppMainToolbarBoxShadow: var(--elevation2);
+
+  /* Segment Control - Material chips */
+  --segmentControlPadding: 4px;
+  --segmentControlSegmentPadding: 6px 12px;
+  --segmentControlBoxShadow: none;
+  --segmentControlBackground: transparent;
+  --segmentControlBorderRadius: 8px;
+  --segmentControlIndicatorBoxShadow: none;
+  --segmentControlIndicatorBackground: var(--mdSecondaryContainer);
+  --segmentControlIndicatorBorderRadius: 8px;
+
+  /* Card - Material card */
+  --cardBackground: var(--mdSurface);
+  --cardBorder: none;
+  --cardBorderRadius: 12px;
+  --cardBoxShadow: var(--elevation1);
+  --cardPadding: 16px;
+  --cardHoverBoxShadow: var(--elevation2);
+
+  /* Popover */
+  --popoverBackground: var(--mdSurface);
+  --popoverBorder: none;
+  --popoverBorderRadius: 4px;
+  --popoverBoxShadow: var(--elevation3);
+
+  /* FAB (Floating Action Button) */
+  --fabSize: 56px;
+  --fabSmallSize: 40px;
+  --fabLargeSize: 96px;
+  --fabBackground: var(--mdPrimaryContainer);
+  --fabColor: var(--mdOnPrimaryContainer);
+  --fabBoxShadow: var(--elevation3);
+  --fabHoverBoxShadow: var(--elevation4);
+
+  /* Ripple effect */
+  --rippleDuration: 600ms;
+  --rippleColor: currentColor;
+  --rippleOpacity: 0.12;
+
+  /* Snackbar */
+  --snackbarBackground: var(--mdInverseSurface);
+  --snackbarTextColor: var(--mdInverseOnSurface);
+  --snackbarActionColor: var(--mdInversePrimary);
+  --snackbarBorderRadius: 4px;
+  --snackbarBoxShadow: var(--elevation3);
+
+  /* Animation */
+  --animationDuration: 200ms;
+  --animationEasing: cubic-bezier(0.4, 0, 0.2, 1);
+  --animationEasingDecelerate: cubic-bezier(0, 0, 0.2, 1);
+  --animationEasingAccelerate: cubic-bezier(0.4, 0, 1, 1);
+  --animationEasingSharp: cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Material Design 3 Dark Theme Colors */
+    --mdPrimary: #d0bcff;
+    --mdOnPrimary: #381e72;
+    --mdPrimaryContainer: #4f378b;
+    --mdOnPrimaryContainer: #eaddff;
+    
+    --mdSecondary: #ccc2dc;
+    --mdOnSecondary: #332d41;
+    --mdSecondaryContainer: #4a4458;
+    --mdOnSecondaryContainer: #e8def8;
+    
+    --mdTertiary: #efb8c8;
+    --mdOnTertiary: #492532;
+    --mdTertiaryContainer: #633b48;
+    --mdOnTertiaryContainer: #ffd8e4;
+    
+    --mdError: #f2b8b5;
+    --mdOnError: #601410;
+    --mdErrorContainer: #8c1d18;
+    --mdOnErrorContainer: #f9dedc;
+    
+    --mdBackground: #1c1b1f;
+    --mdOnBackground: #e6e1e5;
+    --mdSurface: #1c1b1f;
+    --mdOnSurface: #e6e1e5;
+    --mdSurfaceVariant: #49454f;
+    --mdOnSurfaceVariant: #cac4d0;
+    
+    --mdOutline: #938f99;
+    --mdOutlineVariant: #49454f;
+    
+    --mdInverseSurface: #e6e1e5;
+    --mdInverseOnSurface: #313033;
+    --mdInversePrimary: #6750a4;
+    
+    /* Update dependent colors */
+    --windowBackgroundColor: var(--mdBackground);
+    --scrollBarThumbColor: rgba(255, 255, 255, 0.2);
+    --activeScrollBarThumbColor: rgba(255, 255, 255, 0.4);
+    --backgroundHover: rgba(208, 188, 255, 0.08);
+    --backgroundActive: rgba(208, 188, 255, 0.12);
+    
+    /* Update elevation shadows for dark theme */
+    --elevation1: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --elevation2: 0 2px 6px 2px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --elevation3: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
+    --elevation4: 0 2px 3px 0 rgba(0, 0, 0, 0.3), 0 6px 10px 4px rgba(0, 0, 0, 0.15);
+    --elevation5: 0 4px 4px 0 rgba(0, 0, 0, 0.3), 0 8px 12px 6px rgba(0, 0, 0, 0.15);
+    
+    /* Control adjustments for dark */
+    --controlBorder: 1px solid var(--mdOutline);
+    --controlHoverStateLayer: rgba(208, 188, 255, 0.08);
+    --controlActiveStateLayer: rgba(208, 188, 255, 0.12);
+    
+    /* Input dark */
+    --inputBackground: var(--mdSurface);
+    --inputBorder: 1px solid var(--mdOutline);
+    
+    /* Table dark */
+    --tableRowAlternateBackgroundColor: rgba(208, 188, 255, 0.04);
+    
+    /* Sidebar dark */
+    --sidebarListItemDetailsBackground: var(--mdSurface);
+    --sidebarListItemHoverBackground: rgba(208, 188, 255, 0.08);
+    --sidebarSectionTitleColor: var(--mdOnSurfaceVariant);
+  }
+}
+
+/* Scrollbar styling - Material style */
+body ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: var(--scrollBarThumbColor);
+  border-radius: 4px;
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: var(--activeScrollBarThumbColor);
+}
+
+body ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+  :root {
+    --mdOutline: currentColor;
+    --controlBorder: 2px solid currentColor;
+    --inputBorder: 2px solid currentColor;
+    --controlFocusBoxShadow: 0 0 0 3px var(--mdPrimary);
+    --inputFocusBoxShadow: 0 0 0 3px var(--mdPrimary);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animationDuration: 0ms;
+    --rippleDuration: 0ms;
+  }
+}

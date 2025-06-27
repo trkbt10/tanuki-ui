@@ -1,0 +1,328 @@
+/**
+ * @theme Vercel
+ * @description Clean modern development-focused design with crisp typography and minimal visual elements
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Developer
+ */
+
+:root {
+  /* Fonts - Vercel uses Inter font family */
+  --themeDefaultFontFamily: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
+    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --themeControlFontFamily: var(--themeDefaultFontFamily);
+  --themeLabelFontFamily: var(--themeDefaultFontFamily);
+  --themeSystemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+
+  /* Vercel Color Palette - Light Mode */
+  --vercelGray50: #fafafa;
+  --vercelGray100: #f4f4f5;
+  --vercelGray200: #e4e4e7;
+  --vercelGray300: #d4d4d8;
+  --vercelGray400: #a1a1aa;
+  --vercelGray500: #71717a;
+  --vercelGray600: #52525b;
+  --vercelGray700: #3f3f46;
+  --vercelGray800: #27272a;
+  --vercelGray900: #18181b;
+
+  --vercelBlue50: #eff6ff;
+  --vercelBlue100: #dbeafe;
+  --vercelBlue500: #3b82f6;
+  --vercelBlue600: #2563eb;
+  --vercelBlue700: #1d4ed8;
+
+  --vercelRed50: #fef2f2;
+  --vercelRed100: #fee2e2;
+  --vercelRed500: #ef4444;
+  --vercelRed600: #dc2626;
+
+  --vercelGreen50: #f0fdf4;
+  --vercelGreen100: #dcfce7;
+  --vercelGreen500: #22c55e;
+  --vercelGreen600: #16a34a;
+
+  --vercelYellow50: #fefce8;
+  --vercelYellow100: #fef3c7;
+  --vercelYellow500: #eab308;
+  --vercelYellow600: #ca8a04;
+
+  /* Core Colors */
+  --textColor: var(--vercelGray900);
+  --secondaryTextColor: var(--vercelGray600);
+  --tertiaryTextColor: var(--vercelGray500);
+  --quaternaryTextColor: var(--vercelGray400);
+
+  --accentColor: var(--vercelBlue600);
+  --successColor: var(--vercelGreen500);
+  --warningColor: var(--vercelYellow500);
+  --errorColor: var(--vercelRed500);
+  --cautionColor: var(--errorColor);
+
+  /* Background Colors */
+  --windowBackgroundColor: #ffffff;
+  --backgroundSecondary: var(--vercelGray50);
+  --backgroundTertiary: var(--vercelGray100);
+
+  /* Text Colors */
+  --labelColor: var(--textColor);
+  --secondaryLabelColor: var(--secondaryTextColor);
+  --tertiaryLabelColor: var(--tertiaryTextColor);
+  --quaternaryLabelColor: var(--quaternaryTextColor);
+  --placeholderTextColor: var(--vercelGray400);
+  --selectedTextColor: var(--textColor);
+  --textBackgroundColor: var(--windowBackgroundColor);
+  --selectedTextBackgroundColor: var(--vercelBlue100);
+  --linkColor: var(--accentColor);
+
+  /* Border Colors */
+  --separatorColor: var(--vercelGray200);
+  --borderColor: var(--vercelGray300);
+  --focusBorderColor: var(--accentColor);
+
+  /* Control Colors */
+  --controlAccentColor: var(--accentColor);
+  --controlColor: var(--windowBackgroundColor);
+  --controlTextColor: var(--textColor);
+  --disabledControlTextColor: var(--vercelGray400);
+  --selectedControlColor: var(--vercelBlue100);
+  --selectedControlTextColor: var(--textColor);
+
+  /* Shadow */
+  --shadowColor: rgba(0, 0, 0, 0.1);
+  --boxShadowSmall: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --boxShadowMedium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --boxShadowLarge: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* Typography */
+  --textFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --textFontSmall: normal normal 400 12px/1.4 var(--themeDefaultFontFamily);
+  --textFontLarge: normal normal 400 16px/1.5 var(--themeDefaultFontFamily);
+
+  /* Control Styling */
+  --controlBorderRadius: 6px;
+  --controlBorderRadiusSmall: 4px;
+  --controlBorderRadiusLarge: 8px;
+  --controlPadding: 8px 12px;
+  --controlPaddingSmall: 6px 10px;
+  --controlPaddingLarge: 12px 16px;
+
+  --controlBackground: var(--windowBackgroundColor);
+  --controlBorder: 1px solid var(--borderColor);
+  --controlBoxShadow: var(--boxShadowSmall);
+  --controlHoverBackground: var(--vercelGray50);
+  --controlFocusBoxShadow: 0 0 0 2px var(--vercelBlue100);
+  --controlTextFont: var(--textFont);
+
+  /* Button Primary */
+  --controlBackground--primary: var(--accentColor);
+  --controlTextColor--primary: #ffffff;
+  --controlBorder--primary: 1px solid var(--accentColor);
+  --controlHoverBackground--primary: var(--vercelBlue700);
+  --controlFocusBoxShadow--primary: 0 0 0 2px var(--vercelBlue100);
+
+  /* Button Secondary */
+  --controlBackground--secondary: var(--windowBackgroundColor);
+  --controlTextColor--secondary: var(--textColor);
+  --controlBorder--secondary: 1px solid var(--borderColor);
+  --controlHoverBackground--secondary: var(--vercelGray50);
+
+  /* Button Danger */
+  --controlBackground--danger: var(--errorColor);
+  --controlTextColor--danger: #ffffff;
+  --controlBorder--danger: 1px solid var(--errorColor);
+  --controlHoverBackground--danger: var(--vercelRed600);
+
+  /* Input */
+  --inputBackground: var(--windowBackgroundColor);
+  --inputBorder: 1px solid var(--borderColor);
+  --inputBorderRadius: var(--controlBorderRadius);
+  --inputPadding: var(--controlPadding);
+  --inputFont: var(--textFont);
+  --inputBoxShadow: var(--boxShadowSmall);
+  --inputFocusBorder: 1px solid var(--focusBorderColor);
+  --inputFocusBoxShadow: 0 0 0 2px var(--vercelBlue100);
+
+  /* Progress & Meter */
+  --progressBackground: var(--vercelGray200);
+  --progressForeground: var(--accentColor);
+  --meterBackground: var(--vercelGray200);
+  --meterOptimum: var(--successColor);
+  --meterSuboptimal: var(--warningColor);
+  --meterEvenLessGood: var(--errorColor);
+
+  /* Table */
+  --tableBackgroundColor: var(--windowBackgroundColor);
+  --tableBorderColor: var(--separatorColor);
+  --tableHeaderTextColor: var(--secondaryTextColor);
+  --tableHeaderBackgroundColor: var(--backgroundSecondary);
+  --tableHeaderBorder: 1px solid var(--separatorColor);
+  --tableRowTextColor: var(--textColor);
+  --tableRowBackgroundColor: var(--windowBackgroundColor);
+  --tableRowAlternateBackgroundColor: var(--vercelGray50);
+
+  /* Dialog */
+  --dialogBackground: var(--windowBackgroundColor);
+  --dialogBoxShadow: var(--boxShadowLarge);
+  --dialogBorderRadius: var(--controlBorderRadiusLarge);
+
+  /* Navigation */
+  --tabBarBackground: var(--windowBackgroundColor);
+  --tabItemTextColor: var(--secondaryTextColor);
+  --tabItemTextColor-selected: var(--accentColor);
+  --tabItemBackground-selected: var(--vercelBlue50);
+  --tabItemBorderRadius: var(--controlBorderRadius);
+
+  /* Sidebar */
+  --sidebarBackground: var(--backgroundSecondary);
+  --sidebarItemTextColor: var(--textColor);
+  --sidebarItemHoverBackground: var(--vercelGray100);
+  --sidebarItemSelectedBackground: var(--vercelBlue100);
+  --sidebarItemSelectedTextColor: var(--accentColor);
+  --sidebarListItemTextColor: var(--textColor);
+  --selectedSidebarListItemBackground: var(--vercelBlue100);
+  --selectedSidebarListItemTextColor: var(--accentColor);
+  
+  /* Sidebar Section Title */
+  --sidebarSectionTitleFont: var(--textFontSmall);
+  --sidebarSectionTitleLetterSpacing: 0.05em;
+  --sidebarSectionTitleMargin: 20px 0 8px 0;
+  --sidebarSectionTitlePadding: 0 12px;
+  --sidebarSectionTitleColor: var(--tertiaryTextColor);
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
+
+  /* Checkbox & Radio */
+  --checkboxSize: 16px;
+  --checkboxBackground: var(--windowBackgroundColor);
+  --checkboxBorder: var(--inputBorder);
+  --checkboxCheckedBackground: var(--accentColor);
+  --checkboxCheckedBorder: 1px solid var(--accentColor);
+
+  /* Elevation levels */
+  --elevation1: var(--boxShadowSmall);
+  --elevation2: var(--boxShadowMedium);
+  --elevation3: var(--boxShadowLarge);
+}
+
+/* Dark Mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Mode Colors */
+    --textColor: var(--vercelGray100);
+    --secondaryTextColor: var(--vercelGray400);
+    --tertiaryTextColor: var(--vercelGray500);
+    --quaternaryTextColor: var(--vercelGray600);
+
+    --windowBackgroundColor: var(--vercelGray900);
+    --backgroundSecondary: var(--vercelGray800);
+    --backgroundTertiary: var(--vercelGray700);
+
+    --labelColor: var(--textColor);
+    --secondaryLabelColor: var(--secondaryTextColor);
+    --tertiaryLabelColor: var(--tertiaryTextColor);
+    --quaternaryLabelColor: var(--quaternaryTextColor);
+    --placeholderTextColor: var(--vercelGray500);
+    --selectedTextColor: var(--textColor);
+    --textBackgroundColor: var(--windowBackgroundColor);
+    --selectedTextBackgroundColor: rgba(59, 130, 246, 0.3);
+
+    /* Border Colors - Dark */
+    --separatorColor: var(--vercelGray700);
+    --borderColor: var(--vercelGray600);
+
+    /* Control Colors - Dark */
+    --controlColor: var(--vercelGray800);
+    --controlTextColor: var(--textColor);
+    --disabledControlTextColor: var(--vercelGray500);
+    --controlBackground: var(--vercelGray800);
+    --controlHoverBackground: var(--vercelGray700);
+
+    /* Input - Dark */
+    --inputBackground: var(--vercelGray800);
+    --inputBorder: 1px solid var(--vercelGray600);
+
+    /* Table - Dark */
+    --tableBackgroundColor: var(--windowBackgroundColor);
+    --tableBorderColor: var(--separatorColor);
+    --tableHeaderBackgroundColor: var(--backgroundSecondary);
+    --tableHeaderBorder: 1px solid var(--separatorColor);
+    --tableRowBackgroundColor: var(--windowBackgroundColor);
+    --tableRowAlternateBackgroundColor: var(--vercelGray800);
+
+    /* Dialog - Dark */
+    --dialogBackground: var(--vercelGray800);
+
+    /* Navigation - Dark */
+    --tabBarBackground: var(--windowBackgroundColor);
+    --tabItemBackground-selected: rgba(59, 130, 246, 0.2);
+
+    /* Sidebar - Dark */
+    --sidebarBackground: var(--backgroundSecondary);
+    --sidebarItemHoverBackground: var(--vercelGray700);
+    --sidebarItemSelectedBackground: rgba(59, 130, 246, 0.2);
+
+    /* Checkbox - Dark */
+    --checkboxBackground: var(--vercelGray800);
+    --checkboxBorder: 1px solid var(--vercelGray600);
+
+    /* Shadows - Dark */
+    --shadowColor: rgba(0, 0, 0, 0.3);
+    --boxShadowSmall: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
+    --boxShadowMedium: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --boxShadowLarge: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  }
+}
+
+/* Vercel-specific component overrides */
+:root {
+  font-feature-settings:
+    "rlig" 1,
+    "calt" 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid var(--accentColor);
+  outline-offset: 2px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vercelGray300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--vercelGray400);
+}
+
+@media (prefers-color-scheme: dark) {
+  ::-webkit-scrollbar-thumb {
+    background: var(--vercelGray600);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--vercelGray500);
+  }
+}
+
+/* Animation and transitions */
+* {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}

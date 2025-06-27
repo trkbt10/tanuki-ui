@@ -1,0 +1,621 @@
+/**
+ * @theme Android 12
+ * @description Based on Material You design system with dynamic color, large touch targets, and smooth animations
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Google
+ */
+
+:root {
+  font-feature-settings: "rclt" off;
+  
+  /* Material You Elevation System */
+  --windowLevelElevation: 128;
+  --dialogLevelElevation: 24;
+  --popupLevelElevation: 8;
+  --tooltipLevelElevation: 16;
+  --cardLevelElevation: 4;
+  --controlsLevelElevation: 2;
+  --layerLevelElevation: 1;
+  --hoverLevelElevation: 4;
+  --activeLevelElevation: 8;
+
+  /* Base Colors - Material You Dynamic Color */
+  --textColor: rgba(28, 27, 31, 1);
+  --accentColor: rgb(102, 80, 164); /* Material You Purple */
+  --cautionColor: rgb(179, 38, 30);
+  --windowBackgroundColor: rgba(255, 251, 254, 1);
+  --dividerColor: rgba(121, 116, 126, 0.12);
+
+  /* Typography System - Roboto */
+  --themeDefaultFontFamily: "Roboto", "Noto Sans", sans-serif;
+  --themeControlFontFamily: var(--themeDefaultFontFamily);
+  --themeLabelFontFamily: "Roboto", sans-serif;
+
+  /* Text Font Definitions - Material You Type Scale */
+  --textFont: 400 14px/20px var(--themeDefaultFontFamily);
+  --labelFont: 500 14px/20px var(--themeLabelFontFamily);
+  --titleFont: 400 22px/28px var(--themeDefaultFontFamily);
+  --subtitleFont: 500 16px/24px var(--themeDefaultFontFamily);
+  --captionFont: 400 12px/16px var(--themeDefaultFontFamily);
+
+  /* Text Color Hierarchy */
+  --labelColor: rgba(28, 27, 31, 1);
+  --secondaryLabelColor: rgba(73, 69, 79, 1);
+  --tertiaryLabelColor: rgba(121, 116, 126, 1);
+  --quaternaryLabelColor: rgba(202, 196, 208, 1);
+
+  /* Material You System Colors */
+  --systemBlueColor: rgba(0, 99, 235, 1);
+  --systemGreenColor: rgba(0, 135, 61, 1);
+  --systemRedColor: rgba(179, 38, 30, 1);
+  --systemOrangeColor: rgba(255, 109, 0, 1);
+  --systemYellowColor: rgba(249, 171, 0, 1);
+  --systemPurpleColor: rgba(102, 80, 164, 1);
+  --systemPinkColor: rgba(186, 26, 126, 1);
+  --systemTealColor: rgba(0, 121, 107, 1);
+  --systemIndigoColor: rgba(48, 64, 159, 1);
+  --systemBrownColor: rgba(121, 85, 72, 1);
+  --systemGrayColor: rgba(121, 116, 126, 1);
+
+  /* Background Colors */
+  --backgroundColor: rgba(255, 251, 254, 1);
+  --secondaryBackgroundColor: rgba(231, 224, 236, 1);
+  --tertiaryBackgroundColor: rgba(255, 255, 255, 1);
+
+  /* Surface Colors with Elevation */
+  --surfaceColor: rgba(255, 251, 254, 1);
+  --surfaceColor-1: rgba(236, 230, 240, 1);
+  --surfaceColor-2: rgba(230, 223, 235, 1);
+  --surfaceColor-3: rgba(223, 217, 230, 1);
+  --surfaceColor-4: rgba(217, 210, 224, 1);
+  --surfaceColor-5: rgba(211, 204, 219, 1);
+
+  /* Border and Separator Colors */
+  --separatorColor: rgba(121, 116, 126, 0.12);
+  --opaqueSeparatorColor: rgba(202, 196, 208, 1);
+  --linkColor: rgba(102, 80, 164, 1);
+  --placeholderTextColor: rgba(73, 69, 79, 0.6);
+
+  /* Window Properties */
+  --windowBackdropFilter: none;
+  --windowBoxShadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 
+    0px 1px 3px rgba(0, 0, 0, 0.3);
+  --windowBorderRadius: 28px;
+  --windowPadding: 24px;
+
+  /* Control Base States */
+  --controlAccentColor: rgba(102, 80, 164, 1);
+  --controlBackground: rgba(231, 224, 236, 1);
+  --controlTextColor: rgba(28, 27, 31, 1);
+  --controlHoverBackground: rgba(217, 210, 224, 1);
+  --controlActiveBackground: rgba(202, 196, 208, 1);
+  --controlFocusBackground: var(--controlHoverBackground);
+  --controlDisabledBackground: rgba(28, 27, 31, 0.12);
+  --disabledControlTextColor: rgba(28, 27, 31, 0.38);
+  
+  /* Control Properties - Material You */
+  --controlBorderRadius: 20px;
+  --controlPadding: 10px 24px;
+  --controlBoxShadow: none;
+  --controlHoverBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --controlActiveBoxShadow: none;
+  --controlFocusBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+    0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+
+  /* Primary Controls - Material You Filled Button */
+  --controlBackground--primary: rgba(102, 80, 164, 1);
+  --controlTextColor--primary: rgba(255, 255, 255, 1);
+  --controlHoverBackground--primary: rgba(120, 98, 182, 1);
+  --controlFocusBackground--primary: var(--controlHoverBackground--primary);
+  --controlBoxShadow--primary: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+
+  /* Secondary Controls - Material You Outlined Button */
+  --controlBackground--secondary: transparent;
+  --controlTextColor--secondary: rgba(102, 80, 164, 1);
+  --controlHoverBackground--secondary: rgba(102, 80, 164, 0.08);
+  --controlFocusBackground--secondary: rgba(102, 80, 164, 0.12);
+  --controlBoxShadow--secondary: inset 0 0 0 1px rgba(121, 116, 126, 1);
+
+  /* Input Elements - Material You Text Fields */
+  --inputPadding: 16px 16px 8px;
+  --inputFont: 400 16px/24px var(--themeDefaultFontFamily);
+  --inputBorder: 0 solid transparent;
+  --inputBorderRadius: 4px 4px 0 0;
+  --inputBackground: rgba(231, 224, 236, 1);
+  --inputBoxShadow: inset 0 -1px 0 0 rgba(73, 69, 79, 0.42);
+  --inputFocusBorder: 0 solid transparent;
+  --inputFocusBoxShadow: inset 0 -2px 0 0 rgba(102, 80, 164, 1);
+
+  /* Dialog Styles */
+  --dialogBackground: rgba(255, 251, 254, 1);
+  --dialogBorderRadius: 28px;
+  --dialogBoxShadow: 0px 6px 10px 4px rgba(0, 0, 0, 0.15), 
+    0px 2px 3px rgba(0, 0, 0, 0.3);
+  --dialogBackdrop: rgba(0, 0, 0, 0.32);
+  --dialogPadding: 24px;
+
+  /* Title Bar Styles - Android 12 Style */
+  --titleBarBackground: transparent;
+  --titleBarInactiveBackground: transparent;
+  --titleBarTextColor: rgba(28, 27, 31, 1);
+  --titleBarHeight: 64px;
+  --titleBarFont: 400 22px/28px var(--themeDefaultFontFamily);
+  --titleBarPadding: 0 24px;
+
+  /* Table Styles */
+  --tableBackgroundColor: rgba(255, 255, 255, 1);
+  --tableBorderColor: rgba(121, 116, 126, 0.12);
+  --tableHeaderTextColor: rgba(73, 69, 79, 1);
+  --tableHeaderBackgroundColor: rgba(255, 251, 254, 1);
+  --tableHeaderBorderColor: rgba(121, 116, 126, 0.12);
+  --tableHeaderFont: 500 14px/20px var(--themeDefaultFontFamily);
+  --tableRowTextColor: rgba(28, 27, 31, 1);
+  --tableRowBackgroundColor: rgba(255, 255, 255, 1);
+  --tableRowBorderColor: rgba(121, 116, 126, 0.12);
+  --tableRowAlternateTextColor: rgba(28, 27, 31, 1);
+  --tableRowAlternateBackgroundColor: rgba(255, 251, 254, 1);
+  --tableRowAlternateBorderColor: rgba(121, 116, 126, 0.12);
+  --tableHoverBackground: rgba(102, 80, 164, 0.08);
+  --tableHoverTextColor: rgba(28, 27, 31, 1);
+  --tableCellPadding: 16px;
+  --tableBorder: none;
+
+  /* Toolbar Styles */
+  --toolbarBackground: rgba(255, 251, 254, 1);
+  --toolbarHeight: 64px;
+  --toolbarPadding: 8px 4px;
+  --toolbarBorder: none;
+  --toolbarBoxShadow: 0px 2px 4px rgba(0, 0, 0, 0.14);
+
+  /* Tab Bar Styles - Material You Navigation Rail */
+  --tabBarBackground: rgba(255, 251, 254, 1);
+  --tabBarBoxShadow: 0px 2px 4px rgba(0, 0, 0, 0.14);
+  --tabBarLayout: horizontal;
+  
+  /* Tab Item Styles */
+  --tabItemBackground: transparent;
+  --tabItemTextColor: rgba(73, 69, 79, 1);
+  --tabItemFont: 500 14px/20px var(--themeLabelFontFamily);
+  --tabItemPadding: 12px 16px;
+  --tabItemBorderRadius: 16px;
+  --tabItemBoxShadow: none;
+  
+  /* Tab Item States */
+  --tabItemBackground-hover: rgba(102, 80, 164, 0.08);
+  --tabItemTextColor-hover: rgba(28, 27, 31, 1);
+  --tabItemBoxShadow-hover: none;
+  
+  --tabItemBackground-selected: rgba(232, 222, 248, 1);
+  --tabItemTextColor-selected: rgba(33, 24, 66, 1);
+  --tabItemFont-selected: 500 14px/20px var(--themeLabelFontFamily);
+  --tabItemBoxShadow-selected: none;
+
+  /* Sidebar Styles - Material You Navigation Drawer */
+  --sidebarBackground: rgba(255, 251, 254, 1);
+  --sidebarWidth: 360px;
+  --sidebarBorder: none;
+  
+  /* Sidebar List Item */
+  --sidebarListItemPadding: 16px 24px;
+  --sidebarListItemHeight: 56px;
+  --sidebarListItemFont: 500 14px/20px var(--themeDefaultFontFamily);
+  --sidebarListItemBorderRadius: 28px;
+  --sidebarListItemHoverBackground: rgba(102, 80, 164, 0.08);
+  --sidebarListItemHoverColor: rgba(28, 27, 31, 1);
+  --selectedSidebarListItemBackground: rgba(232, 222, 248, 1);
+  --selectedSidebarListItemTextColor: rgba(33, 24, 66, 1);
+  --selectedSidebarListItemMarker: rgba(102, 80, 164, 1);
+  
+  /* Sidebar Section Title */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.01em;
+  --sidebarSectionTitleMargin: 16px 0 8px 0;
+  --sidebarSectionTitlePadding: 0 24px;
+  --sidebarSectionTitleColor: var(--tertiaryLabelColor);
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
+
+  /* Panel Styles */
+  --panelBackground: rgba(255, 255, 255, 1);
+  --panelBorder: none;
+  --panelHeaderBackground: rgba(255, 251, 254, 1);
+  --panelHeaderHeight: 64px;
+  --panelHeaderFont: 400 22px/28px var(--themeDefaultFontFamily);
+  --panelHeaderPadding: 0 24px;
+  --panelHeaderBoxShadow: none;
+
+  /* Contextual Menu - Material You Menu */
+  --contextualMenuBackground: rgba(236, 230, 240, 1);
+  --contextualMenuBorder: none;
+  --contextualMenuBorderRadius: 12px;
+  --contextualMenuBoxShadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 
+    0px 1px 2px rgba(0, 0, 0, 0.3);
+  --contextualMenuPadding: 8px 0;
+  --contextualMenuItemPadding: 12px 16px;
+  --contextualMenuItemFont: 400 14px/20px var(--themeDefaultFontFamily);
+  --contextualMenuItemHoverBackground: rgba(102, 80, 164, 0.08);
+  --contextualMenuItemHoverColor: rgba(28, 27, 31, 1);
+  --contextualMenuSeparatorColor: rgba(121, 116, 126, 0.12);
+  --contextualMenuSeparatorHeight: 1px;
+
+  /* Resizer */
+  --resizerColor: rgba(121, 116, 126, 0.4);
+  --resizerHoverColor: rgba(102, 80, 164, 0.6);
+  --resizerActiveColor: rgba(102, 80, 164, 1);
+  --resizerSize: 4px;
+  --resizerBoxShadow: none;
+
+  /* Progress and Meter */
+  --progressBackground: rgba(231, 224, 236, 1);
+  --progressForeground: rgba(102, 80, 164, 1);
+  --progressBorderRadius: 4px;
+  --progressHeight: 4px;
+  --progressBoxShadow: none;
+
+  /* Selection Colors (Text and Content) */
+  --selectedTextColor: rgba(28, 27, 31, 1);
+  --textBackgroundColor: rgba(255, 255, 255, 1);
+  --selectedTextBackgroundColor: rgba(232, 222, 248, 1);
+  --unemphasizedSelectedTextColor: rgba(28, 27, 31, 1);
+  --unemphasizedSelectedTextBackgroundColor: rgba(231, 224, 236, 1);
+  --selectedContentBackgroundColor: rgba(232, 222, 248, 1);
+  --unemphasizedSelectedContentBackgroundColor: rgba(231, 224, 236, 1);
+  --selectedMenuItemTextColor: rgba(28, 27, 31, 1);
+
+  /* Focus Indicators */
+  --keyboardFocusIndicatorColor: rgba(102, 80, 164, 1);
+  --focusRingWidth: 2px;
+  --focusRingOffset: 2px;
+  --focusRingStyle: solid;
+
+  /* Scrollbar Styles - Material You */
+  --scrollBarBackgroundColor: transparent;
+  --scrollBarThumbColor: rgba(121, 116, 126, 0.4);
+  --activeScrollBarThumbColor: rgba(102, 80, 164, 0.6);
+  --scrollbarWidth: 8px;
+  --scrollbarThumbBoxShadow: none;
+  --scrollbarButtonBackground: transparent;
+  --scrollbarButtonBoxShadow: none;
+
+  /* Checkbox and Radio Styles - Material You */
+  --checkboxSize: 20px;
+  --checkboxBackground: transparent;
+  --checkboxBorder: 2px solid rgba(73, 69, 79, 1);
+  --checkboxBoxShadow: none;
+  --checkboxCheckedBackground: rgba(102, 80, 164, 1);
+  --checkboxCheckmarkColor: rgba(255, 255, 255, 1);
+
+  /* Switch Control - Android Specific */
+  --switchWidth: 52px;
+  --switchHeight: 32px;
+  --switchThumbSize: 20px;
+  --switchTrackBackground: rgba(231, 224, 236, 1);
+  --switchTrackCheckedBackground: rgba(208, 193, 238, 1);
+  --switchThumbBackground: rgba(121, 116, 126, 1);
+  --switchThumbCheckedBackground: rgba(102, 80, 164, 1);
+
+  /* Additional System Colors */
+  --gridColor: rgba(231, 224, 236, 1);
+  --headerTextColor: rgba(28, 27, 31, 1);
+  --controlColor: rgba(231, 224, 236, 1);
+  --selectedControlColor: rgba(232, 222, 248, 1);
+  --selectedControlTextColor: rgba(33, 24, 66, 1);
+  --alternateSelectedControlTextColor: rgba(33, 24, 66, 1);
+  --scrubberTexturedBackgroundColor: rgba(255, 251, 254, 1);
+  --windowFrameTextColor: rgba(28, 27, 31, 1);
+  --underPageBackgroundColor: rgba(231, 224, 236, 1);
+  --findHighlightColor: rgba(249, 222, 74, 1);
+  --highlightColor: rgba(232, 222, 248, 1);
+  --shadowColor: rgba(0, 0, 0, 0.2);
+
+  /* Status Bar */
+  --statusBarBackground: rgba(255, 251, 254, 1);
+  --statusBarHeight: 24px;
+  --statusBarFont: 400 14px/20px var(--themeDefaultFontFamily);
+  --statusBarBorder: none;
+  --statusBarBoxShadow: none;
+
+  /* Menu Bar */
+  --menuBarBackground: rgba(255, 251, 254, 1);
+  --menuBarHeight: 56px;
+  --menuBarFont: 500 14px/20px var(--themeDefaultFontFamily);
+  --menuBarItemPadding: 0 16px;
+  --menuBarItemHoverBackground: rgba(102, 80, 164, 0.08);
+  --menuBarItemHoverColor: rgba(28, 27, 31, 1);
+
+  /* FAB (Floating Action Button) - Android Specific */
+  --fabSize: 56px;
+  --fabBackground: rgba(236, 230, 240, 1);
+  --fabTextColor: rgba(28, 27, 31, 1);
+  --fabBoxShadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 
+    0px 1px 3px rgba(0, 0, 0, 0.3);
+  --fabHoverBackground: rgba(230, 223, 235, 1);
+  --fabActiveBackground: rgba(223, 217, 230, 1);
+
+  /* Extended FAB */
+  --fabExtendedPadding: 16px 20px;
+  --fabExtendedBorderRadius: 16px;
+
+  /* Toolbar/Bar Items Variables */
+  --barItemsFontFamily: var(--themeDefaultFontFamily);
+  --barItemsTextColor: rgba(28, 27, 31, 1);
+  --barItemsLabelTextColor: rgba(73, 69, 79, 1);
+  --barItemsDisabledLabelTextColor: rgba(28, 27, 31, 0.38);
+  --barItemsDisabledLabelBackgroundColor: rgba(28, 27, 31, 0.12);
+  --barItemsBorderRadius: 20px;
+  --barItemsControlMarkerBorderRadius: 10px;
+  --barItemsControlPlaceholderTextColor: rgba(73, 69, 79, 0.6);
+  --barItemsControlMarkerBackgroundColor: transparent;
+  --barItemsControlsBorder: 1px solid transparent;
+  --barItemsSegmentControlBackground: rgba(231, 224, 236, 1);
+  --barItemsHoverSegmentControlBackground: rgba(217, 210, 224, 1);
+  --barItemsActiveSegmentControlBackground: rgba(232, 222, 248, 1);
+  --barItemsAccentColor: rgba(102, 80, 164, 1);
+
+  /* App Layout Variables */
+  --appMainToolbarHeight: 64px;
+  --appMainToolbarFloatingBackground: rgba(255, 251, 254, 0.95);
+  --scrolledAppMainToolbarBoxShadow: 0px 2px 4px rgba(0, 0, 0, 0.14);
+  --appMainToolbarBoxShadow: none;
+
+  /* Segment Control Variables */
+  --segmentControlBackgroundColor: rgba(231, 224, 236, 1);
+  --segmentControlPadding: 4px;
+  --segmentControlSegmentPadding: 8px 16px;
+  --segmentControlBoxShadow: none;
+  --segmentControlBackground: rgba(231, 224, 236, 1);
+  --segmentControlBorderRadius: 20px;
+  --segmentControlIndicatorBoxShadow: none;
+
+  /* SelectBox Variables */
+  --selectBoxSplitButtonWidth: 48px;
+  --selectBoxSplitButtonBorderColor: transparent;
+  --selectBoxSplitButtonBorderWidth: 0;
+  --selectBoxSplitButtonBackground: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z' fill='%23494550'/%3E%3C/svg%3E");
+
+  /* Chip Component - Material You */
+  --chipHeight: 32px;
+  --chipPadding: 6px 12px;
+  --chipBorderRadius: 8px;
+  --chipBackground: rgba(231, 224, 236, 1);
+  --chipTextColor: rgba(28, 27, 31, 1);
+  --chipHoverBackground: rgba(217, 210, 224, 1);
+  --chipSelectedBackground: rgba(232, 222, 248, 1);
+  --chipSelectedTextColor: rgba(33, 24, 66, 1);
+
+  /* Card Component - Material You (Material Design 3) */
+  /* Base Card Properties */
+  --cardBackground: var(--surfaceColor);
+  --cardBorderRadius: 12px;
+  --cardBorder: none;
+  --cardPadding: 16px;
+  --cardBoxShadow: none;
+  --cardTextColor: var(--textColor);
+  --cardSecondaryTextColor: var(--secondaryLabelColor);
+  
+  /* Card States - Ripple-like effects */
+  --cardHoverBackground: var(--surfaceColor-1);
+  --cardHoverBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --cardActiveBackground: var(--surfaceColor-2);
+  --cardActiveBoxShadow: none;
+  --cardFocusBackground: var(--surfaceColor-1);
+  --cardFocusBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+    0px 2px 6px 2px rgba(0, 0, 0, 0.15);
+  --cardDisabledBackground: rgba(28, 27, 31, 0.04);
+  --cardDisabledTextColor: rgba(28, 27, 31, 0.38);
+  
+  /* Card Variants */
+  /* Elevated Card - Uses surface tints for elevation */
+  --cardBackground--elevated: var(--surfaceColor-1);
+  --cardBorderRadius--elevated: 12px;
+  --cardBoxShadow--elevated: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+    0px 1px 3px 1px rgba(0, 0, 0, 0.15);
+  --cardHoverBackground--elevated: var(--surfaceColor-2);
+  --cardHoverBoxShadow--elevated: 0px 2px 4px rgba(0, 0, 0, 0.3), 
+    0px 4px 8px 3px rgba(0, 0, 0, 0.15);
+  
+  /* Outlined Card */
+  --cardBackground--outlined: var(--surfaceColor);
+  --cardBorderRadius--outlined: 12px;
+  --cardBorder--outlined: 1px solid var(--dividerColor);
+  --cardBoxShadow--outlined: none;
+  --cardHoverBackground--outlined: var(--surfaceColor-1);
+  --cardHoverBorder--outlined: 1px solid rgba(121, 116, 126, 0.2);
+  
+  /* Filled Card - Higher emphasis */
+  --cardBackground--filled: var(--surfaceColor-2);
+  --cardBorderRadius--filled: 12px;
+  --cardBoxShadow--filled: none;
+  --cardHoverBackground--filled: var(--surfaceColor-3);
+  
+  /* Large Rounded Card - Material You style */
+  --cardBorderRadius--large: 16px;
+  --cardPadding--large: 20px;
+  
+  /* Card Header Properties */
+  --cardHeaderPadding: 16px 16px 8px;
+  --cardHeaderFont: var(--subtitleFont);
+  --cardHeaderTextColor: var(--labelColor);
+  
+  /* Card Content Properties */
+  --cardContentPadding: 0 16px 16px;
+  --cardContentFont: var(--textFont);
+  
+  /* Card Actions Properties */
+  --cardActionsPadding: 8px;
+  --cardActionsJustify: flex-end;
+  --cardActionsGap: 8px;
+
+  /* Bottom Sheet - Android Specific */
+  --bottomSheetBackground: rgba(255, 251, 254, 1);
+  --bottomSheetBorderRadius: 28px 28px 0 0;
+  --bottomSheetBoxShadow: 0px -2px 6px 2px rgba(0, 0, 0, 0.15), 
+    0px -1px 2px rgba(0, 0, 0, 0.3);
+  --bottomSheetHandleWidth: 32px;
+  --bottomSheetHandleHeight: 4px;
+  --bottomSheetHandleBackground: rgba(121, 116, 126, 0.4);
+
+  /* Snackbar - Material Design */
+  --snackbarBackground: rgba(49, 45, 56, 1);
+  --snackbarTextColor: rgba(255, 255, 255, 1);
+  --snackbarActionColor: rgba(208, 193, 238, 1);
+  --snackbarBorderRadius: 4px;
+  --snackbarPadding: 14px 16px;
+  --snackbarBoxShadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 
+    0px 6px 10px rgba(0, 0, 0, 0.14), 
+    0px 1px 18px rgba(0, 0, 0, 0.12);
+
+  /* Animation Timing - Material Motion */
+  --animationDuration: 200ms;
+  --animationEasing: cubic-bezier(0.4, 0, 0.2, 1);
+  --animationDurationShort: 150ms;
+  --animationDurationLong: 300ms;
+  --animationEasingEmphasized: cubic-bezier(0.2, 0, 0, 1);
+  --animationEasingStandard: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Base Colors - Dark Theme */
+    --textColor: rgba(230, 225, 229, 1);
+    --accentColor: rgb(208, 193, 238);
+    --cautionColor: rgb(242, 184, 181);
+    --windowBackgroundColor: rgba(28, 27, 31, 1);
+    --dividerColor: rgba(202, 196, 208, 0.12);
+
+    /* Text Color Hierarchy */
+    --labelColor: rgba(230, 225, 229, 1);
+    --secondaryLabelColor: rgba(202, 196, 208, 1);
+    --tertiaryLabelColor: rgba(147, 143, 153, 1);
+    --quaternaryLabelColor: rgba(73, 69, 79, 1);
+
+    /* Background Colors */
+    --backgroundColor: rgba(28, 27, 31, 1);
+    --secondaryBackgroundColor: rgba(49, 45, 56, 1);
+    --tertiaryBackgroundColor: rgba(36, 34, 40, 1);
+
+    /* Surface Colors with Elevation */
+    --surfaceColor: rgba(28, 27, 31, 1);
+    --surfaceColor-1: rgba(35, 33, 39, 1);
+    --surfaceColor-2: rgba(40, 38, 44, 1);
+    --surfaceColor-3: rgba(44, 42, 48, 1);
+    --surfaceColor-4: rgba(47, 45, 52, 1);
+    --surfaceColor-5: rgba(50, 48, 55, 1);
+
+    /* Control States */
+    --controlBackground: rgba(49, 45, 56, 1);
+    --controlTextColor: rgba(230, 225, 229, 1);
+    --controlHoverBackground: rgba(56, 52, 63, 1);
+    --controlActiveBackground: rgba(64, 60, 71, 1);
+    --controlDisabledBackground: rgba(230, 225, 229, 0.12);
+    --disabledControlTextColor: rgba(230, 225, 229, 0.38);
+
+    /* Primary Controls */
+    --controlBackground--primary: rgba(208, 193, 238, 1);
+    --controlTextColor--primary: rgba(36, 24, 66, 1);
+    --controlHoverBackground--primary: rgba(220, 205, 250, 1);
+
+    /* Secondary Controls */
+    --controlBackground--secondary: transparent;
+    --controlTextColor--secondary: rgba(208, 193, 238, 1);
+    --controlHoverBackground--secondary: rgba(208, 193, 238, 0.08);
+    --controlFocusBackground--secondary: rgba(208, 193, 238, 0.12);
+    --controlBoxShadow--secondary: inset 0 0 0 1px rgba(147, 143, 153, 1);
+
+    /* Input Elements */
+    --inputBackground: rgba(49, 45, 56, 1);
+    --inputBoxShadow: inset 0 -1px 0 0 rgba(202, 196, 208, 0.42);
+    --inputFocusBoxShadow: inset 0 -2px 0 0 rgba(208, 193, 238, 1);
+
+    /* Dialog Styles */
+    --dialogBackground: rgba(36, 34, 40, 1);
+
+    /* Tab States */
+    --tabItemTextColor: rgba(202, 196, 208, 1);
+    --tabItemBackground-hover: rgba(208, 193, 238, 0.08);
+    --tabItemBackground-selected: rgba(73, 69, 91, 1);
+    --tabItemTextColor-selected: rgba(232, 222, 248, 1);
+
+    /* Sidebar */
+    --sidebarBackground: rgba(28, 27, 31, 1);
+    --sidebarListItemHoverBackground: rgba(208, 193, 238, 0.08);
+    --selectedSidebarListItemBackground: rgba(73, 69, 91, 1);
+    --selectedSidebarListItemTextColor: rgba(232, 222, 248, 1);
+
+    /* Contextual Menu */
+    --contextualMenuBackground: rgba(49, 45, 56, 1);
+    --contextualMenuItemHoverBackground: rgba(208, 193, 238, 0.08);
+
+    /* Other UI Elements */
+    --tableBackgroundColor: rgba(28, 27, 31, 1);
+    --tableHoverBackground: rgba(208, 193, 238, 0.08);
+    --progressBackground: rgba(49, 45, 56, 1);
+    --progressForeground: rgba(208, 193, 238, 1);
+    --selectedTextBackgroundColor: rgba(73, 69, 91, 1);
+    --scrollBarThumbColor: rgba(147, 143, 153, 0.4);
+    --activeScrollBarThumbColor: rgba(208, 193, 238, 0.6);
+    --checkboxBorder: 2px solid rgba(202, 196, 208, 1);
+    --checkboxCheckedBackground: rgba(208, 193, 238, 1);
+    --checkboxCheckmarkColor: rgba(36, 24, 66, 1);
+    
+    /* Switch Control - Dark */
+    --switchTrackBackground: rgba(49, 45, 56, 1);
+    --switchTrackCheckedBackground: rgba(103, 89, 134, 1);
+    --switchThumbBackground: rgba(147, 143, 153, 1);
+    --switchThumbCheckedBackground: rgba(208, 193, 238, 1);
+    
+    /* FAB - Dark */
+    --fabBackground: rgba(49, 45, 56, 1);
+    --fabTextColor: rgba(230, 225, 229, 1);
+    --fabHoverBackground: rgba(56, 52, 63, 1);
+    --fabActiveBackground: rgba(64, 60, 71, 1);
+    
+    /* Chip - Dark */
+    --chipBackground: rgba(49, 45, 56, 1);
+    --chipTextColor: rgba(230, 225, 229, 1);
+    --chipHoverBackground: rgba(56, 52, 63, 1);
+    --chipSelectedBackground: rgba(73, 69, 91, 1);
+    --chipSelectedTextColor: rgba(232, 222, 248, 1);
+    
+    /* Card Component - Dark Mode */
+    /* Base Card Properties */
+    --cardBackground: var(--surfaceColor);
+    --cardTextColor: var(--textColor);
+    --cardSecondaryTextColor: var(--secondaryLabelColor);
+    --cardDisabledBackground: rgba(230, 225, 229, 0.04);
+    --cardDisabledTextColor: rgba(230, 225, 229, 0.38);
+    
+    /* Card States - Dark */
+    --cardHoverBackground: var(--surfaceColor-1);
+    --cardActiveBackground: var(--surfaceColor-2);
+    --cardFocusBackground: var(--surfaceColor-1);
+    
+    /* Card Variants - Dark */
+    /* Elevated Card */
+    --cardBackground--elevated: var(--surfaceColor-1);
+    --cardHoverBackground--elevated: var(--surfaceColor-2);
+    
+    /* Outlined Card */
+    --cardBackground--outlined: var(--surfaceColor);
+    --cardBorder--outlined: 1px solid var(--dividerColor);
+    --cardHoverBackground--outlined: var(--surfaceColor-1);
+    --cardHoverBorder--outlined: 1px solid rgba(202, 196, 208, 0.2);
+    
+    /* Filled Card */
+    --cardBackground--filled: var(--surfaceColor-2);
+    --cardHoverBackground--filled: var(--surfaceColor-3);
+    
+    /* Card Header - Dark */
+    --cardHeaderTextColor: var(--labelColor);
+    
+    /* Bottom Sheet - Dark */
+    --bottomSheetBackground: rgba(36, 34, 40, 1);
+    --bottomSheetHandleBackground: rgba(147, 143, 153, 0.4);
+  }
+}

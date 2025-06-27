@@ -1,0 +1,431 @@
+/**
+ * @theme OpenAI
+ * @description OpenAI's clean interface styling with thoughtful typography and modern color palette
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category AI
+ */
+
+:root {
+  /* Fonts - OpenAI uses Söhne and system fonts */
+  --themeDefaultFontFamily: "Söhne", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica", "Arial", sans-serif;
+  --themeControlFontFamily: var(--themeDefaultFontFamily);
+  --themeLabelFontFamily: var(--themeDefaultFontFamily);
+  --themeMonospaceFont: "Söhne Mono", "Monaco", "Consolas", "Liberation Mono", "Courier New", monospace;
+  --themeSystemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --textFont: normal normal 400 14px/1.75 var(--themeDefaultFontFamily);
+  --labelFont: normal normal 500 13px/1.6 var(--themeLabelFontFamily);
+
+  /* OpenAI Color Palette - Light Mode */
+  --openaiGray0: #ffffff;
+  --openaiGray50: #f7f7f8;
+  --openaiGray100: #ececf1;
+  --openaiGray200: #d9d9e3;
+  --openaiGray300: #c5c5d2;
+  --openaiGray400: #acacbe;
+  --openaiGray500: #8e8ea0;
+  --openaiGray600: #6e6e80;
+  --openaiGray700: #565869;
+  --openaiGray800: #40414f;
+  --openaiGray900: #343541;
+  --openaiGray950: #202123;
+
+  /* Brand Colors */
+  --openaiGreen: #10a37f;
+  --openaiGreenDark: #0d8f6f;
+  --openaiGreenLight: #1aba8c;
+  --openaiPurple: #ab68ff;
+  --openaiPurpleDark: #8e44e2;
+  --openaiBlue: #3b82f6;
+  --openaiBlueDark: #2563eb;
+  --openaiRed: #ef4444;
+  --openaiRedDark: #dc2626;
+  --openaiYellow: #fbbf24;
+  --openaiYellowDark: #f59e0b;
+
+  /* Core Colors */
+  --textColor: var(--openaiGray900);
+  --accentColor: var(--openaiGreen);
+  --cautionColor: var(--openaiRed);
+  accent-color: var(--accentColor);
+  
+  /* Background Colors */
+  --windowBackgroundColor: var(--openaiGray0);
+  --backgroundSecondary: var(--openaiGray50);
+  --backgroundTertiary: var(--openaiGray100);
+  --backgroundCode: var(--openaiGray950);
+  --backgroundHover: rgba(0, 0, 0, 0.05);
+  --backgroundActive: rgba(0, 0, 0, 0.1);
+
+  /* No backdrop filters for clean appearance */
+  --backgroundBackdropFilter: none;
+  --windowBackdropFilter: none;
+  
+  /* Window Shadow */
+  --windowBoxShadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  /* Scrollbar Colors */
+  --scrollBarBackgroundColor: transparent;
+  --scrollBarThumbColor: rgba(0, 0, 0, 0.14);
+  --activeScrollBarThumbColor: rgba(0, 0, 0, 0.25);
+
+  /* Text Colors */
+  --labelColor: var(--textColor);
+  --secondaryLabelColor: var(--openaiGray600);
+  --tertiaryLabelColor: var(--openaiGray500);
+  --quaternaryLabelColor: var(--openaiGray400);
+  --placeholderTextColor: var(--openaiGray400);
+  --selectedTextColor: var(--openaiGray0);
+  --textBackgroundColor: var(--windowBackgroundColor);
+  --selectedTextBackgroundColor: var(--accentColor);
+  --keyboardFocusIndicatorColor: rgba(16, 163, 127, 0.2);
+  --unemphasizedSelectedTextColor: var(--textColor);
+  --unemphasizedSelectedTextBackgroundColor: var(--openaiGray100);
+  --linkColor: var(--accentColor);
+  --separatorColor: var(--openaiGray200);
+  --selectedContentBackgroundColor: var(--accentColor);
+  --unemphasizedSelectedContentBackgroundColor: var(--openaiGray100);
+  --selectedMenuItemTextColor: var(--openaiGray0);
+  --gridColor: var(--openaiGray100);
+  --headerTextColor: var(--textColor);
+
+  /* Control Colors */
+  --controlAccentColor: var(--accentColor);
+  --controlColor: var(--windowBackgroundColor);
+  --controlTextColor: var(--textColor);
+  --disabledControlTextColor: var(--openaiGray400);
+  --selectedControlColor: var(--openaiGray100);
+  --selectedControlTextColor: var(--textColor);
+  --alternateSelectedControlTextColor: var(--openaiGray0);
+  --scrubberTexturedBackgroundColor: var(--windowBackgroundColor);
+  --windowFrameTextColor: var(--textColor);
+  --underPageBackgroundColor: var(--openaiGray50);
+  --findHighlightColor: #fbbf24;
+  --highlightColor: var(--openaiGray0);
+  --shadowColor: rgba(0, 0, 0, 1);
+
+  /* System Colors */
+  --systemBrownColor: #a8744f;
+  --systemGrayColor: var(--openaiGray500);
+  --systemGreenColor: var(--openaiGreen);
+  --systemIndigoColor: #5856d6;
+  --systemOrangeColor: #ff9500;
+  --systemPinkColor: #ff2d55;
+  --systemPurpleColor: var(--openaiPurple);
+  --systemRedColor: var(--openaiRed);
+  --systemTealColor: #32ade6;
+  --systemYellowColor: var(--openaiYellow);
+  --systemBlueColor: var(--openaiBlue);
+
+  /* Table */
+  --tableBackgroundColor: var(--windowBackgroundColor);
+  --tableBorderColor: var(--openaiGray200);
+  --tableHeaderTextColor: var(--textColor);
+  --tableHeaderBackgroundColor: var(--openaiGray50);
+  --tableHeaderBorderColor: var(--openaiGray200);
+  --tableRowTextColor: var(--textColor);
+  --tableRowBackgroundColor: var(--windowBackgroundColor);
+  --tableRowBorderColor: var(--openaiGray100);
+  --tableRowAlternateTextColor: var(--textColor);
+  --tableRowAlternateBackgroundColor: var(--openaiGray50);
+  --tableRowAlternateBorderColor: var(--openaiGray100);
+
+  /* Dialog */
+  --dialogBackground: var(--windowBackgroundColor);
+  --dialogBoxShadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.04);
+  
+  /* Control */
+  --controlBoxShadow: none;
+  --controlFocusBoxShadow: 0 0 0 2px var(--keyboardFocusIndicatorColor);
+  --controlTextFont: normal normal 400 14px/1.5 var(--themeControlFontFamily);
+  --controlBorderRadius: 6px;
+  --controlPadding: 8px 16px;
+  --controlTextLetterSpacing: normal;
+  --controlTextColor: var(--textColor);
+  --controlBackground: var(--openaiGray50);
+  --controlBorder: 1px solid var(--openaiGray300);
+  --controlHoverBackground: var(--openaiGray100);
+  --controlActiveBackground: var(--openaiGray200);
+
+  /* Button Primary */
+  --controlBoxShadow--primary: none;
+  --controlBackground--primary: var(--accentColor);
+  --controlBorder--primary: 1px solid var(--accentColor);
+  --controlTextColor--primary: var(--openaiGray0);
+  --controlHoverTextColor--primary: var(--openaiGray0);
+  --controlHoverBackground--primary: var(--openaiGreenDark);
+  --controlFocusBackground--primary: var(--openaiGreenDark);
+  --controlFocusTextColor--primary: var(--openaiGray0);
+
+  /* Button Secondary */
+  --controlBoxShadow--secondary: none;
+  --controlBackground--secondary: var(--windowBackgroundColor);
+  --controlBorder--secondary: 1px solid var(--openaiGray300);
+  --controlTextColor--secondary: var(--textColor);
+  --controlHoverBackground--secondary: var(--openaiGray50);
+  --controlHoverTextColor--secondary: var(--textColor);
+
+  /* Input */
+  --inputPadding: 10px 14px;
+  --inputBoxShadow: none;
+  --inputBorder: 1px solid var(--openaiGray300);
+  --inputBorderRadius: 6px;
+  --inputFont: normal normal 400 14px/1.5 var(--themeControlFontFamily);
+  --inputBackground: var(--windowBackgroundColor);
+  --inputFocusBorder: 1px solid var(--accentColor);
+  --inputFocusBoxShadow: 0 0 0 2px var(--keyboardFocusIndicatorColor);
+  --inputHoverBorder: 1px solid var(--openaiGray400);
+
+  /* Select Box */
+  --selectBoxSplitButtonWidth: 24px;
+  --selectBoxSplitButtonBorderColor: transparent;
+  --selectBoxSplitButtonBorderWidth: 0;
+
+  /* Checkbox */
+  --checkboxSize: 16px;
+  --checkboxBorderRadius: 4px;
+
+  /* Toolbar */
+  --barItemsFontFamily: var(--themeLabelFontFamily);
+  --barItemsTextColor: var(--controlTextColor);
+  --barItemsLabelTextColor: var(--secondaryLabelColor);
+  --barItemsDisabledLabelTextColor: var(--tertiaryLabelColor);
+  --barItemsDisabledLabelBackgroundColor: var(--openaiGray100);
+  --barItemsBorderRadius: 6px;
+  --barItemsControlMarkerBorderRadius: 4px;
+  --barItemsControlPlaceholderTextColor: var(--placeholderTextColor);
+  --barItemsControlMarkerBackgroundColor: var(--openaiGray100);
+  --barItemsControlsBorder: 1px solid var(--openaiGray200);
+  --barItemsSegmentControlBackground: var(--openaiGray100);
+  --barItemsHoverSegmentControlBackground: var(--openaiGray200);
+  --barItemsActiveSegmentControlBackground: var(--openaiGray300);
+  --segmentControlBackgroundColor: var(--windowBackgroundColor);
+  
+  /* Sidebar */
+  --sidebarBackground: var(--windowBackgroundColor);
+  --sidebarListItemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --sidebarListItemBorderRadius: 6px;
+  --selectedSidebarListItemBackground: var(--openaiGray100);
+  --selectedSidebarListItemTextColor: var(--textColor);
+  --selectedSidebarListItemMarker: 3px solid var(--accentColor);
+  --sidebarListItemDetailsBackground: var(--openaiGray50);
+  --sidebarListItemTextColor: var(--textColor);
+  --sidebarListItemHoverBackground: var(--openaiGray50);
+  --sidebarListItemIconSize: 16px;
+  --sidebarListItemChildrenPadding: 0 0 0 24px;
+  --sidebarSectionTitleColor: var(--openaiGray600);
+  --sidebarSectionTitlePadding: 16px 16px 8px 16px;
+  --sidebarListItemPadding: 8px 16px;
+  
+  /* Sidebar Section Title - OpenAI Style */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.03em;
+  --sidebarSectionTitleMargin: 16px 0 8px 0;
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
+
+  /* App Layout */
+  --appMainToolbarFloatingBackground: rgba(255, 255, 255, 0.95);
+  --appMainToolbarHeight: 56px;
+
+  /* Tab Bar */
+  --tabBarBackground: var(--windowBackgroundColor);
+  --tabBarBoxShadow: inset 0 -1px 0 0 var(--openaiGray200);
+  --tabItemHeight: 44px;
+  --tabItemTextColor: var(--openaiGray600);
+  --tabItemBoxShadow: none;
+  --tabItemIconSize: 18px;
+  --tabItemFont: normal normal 500 14px/1.5 var(--themeLabelFontFamily);
+  --tabBarLayout: start;
+  --tabItemBackground-selected: transparent;
+  --tabItemBoxShadow-selected: inset 0 -2px 0 0 var(--accentColor);
+  --tabItemTextColor-selected: var(--textColor);
+  --tabItemFont-selected: var(--tabItemFont);
+
+  /* Scrolled State */
+  --scrolledAppMainToolbarBoxShadow: 0 1px 0 0 var(--openaiGray200);
+
+  /* Segment Control */
+  --segmentControlPadding: 2px;
+  --segmentControlSegmentPadding: 6px 16px;
+  --segmentControlBoxShadow: none;
+  --segmentControlBackground: var(--openaiGray100);
+  --segmentControlBorderRadius: 8px;
+  --segmentControlIndicatorBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --segmentControlIndicatorBackground: var(--windowBackgroundColor);
+
+  /* Card */
+  --cardBackground: var(--windowBackgroundColor);
+  --cardBorder: 1px solid var(--openaiGray200);
+  --cardBorderRadius: 8px;
+  --cardBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --cardPadding: 16px;
+
+  /* Popover */
+  --popoverBackground: var(--windowBackgroundColor);
+  --popoverBorder: 1px solid var(--openaiGray200);
+  --popoverBorderRadius: 8px;
+  --popoverBoxShadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark Mode Colors */
+    --windowBackgroundColor: var(--openaiGray900);
+    --backgroundSecondary: var(--openaiGray800);
+    --backgroundTertiary: var(--openaiGray700);
+    --backgroundCode: var(--openaiGray950);
+    --backgroundHover: rgba(255, 255, 255, 0.1);
+    --backgroundActive: rgba(255, 255, 255, 0.15);
+
+    /* Text Colors Dark */
+    --textColor: var(--openaiGray100);
+    --labelColor: var(--textColor);
+    --secondaryLabelColor: var(--openaiGray300);
+    --tertiaryLabelColor: var(--openaiGray400);
+    --quaternaryLabelColor: var(--openaiGray500);
+    --placeholderTextColor: var(--openaiGray500);
+    --selectedTextColor: var(--openaiGray0);
+    --textBackgroundColor: var(--openaiGray800);
+    --selectedTextBackgroundColor: var(--accentColor);
+    --keyboardFocusIndicatorColor: rgba(16, 163, 127, 0.3);
+    --unemphasizedSelectedTextColor: var(--textColor);
+    --unemphasizedSelectedTextBackgroundColor: var(--openaiGray700);
+    --linkColor: var(--openaiGreenLight);
+    --separatorColor: var(--openaiGray700);
+    --selectedContentBackgroundColor: var(--accentColor);
+    --unemphasizedSelectedContentBackgroundColor: var(--openaiGray700);
+    --selectedMenuItemTextColor: var(--openaiGray0);
+    --gridColor: var(--openaiGray700);
+    --headerTextColor: var(--textColor);
+
+    /* Control Dark */
+    --controlTextColor: var(--textColor);
+    --disabledControlTextColor: var(--openaiGray500);
+    --selectedControlColor: var(--openaiGray700);
+    --selectedControlTextColor: var(--textColor);
+    --alternateSelectedControlTextColor: var(--openaiGray0);
+    --windowFrameTextColor: var(--textColor);
+    --underPageBackgroundColor: var(--openaiGray950);
+    --highlightColor: var(--openaiGray200);
+
+    /* Control Styling Dark */
+    --controlBackground: var(--openaiGray800);
+    --controlBorder: 1px solid var(--openaiGray600);
+    --controlHoverBackground: var(--openaiGray700);
+    --controlActiveBackground: var(--openaiGray600);
+
+    /* Input Dark */
+    --inputBackground: var(--openaiGray800);
+    --inputBorder: 1px solid var(--openaiGray600);
+    --inputHoverBorder: 1px solid var(--openaiGray500);
+    --inputFocusBorder: 1px solid var(--accentColor);
+
+    /* Table Dark */
+    --tableBackgroundColor: var(--windowBackgroundColor);
+    --tableBorderColor: var(--openaiGray700);
+    --tableHeaderBackgroundColor: var(--openaiGray800);
+    --tableHeaderBorderColor: var(--openaiGray700);
+    --tableRowBackgroundColor: var(--windowBackgroundColor);
+    --tableRowBorderColor: var(--openaiGray700);
+    --tableRowAlternateBackgroundColor: var(--openaiGray800);
+    --tableRowAlternateBorderColor: var(--openaiGray700);
+
+    /* Dialog Dark */
+    --dialogBackground: var(--openaiGray800);
+    --dialogBoxShadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 0, 0, 0.2);
+
+    /* Toolbar Dark */
+    --barItemsDisabledLabelBackgroundColor: var(--openaiGray700);
+    --barItemsControlMarkerBackgroundColor: var(--openaiGray700);
+    --barItemsControlsBorder: 1px solid var(--openaiGray600);
+    --barItemsSegmentControlBackground: var(--openaiGray700);
+    --barItemsHoverSegmentControlBackground: var(--openaiGray600);
+    --barItemsActiveSegmentControlBackground: var(--openaiGray500);
+    --selectedSidebarListItemBackground: var(--openaiGray700);
+    --selectedSidebarListItemTextColor: var(--textColor);
+    --sidebarListItemDetailsBackground: var(--openaiGray800);
+    --sidebarListItemTextColor: var(--textColor);
+    --sidebarListItemHoverBackground: var(--openaiGray800);
+    --sidebarSectionTitleColor: var(--openaiGray400);
+    --sidebarListItemPadding: 8px 16px;
+
+    /* App Layout Dark */
+    --appMainToolbarFloatingBackground: rgba(52, 53, 65, 0.95);
+
+    /* Tab Bar Dark */
+    --tabBarBackground: var(--windowBackgroundColor);
+    --tabBarBoxShadow: inset 0 -1px 0 0 var(--openaiGray700);
+    --tabItemTextColor: var(--openaiGray400);
+    --tabItemBoxShadow-selected: inset 0 -2px 0 0 var(--accentColor);
+    --tabItemTextColor-selected: var(--textColor);
+
+    /* Segment Control Dark */
+    --segmentControlBackground: var(--openaiGray700);
+    --segmentControlIndicatorBackground: var(--openaiGray600);
+
+    /* Card Dark */
+    --cardBackground: var(--openaiGray800);
+    --cardBorder: 1px solid var(--openaiGray700);
+
+    /* Popover Dark */
+    --popoverBackground: var(--openaiGray800);
+    --popoverBorder: 1px solid var(--openaiGray700);
+
+    /* Scrollbar Dark */
+    --scrollBarThumbColor: rgba(255, 255, 255, 0.14);
+    --activeScrollBarThumbColor: rgba(255, 255, 255, 0.25);
+
+    /* Primary Button Dark remains the same */
+    --controlBackground--primary: var(--accentColor);
+    --controlHoverBackground--primary: var(--openaiGreenDark);
+
+    /* Secondary Button Dark */
+    --controlBackground--secondary: var(--openaiGray800);
+    --controlBorder--secondary: 1px solid var(--openaiGray600);
+    --controlHoverBackground--secondary: var(--openaiGray700);
+  }
+}
+
+/* Scrollbar Styling */
+body ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+
+body ::-webkit-scrollbar-corner {
+  background: transparent;
+  user-select: none;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: var(--scrollBarThumbColor);
+  border-radius: 10px;
+}
+
+body ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: var(--activeScrollBarThumbColor);
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+  :root {
+    --controlBorder: 2px solid currentColor;
+    --inputBorder: 2px solid currentColor;
+    --controlFocusBoxShadow: 0 0 0 3px var(--keyboardFocusIndicatorColor);
+    --inputFocusBoxShadow: 0 0 0 3px var(--keyboardFocusIndicatorColor);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animationDuration: 0ms;
+  }
+}

@@ -1,0 +1,446 @@
+/**
+ * @theme AWS
+ * @description Amazon Web Services console-inspired design with professional cloud interface aesthetics
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Enterprise
+ */
+
+:root {
+  /* Fonts - AWS uses Amazon Ember and system fonts */
+  --themeDefaultFontFamily: "Amazon Ember", "Helvetica Neue", Roboto, Arial, sans-serif;
+  --themeControlFontFamily: var(--themeDefaultFontFamily);
+  --themeLabelFontFamily: var(--themeDefaultFontFamily);
+  --themeMonospaceFont: Monaco, Menlo, Consolas, "Courier Prime", Courier, "Courier New", monospace;
+  --themeSystemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --textFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --labelFont: normal normal 500 12px/1.4 var(--themeLabelFontFamily);
+
+  /* AWS Color Palette - Dark Mode (default) */
+  /* Background colors */
+  --awsSquidInk: #232f3e;
+  --awsDeepSquidInk: #161e2d;
+  --awsDarkBackground: #0f1b2a;
+  --awsCardBackground: #1b2836;
+  --awsHoverBackground: #2d3e50;
+  --awsSelectedBackground: #3d5875;
+
+  /* AWS Orange - Primary brand color */
+  --awsOrange: #ff9900;
+  --awsOrangeLight: #ffb84d;
+  --awsOrangeDark: #cc7a00;
+  --awsOrangeSubtle: rgba(255, 153, 0, 0.1);
+  --awsOrangeMuted: rgba(255, 153, 0, 0.2);
+
+  /* Text colors */
+  --awsTextPrimary: #ffffff;
+  --awsTextSecondary: #d5dbdb;
+  --awsTextTertiary: #95a5a6;
+  --awsTextMuted: #687078;
+  --awsTextInverse: #232f3e;
+
+  /* Border colors */
+  --awsBorder: #414d5c;
+  --awsBorderLight: #545f70;
+  --awsBorderDark: #2a3441;
+  --awsBorderFocus: var(--awsOrange);
+
+  /* Semantic colors */
+  --awsSuccess: #1e8900;
+  --awsSuccessLight: #5cb85c;
+  --awsSuccessSubtle: rgba(30, 137, 0, 0.15);
+  --awsWarning: #ff9900;
+  --awsWarningLight: #ffb84d;
+  --awsWarningSubtle: rgba(255, 153, 0, 0.15);
+  --awsDanger: #d13212;
+  --awsDangerLight: #ff5630;
+  --awsDangerSubtle: rgba(209, 50, 18, 0.15);
+  --awsInfo: #0073bb;
+  --awsInfoLight: #2196f3;
+  --awsInfoSubtle: rgba(0, 115, 187, 0.15);
+
+  /* Service colors */
+  --awsEC2Orange: #ff9900;
+  --awsS3Green: #569a31;
+  --awsLambdaOrange: #ff9900;
+  --awsRDSBlue: #0073bb;
+  --awsDynamoDBBlue: #4b61d1;
+  --awsCloudFormationPink: #b0085f;
+
+  /* Core Colors */
+  --textColor: var(--awsTextPrimary);
+  --accentColor: var(--awsOrange);
+  --cautionColor: var(--awsDanger);
+  accent-color: var(--accentColor);
+
+  /* Background Colors */
+  --windowBackgroundColor: var(--awsSquidInk);
+  --backgroundSecondary: var(--awsDeepSquidInk);
+  --backgroundTertiary: var(--awsDarkBackground);
+  --backgroundHover: var(--awsHoverBackground);
+  --backgroundActive: var(--awsSelectedBackground);
+
+  /* No backdrop filters for AWS Console style */
+  --backgroundBackdropFilter: none;
+  --windowBackdropFilter: none;
+
+  /* Window Shadow */
+  --windowBoxShadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+
+  /* Scrollbar Colors */
+  --scrollBarBackgroundColor: transparent;
+  --scrollBarThumbColor: rgba(255, 255, 255, 0.2);
+  --activeScrollBarThumbColor: rgba(255, 255, 255, 0.3);
+
+  /* Text Colors */
+  --labelColor: var(--awsTextPrimary);
+  --secondaryLabelColor: var(--awsTextSecondary);
+  --tertiaryLabelColor: var(--awsTextTertiary);
+  --quaternaryLabelColor: var(--awsTextMuted);
+  --placeholderTextColor: var(--awsTextMuted);
+  --selectedTextColor: var(--awsTextPrimary);
+  --textBackgroundColor: var(--windowBackgroundColor);
+  --selectedTextBackgroundColor: var(--awsOrange);
+  --keyboardFocusIndicatorColor: var(--awsOrangeMuted);
+  --unemphasizedSelectedTextColor: var(--awsTextPrimary);
+  --unemphasizedSelectedTextBackgroundColor: var(--awsSelectedBackground);
+  --linkColor: var(--awsOrangeLight);
+  --separatorColor: var(--awsBorder);
+  --selectedContentBackgroundColor: var(--awsOrange);
+  --unemphasizedSelectedContentBackgroundColor: var(--awsSelectedBackground);
+  --selectedMenuItemTextColor: var(--awsTextPrimary);
+  --gridColor: var(--awsBorder);
+  --headerTextColor: var(--awsTextPrimary);
+
+  /* Control Colors */
+  --controlAccentColor: var(--awsOrange);
+  --controlColor: var(--awsCardBackground);
+  --controlTextColor: var(--awsTextPrimary);
+  --disabledControlTextColor: var(--awsTextMuted);
+  --selectedControlColor: var(--awsSelectedBackground);
+  --selectedControlTextColor: var(--awsTextPrimary);
+  --alternateSelectedControlTextColor: var(--awsTextInverse);
+  --scrubberTexturedBackgroundColor: var(--awsCardBackground);
+  --windowFrameTextColor: var(--awsTextPrimary);
+  --underPageBackgroundColor: var(--awsDarkBackground);
+  --findHighlightColor: var(--awsOrangeLight);
+  --highlightColor: var(--awsTextPrimary);
+  --shadowColor: rgba(0, 0, 0, 1);
+
+  /* System Colors */
+  --systemBrownColor: #8b6914;
+  --systemGrayColor: var(--awsTextTertiary);
+  --systemGreenColor: var(--awsSuccess);
+  --systemIndigoColor: var(--awsDynamoDBBlue);
+  --systemOrangeColor: var(--awsOrange);
+  --systemPinkColor: var(--awsCloudFormationPink);
+  --systemPurpleColor: #7b68ee;
+  --systemRedColor: var(--awsDanger);
+  --systemTealColor: #17a2b8;
+  --systemYellowColor: var(--awsWarning);
+  --systemBlueColor: var(--awsInfo);
+
+  /* Table */
+  --tableBackgroundColor: var(--awsCardBackground);
+  --tableBorderColor: var(--awsBorder);
+  --tableHeaderTextColor: var(--awsTextSecondary);
+  --tableHeaderBackgroundColor: var(--awsDeepSquidInk);
+  --tableHeaderBorderColor: var(--awsBorder);
+  --tableRowTextColor: var(--awsTextPrimary);
+  --tableRowBackgroundColor: var(--awsCardBackground);
+  --tableRowBorderColor: var(--awsBorderDark);
+  --tableRowAlternateTextColor: var(--awsTextPrimary);
+  --tableRowAlternateBackgroundColor: var(--awsDeepSquidInk);
+  --tableRowAlternateBorderColor: var(--awsBorderDark);
+  
+  /* Dropdown/Select Styles - AWS Console Specific */
+  --selectDropdownBackground: var(--awsCardBackground);
+  --selectDropdownBorder: 1px solid var(--awsBorder);
+  --selectDropdownShadow: 0 2px 8px 0 rgba(0, 28, 36, 0.5);
+  --selectOptionBackground: var(--awsCardBackground);
+  --selectOptionHoverBackground: var(--awsHoverBackground);
+  --selectOptionSelectedBackground: var(--awsSelectedBackground);
+  --selectOptionTextColor: var(--awsTextPrimary);
+  --selectOptionBorder: 1px solid var(--awsBorderDark);
+  --selectSearchBackground: var(--awsBackgroundSecondary);
+  --selectSearchBorder: 1px solid var(--awsBorder);
+  --selectSearchTextColor: var(--awsTextPrimary);
+  
+  /* Make alternating rows more visible in AWS theme */
+  --tableRowAlternateBackgroundColor: rgba(22, 25, 31, 0.8);
+
+  /* Dialog */
+  --dialogBackground: var(--awsCardBackground);
+  --dialogBoxShadow: 0 2px 8px 0 rgba(0, 0, 0, 0.5);
+
+  /* Control - AWS Console style */
+  --controlBoxShadow: none;
+  --controlFocusBoxShadow: 0 0 0 2px var(--awsOrangeMuted);
+  --controlTextFont: normal normal 400 14px/20px var(--themeControlFontFamily);
+  --controlBorderRadius: 2px;
+  --controlPadding: 6px 16px;
+  --controlTextLetterSpacing: normal;
+  --controlTextColor: var(--awsTextPrimary);
+  --controlBackground: var(--awsCardBackground);
+  --controlBorder: 1px solid var(--awsBorder);
+  --controlHoverBackground: var(--awsHoverBackground);
+  --controlHoverBorder: 1px solid var(--awsBorderLight);
+  --controlActiveBackground: var(--awsSelectedBackground);
+
+  /* Button Primary - AWS Orange */
+  --controlBoxShadow--primary: 0 1px 0 rgba(0, 0, 0, 0.1);
+  --controlBackground--primary: var(--awsOrange);
+  --controlBorder--primary: 1px solid var(--awsOrangeDark);
+  --controlTextColor--primary: var(--awsTextInverse);
+  --controlHoverTextColor--primary: var(--awsTextInverse);
+  --controlHoverBackground--primary: var(--awsOrangeLight);
+  --controlHoverBorder--primary: 1px solid var(--awsOrange);
+  --controlFocusBackground--primary: var(--awsOrangeDark);
+  --controlFocusTextColor--primary: var(--awsTextPrimary);
+
+  /* Button Secondary */
+  --controlBoxShadow--secondary: none;
+  --controlBackground--secondary: transparent;
+  --controlBorder--secondary: 1px solid var(--awsBorder);
+  --controlTextColor--secondary: var(--awsTextPrimary);
+  --controlHoverBackground--secondary: var(--awsHoverBackground);
+  --controlHoverBorder--secondary: 1px solid var(--awsBorderLight);
+  --controlHoverTextColor--secondary: var(--awsTextPrimary);
+
+  /* Button Danger */
+  --controlBoxShadow--danger: 0 1px 0 rgba(0, 0, 0, 0.1);
+  --controlBackground--danger: var(--awsDanger);
+  --controlBorder--danger: 1px solid #a02818;
+  --controlTextColor--danger: var(--awsTextPrimary);
+  --controlHoverBackground--danger: var(--awsDangerLight);
+
+  /* Input - AWS Console style */
+  --inputPadding: 8px 12px;
+  --inputBoxShadow: inset 0 1px 2px rgba(0, 0, 0, 0.39);
+  --inputBorder: 1px solid var(--awsBorder);
+  --inputBorderRadius: 2px;
+  --inputFont: normal normal 400 14px/20px var(--themeControlFontFamily);
+  --inputBackground: var(--awsDarkBackground);
+  --inputFocusBorder: 1px solid var(--awsOrange);
+  --inputFocusBoxShadow: 0 0 0 1px var(--awsOrangeMuted);
+  --inputHoverBorder: 1px solid var(--awsBorderLight);
+
+  /* Select Box */
+  --selectBoxSplitButtonWidth: 30px;
+  --selectBoxSplitButtonBorderColor: var(--awsBorder);
+  --selectBoxSplitButtonBorderWidth: 1px;
+
+  /* Checkbox */
+  --checkboxSize: 16px;
+  --checkboxBorderRadius: 2px;
+
+  /* Toolbar */
+  --barItemsFontFamily: var(--themeLabelFontFamily);
+  --barItemsTextColor: var(--awsTextPrimary);
+  --barItemsLabelTextColor: var(--awsTextSecondary);
+  --barItemsDisabledLabelTextColor: var(--awsTextMuted);
+  --barItemsDisabledLabelBackgroundColor: var(--awsSelectedBackground);
+  --barItemsBorderRadius: 2px;
+  --barItemsControlMarkerBorderRadius: 2px;
+  --barItemsControlPlaceholderTextColor: var(--awsTextMuted);
+  --barItemsControlMarkerBackgroundColor: var(--awsCardBackground);
+  --barItemsControlsBorder: 1px solid var(--awsBorder);
+  --barItemsSegmentControlBackground: var(--awsCardBackground);
+  --barItemsHoverSegmentControlBackground: var(--awsHoverBackground);
+  --barItemsActiveSegmentControlBackground: var(--awsSelectedBackground);
+  --segmentControlBackgroundColor: var(--awsDeepSquidInk);
+  
+  /* Sidebar */
+  --sidebarBackground: var(--awsDeepSquidInk);
+  --sidebarListItemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --sidebarListItemBorderRadius: 0px;
+  --selectedSidebarListItemBackground: var(--awsSelectedBackground);
+  --selectedSidebarListItemTextColor: var(--awsOrange);
+  --selectedSidebarListItemMarker: 3px solid var(--awsOrange);
+  --sidebarListItemDetailsBackground: var(--awsCardBackground);
+  --sidebarListItemTextColor: var(--awsTextPrimary);
+  --sidebarListItemHoverBackground: var(--awsHoverBackground);
+  --sidebarListItemIconSize: 18px;
+  --sidebarListItemChildrenPadding: 0 0 0 20px;
+  --sidebarSectionTitleColor: var(--awsTextSecondary);
+  --sidebarSectionTitlePadding: 16px 16px 8px 16px;
+  --sidebarListItemPadding: 10px 16px;
+  
+  /* Sidebar Section Title - AWS Console Style */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.05em;
+  --sidebarSectionTitleMargin: 24px 0 8px 0;
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
+
+  /* App Layout */
+  --appMainToolbarFloatingBackground: rgba(35, 47, 62, 0.95);
+  --appMainToolbarHeight: 48px;
+
+  /* Tab Bar */
+  --tabBarBackground: var(--awsDeepSquidInk);
+  --tabBarBoxShadow: 0 1px 0 0 var(--awsBorder);
+  --tabItemHeight: 40px;
+  --tabItemTextColor: var(--awsTextSecondary);
+  --tabItemBoxShadow: none;
+  --tabItemIconSize: 16px;
+  --tabItemFont: normal normal 400 14px/1.5 var(--themeLabelFontFamily);
+  --tabBarLayout: start;
+  --tabItemBackground-selected: var(--awsCardBackground);
+  --tabItemBoxShadow-selected: inset 0 -3px 0 0 var(--awsOrange);
+  --tabItemTextColor-selected: var(--awsTextPrimary);
+  --tabItemFont-selected: normal normal 700 14px/1.5 var(--themeLabelFontFamily);
+
+  /* Scrolled State */
+  --scrolledAppMainToolbarBoxShadow: 0 2px 4px 0 rgba(0, 0, 0, 0.37);
+
+  /* Segment Control */
+  --segmentControlPadding: 0px;
+  --segmentControlSegmentPadding: 8px 16px;
+  --segmentControlBoxShadow: none;
+  --segmentControlBackground: transparent;
+  --segmentControlBorderRadius: 0px;
+  --segmentControlIndicatorBoxShadow: none;
+  --segmentControlIndicatorBackground: var(--awsCardBackground);
+  --segmentControlIndicatorBorder: 1px solid var(--awsBorder);
+
+  /* Card */
+  --cardBackground: var(--awsCardBackground);
+  --cardBorder: 1px solid var(--awsBorder);
+  --cardBorderRadius: 2px;
+  --cardBoxShadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+  --cardPadding: 20px;
+
+  /* Popover */
+  --popoverBackground: var(--awsCardBackground);
+  --popoverBorder: 1px solid var(--awsBorder);
+  --popoverBorderRadius: 2px;
+  --popoverBoxShadow: 0 2px 8px 0 rgba(0, 0, 0, 0.5);
+
+  /* AWS Console specific */
+  --consoleHeaderHeight: 40px;
+  --consoleSidebarWidth: 240px;
+  --consoleFooterHeight: 32px;
+
+  /* Service icon backgrounds */
+  --serviceIconSize: 24px;
+  --serviceIconBorderRadius: 4px;
+}
+
+/* Light mode support */
+@media (prefers-color-scheme: light) {
+  body {
+    /* Light Mode Colors */
+    --awsSquidInk: #ffffff;
+    --awsDeepSquidInk: #fafafa;
+    --awsDarkBackground: #f5f5f5;
+    --awsCardBackground: #ffffff;
+    --awsHoverBackground: #f0f0f0;
+    --awsSelectedBackground: #e6f2ff;
+
+    /* Text colors light */
+    --awsTextPrimary: #16191f;
+    --awsTextSecondary: #414d5c;
+    --awsTextTertiary: #687078;
+    --awsTextMuted: #95a5a6;
+    --awsTextInverse: #ffffff;
+
+    /* Border colors light */
+    --awsBorder: #d5dbdb;
+    --awsBorderLight: #c5c5c5;
+    --awsBorderDark: #e1e4e8;
+
+    /* Adjustments for light mode */
+    --windowBoxShadow: 0 1px 4px 0 rgba(0, 0, 0, 0.15);
+    --scrollBarThumbColor: rgba(0, 0, 0, 0.2);
+    --activeScrollBarThumbColor: rgba(0, 0, 0, 0.3);
+    --backgroundHover: rgba(0, 0, 0, 0.05);
+    --backgroundActive: rgba(0, 0, 0, 0.1);
+
+    /* Input light */
+    --inputBackground: var(--awsCardBackground);
+    --inputBoxShadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+
+    /* Control light */
+    --controlBackground: var(--awsCardBackground);
+    --controlTextColor: var(--awsTextPrimary);
+
+    /* Table light */
+    --tableBackgroundColor: var(--awsCardBackground);
+    --tableHeaderBackgroundColor: var(--awsDeepSquidInk);
+    --tableRowAlternateBackgroundColor: var(--awsDeepSquidInk);
+
+    /* Dialog light */
+    --dialogBoxShadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+
+    /* Popover light */
+    --popoverBoxShadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);
+
+    /* Tab Bar light */
+    --tabBarBackground: var(--awsDeepSquidInk);
+    --tabItemBackground-selected: var(--awsCardBackground);
+
+    /* Primary button light */
+    --controlTextColor--primary: var(--awsTextInverse);
+    --controlFocusTextColor--primary: var(--awsTextInverse);
+
+    /* Secondary button light */
+    --controlBackground--secondary: var(--awsCardBackground);
+    --controlTextColor--secondary: var(--awsTextPrimary);
+
+    /* Segment Control light */
+    --segmentControlBackground: var(--awsDeepSquidInk);
+    --segmentControlIndicatorBackground: var(--awsCardBackground);
+    
+    /* Sidebar light */
+    --sidebarBackground: var(--awsDeepSquidInk);
+    --sidebarListItemDetailsBackground: var(--awsCardBackground);
+    --sidebarListItemTextColor: var(--awsTextPrimary);
+    --sidebarListItemHoverBackground: var(--awsHoverBackground);
+    --sidebarSectionTitleColor: var(--awsTextSecondary);
+  }
+}
+
+/* Scrollbar Styling - AWS style */
+body ::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+
+body ::-webkit-scrollbar-corner {
+  background: transparent;
+  user-select: none;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: var(--scrollBarThumbColor);
+  border-radius: 0px;
+}
+
+body ::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: var(--activeScrollBarThumbColor);
+}
+
+/* High Contrast Support */
+@media (prefers-contrast: high) {
+  body {
+    --awsBorder: currentColor;
+    --controlBorder: 1px solid currentColor;
+    --inputBorder: 1px solid currentColor;
+    --controlFocusBoxShadow: 0 0 0 2px var(--awsOrange);
+    --inputFocusBoxShadow: 0 0 0 2px var(--awsOrange);
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  body {
+    --animationDuration: 0ms;
+  }
+}

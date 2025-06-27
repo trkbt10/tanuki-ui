@@ -1,0 +1,419 @@
+/**
+ * @theme 8-bit Game Console RPG
+ * @description Authentic retro 8-bit console experience with pixel-perfect design, monochrome palette, chunky borders, and classic RPG aesthetics
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Retro
+ */
+
+/* Import authentic 8-bit fonts */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+:root {
+  /* Authentic 8-bit Monochrome Palette */
+  --pixel-black: #000000;
+  --pixel-dark-gray: #404040;
+  --pixel-medium-gray: #808080;
+  --pixel-light-gray: #c0c0c0;
+  --pixel-white: #ffffff;
+  --pixel-screen: #f8f8f8;
+  --pixel-border: #404040;
+  --pixel-shadow: #202020;
+  
+  /* Base System Colors */
+  --textColor: var(--pixel-black);
+  --accentColor: var(--pixel-dark-gray);
+  --cautionColor: var(--pixel-medium-gray);
+  --windowBackgroundColor: var(--pixel-screen);
+  
+  /* 8-bit Typography System */
+  --themeDefaultFontFamily: "Press Start 2P", "Courier New", "Monaco", "Menlo", monospace;
+  --themeControlFontFamily: "Press Start 2P", "Courier New", monospace;
+  --themeLabelFontFamily: "Press Start 2P", "Courier New", monospace;
+  
+  /* Pixel-perfect font rendering */
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: unset;
+  font-smooth: never;
+  text-rendering: optimizeSpeed;
+  font-feature-settings: "kern" 0, "liga" 0;
+  font-kerning: none;
+  
+  /* 8-bit Text Hierarchy - Pixel-aligned sizes */
+  --textFont: normal normal 400 8px/1.25 var(--themeDefaultFontFamily);
+  --labelFont: normal normal 400 8px/1.25 var(--themeLabelFontFamily);
+  --titleFont: normal normal 400 16px/1.25 var(--themeDefaultFontFamily);
+  --subtitleFont: normal normal 400 12px/1.25 var(--themeDefaultFontFamily);
+  --captionFont: normal normal 400 8px/1.25 var(--themeDefaultFontFamily);
+  
+  /* 8-bit Text Color Hierarchy */
+  --labelColor: var(--pixel-black);
+  --secondaryLabelColor: var(--pixel-dark-gray);
+  --tertiaryLabelColor: var(--pixel-medium-gray);
+  --quaternaryLabelColor: var(--pixel-light-gray);
+  --placeholderTextColor: var(--pixel-medium-gray);
+  
+  /* 8-bit Selection Colors */
+  --selectedTextColor: var(--pixel-white);
+  --selectedTextBackgroundColor: var(--pixel-black);
+  --textBackgroundColor: var(--pixel-screen);
+  --unemphasizedSelectedTextColor: var(--pixel-black);
+  --unemphasizedSelectedTextBackgroundColor: var(--pixel-light-gray);
+  
+  /* 8-bit System Colors */
+  --systemBlueColor: var(--pixel-dark-gray);
+  --systemGreenColor: var(--pixel-dark-gray);
+  --systemRedColor: var(--pixel-black);
+  --systemOrangeColor: var(--pixel-medium-gray);
+  --systemYellowColor: var(--pixel-light-gray);
+  --systemPurpleColor: var(--pixel-dark-gray);
+  --systemPinkColor: var(--pixel-light-gray);
+  --systemTealColor: var(--pixel-medium-gray);
+  --systemIndigoColor: var(--pixel-dark-gray);
+  --systemBrownColor: var(--pixel-medium-gray);
+  --systemGrayColor: var(--pixel-medium-gray);
+  
+  /* 8-bit Chunky Borders */
+  --pixel-raised-border: 3px outset var(--pixel-light-gray);
+  --pixel-lowered-border: 3px inset var(--pixel-light-gray);
+  --pixel-double-border: 4px double var(--pixel-border);
+  
+  /* 8-bit Box Shadow Effects */
+  --pixel-raised-shadow: 
+    inset 2px 2px 0 var(--pixel-white),
+    inset -2px -2px 0 var(--pixel-dark-gray);
+  --pixel-lowered-shadow:
+    inset -2px -2px 0 var(--pixel-white),
+    inset 2px 2px 0 var(--pixel-dark-gray);
+  --pixel-flat-shadow: 2px 2px 0 var(--pixel-shadow);
+  
+  /* 8-bit Control Properties */
+  --controlAccentColor: var(--pixel-dark-gray);
+  --controlBackground: var(--pixel-light-gray);
+  --controlTextColor: var(--pixel-black);
+  --controlHoverBackground: var(--pixel-medium-gray);
+  --controlActiveBackground: var(--pixel-dark-gray);
+  --controlFocusBackground: var(--pixel-light-gray);
+  --controlDisabledBackground: var(--pixel-screen);
+  --disabledControlTextColor: var(--pixel-medium-gray);
+  
+  /* 8-bit Control Styling */
+  --controlBorder: var(--pixel-raised-border);
+  --controlBoxShadow: var(--pixel-raised-shadow);
+  --controlHoverBoxShadow: var(--pixel-raised-shadow);
+  --controlActiveBoxShadow: var(--pixel-lowered-shadow);
+  --controlFocusBoxShadow: var(--pixel-raised-shadow), 0 0 0 2px var(--pixel-black);
+  --controlBorderRadius: 0;
+  --controlPadding: 8px 12px;
+  --controlTextFont: normal normal 400 8px/1.25 var(--themeControlFontFamily);
+  --controlTextLetterSpacing: 1px;
+  
+  /* 8-bit Primary Controls */
+  --controlBackground--primary: var(--pixel-black);
+  --controlTextColor--primary: var(--pixel-white);
+  --controlHoverBackground--primary: var(--pixel-dark-gray);
+  --controlActiveBackground--primary: var(--pixel-black);
+  --controlBorder--primary: var(--pixel-raised-border);
+  --controlBoxShadow--primary: var(--pixel-raised-shadow);
+  
+  /* 8-bit Secondary Controls */
+  --controlBackground--secondary: var(--pixel-medium-gray);
+  --controlTextColor--secondary: var(--pixel-black);
+  --controlHoverBackground--secondary: var(--pixel-light-gray);
+  --controlActiveBackground--secondary: var(--pixel-dark-gray);
+  --controlBorder--secondary: var(--pixel-raised-border);
+  --controlBoxShadow--secondary: var(--pixel-raised-shadow);
+  
+  /* 8-bit Input Elements */
+  --inputPadding: 6px 8px;
+  --inputFont: var(--textFont);
+  --inputBorder: var(--pixel-lowered-border);
+  --inputBorderRadius: 0;
+  --inputBackground: var(--pixel-white);
+  --inputBoxShadow: var(--pixel-lowered-shadow);
+  --inputFocusBorder: var(--pixel-lowered-border);
+  --inputFocusBoxShadow: var(--pixel-lowered-shadow), 0 0 0 2px var(--pixel-black);
+  
+  /* 8-bit Dialog & Windows */
+  --dialogBackground: var(--pixel-light-gray);
+  --dialogBorderRadius: 0;
+  --dialogBorder: var(--pixel-raised-border);
+  --dialogBoxShadow: var(--pixel-raised-shadow), var(--pixel-flat-shadow);
+  --dialogBackdrop: rgba(0, 0, 0, 0.75);
+  --dialogPadding: 16px;
+  --windowBorder: var(--pixel-raised-border);
+  --windowBoxShadow: var(--pixel-raised-shadow), var(--pixel-flat-shadow);
+  --windowBorderRadius: 0;
+  --windowPadding: 12px;
+  --windowBackdropFilter: none;
+  
+  /* 8-bit Table Styles */
+  --tableBackgroundColor: var(--pixel-white);
+  --tableBorderColor: var(--pixel-border);
+  --tableHeaderTextColor: var(--pixel-black);
+  --tableHeaderBackgroundColor: var(--pixel-light-gray);
+  --tableHeaderBorderColor: var(--pixel-dark-gray);
+  --tableHeaderFont: normal normal 400 8px/1.25 var(--themeDefaultFontFamily);
+  --tableRowTextColor: var(--pixel-black);
+  --tableRowBackgroundColor: var(--pixel-white);
+  --tableRowBorderColor: var(--pixel-light-gray);
+  --tableRowAlternateBackgroundColor: var(--pixel-screen);
+  --tableHoverBackground: var(--pixel-light-gray);
+  --tableHoverTextColor: var(--pixel-black);
+  --tableCellPadding: 6px 8px;
+  
+  /* 8-bit Table Border Styles */
+  --tableBorder: var(--pixel-double-border);
+  --tableBorderStyle: double;
+  --tableBorderWidth: 4px;
+  --tableHeaderBorder: var(--pixel-raised-border);
+  --tableHeaderBorderStyle: outset;
+  --tableHeaderBorderWidth: 3px;
+  --tableCellBorder: 1px solid var(--pixel-medium-gray);
+  --tableCellBorderStyle: solid;
+  --tableCellBorderWidth: 1px;
+  --tableRowBorder: 1px solid var(--pixel-light-gray);
+  --tableRowBorderStyle: solid;
+  --tableRowBorderWidth: 1px;
+  
+  /* 8-bit Tab System */
+  --tabBarBackground: var(--pixel-light-gray);
+  --tabBarBorder: var(--pixel-raised-border);
+  --tabBarBoxShadow: var(--pixel-raised-shadow);
+  --tabBarLayout: horizontal;
+  --tabItemBackground: var(--pixel-medium-gray);
+  --tabItemTextColor: var(--pixel-black);
+  --tabItemFont: var(--textFont);
+  --tabItemPadding: 8px 16px;
+  --tabItemBorderRadius: 0;
+  --tabItemBorder: var(--pixel-raised-border);
+  --tabItemBoxShadow: var(--pixel-raised-shadow);
+  --tabItemBackground-hover: var(--pixel-light-gray);
+  --tabItemTextColor-hover: var(--pixel-black);
+  --tabItemBorder-hover: var(--pixel-raised-border);
+  --tabItemBoxShadow-hover: var(--pixel-raised-shadow);
+  --tabItemBackground-selected: var(--pixel-black);
+  --tabItemTextColor-selected: var(--pixel-white);
+  --tabItemFont-selected: normal normal 400 8px/1.25 var(--themeDefaultFontFamily);
+  --tabItemBorder-selected: var(--pixel-lowered-border);
+  --tabItemBoxShadow-selected: var(--pixel-lowered-shadow);
+  
+  /* 8-bit Sidebar */
+  --sidebarBackground: var(--pixel-light-gray);
+  --sidebarWidth: 200px;
+  --sidebarBorder: var(--pixel-raised-border);
+  --sidebarListItemPadding: 6px 12px;
+  --sidebarListItemHeight: 24px;
+  --sidebarListItemFont: var(--textFont);
+  --sidebarListItemBorderRadius: 0;
+  --sidebarListItemTextColor: var(--pixel-black);
+  --sidebarListItemHoverBackground: var(--pixel-medium-gray);
+  --sidebarListItemHoverColor: var(--pixel-black);
+  --selectedSidebarListItemBackground: var(--pixel-black);
+  --selectedSidebarListItemTextColor: var(--pixel-white);
+  --selectedSidebarListItemMarker: none;
+  --sidebarSectionTitleFont: normal normal 400 8px/1.25 var(--themeLabelFontFamily);
+  --sidebarSectionTitleLetterSpacing: 1px;
+  --sidebarSectionTitleMargin: 12px 0 6px 0;
+  --sidebarSectionTitlePadding: 4px 12px;
+  --sidebarSectionTitleColor: var(--pixel-dark-gray);
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
+  
+  /* 8-bit Cards */
+  --cardBackground: var(--pixel-white);
+  --cardBorderRadius: 0;
+  --cardBorder: var(--pixel-raised-border);
+  --cardBoxShadow: var(--pixel-raised-shadow), var(--pixel-flat-shadow);
+  --cardPadding: 16px;
+  --cardHoverTransform: none;
+  --cardHoverBorder: var(--pixel-raised-border);
+  --cardHoverBoxShadow: var(--pixel-raised-shadow), 3px 3px 0 var(--pixel-shadow);
+  
+  /* 8-bit Toolbar */
+  --toolbarBackground: var(--pixel-light-gray);
+  --toolbarHeight: 32px;
+  --toolbarPadding: 6px 12px;
+  --toolbarBorder: var(--pixel-raised-border);
+  --toolbarBoxShadow: var(--pixel-raised-shadow);
+  
+  /* 8-bit Bar Items */
+  --barItemsFontFamily: var(--themeDefaultFontFamily);
+  --barItemsTextColor: var(--pixel-black);
+  --barItemsLabelTextColor: var(--pixel-black);
+  --barItemsDisabledLabelTextColor: var(--pixel-medium-gray);
+  --barItemsDisabledLabelBackgroundColor: var(--pixel-screen);
+  --barItemsBorderRadius: 0;
+  --barItemsControlMarkerBorderRadius: 0;
+  --barItemsControlPlaceholderTextColor: var(--pixel-medium-gray);
+  --barItemsControlMarkerBackgroundColor: var(--pixel-white);
+  --barItemsControlsBorder: var(--pixel-raised-border);
+  --barItemsSegmentControlBackground: var(--pixel-medium-gray);
+  --barItemsHoverSegmentControlBackground: var(--pixel-light-gray);
+  --barItemsActiveSegmentControlBackground: var(--pixel-black);
+  --barItemsAccentColor: var(--pixel-dark-gray);
+  
+  /* 8-bit Segment Controls */
+  --segmentControlBackgroundColor: var(--pixel-medium-gray);
+  --segmentControlPadding: 4px;
+  --segmentControlSegmentPadding: 6px 12px;
+  --segmentControlBoxShadow: var(--pixel-lowered-shadow);
+  --segmentControlBackground: var(--pixel-medium-gray);
+  --segmentControlBorderRadius: 0;
+  --segmentControlIndicatorBoxShadow: var(--pixel-raised-shadow);
+  --segmentControlIndicatorBackground: var(--pixel-light-gray);
+  
+  /* 8-bit Contextual Menu */
+  --contextualMenuBackground: var(--pixel-light-gray);
+  --contextualMenuBorder: var(--pixel-raised-border);
+  --contextualMenuBorderRadius: 0;
+  --contextualMenuBoxShadow: var(--pixel-raised-shadow), var(--pixel-flat-shadow);
+  --contextualMenuPadding: 4px;
+  --contextualMenuItemPadding: 6px 12px;
+  --contextualMenuItemFont: var(--textFont);
+  --contextualMenuItemHoverBackground: var(--pixel-black);
+  --contextualMenuItemHoverColor: var(--pixel-white);
+  --contextualMenuSeparatorColor: var(--pixel-border);
+  --contextualMenuSeparatorHeight: 2px;
+  
+  /* 8-bit Progress & Health Bars */
+  --progressBackground: var(--pixel-white);
+  --progressForeground: var(--pixel-black);
+  --progressBorderRadius: 0;
+  --progressHeight: 16px;
+  --progressBoxShadow: var(--pixel-lowered-shadow);
+  
+  /* 8-bit Scrollbars */
+  --scrollBarBackgroundColor: var(--pixel-medium-gray);
+  --scrollBarThumbColor: var(--pixel-dark-gray);
+  --activeScrollBarThumbColor: var(--pixel-black);
+  --scrollbarWidth: 16px;
+  --scrollbarThumbBoxShadow: var(--pixel-raised-shadow);
+  --scrollbarButtonBackground: var(--pixel-light-gray);
+  --scrollbarButtonBoxShadow: var(--pixel-raised-shadow);
+  
+  /* 8-bit Form Elements */
+  --checkboxSize: 16px;
+  --checkboxBackground: var(--pixel-white);
+  --checkboxBorder: var(--pixel-lowered-border);
+  --checkboxBoxShadow: var(--pixel-lowered-shadow);
+  --checkboxCheckedBackground: var(--pixel-black);
+  --checkboxCheckmarkColor: var(--pixel-white);
+  --checkboxBorderRadius: 0;
+  --selectBoxSplitButtonWidth: 24px;
+  --selectBoxSplitButtonBorderColor: var(--pixel-border);
+  --selectBoxSplitButtonBorderWidth: 3px;
+  --selectBoxSplitButtonBackground: var(--pixel-light-gray);
+  
+  /* 8-bit Focus & Links */
+  --keyboardFocusIndicatorColor: var(--pixel-black);
+  --focusRingWidth: 2px;
+  --focusRingOffset: 2px;
+  --focusRingStyle: solid;
+  --linkColor: var(--pixel-dark-gray);
+  --separatorColor: var(--pixel-border);
+  --gridColor: var(--pixel-border);
+  --headerTextColor: var(--pixel-black);
+  --controlColor: var(--pixel-black);
+  --selectedControlColor: var(--pixel-white);
+  --selectedControlTextColor: var(--pixel-black);
+  --alternateSelectedControlTextColor: var(--pixel-white);
+  --scrubberTexturedBackgroundColor: var(--pixel-screen);
+  --windowFrameTextColor: var(--pixel-black);
+  --underPageBackgroundColor: var(--pixel-screen);
+  --findHighlightColor: var(--pixel-light-gray);
+  --highlightColor: var(--pixel-black);
+  --shadowColor: var(--pixel-shadow);
+  
+  /* 8-bit Animation */
+  --animationDuration: 0ms;
+  --animationEasing: steps(1);
+}
+
+/* Dark mode - inverted 8-bit palette */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --pixel-black: #ffffff;
+    --pixel-dark-gray: #c0c0c0;
+    --pixel-medium-gray: #808080;
+    --pixel-light-gray: #404040;
+    --pixel-white: #000000;
+    --pixel-screen: #202020;
+    --pixel-border: #c0c0c0;
+    --pixel-shadow: #ffffff;
+    
+    --textColor: var(--pixel-black);
+    --windowBackgroundColor: var(--pixel-screen);
+    --labelColor: var(--pixel-black);
+    --secondaryLabelColor: var(--pixel-dark-gray);
+    --controlBackground: var(--pixel-light-gray);
+    --controlTextColor: var(--pixel-black);
+    --inputBackground: var(--pixel-white);
+    --dialogBackground: var(--pixel-light-gray);
+    --tableBackgroundColor: var(--pixel-white);
+    --cardBackground: var(--pixel-white);
+    --tabBarBackground: var(--pixel-light-gray);
+    --sidebarBackground: var(--pixel-light-gray);
+  }
+}
+
+/* Pixel-perfect font rendering */
+* {
+  -webkit-font-smoothing: none !important;
+  -moz-osx-font-smoothing: unset !important;
+  font-smooth: never !important;
+  text-rendering: optimizeSpeed !important;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "kern" 0;
+  font-kerning: none;
+}
+
+/* 8-bit Scrollbar styling */
+body ::-webkit-scrollbar {
+  width: var(--scrollbarWidth);
+  height: var(--scrollbarWidth);
+  background: var(--pixel-medium-gray);
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: var(--scrollBarThumbColor);
+  box-shadow: var(--scrollbarThumbBoxShadow);
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: var(--activeScrollBarThumbColor);
+}
+
+body ::-webkit-scrollbar-track {
+  background: var(--scrollBarBackgroundColor);
+  box-shadow: var(--pixel-lowered-shadow);
+}
+
+body ::-webkit-scrollbar-corner {
+  background: var(--pixel-medium-gray);
+}
+
+body ::-webkit-scrollbar-button {
+  background: var(--scrollbarButtonBackground);
+  box-shadow: var(--scrollbarButtonBoxShadow);
+  width: var(--scrollbarWidth);
+  height: var(--scrollbarWidth);
+}
+
+body ::-webkit-scrollbar-button:hover {
+  background: var(--pixel-light-gray);
+}
+
+/* 8-bit cursor styles */
+* {
+  cursor: default;
+}
+
+button, input[type="button"], input[type="submit"], [role="button"] {
+  cursor: pointer;
+}
+
+input[type="text"], input[type="password"], textarea {
+  cursor: text;
+}
