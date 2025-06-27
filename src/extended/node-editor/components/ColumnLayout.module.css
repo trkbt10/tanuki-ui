@@ -6,26 +6,22 @@
   overflow: hidden;
 }
 
+.rightSidebar,
 .leftSidebar {
   flex: 0 0 auto;
+  position: relative;
   background: var(--controlBackground, #ffffff);
-  border-right: 1px solid var(--inputBorder, #e0e0e0);
   display: flex;
   flex-direction: column;
   overflow: hidden;
   min-width: 200px;
   max-width: 600px;
+  border-right: 1px solid var(--inputBorder, #e0e0e0);
 }
 
 .rightSidebar {
-  flex: 0 0 auto;
-  background: var(--controlBackground, #ffffff);
+  border-right: none;
   border-left: 1px solid var(--inputBorder, #e0e0e0);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  min-width: 200px;
-  max-width: 600px;
 }
 
 .mainContent {
@@ -48,6 +44,7 @@
 
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
+
   .leftSidebar,
   .rightSidebar {
     background: var(--controlBackground, #2a2a2a);

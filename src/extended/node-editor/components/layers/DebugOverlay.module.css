@@ -25,12 +25,14 @@
 }
 
 .bottomLeft {
-  bottom: 60px; /* Account for status bar */
+  bottom: 60px;
+  /* Account for status bar */
   left: 16px;
 }
 
 .bottomRight {
-  bottom: 60px; /* Account for status bar */
+  bottom: 60px;
+  /* Account for status bar */
   right: 16px;
 }
 
@@ -141,7 +143,7 @@
     background: rgba(0, 0, 0, 0.95);
     border-color: rgba(255, 255, 255, 0.15);
   }
-  
+
   .debugHeader {
     background: rgba(255, 255, 255, 0.05);
     border-bottom-color: rgba(255, 255, 255, 0.05);
@@ -155,20 +157,20 @@
     color: #000000;
     border-color: rgba(0, 0, 0, 0.2);
   }
-  
+
   .debugHeader {
     background: rgba(0, 0, 0, 0.05);
     border-bottom-color: rgba(0, 0, 0, 0.1);
   }
-  
+
   .label {
     color: rgba(0, 0, 0, 0.6);
   }
-  
+
   .value {
     color: var(--accentColor, #007aff);
   }
-  
+
   .sectionTitle {
     color: var(--accentColor, #007aff);
   }
