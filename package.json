@@ -50,13 +50,13 @@
       "require": "./dist/lib/themes/LiquidGlassFilter.cjs",
       "default": "./dist/lib/themes/LiquidGlassFilter.js"
     },
-    "./style.css": "./dist/lib/index/style.css",
-    "./layouts/style.css": "./dist/lib/layouts/style.css",
-    "./extended/node-editor/style.css": "./dist/lib/extended/node-editor/style.css",
-    "./extended/panel/style.css": "./dist/lib/extended/panel/style.css",
+    "./style.css": "./dist/lib/index.css",
+    "./layouts/style.css": "./dist/lib/layouts.css",
+    "./extended/node-editor/style.css": "./dist/lib/node-editor.css",
+    "./extended/panel/style.css": "./dist/lib/panel.css",
     "./styles/*.css": "./public/styles/*.css"
   },
-  "version": "1.213.150",
+  "version": "1.215.156",
   "license": "Unlicense",
   "author": "trkbt10 <triplequartet@gmail.com>",
   "homepage": "https://github.com/trkbt10/tanuki-ui#readme",
@@ -74,6 +74,7 @@
     "LICENSE"
   ],
   "scripts": {
+    "version:up": "node scripts/generate-theme-catalog.js && node scripts/auto-version.js && node scripts/update-readme.js",
     "build": "vite build",
     "typecheck": "bunx tsc --noEmit",
     "typecheck:no-stories": "bunx tsc --noEmit --project tsconfig.typecheck.json",
