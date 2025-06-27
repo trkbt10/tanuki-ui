@@ -7,7 +7,6 @@ import { NodeLayer } from "./components/node/NodeLayer";
 import { ConnectionLayer } from "./components/connection/ConnectionLayer";
 import { StatusBar } from "./components/StatusBar";
 import { NodeSearchMenu } from "./components/NodeSearchMenu";
-import { Toolbar } from "./components/Toolbar";
 import { NodeCanvasProvider } from "./contexts/NodeCanvasContext";
 import { EditorActionStateProvider } from "./contexts/EditorActionStateContext";
 import { KeyboardShortcutProvider } from "./contexts/KeyboardShortcutContext";
@@ -78,7 +77,7 @@ export interface NodeEditorProps<TNodeDataTypeMap = {}> {
  * NodeEditor - Main component that integrates all node editor functionality
  * Provides three separate contexts for managing different aspects of the editor
  */
-export const NodeEditor = <TNodeDataTypeMap = {}>({
+export const NodeEditor = <TNodeDataTypeMap = {},>({
   initialData,
   data,
   onDataChange,
@@ -189,20 +188,20 @@ const NodeEditorContent: React.FC<{
   const { utils } = useNodeCanvas();
 
   const nodeDefinitions = useNodeDefinitionList();
-  
+
   // Compute port positions whenever nodes change
   const [portPositions, setPortPositions] = React.useState<EditorPortPositions>(() => new Map());
-  
+
   // Track previous nodes state for change detection
   const prevNodesRef = React.useRef<typeof editorState.nodes>(editorState.nodes);
-  
+
   React.useEffect(() => {
     if (!editorState.nodes) return;
-    
+
     // Check if nodes have actually changed
     const prevNodes = prevNodesRef.current;
     let hasChanged = false;
-    
+
     if (!prevNodes || Object.keys(prevNodes).length !== Object.keys(editorState.nodes).length) {
       hasChanged = true;
     } else {
@@ -210,27 +209,29 @@ const NodeEditorContent: React.FC<{
       for (const nodeId in editorState.nodes) {
         const node = editorState.nodes[nodeId];
         const prevNode = prevNodes[nodeId];
-        
-        if (!prevNode || 
-            node.position.x !== prevNode.position.x || 
-            node.position.y !== prevNode.position.y ||
-            node.size?.width !== prevNode.size?.width ||
-            node.size?.height !== prevNode.size?.height) {
+
+        if (
+          !prevNode ||
+          node.position.x !== prevNode.position.x ||
+          node.position.y !== prevNode.position.y ||
+          node.size?.width !== prevNode.size?.width ||
+          node.size?.height !== prevNode.size?.height
+        ) {
           hasChanged = true;
           break;
         }
       }
     }
-    
+
     if (hasChanged) {
       // Compute port positions for all nodes
-      const nodes = Object.values(editorState.nodes).map(node => ({
+      const nodes = Object.values(editorState.nodes).map((node) => ({
         ...node,
         ports: getNodePorts(node.id),
       }));
       const newPortPositions = computeAllPortPositions(nodes);
       setPortPositions(newPortPositions);
-      
+
       // Update ref
       prevNodesRef.current = editorState.nodes;
     }
