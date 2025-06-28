@@ -1,0 +1,72 @@
+.playheadContainer {
+  box-sizing: border-box;
+  position: relative;
+  width: 100%;
+  pointer-events: none;
+}
+
+.playhead {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  transform: translateX(-50%);
+  cursor: grab;
+  pointer-events: all;
+  z-index: 100;
+  transition: width 0.1s ease;
+}
+
+.playhead:hover {
+  width: 4px;
+}
+
+.playhead[data-dragging='true'] {
+  cursor: grabbing;
+  width: 4px;
+}
+
+.playhead[data-scrubbing='true'] {
+  cursor: ew-resize;
+  width: 6px;
+  opacity: 0.8;
+}
+
+.handle {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background-color: inherit;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.playhead:hover .handle,
+.playhead[data-dragging='true'] .handle {
+  opacity: 1;
+}
+
+.timeDisplay {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--time-display-bg, rgba(0, 0, 0, 0.8));
+  color: white;
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.playhead:hover .timeDisplay,
+.playhead[data-dragging='true'] .timeDisplay {
+  opacity: 1;
+}

@@ -26,6 +26,10 @@ export const entryPoints: Record<string, EntryPointConfig> = {
     path: path.resolve(entryRoot, "extended/node-editor/index.ts"),
     description: "Node editor module",
   },
+  "extended/audio-controls": {
+    path: path.resolve(entryRoot, "extended/audio-controls/index.ts"),
+    description: "Audio controls module",
+  },
   "themes/LiquidGlassFilter": {
     path: path.resolve(entryRoot, "themes/LiquidGlassFilter.tsx"),
     description: "Liquid glass theme",

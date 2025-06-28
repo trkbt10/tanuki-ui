@@ -1,0 +1,116 @@
+.xyPad {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.padArea {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: var(--pad-bg, #1e1e1e);
+  border: 2px solid var(--pad-border, #333);
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+.padArea[data-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.padArea[data-dragging='true'] {
+  cursor: move;
+}
+
+.gridLines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.gridVertical {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: var(--grid-color, #333);
+}
+
+.gridHorizontal {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: var(--grid-color, #333);
+}
+
+.position {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.crosshair {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.crosshairH,
+.crosshairV {
+  position: absolute;
+  background-color: var(--crosshair-color, #2196f3);
+}
+
+.crosshairH {
+  top: 50%;
+  left: -100px;
+  right: -100px;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.crosshairV {
+  left: 50%;
+  top: -100px;
+  bottom: -100px;
+  width: 2px;
+  transform: translateX(-50%);
+}
+
+.position::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  background-color: var(--position-color, #2196f3);
+  border: 2px solid var(--position-border, white);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 4px;
+}
+
+.labelX,
+.labelY {
+  font-size: 12px;
+  color: var(--label-color, #999);
+  font-family: monospace;
+}

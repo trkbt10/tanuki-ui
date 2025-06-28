@@ -1,0 +1,130 @@
+.stepSequencer {
+  box-sizing: border-box;
+  display: inline-block;
+  background-color: var(--sequencer-bg, #1e1e1e);
+  border: 1px solid var(--sequencer-border, #333);
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.header {
+  display: flex;
+  margin-bottom: 4px;
+}
+
+.trackLabelHeader {
+  width: 100px;
+  flex-shrink: 0;
+}
+
+.stepHeader {
+  width: 32px;
+  height: 20px;
+  margin: 0 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--header-color, #666);
+}
+
+.stepHeader[data-current='true'] {
+  color: var(--header-current-color, #4caf50);
+  font-weight: bold;
+}
+
+.track {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.track:last-child {
+  margin-bottom: 0;
+}
+
+.trackLabel {
+  width: 100px;
+  padding-right: 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.trackLabel span {
+  font-size: 12px;
+  color: var(--label-color, #999);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.clearButton {
+  width: 16px;
+  height: 16px;
+  border: none;
+  background: none;
+  color: var(--clear-color, #666);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.track:hover .clearButton {
+  opacity: 1;
+}
+
+.clearButton:hover {
+  color: var(--clear-hover-color, #f44336);
+}
+
+.step {
+  width: 32px;
+  height: 32px;
+  margin: 0 2px;
+  border: 1px solid var(--step-border, #444);
+  background-color: var(--step-bg, #2a2a2a);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.1s ease;
+  position: relative;
+}
+
+.step[data-beat='true'] {
+  border-color: var(--step-beat-border, #555);
+}
+
+.step:hover {
+  background-color: var(--step-hover-bg, #333);
+  border-color: var(--step-hover-border, #666);
+}
+
+.step[data-active='true'] {
+  background-color: var(--step-active-bg, #4caf50);
+  border-color: var(--step-active-border, #4caf50);
+}
+
+.step[data-active='true']:hover {
+  background-color: var(--step-active-hover-bg, #66bb6a);
+  border-color: var(--step-active-hover-border, #66bb6a);
+}
+
+.step[data-current='true']::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  right: -4px;
+  bottom: -4px;
+  border: 2px solid var(--step-current-border, #ffeb3b);
+  pointer-events: none;
+}
+
+.step:focus-visible {
+  outline: 2px solid var(--step-focus, #2196f3);
+  outline-offset: 2px;
+}

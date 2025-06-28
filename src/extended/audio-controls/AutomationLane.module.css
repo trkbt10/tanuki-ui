@@ -1,0 +1,65 @@
+.automationLane {
+  box-sizing: border-box;
+  background-color: var(--lane-bg, #1e1e1e);
+  border: 1px solid var(--lane-border, #333);
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.label {
+  font-size: 12px;
+  color: var(--label-color, #999);
+}
+
+.value {
+  font-size: 12px;
+  color: var(--value-color, #ccc);
+  font-family: monospace;
+}
+
+.svg {
+  display: block;
+  cursor: crosshair;
+  background-color: var(--svg-bg, #2a2a2a);
+  border-radius: 2px;
+}
+
+.defaultLine {
+  stroke: var(--default-line-color, #444);
+  stroke-width: 1;
+  stroke-dasharray: 4,4;
+}
+
+.automationPath {
+  pointer-events: none;
+}
+
+.point {
+  cursor: move;
+  stroke: var(--point-stroke, white);
+  stroke-width: 2;
+  transition: all 0.1s ease;
+}
+
+.point:hover {
+  r: 8;
+}
+
+.point[data-selected='true'] {
+  r: 8;
+  stroke-width: 3;
+}
+
+.hint {
+  font-size: 10px;
+  color: var(--hint-color, #666);
+  text-align: center;
+  margin-top: 4px;
+}

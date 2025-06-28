@@ -1,0 +1,121 @@
+.panKnob {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+
+.panKnob[data-size='small'] {
+  width: 40px;
+}
+
+.panKnob[data-size='medium'] {
+  width: 60px;
+}
+
+.panKnob[data-size='large'] {
+  width: 80px;
+}
+
+.panKnob[data-disabled='true'] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.knob {
+  position: relative;
+  background-color: var(--knob-bg, #424242);
+  border: 2px solid var(--knob-border, #666);
+  border-radius: 50%;
+  cursor: grab;
+  transition: transform 0.1s ease;
+}
+
+.panKnob[data-size='small'] .knob {
+  width: 32px;
+  height: 32px;
+}
+
+.panKnob[data-size='medium'] .knob {
+  width: 48px;
+  height: 48px;
+}
+
+.panKnob[data-size='large'] .knob {
+  width: 64px;
+  height: 64px;
+}
+
+.knob:hover {
+  border-color: var(--knob-border-hover, #888);
+}
+
+.panKnob[data-dragging='true'] .knob {
+  cursor: grabbing;
+  border-color: var(--knob-border-active, #2196f3);
+}
+
+.indicator {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  background-color: var(--indicator-color, #fff);
+  border-radius: 1px;
+}
+
+.panKnob[data-size='small'] .indicator {
+  height: 8px;
+}
+
+.panKnob[data-size='medium'] .indicator {
+  height: 12px;
+}
+
+.panKnob[data-size='large'] .indicator {
+  height: 16px;
+}
+
+.centerDot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  background-color: var(--center-dot-color, #666);
+  border-radius: 50%;
+}
+
+.scale {
+  position: relative;
+  width: 100%;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10%;
+}
+
+.scaleMarkLeft,
+.scaleMarkCenter,
+.scaleMarkRight {
+  width: 2px;
+  height: 6px;
+  background-color: var(--scale-mark-color, #999);
+}
+
+.scaleMarkCenter {
+  height: 10px;
+  background-color: var(--scale-mark-center-color, #666);
+}
+
+.valueDisplay {
+  font-size: 11px;
+  color: var(--value-color, #666);
+  text-align: center;
+  min-width: 30px;
+}

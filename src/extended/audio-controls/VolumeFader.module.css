@@ -1,0 +1,168 @@
+.volumeFader {
+  box-sizing: border-box;
+  display: flex;
+  position: relative;
+  padding: 8px;
+}
+
+.volumeFader[data-orientation='vertical'] {
+  flex-direction: column;
+  align-items: center;
+  width: 60px;
+  height: 200px;
+}
+
+.volumeFader[data-orientation='horizontal'] {
+  flex-direction: row;
+  align-items: center;
+  height: 60px;
+  width: 200px;
+}
+
+.volumeFader[data-disabled='true'] {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.track {
+  position: relative;
+  background-color: var(--track-bg, #e0e0e0);
+  border-radius: 2px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.volumeFader[data-orientation='vertical'] .track {
+  width: 8px;
+  height: 100%;
+  flex: 1;
+}
+
+.volumeFader[data-orientation='horizontal'] .track {
+  height: 8px;
+  width: 100%;
+  flex: 1;
+}
+
+.volumeFader[data-dragging='true'] .track {
+  cursor: grabbing;
+}
+
+.fill {
+  position: absolute;
+  background-color: var(--fill-color, #2196f3);
+  transition: none;
+}
+
+.volumeFader[data-orientation='vertical'] .fill {
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.volumeFader[data-orientation='horizontal'] .fill {
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+
+.thumb {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: var(--thumb-color, #1976d2);
+  border: 2px solid var(--thumb-border, white);
+  border-radius: 2px;
+  transform: translate(-50%, 50%);
+  pointer-events: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s ease;
+}
+
+.volumeFader[data-orientation='vertical'] .thumb {
+  left: 50%;
+}
+
+.volumeFader[data-orientation='horizontal'] .thumb {
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.volumeFader:hover .thumb,
+.volumeFader[data-dragging='true'] .thumb {
+  background-color: var(--thumb-color-hover, #1565c0);
+}
+
+.volumeFader[data-orientation='horizontal']:hover .thumb,
+.volumeFader[data-orientation='horizontal'][data-dragging='true'] .thumb {
+  background-color: var(--thumb-color-hover, #1565c0);
+}
+
+.scale {
+  position: absolute;
+  pointer-events: none;
+}
+
+.volumeFader[data-orientation='vertical'] .scale {
+  left: 100%;
+  top: 0;
+  height: 100%;
+  margin-left: 8px;
+}
+
+.volumeFader[data-orientation='horizontal'] .scale {
+  top: 100%;
+  left: 0;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.scaleMark {
+  position: absolute;
+  display: flex;
+  align-items: center;
+}
+
+.volumeFader[data-orientation='vertical'] .scaleMark {
+  transform: translateY(50%);
+}
+
+.volumeFader[data-orientation='horizontal'] .scaleMark {
+  transform: translateX(-50%);
+}
+
+.scaleLabel {
+  font-size: 10px;
+  color: var(--scale-color, #666);
+  white-space: nowrap;
+}
+
+.valueDisplay {
+  position: absolute;
+  background-color: var(--value-bg, rgba(0, 0, 0, 0.8));
+  color: white;
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-size: 11px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.volumeFader[data-orientation='vertical'] .valueDisplay {
+  bottom: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.volumeFader[data-orientation='horizontal'] .valueDisplay {
+  right: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.volumeFader:hover .valueDisplay,
+.volumeFader[data-dragging='true'] .valueDisplay {
+  opacity: 1;
+}

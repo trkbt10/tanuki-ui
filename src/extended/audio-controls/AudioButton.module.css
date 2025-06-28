@@ -1,0 +1,196 @@
+.audioButton {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--button-border, #666);
+  background-color: var(--button-bg, transparent);
+  color: var(--button-fg, #666);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: bold;
+  padding: 0;
+  position: relative;
+}
+
+.audioButton[data-shape='circle'] {
+  border-radius: 50%;
+}
+
+.audioButton[data-shape='square'] {
+  border-radius: 4px;
+}
+
+.audioButton[data-size='small'] {
+  width: 28px;
+  height: 28px;
+  font-size: 12px;
+}
+
+.audioButton[data-size='medium'] {
+  width: 36px;
+  height: 36px;
+  font-size: 14px;
+}
+
+.audioButton[data-size='large'] {
+  width: 44px;
+  height: 44px;
+  font-size: 16px;
+}
+
+/* Hover states */
+.audioButton:hover:not(:disabled) {
+  border-color: var(--button-border-hover, #888);
+  color: var(--button-fg-hover, #888);
+}
+
+.audioButton:active:not(:disabled) {
+  filter: brightness(0.9);
+}
+
+.audioButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.audioButton:focus-visible {
+  outline: 2px solid var(--button-focus, #2196f3);
+  outline-offset: 2px;
+}
+
+/* Variant styles */
+.playVariant {
+  --button-bg: #2196f3;
+  --button-border: #2196f3;
+  --button-fg: white;
+  --button-bg-hover: #1976d2;
+  --button-border-hover: #1976d2;
+  --button-bg-active: #1565c0;
+  --button-focus: #2196f3;
+}
+
+.stopVariant {
+  --button-bg: #757575;
+  --button-border: #757575;
+  --button-fg: white;
+  --button-bg-hover: #616161;
+  --button-border-hover: #616161;
+  --button-bg-active: #424242;
+  --button-focus: #757575;
+}
+
+.recordVariant {
+  --button-bg: #424242;
+  --button-border: #424242;
+  --button-fg: #f44336;
+  --button-focus: #f44336;
+}
+
+.recordVariant[data-armed='true'] {
+  --button-bg: #d32f2f;
+  --button-border: #d32f2f;
+  --button-fg: white;
+  --button-bg-hover: #c62828;
+  --button-border-hover: #c62828;
+}
+
+.recordVariant[data-recording='true'] {
+  --button-bg: #f44336;
+  --button-border: #f44336;
+  --button-fg: white;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+.muteVariant {
+  --button-bg: transparent;
+  --button-border: #666;
+  --button-fg: #666;
+  --button-border-hover: #888;
+  --button-fg-hover: #888;
+  --button-focus: #f44336;
+}
+
+.muteVariant[data-active='true'] {
+  --button-bg: #f44336;
+  --button-border: #f44336;
+  --button-fg: white;
+  --button-bg-hover: #d32f2f;
+  --button-border-hover: #d32f2f;
+}
+
+.muteVariant[data-soloed='true'] {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.soloVariant {
+  --button-bg: transparent;
+  --button-border: #666;
+  --button-fg: #666;
+  --button-border-hover: #888;
+  --button-fg-hover: #888;
+  --button-focus: #ffc107;
+}
+
+.soloVariant[data-active='true'] {
+  --button-bg: #ffc107;
+  --button-border: #ffc107;
+  --button-fg: #333;
+  --button-bg-hover: #ffb300;
+  --button-border-hover: #ffb300;
+}
+
+.toggleVariant {
+  --button-bg: transparent;
+  --button-border: #9e9e9e;
+  --button-fg: #9e9e9e;
+  --button-border-hover: #757575;
+  --button-fg-hover: #757575;
+  --button-focus: #4caf50;
+}
+
+.toggleVariant[data-active='true'] {
+  --button-bg: #4caf50;
+  --button-border: #4caf50;
+  --button-fg: white;
+  --button-bg-hover: #43a047;
+  --button-border-hover: #43a047;
+}
+
+/* Icon and label styles */
+.icon {
+  width: 60%;
+  height: 60%;
+  fill: currentColor;
+  transition: transform 0.2s ease;
+}
+
+.label {
+  user-select: none;
+}
+
+/* Active state adjustments */
+.audioButton[data-active='true'] .icon,
+.audioButton[data-armed='true'] .icon,
+.audioButton[data-recording='true'] .icon {
+  fill: currentColor;
+}
+
+.audioButton[data-active='true'] .label,
+.audioButton[data-armed='true'] .label,
+.audioButton[data-recording='true'] .label {
+  color: currentColor;
+}
+
+/* Record animation */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}

@@ -1,0 +1,31 @@
+.waveformEditor {
+  box-sizing: border-box;
+  position: relative;
+  background-color: var(--editor-bg, #1e1e1e);
+  border: 1px solid var(--editor-border, #333);
+  border-radius: 4px;
+  cursor: crosshair;
+  overflow: hidden;
+}
+
+.waveformEditor:focus {
+  outline: 2px solid var(--editor-focus, #2196f3);
+  outline-offset: 2px;
+}
+
+.canvas {
+  display: block;
+  --waveform-color: #4caf50;
+  --waveform-center-line: #666;
+  --selection-color: rgba(33, 150, 243, 0.3);
+}
+
+.playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background-color: var(--playhead-color, #ff4081);
+  pointer-events: none;
+  z-index: 10;
+}

@@ -50,6 +50,12 @@
       "require": "./dist/lib/extended/panel.cjs",
       "default": "./dist/lib/extended/panel.js"
     },
+    "./extended/audio-controls": {
+      "types": "./dist/types/extended/audio-controls/index.d.ts",
+      "import": "./dist/lib/extended/audio-controls.js",
+      "require": "./dist/lib/extended/audio-controls.cjs",
+      "default": "./dist/lib/extended/audio-controls.js"
+    },
     "./themes/LiquidGlassFilter": {
       "types": "./dist/types/themes/LiquidGlassFilter.d.ts",
       "import": "./dist/lib/themes/LiquidGlassFilter.js",
@@ -60,6 +66,7 @@
     "./layouts/style.css": "./dist/lib/layouts.css",
     "./extended/node-editor/style.css": "./dist/lib/node-editor.css",
     "./extended/panel/style.css": "./dist/lib/panel.css",
+    "./extended/audio-controls/style.css": "./dist/lib/audio-controls.css",
     "./styles/*.css": "./public/styles/*.css"
   },
   "version": "1.217.164",

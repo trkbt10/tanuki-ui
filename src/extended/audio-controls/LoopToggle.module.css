@@ -1,0 +1,79 @@
+.loopToggle {
+  box-sizing: border-box;
+  display: inline-block;
+  position: relative;
+}
+
+.loopToggle[data-selecting='true'] {
+  cursor: crosshair;
+}
+
+.button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--button-border, #9e9e9e);
+  border-radius: 4px;
+  background-color: var(--button-bg, transparent);
+  color: var(--button-fg, #9e9e9e);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  padding: 0;
+}
+
+.button[data-size='small'] {
+  width: 32px;
+  height: 32px;
+}
+
+.button[data-size='medium'] {
+  width: 48px;
+  height: 48px;
+}
+
+.button[data-size='large'] {
+  width: 64px;
+  height: 64px;
+}
+
+.button[data-looping='true'] {
+  background-color: var(--button-bg-active, #4caf50);
+  border-color: var(--button-border-active, #4caf50);
+  color: white;
+}
+
+.button[data-looping='true'] .icon {
+  fill: white;
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--button-border-hover, #757575);
+  color: var(--button-fg-hover, #757575);
+}
+
+.button[data-looping='true']:hover:not(:disabled) {
+  background-color: var(--button-bg-active-hover, #43a047);
+  border-color: var(--button-border-active-hover, #43a047);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--button-focus, #4caf50);
+  outline-offset: 2px;
+}
+
+.icon {
+  width: 60%;
+  height: 60%;
+  fill: currentColor;
+}
