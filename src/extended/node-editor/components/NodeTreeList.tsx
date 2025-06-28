@@ -4,7 +4,7 @@ import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
 import { Node, NodeId } from "../types/core";
 import { getNodeIcon } from "../utils/nodeUtils";
-import { CloseIcon } from "../../../blocks/Icon";
+import { CloseIcon } from "./elements";
 import styles from "./NodeTreeList.module.css";
 
 interface DragState {

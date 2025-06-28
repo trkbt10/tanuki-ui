@@ -5,12 +5,8 @@ import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import { NodeInspector } from "./NodeInspector";
 import { NodeTreeList } from "./NodeTreeList";
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
-import { classNames } from "../../../utilities/classNames";
-import { Input } from "../../../form/Input";
-import { Label } from "../../../form/Label";
+import { classNames, Input, Label, H4, Toolbar } from "./elements";
 import styles from "../NodeEditor.module.css";
-import { H4 } from "../../../elements/Heading";
-import { Toolbar } from "../../../bars/Toolbar";
 
 export interface InspectorPanelProps {
   className?: string;

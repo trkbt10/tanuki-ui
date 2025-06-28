@@ -1,18 +1,20 @@
 import * as React from "react";
 import type { NodeRenderProps, InspectorRenderProps } from "../../../types/NodeDefinition";
 import type { Node } from "../../../types/core";
-import { AlignLeftIcon } from "../../../../../blocks/AlignLeftIcon";
-import { AlignCenterIcon } from "../../../../../blocks/AlignCenterIcon";
-import { AlignRightIcon } from "../../../../../blocks/AlignRightIcon";
-import { AlignTopIcon } from "../../../../../blocks/AlignTopIcon";
-import { AlignMiddleIcon } from "../../../../../blocks/AlignMiddleIcon";
-import { AlignBottomIcon } from "../../../../../blocks/AlignBottomIcon";
-import { DistributeHorizontalIcon } from "../../../../../blocks/DistributeHorizontalIcon";
-import { DistributeVerticalIcon } from "../../../../../blocks/DistributeVerticalIcon";
-import { Button } from "../../../../../form/Button";
-import { Input } from "../../../../../form/Input";
-import { Label } from "../../../../../form/Label";
-import { Textarea } from "../../../../../form/Textarea";
+import { 
+  AlignLeftIcon,
+  AlignCenterIcon,
+  AlignRightIcon,
+  AlignTopIcon,
+  AlignMiddleIcon,
+  AlignBottomIcon,
+  DistributeHorizontalIcon,
+  DistributeVerticalIcon,
+  Button,
+  Input,
+  Label,
+  Textarea
+} from "../../elements";
 import alignmentStyles from "./AlignmentControls.module.css";
 
 /**
@@ -69,7 +71,7 @@ const InspectorTextarea = React.memo<{
   name?: string;
   "aria-label"?: string;
 }>(({ value, onChange, style, id, name, "aria-label": ariaLabel }) => (
-  <textarea value={value} onChange={(e) => onChange(e.target.value)} style={style} id={id} name={name} aria-label={ariaLabel} />
+  <Textarea value={value} onChange={(e) => onChange(e.target.value)} style={style} id={id} name={name} aria-label={ariaLabel} />
 ));
 InspectorTextarea.displayName = "InspectorTextarea";
 
