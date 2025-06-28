@@ -2,7 +2,7 @@ import * as React from "react";
 import type { Connection, Node, Port } from "../../types/core";
 import { calculateBezierPath } from "./utils/connectionUtils";
 import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
-import { classNames } from "../../../../utilities/classNames";
+import { classNames } from "../elements";
 import styles from "../../NodeEditor.module.css";
 
 export interface ConnectionViewProps {

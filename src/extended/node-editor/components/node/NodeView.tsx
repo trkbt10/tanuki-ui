@@ -6,7 +6,7 @@ import { useNodeDefinition } from "../../contexts/NodeDefinitionContext";
 import { useExternalDataRef } from "../../contexts/ExternalDataContext";
 import { useExternalData } from "../../hooks/useExternalData";
 import { DefaultNodeRenderer } from "./renderers/DefaultRenderers";
-import { classNames } from "../../../../utilities/classNames";
+import { classNames } from "../elements";
 import styles from "../../NodeEditor.module.css";
 import { PortView } from "../connection/ports/PortView";
 import { ResizeHandle } from "../parts/ResizeHandle";

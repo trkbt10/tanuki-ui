@@ -1,6 +1,6 @@
 import * as React from "react";
 import { SelectionBox } from "./SelectionBox";
-import { classNames } from "../../../../utilities/classNames";
+import { classNames } from "../elements";
 import styles from "./SelectionOverlay.module.css";
 
 export interface SelectionOverlayProps {

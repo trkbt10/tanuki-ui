@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { ConstraintViolation } from "../../types/NodeDefinition";
-import { classNames } from "../../../../utilities/classNames";
+import { classNames } from "../elements";
 import styles from "./ConstraintViolationDisplay.module.css";
 
 export interface ConstraintViolationDisplayProps {

@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Port } from "../../../types/core";
-import { classNames } from "../../../../../utilities/classNames";
+import { classNames } from "../../elements";
 import { useDynamicPortPosition } from "../../../hooks/usePortPosition";
 import styles from "./PortView.module.css";
 

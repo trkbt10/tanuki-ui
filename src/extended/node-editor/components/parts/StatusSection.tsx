@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../../../utilities/classNames";
+import { classNames } from "../elements";
 import styles from "./StatusSection.module.css";
 
 export interface StatusSectionProps {

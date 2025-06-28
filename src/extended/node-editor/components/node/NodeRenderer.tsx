@@ -2,7 +2,7 @@ import * as React from "react";
 import { Node, NodeId, Port } from "../../types/core";
 import { NodeView } from "./NodeView";
 import { NodeDragHandler } from "./NodeDragHandler";
-import { classNames } from "../../../../utilities/classNames";
+import { classNames } from "../elements";
 import { createMemoizedComponent, areNodesEqual } from "../../utils/memoization";
 import styles from "../../NodeEditor.module.css";
 

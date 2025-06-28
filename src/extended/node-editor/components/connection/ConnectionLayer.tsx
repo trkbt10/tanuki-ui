@@ -6,7 +6,7 @@ import { ConnectionView } from "./ConnectionView";
 import { calculateBezierPath, getOppositePortPosition } from "./utils/connectionUtils";
 import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
 import type { Connection, Node as EditorNode } from "../../types/core";
-import { classNames } from "../../../../utilities/classNames";
+import { classNames } from "../elements";
 import styles from "../../NodeEditor.module.css";
 
 export interface ConnectionLayerProps {

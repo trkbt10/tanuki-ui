@@ -2,7 +2,7 @@ import * as React from "react";
 import { useNodeEditor } from "../../contexts/NodeEditorContext";
 import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
-import { classNames } from "../../../../utilities/classNames";
+import { classNames } from "../elements";
 import styles from "./DebugOverlay.module.css";
 
 export interface DebugOverlayProps {
