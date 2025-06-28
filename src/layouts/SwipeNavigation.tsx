@@ -121,7 +121,7 @@ export const SwipeNavigation: React.FC<SwipeNavigationProps> = ({
     handleTouchEnd,
   } = useSwipeNavigationRefactored(config);
 
-  const { updateViewDimension, getViewWidth, getViewOffset, containerWidth } = useViewDimensions({
+  const { updateViewDimension, getViewWidth, getViewOffset, containerWidth, dimensionCache } = useViewDimensions({
     viewCount,
     isMobile,
     hasMenu: !!menu,
@@ -203,8 +203,16 @@ export const SwipeNavigation: React.FC<SwipeNavigationProps> = ({
 
         {/* Content Views */}
         {views.map((view, index) => {
+          const { measureRef } = useViewMeasurement(
+            index,
+            updateViewDimension,
+            dynamicSizing && !isMobile && viewCount > 1
+          );
+
           const viewStyle: React.CSSProperties = {};
-          if (dynamicSizing && !isMobile && viewCount > 1) {
+          const hasMeasuredWidth = dimensionCache.has(index);
+          
+          if (dynamicSizing && !isMobile && viewCount > 1 && hasMeasuredWidth) {
             const width = getViewWidth(index);
             const offset = getViewOffset(index);
             viewStyle.width = width;
@@ -216,6 +224,7 @@ export const SwipeNavigation: React.FC<SwipeNavigationProps> = ({
           return (
             <div
               key={index}
+              ref={measureRef}
               className={[classes.view, viewClassName].filter(Boolean).join(" ")}
               data-view={index}
               data-active={index === activeViewIndex}

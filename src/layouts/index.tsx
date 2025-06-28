@@ -6,4 +6,6 @@ export { AppLayout } from "./AppLayout";
 export { StickyHeader } from "./StickyHeader";
 export { ParavirtualScroll } from "./ParavirtualScroll";
 export { ViewSwitcher } from "./ViewSwitcher";
+export { SwipeNavigation } from "./SwipeNavigation";
 
+export { SwipeIndicators } from "./components/SwipeIndicators";

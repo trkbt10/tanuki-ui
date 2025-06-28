@@ -1,4 +1,5 @@
-import React, { useCallback, useRef } from 'react';
+import * as React from 'react';
+import { useCallback, useRef } from 'react';
 import { useResponsive } from './useResponsive';
 import { useActiveView } from './useActiveView';
 import { useScrollSync } from './useScrollSync';
