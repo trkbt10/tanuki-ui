@@ -4,8 +4,7 @@ import {
   setFeatureFlags, 
   type NodeEditorFeatureFlags 
 } from "../config/featureFlags";
-import { SwitchInput } from "../../../form/custom-inputs/SwitchInput";
-import { Button } from "../../../form/Button";
+import { SwitchInput, Button } from "./elements";
 import styles from "./FeatureFlagsPanel.module.css";
 
 export interface FeatureFlagsPanelProps {

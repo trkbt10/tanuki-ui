@@ -7,8 +7,7 @@ import {
   type VersionedNodeEditorData 
 } from "../utils/dataMigration";
 import { useNodeDefinitions } from "../contexts/NodeDefinitionContext";
-import { Button } from "../../../form/Button";
-import { Dialog } from "../../../dialogs/Dialog";
+import { Button, Dialog } from "./elements";
 import styles from "./DataMigrationDialog.module.css";
 
 export interface DataMigrationDialogProps {
@@ -96,7 +95,7 @@ export const DataMigrationDialog: React.FC<DataMigrationDialogProps> = ({
 
   return (
     <Dialog
-      open={isOpen}
+      isOpen={isOpen}
       onClose={onClose}
       title="Data Migration"
       className={styles.migrationDialog}
