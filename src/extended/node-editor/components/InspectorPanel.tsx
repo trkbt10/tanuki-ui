@@ -4,6 +4,7 @@ import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import { NodeInspector } from "./NodeInspector";
 import { NodeTreeList } from "./NodeTreeList";
+import { TabNav } from "./TabNav";
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
 import { classNames, Input, Label, H4, Toolbar } from "./elements";
 import styles from "../NodeEditor.module.css";
@@ -56,7 +57,13 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
 
   return (
     <div className={classNames(styles.inspectorPanel, className)}>
-      <div className={styles.inspectorHeader}></div>
+      <div className={styles.inspectorHeader}>
+        <TabNav
+          tabs={tabItems}
+          activeTabIndex={activeTabIndex}
+          onTabChange={setActiveTabIndex}
+        />
+      </div>
 
       <div className={classNames(styles.inspectorContent, activeTabIndex === 0 && styles.inspectorContentNoPadding)}>
         {activeTabIndex === 0 ? (
