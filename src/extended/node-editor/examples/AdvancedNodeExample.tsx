@@ -2,8 +2,7 @@ import * as React from "react";
 import { NodeEditor } from "../NodeEditor";
 import type { NodeDefinition, NodeRenderProps, InspectorRenderProps, ExternalDataReference } from "../types/NodeDefinition";
 import type { NodeEditorData } from "../types/core";
-import { Button } from "../../../form/Button";
-import { Textarea } from "../../../form/Textarea";
+import { Button, Textarea } from "../components/elements";
 
 // =============================================
 // Code Editor Node

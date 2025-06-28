@@ -1,6 +1,5 @@
 import * as React from "react";
-import { calculateContextMenuPosition, getViewportInfo } from "../../../dialogs/utilities/positionUtils";
-import { classNames } from "../../../utilities/classNames";
+import { classNames, calculateContextMenuPosition, getViewportInfo } from "./elements";
 import type { NodeDefinition } from "../types/NodeDefinition";
 import type { Position } from "../types/core";
 import { getNodeIcon } from "../utils/nodeUtils";
