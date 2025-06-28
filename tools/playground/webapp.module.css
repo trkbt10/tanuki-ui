@@ -4,43 +4,11 @@ body {
   user-select: none;
   margin: 0;
 }
+
 .root {
   display: grid;
   height: 100dvh;
   --footerHeight: calc(var(--appMainToolbarHeight) + env(safe-area-inset-bottom));
   --headerHeight: calc(var(--appMainToolbarHeight) + env(safe-area-inset-top));
   --fullScreenHeight: calc(100dvh + env(safe-area-inset-bottom) + env(safe-area-inset-top));
-}
-.AppHeader {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  width: 100%;
-  box-sizing: border-box;
-  height: var(--headerHeight);
-}
-.AppMain {
-  position: relative;
-  box-sizing: border-box;
-  height: var(--fullScreenHeight);
-}
-.AppFooter {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 2;
-  width: 100%;
-  height: var(--footerHeight);
-}
-.AppMainInner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  width: 100%;
-  min-height: 100%;
-  box-sizing: border-box;
-  padding-top: var(--headerHeight);
-  padding-bottom: var(--footerHeight);
 }
