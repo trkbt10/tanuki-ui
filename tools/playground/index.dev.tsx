@@ -12,12 +12,12 @@ import { TestNodeEditor } from "./pages/TestNodeEditor";
 import { TestPanel } from "./pages/TestPanel";
 import { TestPanelDebug } from "./pages/TestPanelDebug";
 import { TestPanelMinimal } from "./pages/TestPanelMinimal";
-import { HeaderMainLayout, StickyHeader } from "../../src/layouts";
-import { H2, SidebarList, Toolbar } from "../../src";
-import { CloseIcon } from "../../src/blocks/Icon";
-import { SearchIcon } from "../../src/blocks/SearchIcon";
+import { HeaderMainLayout, StickyHeader } from "@/layouts";
+import { H2, SidebarList, Toolbar } from "@/index";
+import { CloseIcon } from "@/blocks/Icon";
+import { SearchIcon } from "@/blocks/SearchIcon";
 import classes from "./index.module.css";
-import { CloseButton } from "../../src/form/CloseButton";
+import { CloseButton } from "@/form/CloseButton";
 
 const Home = () => {
   return (

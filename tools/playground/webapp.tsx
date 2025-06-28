@@ -1,7 +1,19 @@
+import { TabBar } from "@/bars/TabBar";
+import { Toolbar } from "@/bars/Toolbar";
 import * as React from "react";
-import { Link, useMatches, useOutlet } from "react-router";
+import { Root as ClientRoot, createRoot } from "react-dom/client";
+import {
+  Link,
+  Route,
+  RouterProvider,
+  createHashRouter,
+  createMemoryRouter,
+  createRoutesFromElements,
+  useOutlet,
+} from "react-router";
+
 import classes from "./webapp.module.css";
-import { TabBar, Toolbar } from "../src";
+import { StickyHeader } from "@/layouts/StickyHeader";
 function Root(props: React.PropsWithChildren<{}>) {
   const outlet = useOutlet();
   const items = React.useMemo(() => {
@@ -65,9 +77,6 @@ function Root(props: React.PropsWithChildren<{}>) {
     </div>
   );
 }
-import { Root as ClientRoot, createRoot } from "react-dom/client";
-import { Route, RouterProvider, createHashRouter, createMemoryRouter, createRoutesFromElements } from "react-router";
-import { StickyHeader } from "../src/layouts";
 
 const isPWADisplayMode = "standalone" in window.navigator;
 const routerFactory = isPWADisplayMode ? createMemoryRouter : createHashRouter;
@@ -126,7 +135,7 @@ const routes = createRoutesFromElements(
     <Route element={<Root />}>
       <Route path="/" element={<Variables />} />
     </Route>
-  </Route>,
+  </Route>
 );
 const router = routerFactory(routes, {
   future: {},
@@ -145,5 +154,5 @@ let root: ClientRoot = createRoot(mountNode);
 root.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
 );
