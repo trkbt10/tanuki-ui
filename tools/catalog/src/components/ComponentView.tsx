@@ -12,6 +12,11 @@ const ComponentView: React.FC = () => {
     return <P>Component not found</P>;
   }
 
+  // カテゴリ専用ルートへのアクセスを防ぐ
+  if (!name || name === category) {
+    return <P>Invalid component path</P>;
+  }
+
   const categoryData = components[category];
   if (!categoryData) {
     return <P>Category not found</P>;
@@ -23,18 +28,33 @@ const ComponentView: React.FC = () => {
   }
 
   const renderComponentDemo = () => {
+    // 新しい形式（3d-controlsなど）の場合
+    if (component.component) {
+      return (
+        <Section className={styles.previewSection}>
+          <Section className={styles.basicExample}>
+            <H4 className={styles.sectionTitle}>デモ</H4>
+            <div className={styles.demoSection}>
+              <component.component />
+            </div>
+          </Section>
+        </Section>
+      );
+    }
+
+    // 従来の形式の場合
     return (
       <Section className={styles.previewSection}>
         {/* 基本例 */}
         <Section className={styles.basicExample}>
           <H4 className={styles.sectionTitle}>基本例</H4>
           <div className={styles.demoSection}>
-            <>{component.examples.basic}</>
+            <>{component.examples?.basic}</>
           </div>
         </Section>
 
         {/* バリエーション */}
-        {component.examples.variations && (
+        {component.examples?.variations && (
           <Section>
             <H4 className={styles.sectionTitle}>バリエーション</H4>
             <div className={styles.variationContainer}>
@@ -60,7 +80,7 @@ const ComponentView: React.FC = () => {
                 {categoryData.icon} {name}
               </strong>
               <small>
-                {component.description} - {categoryData.name}
+                {component.meta?.description || component.description} - {categoryData.name}
               </small>
             </Toolbar.Title>
           </Toolbar.Body>

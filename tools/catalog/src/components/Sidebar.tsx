@@ -56,7 +56,7 @@ const Sidebar: React.FC<SidebarProps> = ({ components }) => {
             ))}
           </datalist>
           {themes.length > 0 && (
-            <span style={{ fontSize: '12px', color: 'var(--secondaryLabelColor)', marginLeft: '8px' }}>
+            <span style={{ fontSize: "12px", color: "var(--secondaryLabelColor)", marginLeft: "8px" }}>
               {themes.length} themes available
             </span>
           )}
@@ -85,6 +85,27 @@ const Sidebar: React.FC<SidebarProps> = ({ components }) => {
               }}
             >
               <SidebarList.ListItem label="🧪 NodeEditor Props Test" selected={location.pathname === "/node-editor-test"} />
+            </Link>
+            <Link
+              to="/component/3d-controls"
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
+            >
+              <SidebarList.ListItem label="🎮 3D Controls" selected={location.pathname.includes("/component/3d-controls")} />
+            </Link>
+            <Link
+              to="/component/audio-controls"
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
+            >
+              <SidebarList.ListItem
+                label="🎵 Audio Controls"
+                selected={location.pathname.includes("/component/audio-controls")}
+              />
             </Link>
           </SidebarList.List>
         </SidebarList.Container>
