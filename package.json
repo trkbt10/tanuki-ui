@@ -62,7 +62,7 @@
     "./extended/panel/style.css": "./dist/lib/panel.css",
     "./styles/*.css": "./public/styles/*.css"
   },
-  "version": "1.216.158",
+  "version": "1.217.164",
   "license": "Unlicense",
   "author": "trkbt10 <triplequartet@gmail.com>",
   "homepage": "https://github.com/trkbt10/tanuki-ui#readme",
