@@ -11,9 +11,6 @@ export default defineConfig({
       "tanuki-ui": path.resolve(__dirname, "../../src/index.tsx"),
     },
   },
-  server: {
-    port: 3000,
-  },
   build: {
     outDir: "dist",
   },
