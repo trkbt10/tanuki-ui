@@ -56,11 +56,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
 
   return (
     <div className={classNames(styles.inspectorPanel, className)}>
-      <div className={styles.inspectorHeader}>
-        <Toolbar.Body>
-          <Toolbar.SegmentedControl items={tabItems} defaultSelected={activeTabIndex} onSelect={setActiveTabIndex} />
-        </Toolbar.Body>
-      </div>
+      <div className={styles.inspectorHeader}></div>
 
       <div className={classNames(styles.inspectorContent, activeTabIndex === 0 && styles.inspectorContentNoPadding)}>
         {activeTabIndex === 0 ? (

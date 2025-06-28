@@ -18,7 +18,7 @@ export const Heading: React.FC<HeadingProps> = ({
   children,
   ...props
 }) => {
-  const Tag = `h${level}` as keyof JSX.IntrinsicElements;
+  const Tag = `h${level}` as React.ElementType;
   
   const baseClass = 'ne-heading';
   const levelClass = `ne-heading--h${level}`;
