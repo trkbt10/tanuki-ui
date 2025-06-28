@@ -1,10 +1,10 @@
 import * as React from "react";
-import { NodeEditor } from "../../src/extended/node-editor/NodeEditor";
-import type { NodeEditorData } from "../../src/extended/node-editor/types/core";
-import { SettingsManager } from "../../src/extended/node-editor/settings/SettingsManager";
-import { defaultSettings } from "../../src/extended/node-editor/settings/defaultSettings";
-import { Minimap, GridToolbox } from "../../src/extended/node-editor/components/layers";
-import { Toolbar } from "../../src/extended/node-editor/components/Toolbar";
+import { NodeEditor } from "@/extended/node-editor/NodeEditor";
+import type { NodeEditorData } from "@/extended/node-editor/types/core";
+import { SettingsManager } from "@/extended/node-editor/settings/SettingsManager";
+import { defaultSettings } from "@/extended/node-editor/settings/defaultSettings";
+import { Minimap, GridToolbox } from "@/extended/node-editor/components/layers";
+import { Toolbar } from "@/extended/node-editor/components/Toolbar";
 import { useNodeDataFlow } from "../components/NodeDataFlow";
 import { createAllTestNodeDefinitions } from "../test-nodes";
 export const TestNodeEditor: React.FC = () => {

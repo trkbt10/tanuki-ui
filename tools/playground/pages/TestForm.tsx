@@ -1,5 +1,5 @@
 import React from "react";
-import { H3, Input, H4, Label, Selectbox, H1, H2 } from "../../src";
+import { H3, Input, H4, Label, Selectbox, H1, H2 } from "@/index";
 function useInputValue<T>(defaultValue: T | (() => T)) {
   const [value, setValue] = React.useState<T>(defaultValue);
   const onChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

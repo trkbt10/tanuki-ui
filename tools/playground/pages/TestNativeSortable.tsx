@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Input } from "../../src/form/Input";
-import { List, ListItem } from "../../src/elements/List";
-import { NativeSortable } from "../../src/controls/NativeSortable";
+import { Input } from "@/form/Input";
+import { List, ListItem } from "@/elements/List";
+import { NativeSortable } from "@/controls/NativeSortable";
 
 export const TestNativeSortable = () => {
   const [items, setItems] = useState<{ name: string }[]>(() => {

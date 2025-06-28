@@ -1,20 +1,20 @@
 import React from "react";
 import { usePrevious } from "react-use";
-import { useNativeAlertLikeInterface } from "../../src/dialogs/useNativeAlertLikeInterface";
-import { Descriptions } from "../../src/elements/Descriptions";
-import { Sortable } from "../../src/form/Sortable";
-import { Button } from "../../src/form/Button";
-import { Input } from "../../src/form/Input";
-import { List, ListItem } from "../../src/elements/List";
-import { Selectbox } from "../../src/form/Selectbox";
-import { Textarea } from "../../src/form/Textarea";
-import { Table } from "../../src/elements/Table";
-import { Icon } from "../../src/blocks/Icon";
-import { H1, H2, H3, H4, H5, H6 } from "../../src/elements/Heading";
-import { BarItems, Toolbar } from "../../src/bars/Toolbar";
-import { SidebarList } from "../../src/navigations/SidebarList";
-import { Fieldset, Legend } from "../../src";
-import { useDocument } from "../../src/hooks/useDocumentBody";
+import { useNativeAlertLikeInterface } from "@/dialogs/useNativeAlertLikeInterface";
+import { Descriptions } from "@/elements/Descriptions";
+import { Sortable } from "@/form/Sortable";
+import { Button } from "@/form/Button";
+import { Input } from "@/form/Input";
+import { List, ListItem } from "@/elements/List";
+import { Selectbox } from "@/form/Selectbox";
+import { Textarea } from "@/form/Textarea";
+import { Table } from "@/elements/Table";
+import { Icon } from "@/blocks/Icon";
+import { H1, H2, H3, H4, H5, H6 } from "@/elements/Heading";
+import { BarItems, Toolbar } from "@/bars/Toolbar";
+import { SidebarList } from "@/navigations/SidebarList";
+import { Fieldset, Legend } from "@/index";
+import { useDocument } from "@/hooks/useDocumentBody";
 
 export const AllForms = () => {
   const uniqueId = React.useId();

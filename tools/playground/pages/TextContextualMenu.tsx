@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Button, ContextualMenu, Dialog, H1, useContextualMenu } from "../../src";
+import { Button, ContextualMenu, Dialog, H1, useContextualMenu } from "@/index";
 export const TextContextualMenu = (props: React.PropsWithChildren<{}>) => {
   return (
     <div>

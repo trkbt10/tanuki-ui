@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Button } from "../../src";
-import { Window } from "../../src/layouts/Window";
+import { Button } from "@/index";
+import { Window } from "@/layouts/Window";
 export function TestWindow(props: React.PropsWithChildren<{}>) {
   const [windows, setWindows] = React.useState<
     {

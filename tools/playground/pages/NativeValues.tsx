@@ -1,7 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { Descriptions } from "../../src/elements/Descriptions";
-import { H3 } from "../../src/elements/Heading";
+import { Descriptions } from "@/elements/Descriptions";
+import { H3 } from "@/elements/Heading";
 
 const App: React.FC = (props) => {
   const screen: any = window.screen;

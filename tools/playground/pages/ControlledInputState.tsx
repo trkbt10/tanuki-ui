@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Input } from "../../src";
-import { Converter, useControlledInputState, useMergedRef } from "../../src/hooks/useControlledInputState";
+import { Input } from "@/index";
+import { Converter, useControlledInputState, useMergedRef } from "@/hooks/useControlledInputState";
 const targetAttributeNames = ["value", "defaultValue", "readOnly"];
 
 function generateCombinations<T>(array: T[]): T[][] {

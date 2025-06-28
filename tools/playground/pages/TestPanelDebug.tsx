@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef } from 'react';
-import { Panel, TabMeta, PanelState, PanelID } from '../../src/extended/panel';
+import { Panel, TabMeta, PanelState, PanelID } from '@/extended/panel';
 
 // Simple debug component without custom tab bar to avoid conflicts
 export const TestPanelDebug: React.FC = () => {

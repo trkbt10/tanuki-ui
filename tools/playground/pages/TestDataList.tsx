@@ -1,5 +1,5 @@
 import React from "react";
-import { DataList } from "../../src";
+import { DataList } from "@/index";
 
 const list = Array(100)
   .fill(0)
