@@ -1,4 +1,4 @@
-name: Deploy Component Catalog
+name: Deploy Catalog to Latest Branch
 
 on:
   push:
@@ -13,7 +13,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "catalog-deploy"
   cancel-in-progress: false
 
 jobs:
@@ -70,15 +70,19 @@ jobs:
       - name: Build catalog site
         run: cd tools/catalog && bun run build
         
-      - name: Create catalog branch
+      - name: Create latest branch
         run: |
-          CATALOG_BRANCH="catalog-v${{ needs.check-version.outputs.new-version }}"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Create orphan branch for catalog
-          git checkout --orphan "$CATALOG_BRANCH"
-          git rm -rf .
+          # Create or switch to latest branch
+          git fetch origin || true
+          if git rev-parse --verify origin/latest >/dev/null 2>&1; then
+            git checkout -B latest origin/latest
+          else
+            git checkout --orphan latest
+            git rm -rf .
+          fi
           
           # Copy catalog build files
           cp -r tools/catalog/dist/* .
@@ -87,10 +91,10 @@ jobs:
           touch .nojekyll
           
           git add .
-          git commit -m "Deploy catalog v${{ needs.check-version.outputs.new-version }}"
-          git push origin "$CATALOG_BRANCH"
+          git commit -m "Deploy catalog latest (v${{ needs.check-version.outputs.new-version }})" || echo "No changes to commit"
+          git push origin latest
           
-          echo "Created catalog branch: $CATALOG_BRANCH"
+          echo "Updated latest branch with catalog v${{ needs.check-version.outputs.new-version }}"
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
