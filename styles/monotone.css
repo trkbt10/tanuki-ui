@@ -1,0 +1,227 @@
+/**
+ * @theme Monotone
+ * @description High contrast accessibility-focused design with clear visual hierarchy and enhanced readability
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Accessibility
+ */
+
+:root {
+  margin: 0;
+  /* Fonts */
+  --themeDefaultFontFamily: "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  --themeControlFontFamily: var(--themeDefaultFontFamily);
+  --themeUtilityWindowTitleFont: normal normal 400 13px/1.4142 "Lucida Grande", sans-serif;
+  --themeLabelFontFamily: var(--themeDefaultFontFamily);
+  --themeControlFontFamily: var(--themeDefaultFontFamily);
+  --themeSystemFont: normal normal 400 11px/1.6 "Lucida Grande", sans-serif;
+  --textFont: normal normal 400 13px/1.230769 var(--themeLabelFontFamily);
+  --labelFont: normal normal 500 11px/1.272727 var(--themeLabelFontFamily);
+
+  /* Colors */
+  --textColor: rgba(0, 0, 0, 0.847059);
+  --accentColor: rgb(48, 48, 255);
+  --cautionColor: rgb(255, 48, 224);
+  accent-color: var(--accentColor);
+
+  --backgroundBackdropFilter: none;
+  --windowBackdropFilter: none;
+  --windowBackgroundColor: rgba(255, 255, 255, 0.9);
+  --labelColor: rgba(0, 0, 0, 0.847059);
+  --secondaryLabelColor: rgba(0, 0, 0, 0.498039);
+  --tertiaryLabelColor: rgba(0, 0, 0, 0.258824);
+  --quaternaryLabelColor: rgba(0, 0, 0, 0.098039);
+  --placeholderTextColor: rgba(0, 0, 0, 0.247059);
+  --selectedTextColor: rgba(0, 0, 0, 1);
+  --textBackgroundColor: rgba(255, 255, 255, 1);
+  --selectedTextBackgroundColor: rgba(179, 215, 255, 1);
+  --keyboardFocusIndicatorColor: rgba(0, 103, 244, 0.247059);
+  --unemphasizedSelectedTextColor: rgba(0, 0, 0, 1);
+  --unemphasizedSelectedTextBackgroundColor: rgba(220, 220, 220, 1);
+  --linkColor: rgba(0, 104, 218, 1);
+  --separatorColor: rgba(0, 0, 0, 0.384466667);
+  --selectedContentBackgroundColor: rgba(0, 99, 225, 1);
+  --unemphasizedSelectedContentBackgroundColor: rgba(220, 220, 220, 1);
+  --selectedMenuItemTextColor: rgba(255, 255, 255, 1);
+  --gridColor: rgba(230, 230, 230, 1);
+  --headerTextColor: rgba(0, 0, 0, 0.847059);
+  --controlAccentColor: rgba(0, 122, 255, 1);
+  --controlColor: rgba(255, 255, 255, 1);
+  --controlTextColor: rgba(0, 0, 0, 0.847059);
+  --disabledControlTextColor: rgba(0, 0, 0, 0.247059);
+  --selectedControlColor: rgba(179, 215, 255, 1);
+  --selectedControlTextColor: rgba(0, 0, 0, 0.847059);
+  --alternateSelectedControlTextColor: rgba(255, 255, 255, 1);
+  --scrubberTexturedBackgroundColor: rgba(255, 255, 255, 1);
+  --windowFrameTextColor: rgba(0, 0, 0, 0.847059);
+  --underPageBackgroundColor: rgba(150, 150, 150, 0.898039);
+  --findHighlightColor: rgba(255, 255, 0, 1);
+  --highlightColor: rgba(255, 255, 255, 1);
+  --shadowColor: rgba(0, 0, 0, 0.5);
+  --systemBrownColor: rgba(162, 132, 94, 1);
+  --systemGrayColor: rgba(142, 142, 147, 1);
+  --systemGreenColor: rgba(40, 205, 65, 1);
+  --systemIndigoColor: rgba(88, 86, 214, 1);
+  --systemOrangeColor: rgba(255, 149, 0, 1);
+  --systemPinkColor: rgba(255, 45, 85, 1);
+  --systemPurpleColor: rgba(175, 82, 222, 1);
+  --systemRedColor: rgba(255, 59, 48, 1);
+  --systemTealColor: rgba(85, 190, 240, 1);
+  --systemYellowColor: rgba(255, 204, 0, 1);
+  --systemBlueColor: rgba(0, 122, 255, 1);
+
+  /* Table */
+  --tableBackgroundColor: rgba(255, 255, 255, 0);
+  --tableBorderColor: rgba(0, 0, 0, 0.098039);
+  --tableHeaderTextColor: rgba(0, 0, 0, 0.847059);
+  --tableHeaderBackgroundColor: rgba(255, 255, 255, 0.7);
+  --tableHeaderBorderColor: rgba(0, 0, 0, 0.098039);
+  --tableRowTextColor: rgba(0, 0, 0, 0.847059);
+  --tableRowBackgroundColor: rgba(255, 255, 255, 0);
+  --tableRowBorderColor: rgba(0, 0, 0, 0.098039);
+
+  --tableRowAlternateTextColor: rgba(0, 0, 0, 0.847059);
+  --tableRowAlternateBackgroundColor: rgba(244, 244, 244, 0.9);
+  --tableRowAlternateBorderColor: rgba(0, 0, 0, 0.098039);
+
+  /* Dialog */
+  --dialogBackground: var(--windowBackgroundColor);
+  --dialogBoxShadow: 0 1.8px 5px 0 rgba(0, 0, 0, 0.4), 0 0 1px 0 rgba(0, 0, 0, 0.55);
+  /* Control */
+  --controlBoxShadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  --controlFocusBoxShadow: var(--controlBoxShadow);
+  --controlTextFont: normal normal 400 13px/1.230769 var(--themeControlFontFamily);
+  --controlBorderRadius: 6px;
+  --controlPadding: 0.32em 1em 0.38em;
+  --controlTextLetterSpacing: -0.5px;
+  --controlTextColor: var(--textColor);
+  --controlBackground: rgba(255, 255, 255, 1);
+
+  /* Button Primary */
+  --controlBoxShadow--primary: none;
+  --controlBackground--primary: rgb(34, 34, 34);
+
+  --controlTextColor--primary: rgba(255, 255, 255, 1);
+
+  --controlHoverTextColor--primary: rgba(255, 255, 255, 1);
+  --controlHoverBackground--primary: var(--controlBackground--primary);
+
+  --controlFocusBackground--primary: linear-gradient(179deg, rgba(0, 99, 225, 0) 0%, rgba(0, 99, 225, 0.085) 96%),
+    rgb(34, 34, 34);
+
+  --controlFocusTextColor--primary: rgba(255, 255, 255, 0.8);
+
+  /* Button Secondary */
+  --controlBoxShadow--secondary: 0 0 0 0 rgba(0, 0, 0, 0.15), 0 1px 0 0 rgba(0, 0, 0, 0.05);
+  --controlBackground--secondary: linear-gradient(179deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.025) 96%), rgba(255, 255, 255, 1);
+
+  --controlTextColor--secondary: inherit;
+
+  /* Input */
+  --inputPadding: 2px 7.5px 2.4px;
+  /*  --inputBoxShadow: 0 0 0 0 rgba(0, 0, 0, 0.06), 0 1px 0 0 rgba(0, 0, 0, 0.12);*/
+  --inputBoxShadow: 0 0 0 0 rgba(0, 0, 0, 0.06);
+  --inputBorder: 1px solid rgba(0, 0, 0, 0.08);
+  --inputFont: normal normal 400 13px/1.230769 var(--themeControlFontFamily);
+
+  --selectBoxSplitButtonWidth: 20px;
+  --selectBoxSplitButtonBorderColor: inherit;
+  --selectBoxSplitButtonBorderWidth: 0;
+
+  /* Check box */
+  --checkboxSize: 14px;
+
+  /* Toolbar */
+  --barItemsFontFamily: var(--themeLabelFontFamily);
+  --barItemsTextColor: var(--controlTextColor);
+  --barItemsLabelTextColor: var(--secondaryLabelColor);
+  --barItemsDisabledLabelTextColor: var(--tertiaryLabelColor);
+  --barItemsDisabledLabelBackgroundColor: rgba(0, 0, 0, 0.05);
+  --barItemsBorderRadius: 6px;
+  --barItemsControlMarkerBorderRadius: 4px;
+  --barItemsControlPlaceholderTextColor: rgba(0, 0, 0, 0.61);
+  --barItemsControlMarkerBackgroundColor: rgba(0, 0, 0, 0.05);
+  --barItemsControlsBorder: 1px solid rgba(0, 0, 0, 0.05);
+  --barItemsSegmentControlBackground: rgba(0, 0, 0, 0.05);
+  --barItemsHoverSegmentControlBackground: rgba(0, 0, 0, 0.05);
+  --barItemsActiveSegmentControlBackground: rgba(0, 0, 0, 0.05);
+  --sidebarListItemFont: normal normal 400 13px/1.230769 var(--themeDefaultFontFamily);
+  --sidebarListItemBorderRadius: 5px;
+  --selectedSidebarListItemBackground: rgba(0, 0, 0, 0.1235295);
+  --selectedSidebarListItemTextColor: rgba(0, 0, 0, 0.847059);
+  --sidebarListItemTextColor: rgba(0, 0, 0, 0.847059);
+  --selectedSidebarListItemMarker: none;
+  
+  /* Sidebar Section Title */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0;
+  --sidebarSectionTitleMargin: 16px 0 4px 0;
+  --sidebarSectionTitlePadding: 0 8px;
+  --sidebarSectionTitleColor: var(--secondaryLabelColor);
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: none;
+
+  --appMainToolbarFloatingBackground: rgba(255, 255, 255, 0.9);
+
+  /* Tab item*/
+  --tabBarBackground: inherit;
+  --tabBarBoxShadow: rgba(0, 0, 0, 0);
+  --tabItemHeight: 48px;
+  --tabItemTextColor: rgba(0, 0, 0, 0.54);
+  --tabItemBoxShadow: rgba(0, 0, 0, 0);
+  --tabItemIconSize: 20px;
+  --tabItemFont: normal normal 11px/1.333333 var(--themeLabelFontFamily);
+  --tabBarLayout: center;
+  --tabItemBackground-selected: transparent;
+  --tabItemBoxShadow-selected: rgba(0, 0, 0, 0);
+  --tabItemTextColor-selected: var(--accentColor);
+  --tabItemFont-selected: var(--tabItemFont);
+
+  --scrolledAppMainToolbarBoxShadow: 0 0 5px 0 rgba(0, 0, 0, 0.1), 0 1px 0 0 rgba(0, 0, 0, 0.05);
+
+  --appMainToolbarHeight: 52px;
+  /* SegmentControl */
+  --segmentControlBackgroundColor: transparent;
+  --segmentControlPadding: 1px;
+  --segmentControlSegmentPadding: 0.25em 0.5em 0.3em;
+  --segmentControlBoxShadow: none;
+  --segmentControlBackground: rgba(0, 0, 0, 0);
+  --segmentControlBorderRadius: 0;
+  --segmentControlIndicatorBoxShadow: 0 2px 0 0 rgba(0, 0, 0, 0.8);
+}
+
+:root {
+  --scrollBarBackgroundColor: rgba(255, 255, 255, 0.247059);
+  --scrollBarThumbColor: rgba(0, 0, 0, 0.247059);
+  --activeScrollBarThumbColor: rgba(0, 0, 0, 0.4);
+}
+
+body ::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+
+body ::-webkit-scrollbar-track {
+  background: var(--scrollBarBackgroundColor);
+  transition: 0.2s ease;
+}
+
+body *:hover> ::-webkit-scrollbar-thumb {
+  background: var(--scrollBarThumbColor);
+  transition: background 0.2s ease;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 4px;
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: var(--activeScrollBarThumbColor);
+}
+
+body ::-webkit-scrollbar-corner {
+  background: transparent;
+  user-select: none;
+}

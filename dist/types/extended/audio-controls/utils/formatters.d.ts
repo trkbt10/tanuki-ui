@@ -1,0 +1,9 @@
+export declare const formatDb: (value: number) => string;
+export declare const formatPan: (value: number) => string;
+export declare const formatTime: (seconds: number) => string;
+export declare const formatBpm: (bpm: number) => string;
+export declare const formatFrequency: (hz: number) => string;
+export declare const formatPercentage: (value: number) => string;
+export declare const valueToPercentage: (value: number, min: number, max: number) => number;
+export declare const percentageToValue: (percentage: number, min: number, max: number) => number;
+export declare const clampValue: (value: number, min: number, max: number) => number;

@@ -1,0 +1,297 @@
+/**
+ * @theme Handheld Console
+ * @description Nintendo Switch and handheld gaming aesthetics with rounded corners and vibrant colors
+ * @author Tanuki UI
+ * @version 1.0.0
+ * @category Gaming
+ */
+
+:root {
+  font-feature-settings: "rclt" off;
+  /* Nintendo Switch Color Palette */
+  /* Primary Colors */
+  --switchRed: #e60012;
+  --switchRedDark: #ce000a;
+  --switchBlue: #0084ff;
+  --switchBlueDark: #0066cc;
+  --switchTeal: #00d1d1;
+  --switchTealDark: #00a1a1;
+  --switchNeonRed: #ff6b7a;
+  --switchNeonBlue: #00c3ff;
+  
+  /* UI Colors */
+  --switchWhite: #ffffff;
+  --switchLightGray: #f5f5f5;
+  --switchMediumGray: #e4e4e4;
+  --switchDarkGray: #2d2d2d;
+  --switchBlack: #1a1a1a;
+  --switchBackgroundGray: #ebebeb;
+  --switchCardGray: #f8f8f8;
+  
+  /* Nintendo Brand Colors */
+  --nintendoRed: #e60012;
+  --nintendoGray: #484848;
+  --nintendoLightGray: #9b9b9b;
+  
+  /* System Colors */
+  --textColor: var(--switchDarkGray);
+  --accentColor: var(--switchTeal);
+  accent-color: var(--accentColor);
+  --cautionColor: var(--switchRed);
+
+  --windowBackgroundColor: var(--switchBackgroundGray);
+  --labelColor: var(--switchDarkGray);
+  --secondaryLabelColor: var(--nintendoGray);
+  --tertiaryLabelColor: var(--nintendoLightGray);
+  --quaternaryLabelColor: rgba(45, 45, 45, 0.3);
+  --placeholderTextColor: var(--nintendoLightGray);
+  --selectedTextColor: var(--switchWhite);
+  --textBackgroundColor: var(--switchWhite);
+  --selectedTextBackgroundColor: var(--switchTeal);
+  --keyboardFocusIndicatorColor: rgba(0, 209, 209, 0.3);
+  --unemphasizedSelectedTextColor: var(--switchDarkGray);
+  --unemphasizedSelectedTextBackgroundColor: var(--switchMediumGray);
+  --linkColor: var(--switchBlue);
+  --separatorColor: var(--switchMediumGray);
+  --selectedContentBackgroundColor: var(--switchTeal);
+  --unemphasizedSelectedContentBackgroundColor: var(--switchMediumGray);
+  --selectedMenuItemTextColor: var(--switchWhite);
+  --gridColor: var(--switchMediumGray);
+  --headerTextColor: var(--switchDarkGray);
+  --controlAccentColor: var(--switchTeal);
+  --controlColor: var(--switchWhite);
+  --controlTextColor: var(--switchDarkGray);
+  --disabledControlTextColor: var(--nintendoLightGray);
+  --selectedControlColor: var(--switchTeal);
+  --selectedControlTextColor: var(--switchWhite);
+  --alternateSelectedControlTextColor: var(--switchWhite);
+  --scrubberTexturedBackgroundColor: var(--switchCardGray);
+  --windowFrameTextColor: var(--switchDarkGray);
+  --underPageBackgroundColor: rgba(45, 45, 45, 0.95);
+  --findHighlightColor: #ffeb3b;
+  --highlightColor: var(--switchWhite);
+  --shadowColor: rgba(0, 0, 0, 1);
+  --systemBrownColor: #8d6e63;
+  --systemGrayColor: var(--nintendoLightGray);
+  --systemGreenColor: #4caf50;
+  --systemIndigoColor: #5c6bc0;
+  --systemOrangeColor: #ff9800;
+  --systemPinkColor: #e91e63;
+  --systemPurpleColor: #9c27b0;
+  --systemRedColor: var(--switchRed);
+  --systemTealColor: var(--switchTeal);
+  --systemYellowColor: #ffeb3b;
+  --systemBlueColor: var(--switchBlue);
+
+  /* Fonts - Nintendo Switch uses custom Nintendo fonts */
+  --themeDefaultFontFamily: "Nintendo Switch UI", "UD Shin Go", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+  --themeControlFontFamily: var(--themeDefaultFontFamily);
+  --themeLabelFontFamily: var(--themeDefaultFontFamily);
+  --themeSystemFont: normal normal 400 16px/1.5 var(--themeDefaultFontFamily);
+
+  --textFont: normal normal 400 16px/1.5 var(--themeDefaultFontFamily);
+  --labelFont: normal normal 500 14px/1.4 var(--themeLabelFontFamily);
+
+  /* Control - Nintendo Switch button style */
+  --controlFocusBoxShadow: 0 0 0 3px var(--switchTealDark);
+  --controlBackground: var(--switchWhite);
+  --controlHoverBackground: var(--switchLightGray);
+  --controlActiveBackground: var(--switchMediumGray);
+  --controlTextColor: var(--switchDarkGray);
+
+  --controlAccentColor: var(--switchTeal);
+  --controlBoxShadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+  --controlTextFont: normal normal 500 16px/1.25 var(--themeControlFontFamily);
+  --controlBorderRadius: 35px;
+  --controlPadding: 12px 32px;
+  --controlTextLetterSpacing: 0.5px;
+  --controlBorder: none;
+
+  /* Primary Button - Switch style with teal accent */
+  --controlBackground--primary: var(--switchTeal);
+  --controlTextColor--primary: var(--switchWhite);
+  --controlBoxShadow--primary: 0 2px 8px rgba(0, 209, 209, 0.4);
+  --controlHoverBackground--primary: var(--switchTealDark);
+  --controlActiveBackground--primary: #009999;
+
+  /* Secondary Button - Switch outline style */
+  --controlBackground--secondary: transparent;
+  --controlBorder--secondary: 2px solid var(--switchMediumGray);
+  --controlTextColor--secondary: var(--switchDarkGray);
+  --controlBoxShadow--secondary: none;
+  --controlHoverBackground--secondary: var(--switchLightGray);
+  --controlHoverBorder--secondary: 2px solid var(--switchDarkGray);
+
+  /* Input - Nintendo Switch style */
+  --inputPadding: 12px 16px;
+  --inputFont: normal normal 400 16px/1.5 var(--themeDefaultFontFamily);
+  --inputBoxShadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  --inputBorder: 2px solid var(--switchMediumGray);
+  --inputBorderRadius: 12px;
+  --inputBackground: var(--switchWhite);
+  --inputFocusBorder: 2px solid var(--switchTeal);
+  --inputFocusBoxShadow: 0 0 0 3px rgba(0, 209, 209, 0.2);
+
+  /* SelectBox - Switch dropdown style */
+  --selectBoxSplitButtonWidth: 40px;
+  --selectBoxSplitButtonBorderColor: var(--switchMediumGray);
+  --selectBoxSplitButtonBorderWidth: 0 0 0 2px;
+  --selectBoxSplitButtonBackground: url("data:image/svg+xml,%0A%3Csvg width='12px' height='8px' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 8L0 0h12z' fill='%232d2d2d'/%3E%3C/svg%3E");
+
+  /* Check box - Switch style */
+  --checkboxSize: 24px;
+  --checkboxBorderRadius: 6px;
+  
+  /* Toolbar */
+  --barItemsFontFamily: var(--themeDefaultFontFamily);
+  --barItemsTextColor: var(--switchDarkGray);
+  --barItemsAccentColor: var(--switchTeal);
+  --barItemsLabelTextColor: var(--nintendoGray);
+  --barItemsControlPlaceholderTextColor: var(--nintendoLightGray);
+  --barItemsControlMarkerBackgroundColor: var(--switchCardGray);
+  --barItemsDisabledLabelTextColor: var(--nintendoLightGray);
+  --barItemsDisabledLabelBackgroundColor: var(--switchMediumGray);
+  --barItemsBorderRadius: 12px;
+  --barItemsControlMarkerBorderRadius: 8px;
+  --barItemsControlsBorder: 2px solid var(--switchMediumGray);
+  --barItemsHoverSegmentControlBackground: var(--switchLightGray);
+  --barItemsActiveSegmentControlBackground: var(--switchTeal);
+  --segmentControlBackgroundColor: var(--switchCardGray);
+  
+  /* Sidebar - Nintendo Switch menu style */
+  --sidebarBackground: var(--switchCardGray);
+  --sidebarListItemFont: normal normal 400 16px/1.5 var(--themeDefaultFontFamily);
+  --sidebarListItemBorderRadius: 12px;
+  --selectedSidebarListItemBackground: var(--switchTeal);
+  --selectedSidebarListItemTextColor: var(--switchWhite);
+  --selectedSidebarListItemMarker: none;
+  --sidebarItemPadding: 12px 20px;
+  --sidebarItemHoverBackground: var(--switchLightGray);
+  --sidebarListItemDetailsBackground: var(--switchLightGray);
+  --sidebarListItemTextColor: var(--switchDarkGray);
+  --sidebarListItemHoverBackground: var(--switchLightGray);
+  --sidebarListItemIconSize: 20px;
+  --sidebarListItemChildrenPadding: 0 0 0 28px;
+  --sidebarSectionTitleColor: var(--nintendoGray);
+  --sidebarSectionTitlePadding: 20px 20px 8px 20px;
+  --sidebarListItemPadding: 12px 20px;
+  
+  /* Sidebar Section Title - Nintendo Style */
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.02em;
+  --sidebarSectionTitleMargin: 20px 0 8px 0;
+  --sidebarSectionTitleBackground: transparent;
+  --sidebarSectionTitleBorderRadius: 0;
+  --sidebarSectionTitleTextTransform: uppercase;
+
+  /* Dialog - Switch modal style */
+  --dialogBackground: var(--switchWhite);
+  --dialogBoxShadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  --dialogBorderRadius: 16px;
+  --dialogPadding: 24px;
+
+  /* Tab Bar - Nintendo Switch navigation */
+  --tabBarBackground: var(--switchWhite);
+  --tabBarBoxShadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --tabItemHeight: 56px;
+  --tabItemTextColor: var(--nintendoGray);
+  --tabItemBoxShadow: none;
+  --tabItemIconSize: 24px;
+  --tabItemFont: normal normal 500 14px/1.4 var(--themeLabelFontFamily);
+  --tabBarLayout: center;
+  --tabItemBackground-selected: transparent;
+  --tabItemBoxShadow-selected: inset 0 -3px 0 0 var(--switchTeal);
+  --tabItemTextColor-selected: var(--switchTeal);
+  --tabItemFont-selected: normal normal 600 14px/1.4 var(--themeLabelFontFamily);
+
+  /* Table - Switch style */
+  --tableBackgroundColor: var(--switchWhite);
+  --tableBorderColor: var(--switchMediumGray);
+  --tableHeaderBackgroundColor: var(--switchCardGray);
+  --tableHeaderBorderColor: var(--switchMediumGray);
+  --tableRowHoverBackground: var(--switchLightGray);
+  --tableRowSelectedBackground: rgba(0, 209, 209, 0.1);
+
+  /* Card - Switch game card style */
+  --cardBackground: var(--switchWhite);
+  --cardBorderRadius: 16px;
+  --cardBoxShadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  --cardPadding: 20px;
+  --cardHoverTransform: translateY(-4px);
+  --cardHoverBoxShadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+
+  /* Window - Switch UI window */
+  --windowBoxShadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  --windowBorderRadius: 16px;
+
+  /* Segment Control - Switch toggle style */
+  --segmentControlPadding: 4px;
+  --segmentControlSegmentPadding: 8px 24px;
+  --segmentControlBoxShadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  --segmentControlBackground: var(--switchMediumGray);
+  --segmentControlBorderRadius: 28px;
+  --segmentControlIndicatorBoxShadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --segmentControlIndicatorBackground: var(--switchWhite);
+  --segmentControlIndicatorBorderRadius: 24px;
+
+  /* Scrollbar - Nintendo style */
+  --scrollBarThumbColor: var(--switchMediumGray);
+  --activeScrollBarThumbColor: var(--nintendoGray);
+  --scrollBarWidth: 8px;
+
+  /* Animation */
+  --animationDuration: 200ms;
+  --animationEasing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Dark theme support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark mode adjustments */
+    --switchBackgroundGray: #1a1a1a;
+    --switchCardGray: #2d2d2d;
+    --switchWhite: #f5f5f5;
+    --switchLightGray: #2d2d2d;
+    --switchMediumGray: #484848;
+    --textColor: var(--switchWhite);
+    --labelColor: var(--switchWhite);
+    --secondaryLabelColor: #b0b0b0;
+    --windowBackgroundColor: var(--switchBlack);
+    --controlBackground: var(--switchDarkGray);
+    --controlTextColor: var(--switchWhite);
+    --inputBackground: var(--switchDarkGray);
+    --inputBorder: 2px solid var(--switchMediumGray);
+    --tableBackgroundColor: var(--switchDarkGray);
+    --cardBackground: var(--switchDarkGray);
+    --dialogBackground: var(--switchDarkGray);
+    --tabBarBackground: var(--switchDarkGray);
+    --segmentControlBackground: var(--switchBlack);
+    --segmentControlIndicatorBackground: var(--switchDarkGray);
+    --sidebarBackground: var(--switchDarkGray);
+    --sidebarListItemDetailsBackground: var(--switchBlack);
+    --sidebarListItemTextColor: var(--switchWhite);
+    --sidebarListItemHoverBackground: #3a3a3a;
+    --sidebarSectionTitleColor: #b0b0b0;
+  }
+}
+
+/* Scrollbar styling */
+body ::-webkit-scrollbar {
+  width: var(--scrollBarWidth);
+  height: var(--scrollBarWidth);
+  background: transparent;
+}
+
+body ::-webkit-scrollbar-thumb {
+  background: var(--scrollBarThumbColor);
+  border-radius: 4px;
+}
+
+body ::-webkit-scrollbar-thumb:hover {
+  background: var(--activeScrollBarThumbColor);
+}
+
+body ::-webkit-scrollbar-track {
+  background: transparent;
+}
