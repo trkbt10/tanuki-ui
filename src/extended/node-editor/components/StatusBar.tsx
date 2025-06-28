@@ -3,7 +3,7 @@ import { useNodeEditor } from "../contexts/NodeEditorContext";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import type { SettingsManager } from "../settings/SettingsManager";
-import { classNames } from "../../../utilities/classNames";
+import { classNames } from "./elements";
 import { StatusSection, statusSectionStyles } from "./parts";
 import styles from "../NodeEditor.module.css";
 

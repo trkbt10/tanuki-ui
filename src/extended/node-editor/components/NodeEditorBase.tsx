@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "../../../utilities/classNames";
+import { classNames } from "./elements";
 import { useNodeEditorShortcuts } from "../hooks/useNodeEditorShortcuts";
 import styles from "../NodeEditor.module.css";
 

@@ -3,7 +3,7 @@ import { NodeId, ConnectionId, Position } from "../types/core";
 import { useNodeEditor } from "../contexts/NodeEditorContext";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../contexts/NodeCanvasContext";
-import { classNames } from "../../../utilities/classNames";
+import { classNames } from "./elements";
 import { getNodeBoundingBox, createBoundingBoxFromCorners, doRectanglesIntersect } from "../utils/boundingBoxUtils";
 import { SpatialGrid } from "../utils/lookupUtils";
 import styles from "../NodeEditor.module.css";

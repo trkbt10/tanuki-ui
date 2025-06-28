@@ -3,7 +3,7 @@ import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeEditor } from "../contexts/NodeEditorContext";
 import { SelectionOverlay } from "./parts/SelectionOverlay";
-import { classNames } from "../../../utilities/classNames";
+import { classNames } from "./elements";
 import styles from "../NodeEditor.module.css";
 
 export interface CanvasBaseProps {

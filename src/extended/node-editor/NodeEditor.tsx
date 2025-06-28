@@ -23,7 +23,7 @@ import { useNodeCanvas } from "./contexts/NodeCanvasContext";
 import type { NodeDefinition, ExternalDataReference } from "./types/NodeDefinition";
 import type { SettingsManager } from "./settings/SettingsManager";
 import { useSettings } from "./hooks/useSettings";
-import { classNames } from "../../utilities/classNames";
+import { classNames } from "./components/elements";
 import styles from "./NodeEditor.module.css";
 
 export interface NodeEditorProps<TNodeDataTypeMap = {}> {
