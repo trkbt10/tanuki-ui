@@ -1,4 +1,4 @@
-import type { NodeDefinition } from "../../../src/extended/node-editor/types/NodeDefinition";
+import type { NodeDefinition } from "@/extended/node-editor/types/NodeDefinition";
 import { createMathNodeDefinitions } from "./mathNodes";
 import { createDataNodeDefinitions } from "./dataNodes";
 import { createGraphicsNodeDefinitions } from "./graphicsNodes";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { NodeDefinition } from "../../../src/extended/node-editor/types/NodeDefinition";
+import type { NodeDefinition } from "@/extended/node-editor/types/NodeDefinition";
 
 export const createProgressNodeDefinitions = (
   getConnectedValue: (nodeId: string, portId: string) => any,
