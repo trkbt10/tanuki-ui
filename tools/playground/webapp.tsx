@@ -15,6 +15,7 @@ import {
 import classes from "./webapp.module.css";
 import { StickyHeader } from "@/layouts/StickyHeader";
 import "@/global.css";
+import "./public/monotone.css";
 
 function Root(props: React.PropsWithChildren<{}>) {
   const outlet = useOutlet();

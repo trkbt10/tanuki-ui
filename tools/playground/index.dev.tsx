@@ -19,7 +19,7 @@ import { SearchIcon } from "@/blocks/SearchIcon";
 import classes from "./index.module.css";
 import { CloseButton } from "@/form/CloseButton";
 import "@/global.css";
-import "@/monotone.css"; // Assuming this is a global style file
+import "./public/monotone.css";
 const Home = () => {
   return (
     <div>
