@@ -1,0 +1,76 @@
+/* ===========================
+   Indicators Container
+   =========================== */
+.indicators {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 10;
+}
+
+/* ===========================
+   Individual Indicator
+   =========================== */
+.indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.indicator[data-active="true"] {
+  background: rgba(0, 0, 0, 0.8);
+  width: 24px;
+  border-radius: 4px;
+}
+
+.indicator:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.indicator:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.5);
+  outline-offset: 2px;
+}
+
+/* ===========================
+   Responsive
+   =========================== */
+@media (max-width: 768px) {
+  .indicators {
+    bottom: 10px;
+    padding: 6px;
+    gap: 6px;
+  }
+  
+  .indicator {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .indicator[data-active="true"] {
+    width: 18px;
+  }
+}
+
+/* Desktop positioning */
+@media (min-width: 769px) {
+  .indicators {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}

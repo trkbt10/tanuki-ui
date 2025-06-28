@@ -1,0 +1,164 @@
+/* ===========================
+   Base Container
+   =========================== */
+.container {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+/* ===========================
+   Scroll Container
+   =========================== */
+.scrollContainer {
+  flex: 1;
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar */
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+.scrollContainer {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Mobile: full width scroll */
+.container.mobile .scrollContainer {
+  scroll-snap-type: x mandatory;
+}
+
+/* Desktop: normal scroll */
+.container:not(.mobile) .scrollContainer {
+  scroll-snap-type: none;
+}
+
+/* ===========================
+   Views
+   =========================== */
+.view {
+  flex-shrink: 0;
+  height: 100%;
+  position: relative;
+  scroll-snap-align: start;
+}
+
+/* Mobile: full screen views */
+.container.mobile .view {
+  width: 100vw;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+}
+
+/* Add backdrop based on menu progress */
+.container.mobile .view:not(.menuView) {
+  filter: brightness(calc(1 - var(--menu-progress, 0) * 0.4));
+}
+
+/* Disable pointer events when menu is significantly visible */
+.container.mobile.menuActive .view:not(.menuView) {
+  pointer-events: none;
+}
+
+/* Desktop: fixed width views */
+.container:not(.mobile) .view {
+  width: 400px;
+  min-width: 400px;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Single view: fill remaining space */
+.container:not(.mobile).singleView .view {
+  width: auto;
+  min-width: auto;
+  flex: 1;
+  border-right: none;
+}
+
+/* Dynamic sizing: allow content-based width */
+.container:not(.mobile).dynamicSizing .view {
+  width: auto;
+  min-width: 200px;
+  max-width: 800px;
+  flex-shrink: 0;
+}
+
+/* Dynamic sizing container */
+.container:not(.mobile).dynamicSizing .scrollContainer {
+  width: var(--container-width, auto);
+  position: relative;
+}
+
+.container:not(.mobile) .view:last-child {
+  border-right: none;
+}
+
+.container:not(.mobile).dynamicSizing .view:last-child {
+  border-right: none;
+}
+
+/* Menu view (mobile only) */
+.menuView {
+  background: #f8f9fa;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===========================
+   Menu
+   =========================== */
+.menu {
+  background: #f8f9fa;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Desktop menu */
+.container:not(.mobile) .menu {
+  flex-shrink: 0;
+  width: var(--menu-width, 280px);
+  border-right: 1px solid #e0e0e0;
+}
+
+
+/* ===========================
+   Scrollbar Styling (Desktop)
+   =========================== */
+.container:not(.mobile) .view::-webkit-scrollbar,
+.container:not(.mobile) .menu::-webkit-scrollbar {
+  width: 6px;
+}
+
+.container:not(.mobile) .view::-webkit-scrollbar-track,
+.container:not(.mobile) .menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.container:not(.mobile) .view::-webkit-scrollbar-thumb,
+.container:not(.mobile) .menu::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.container:not(.mobile) .view::-webkit-scrollbar-thumb:hover,
+.container:not(.mobile) .menu::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ===========================
+   Responsive Adjustments
+   =========================== */
