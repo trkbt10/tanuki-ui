@@ -1389,3 +1389,60 @@
   pointer-events: auto;
   /* Children can choose to be interactive */
 }
+
+/* TabNav Styles */
+.tabNav {
+  display: flex;
+  gap: 0;
+  padding: 0;
+  background: var(--tableHeaderBackgroundColor, #f0f0f0);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.tabButton {
+  flex: 1;
+  padding: 8px 16px;
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--secondaryLabelColor, #666);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.tabButton:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.tabButton:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
+.tabButton:only-child {
+  border-radius: 6px;
+}
+
+.tabButton:hover {
+  color: var(--labelColor, #000);
+  background: var(--controlHoverBackground, #e8e8e8);
+}
+
+.tabButtonActive {
+  color: var(--controlTextColor--primary, #ffffff);
+  background: var(--accentColor, #007AFF);
+  box-shadow: 0 1px 3px rgba(0, 122, 255, 0.3);
+}
+
+.tabButtonActive:hover {
+  background: var(--accentColor, #007AFF);
+  color: var(--controlTextColor--primary, #ffffff);
+}

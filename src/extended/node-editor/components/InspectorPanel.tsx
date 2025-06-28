@@ -58,11 +58,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
   return (
     <div className={classNames(styles.inspectorPanel, className)}>
       <div className={styles.inspectorHeader}>
-        <TabNav
-          tabs={tabItems}
-          activeTabIndex={activeTabIndex}
-          onTabChange={setActiveTabIndex}
-        />
+        <TabNav tabs={tabItems} activeTabIndex={activeTabIndex} onTabChange={setActiveTabIndex} />
       </div>
 
       <div className={classNames(styles.inspectorContent, activeTabIndex === 0 && styles.inspectorContentNoPadding)}>
