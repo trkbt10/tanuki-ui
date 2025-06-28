@@ -14,6 +14,8 @@ import {
 
 import classes from "./webapp.module.css";
 import { StickyHeader } from "@/layouts/StickyHeader";
+import "@/global.css";
+
 function Root(props: React.PropsWithChildren<{}>) {
   const outlet = useOutlet();
   const items = React.useMemo(() => {
