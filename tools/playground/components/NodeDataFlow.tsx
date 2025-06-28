@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { NodeEditorData } from "../../src/extended/node-editor/types/core";
+import type { NodeEditorData } from "@/extended/node-editor/types/core";
 
 interface NodeDataFlowProps {
   editorData: NodeEditorData | null;

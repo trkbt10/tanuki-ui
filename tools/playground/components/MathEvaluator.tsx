@@ -1,5 +1,5 @@
 import * as React from "react";
-import type { NodeEditorData, Node } from "../../src/extended/node-editor/types/core";
+import type { NodeEditorData, Node } from "@/extended/node-editor/types/core";
 
 interface EvaluationContext {
   editorData: NodeEditorData;
