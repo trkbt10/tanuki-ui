@@ -18,7 +18,8 @@ import { CloseIcon } from "@/blocks/Icon";
 import { SearchIcon } from "@/blocks/SearchIcon";
 import classes from "./index.module.css";
 import { CloseButton } from "@/form/CloseButton";
-
+import "@/global.css";
+import "@/monotone.css"; // Assuming this is a global style file
 const Home = () => {
   return (
     <div>
