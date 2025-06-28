@@ -1,0 +1,19 @@
+.ne-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+.ne-label--disabled {
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.ne-label__required {
+  color: #ef4444;
+  margin-left: 2px;
+  font-weight: 600;
+}

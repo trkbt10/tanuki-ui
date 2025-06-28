@@ -1,0 +1,89 @@
+.ne-heading {
+  margin: 0;
+  font-family: inherit;
+  line-height: 1.2;
+}
+
+/* Default sizes based on heading level */
+.ne-heading--h1 {
+  font-size: 2rem;
+}
+
+.ne-heading--h2 {
+  font-size: 1.5rem;
+}
+
+.ne-heading--h3 {
+  font-size: 1.25rem;
+}
+
+.ne-heading--h4 {
+  font-size: 1.125rem;
+}
+
+.ne-heading--h5 {
+  font-size: 1rem;
+}
+
+.ne-heading--h6 {
+  font-size: 0.875rem;
+}
+
+/* Custom sizes */
+.ne-heading--xs {
+  font-size: 0.75rem;
+}
+
+.ne-heading--sm {
+  font-size: 0.875rem;
+}
+
+.ne-heading--md {
+  font-size: 1rem;
+}
+
+.ne-heading--lg {
+  font-size: 1.125rem;
+}
+
+.ne-heading--xl {
+  font-size: 1.25rem;
+}
+
+.ne-heading--2xl {
+  font-size: 1.5rem;
+}
+
+.ne-heading--3xl {
+  font-size: 2rem;
+}
+
+/* Font weights */
+.ne-heading--normal {
+  font-weight: 400;
+}
+
+.ne-heading--medium {
+  font-weight: 500;
+}
+
+.ne-heading--semibold {
+  font-weight: 600;
+}
+
+.ne-heading--bold {
+  font-weight: 700;
+}
+
+/* Colors */
+.ne-heading--primary {
+  color: #111827;
+}
+
+.ne-heading--secondary {
+  color: #374151;
+}
+
+.ne-heading--muted {
+  color: #6b7280;
+}

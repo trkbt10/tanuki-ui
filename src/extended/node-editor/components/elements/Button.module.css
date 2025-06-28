@@ -1,0 +1,80 @@
+.ne-button {
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  outline: none;
+}
+
+.ne-button:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.ne-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Sizes */
+.ne-button--small {
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.ne-button--medium {
+  padding: 8px 16px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.ne-button--large {
+  padding: 12px 24px;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+/* Variants */
+.ne-button--primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.ne-button--primary:hover:not(:disabled) {
+  background-color: #2563eb;
+}
+
+.ne-button--secondary {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.ne-button--secondary:hover:not(:disabled) {
+  background-color: #d1d5db;
+}
+
+.ne-button--danger {
+  background-color: #ef4444;
+  color: white;
+}
+
+.ne-button--danger:hover:not(:disabled) {
+  background-color: #dc2626;
+}
+
+.ne-button--ghost {
+  background-color: transparent;
+  color: #6b7280;
+  border: 1px solid #d1d5db;
+}
+
+.ne-button--ghost:hover:not(:disabled) {
+  background-color: #f9fafb;
+  color: #374151;
+}

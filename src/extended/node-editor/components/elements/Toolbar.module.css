@@ -1,0 +1,83 @@
+.ne-toolbar {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  background-color: white;
+}
+
+/* Orientations */
+.ne-toolbar--horizontal {
+  flex-direction: row;
+  gap: 4px;
+}
+
+.ne-toolbar--vertical {
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Variants */
+.ne-toolbar--default {
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.ne-toolbar--subtle {
+  background-color: #f9fafb;
+  border: 1px solid #f3f4f6;
+}
+
+.ne-toolbar--elevated {
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.07);
+}
+
+/* Sizes */
+.ne-toolbar--small {
+  padding: 4px;
+  min-height: 32px;
+}
+
+.ne-toolbar--medium {
+  padding: 6px;
+  min-height: 40px;
+}
+
+.ne-toolbar--large {
+  padding: 8px;
+  min-height: 48px;
+}
+
+/* Toolbar Group */
+.ne-toolbar__group {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.ne-toolbar--horizontal .ne-toolbar__group {
+  flex-direction: row;
+}
+
+.ne-toolbar--vertical .ne-toolbar__group {
+  flex-direction: column;
+}
+
+/* Toolbar Separator */
+.ne-toolbar__separator {
+  background-color: #e5e7eb;
+  flex-shrink: 0;
+}
+
+.ne-toolbar--horizontal .ne-toolbar__separator {
+  width: 1px;
+  height: 20px;
+  margin: 0 4px;
+}
+
+.ne-toolbar--vertical .ne-toolbar__separator {
+  height: 1px;
+  width: 20px;
+  margin: 4px 0;
+}

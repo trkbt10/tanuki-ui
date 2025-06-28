@@ -1,0 +1,92 @@
+.ne-textarea {
+  width: 100%;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #374151;
+  background-color: white;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  outline: none;
+  min-height: 80px;
+}
+
+.ne-textarea:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.ne-textarea:disabled {
+  background-color: #f9fafb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Variants */
+.ne-textarea--default {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+}
+
+.ne-textarea--default:hover:not(:disabled) {
+  border-color: #9ca3af;
+}
+
+.ne-textarea--default:focus {
+  border-color: #3b82f6;
+}
+
+.ne-textarea--outline {
+  padding: 8px 12px;
+  border: 2px solid #e5e7eb;
+  background-color: transparent;
+}
+
+.ne-textarea--outline:hover:not(:disabled) {
+  border-color: #d1d5db;
+}
+
+.ne-textarea--outline:focus {
+  border-color: #3b82f6;
+}
+
+.ne-textarea--filled {
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  background-color: #f3f4f6;
+}
+
+.ne-textarea--filled:hover:not(:disabled) {
+  background-color: #e5e7eb;
+}
+
+.ne-textarea--filled:focus {
+  background-color: white;
+  border-color: #3b82f6;
+}
+
+/* Resize options */
+.ne-textarea--resize-none {
+  resize: none;
+}
+
+.ne-textarea--resize-vertical {
+  resize: vertical;
+}
+
+.ne-textarea--resize-horizontal {
+  resize: horizontal;
+}
+
+.ne-textarea--resize-both {
+  resize: both;
+}
+
+/* Error state */
+.ne-textarea--error {
+  border-color: #ef4444;
+}
+
+.ne-textarea--error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}

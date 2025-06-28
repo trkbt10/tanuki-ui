@@ -1,0 +1,74 @@
+.ne-input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #374151;
+  background-color: white;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.ne-input:focus {
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+}
+
+.ne-input:disabled {
+  background-color: #f9fafb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Variants */
+.ne-input--default {
+  padding: 8px 12px;
+  border: 1px solid #d1d5db;
+}
+
+.ne-input--default:hover:not(:disabled) {
+  border-color: #9ca3af;
+}
+
+.ne-input--default:focus {
+  border-color: #3b82f6;
+}
+
+.ne-input--outline {
+  padding: 8px 12px;
+  border: 2px solid #e5e7eb;
+  background-color: transparent;
+}
+
+.ne-input--outline:hover:not(:disabled) {
+  border-color: #d1d5db;
+}
+
+.ne-input--outline:focus {
+  border-color: #3b82f6;
+}
+
+.ne-input--filled {
+  padding: 8px 12px;
+  border: 1px solid transparent;
+  background-color: #f3f4f6;
+}
+
+.ne-input--filled:hover:not(:disabled) {
+  background-color: #e5e7eb;
+}
+
+.ne-input--filled:focus {
+  background-color: white;
+  border-color: #3b82f6;
+}
+
+/* Error state */
+.ne-input--error {
+  border-color: #ef4444;
+}
+
+.ne-input--error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+}
