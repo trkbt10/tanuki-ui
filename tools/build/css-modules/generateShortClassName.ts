@@ -27,21 +27,6 @@ export function generateShortClassName(name: string, filePath: string): string {
   // Find the most specific folder to use as prefix
   let prefix = "ui"; // default prefix
 
-  // Try to use the most specific (deepest) folder
-  if (pathParts.length > 0) {
-    // Skip the filename, get the immediate parent folder
-    const immediateFolder = pathParts[pathParts.length - 2] || pathParts[0];
-
-    // For special deep paths, use combination
-    if (pathParts.length > 2 && pathParts[0] === "extended") {
-      // e.g., extended/node-editor -> ne
-      const folderKey = pathParts.slice(0, 2).join("-");
-      prefix = getFolderPrefix(folderKey);
-    } else {
-      prefix = getFolderPrefix(immediateFolder);
-    }
-  }
-
   // Create a short but readable version of the class name
   let shortName = name;
 

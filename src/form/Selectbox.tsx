@@ -26,25 +26,8 @@ export const Selectbox = forwardRef<
   );
 });
 Selectbox.displayName = "Selectbox";
-const isOptionNode = (
-  node: any,
-): node is React.ReactElement<{
-  value: string;
-  children: React.ReactNode;
-}> => {
-  return React.isValidElement(node) && node.type === "option";
-};
 const isReadonlyStringArray = (value: any): value is readonly string[] => {
   return Array.isArray(value);
-};
-const toArray = (source: string | readonly string[] | undefined): string[] => {
-  if (source === undefined) {
-    return [];
-  }
-  if (isReadonlyStringArray(source)) {
-    return [...source];
-  }
-  return [source];
 };
 const SelectableView = ({
   children,
@@ -58,19 +41,13 @@ const SelectableView = ({
   }
 >) => {
   const selectRef = React.useRef<HTMLSelectElement>(null);
-  const {
-    options,
-    selectedValues,
-    handleToggleOption,
-    handleToggleAll,
-    isCheckedAll,
-    isCheckedPartially
-  } = useSelectableOptions({
-    children,
-    value: props.value,
-    defaultValue: props.defaultValue,
-    multiple: true
-  });
+  const { options, selectedValues, handleToggleOption, handleToggleAll, isCheckedAll, isCheckedPartially } =
+    useSelectableOptions({
+      children,
+      value: props.value,
+      defaultValue: props.defaultValue,
+      multiple: true,
+    });
 
   const handleChange = React.useCallback(
     (value: string, checked: boolean) => {
@@ -82,37 +59,37 @@ const SelectableView = ({
       if (!targetOption) {
         return;
       }
-      
+
       handleToggleOption(value, checked);
-      
+
       targetOption.setAttribute("checked", checked.toString());
       const changeEvent = new Event("change", { bubbles: true });
       select.dispatchEvent(changeEvent);
     },
-    [handleToggleOption],
+    [handleToggleOption]
   );
 
   const handleAllChange: React.ChangeEventHandler<HTMLInputElement> = React.useCallback(
     (e) => {
       const checked = e.target.checked;
       const indeterminate = e.target.indeterminate;
-      
+
       if (indeterminate || checked) {
         handleToggleAll(true);
       } else {
         handleToggleAll(false);
       }
-      
+
       const allOptions = selectRef.current?.querySelectorAll("option");
       if (allOptions) {
-        Array.from(allOptions).forEach(option => {
+        Array.from(allOptions).forEach((option) => {
           option.setAttribute("checked", (indeterminate || checked).toString());
         });
         const changeEvent = new Event("change", { bubbles: true });
         selectRef.current?.dispatchEvent(changeEvent);
       }
     },
-    [handleToggleAll],
+    [handleToggleAll]
   );
 
   return (
@@ -146,10 +123,10 @@ const SelectableView = ({
         <tbody>
           {options.map((option, index) => {
             return (
-              <SelectableViewOption 
-                values={selectedValues} 
-                value={option.value} 
-                onChange={handleChange} 
+              <SelectableViewOption
+                values={selectedValues}
+                value={option.value}
+                onChange={handleChange}
                 key={option.value}
                 switch={props.switch}
               >
@@ -184,7 +161,7 @@ const SelectableViewOption = ({
     (e: React.ChangeEvent<HTMLInputElement>) => {
       onChange(value, e.target.checked);
     },
-    [value, onChange],
+    [value, onChange]
   );
   return (
     <tr>

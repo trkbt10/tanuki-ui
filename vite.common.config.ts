@@ -27,7 +27,6 @@ export const createCommonConfig = (selectedEntries: Record<string, string> | str
       cssCodeSplit: true,
       lib: {
         entry: entryConfig,
-        formats: buildConfig.formats as ["es", "cjs"],
       },
 
       rollupOptions: {
@@ -56,16 +55,15 @@ export const createCommonConfig = (selectedEntries: Record<string, string> | str
     },
     css: {
       modules: {
-        generateScopedName: (name, filename) => {
-          const relativePath = path.relative(entryRoot, filename);
-          // Normalize path separators for consistent naming across platforms
-          const normalizedPath = relativePath.replace(/\\/g, "/");
-          // Remove file extension and "src/" prefix
-          const cleanPath = normalizedPath.replace(/\.module\.(css|scss|sass|less)$/, "").replace(/^src\//, "");
-
-          return generateShortClassName(name, cleanPath);
-        },
-        localsConvention: "camelCaseOnly",
+        // generateScopedName: (name, filename) => {
+        //   const relativePath = path.relative(entryRoot, filename);
+        //   // Normalize path separators for consistent naming across platforms
+        //   const normalizedPath = relativePath.replace(/\\/g, "/");
+        //   // Remove file extension and "src/" prefix
+        //   const cleanPath = normalizedPath.replace(/\.module\.(css|scss|sass|less)$/, "").replace(/^src\//, "");
+        //   return generateShortClassName(name, cleanPath);
+        // },
+        // localsConvention: "camelCaseOnly",
       },
     },
     plugins: [

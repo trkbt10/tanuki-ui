@@ -39,7 +39,6 @@ export const entryPoints: Record<string, EntryPointConfig> = {
 export const buildConfig = {
   outDir: "dist/lib",
   typesDir: "dist/types",
-  formats: ["es", "cjs"] as const,
   external: ["react", "react-dom", "react/jsx-runtime"],
   globals: {
     react: "React",
