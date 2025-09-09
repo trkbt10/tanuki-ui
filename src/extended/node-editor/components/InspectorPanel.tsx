@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useNodeEditor } from "../contexts/NodeEditorContext";
+import { useNodeEditor } from "../contexts/node-editor";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import { NodeInspector } from "./NodeInspector";

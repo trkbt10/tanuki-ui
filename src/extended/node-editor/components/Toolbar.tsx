@@ -2,7 +2,7 @@ import * as React from "react";
 import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../contexts/NodeCanvasContext";
-import { useNodeEditor } from "../contexts/NodeEditorContext";
+import { useNodeEditor } from "../contexts/node-editor";
 import { FloatingContainer } from "./parts/FloatingContainer";
 import { Button } from "./elements";
 import styles from "./Toolbar.module.css";

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useNodeEditor } from "../../contexts/NodeEditorContext";
+import { useNodeEditor } from "../../contexts/node-editor";
 import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
 import styles from "./Minimap.module.css";
 

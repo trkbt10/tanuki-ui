@@ -12,7 +12,7 @@ import { EditorActionStateProvider } from "./contexts/EditorActionStateContext";
 import { KeyboardShortcutProvider } from "./contexts/KeyboardShortcutContext";
 import { HistoryProvider } from "./contexts/HistoryContext";
 import { InlineEditingProvider } from "./contexts/InlineEditingContext";
-import { NodeEditorProvider, useNodeEditor, nodeEditorReducer, type NodeEditorData } from "./contexts/NodeEditorContext";
+import { NodeEditorProvider, useNodeEditor, nodeEditorReducer, type NodeEditorData } from "./contexts/node-editor";
 import { NodeDefinitionProvider, useNodeDefinitions, useNodeDefinitionList } from "./contexts/NodeDefinitionContext";
 import { ExternalDataProvider } from "./contexts/ExternalDataContext";
 import { PortPositionProvider } from "./contexts/PortPositionContext";

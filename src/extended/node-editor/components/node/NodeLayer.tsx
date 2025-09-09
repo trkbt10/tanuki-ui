@@ -3,7 +3,7 @@ import { classNames } from "../elements";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
 import { useNodeDefinitions } from "../../contexts/NodeDefinitionContext";
-import { useNodeEditor } from "../../contexts/NodeEditorContext";
+import { useNodeEditor } from "../../contexts/node-editor";
 import { useGroupManagement } from "../../hooks/useGroupManagement";
 import { useNodeResize } from "../../hooks/useNodeResize";
 import { useVisibleNodes } from "../../hooks/useVisibleNodes";

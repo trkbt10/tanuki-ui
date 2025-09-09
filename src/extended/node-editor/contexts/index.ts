@@ -2,7 +2,7 @@
  * Context providers for the Node Editor
  */
 
-export { NodeEditorProvider, useNodeEditor } from "./NodeEditorContext";
+export { NodeEditorProvider, useNodeEditor } from "./node-editor";
 export { NodeDefinitionProvider, useNodeDefinitions, useNodeDefinition, useNodeDefinitionList } from "./NodeDefinitionContext";
 export { ExternalDataProvider, useExternalDataRef } from "./ExternalDataContext";
 export { InlineEditingProvider, useInlineEditing } from "./InlineEditingContext";
@@ -12,7 +12,7 @@ export { HistoryProvider, useHistory } from "./HistoryContext";
 export { KeyboardShortcutProvider } from "./KeyboardShortcutContext";
 
 // Re-export types
-export type { NodeEditorData } from "./NodeEditorContext";
+export type { NodeEditorData } from "./node-editor";
 export type { PanState, NodeCanvasState, NodeCanvasAction } from "./NodeCanvasContext";
 export type { InlineEditingState } from "./InlineEditingContext";
 export type { Viewport } from "../types/core";

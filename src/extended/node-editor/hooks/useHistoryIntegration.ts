@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useHistory } from "../contexts/HistoryContext";
-import { useNodeEditor } from "../contexts/NodeEditorContext";
+import { useNodeEditor } from "../contexts/node-editor";
 
 /**
  * Hook that integrates history tracking with node editor state changes

@@ -194,9 +194,12 @@
 }
 
 @keyframes dropIndicatorPulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.6;
   }
@@ -207,54 +210,54 @@
   .nodeTreeList {
     background: var(--controlBackground, #1e1e1e);
   }
-  
+
   .header {
     background: var(--controlBackground, #2a2a2a);
     border-bottom-color: var(--separatorColor, rgba(255, 255, 255, 0.1));
   }
-  
+
   .title {
     color: var(--labelColor, #fff);
   }
-  
+
   .nodeCount {
     color: var(--secondaryLabelColor, rgba(255, 255, 255, 0.5));
   }
-  
+
   .emptyState {
     color: var(--tertiaryLabelColor, rgba(255, 255, 255, 0.3));
   }
-  
+
   .treeItem:hover {
     background: var(--quaternarySystemFillColor, rgba(255, 255, 255, 0.04));
   }
-  
+
   .nodeName {
     color: var(--labelColor, #fff);
   }
-  
+
   .expandButton {
     color: var(--secondaryLabelColor, rgba(255, 255, 255, 0.5));
   }
-  
+
   .expandButton:hover {
     color: var(--labelColor, #fff);
   }
-  
+
   .visibilityButton,
   .deleteButton {
     color: var(--secondaryLabelColor, rgba(255, 255, 255, 0.5));
   }
-  
+
   .visibilityButton:hover {
     color: var(--labelColor, #fff);
   }
-  
+
   .deleteButton:hover {
     color: var(--cautionColor, #ff453a);
     background: rgba(255, 69, 58, 0.1);
   }
-  
+
   .treeItem[style*="padding-left: 24px"] {
     border-left-color: var(--separatorColor, rgba(255, 255, 255, 0.1));
   }

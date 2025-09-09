@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Node } from "../types/core";
-import { useNodeEditor } from "../contexts/NodeEditorContext";
+import { useNodeEditor } from "../contexts/node-editor";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeDefinition } from "../contexts/NodeDefinitionContext";
 import { useExternalDataRef } from "../contexts/ExternalDataContext";

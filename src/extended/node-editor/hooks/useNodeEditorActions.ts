@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useNodeEditor } from "../contexts/NodeEditorContext";
+import { useNodeEditor } from "../contexts/node-editor";
 
 /**
  * Hook that provides pre-bound action creators for the NodeEditor

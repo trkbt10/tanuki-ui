@@ -16,7 +16,7 @@ export type {
 // Re-export context-specific types
 export type {
   NodeEditorAction,
-} from "./contexts/NodeEditorContext";
+} from "./contexts/node-editor";
 
 export type {
   PanState,

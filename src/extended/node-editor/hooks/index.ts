@@ -3,7 +3,7 @@
  */
 
 // Core editor hooks
-export { useNodeEditor } from "../contexts/NodeEditorContext";
+export { useNodeEditor } from "../contexts/node-editor";
 export { useNodeCanvas } from "../contexts/NodeCanvasContext";
 export { useEditorActionState } from "../contexts/EditorActionStateContext";
 export { useInlineEditing } from "../contexts/InlineEditingContext";

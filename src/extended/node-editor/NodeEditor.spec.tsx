@@ -1,7 +1,7 @@
 import { describe, test, expect, vi } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { NodeEditor } from "./NodeEditor";
-import type { NodeEditorData } from "./contexts/NodeEditorContext";
+import type { NodeEditorData } from "./contexts/node-editor";
 import React from "react";
 
 describe("NodeEditor", () => {

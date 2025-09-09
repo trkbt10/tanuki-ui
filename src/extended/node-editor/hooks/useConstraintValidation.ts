@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Node, NodeId, Connection, Port } from "../types/core";
-import type { NodeEditorAction } from "../contexts/NodeEditorContext";
+import type { NodeEditorAction } from "../contexts/node-editor";
 import type { NodeDefinition, ConstraintViolation } from "../types/NodeDefinition";
 import { validateNodeConstraints, validateConnectionConstraints, hasBlockingViolations } from "../utils/constraintUtils";
 import { useNodeDefinitions } from "../contexts/NodeDefinitionContext";
