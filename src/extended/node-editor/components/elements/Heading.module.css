@@ -1,89 +1,89 @@
-.ne-heading {
+.heading {
   margin: 0;
   font-family: inherit;
   line-height: 1.2;
 }
 
 /* Default sizes based on heading level */
-.ne-heading--h1 {
+.heading[data-level="1"] {
   font-size: 2rem;
 }
 
-.ne-heading--h2 {
+.heading[data-level="2"] {
   font-size: 1.5rem;
 }
 
-.ne-heading--h3 {
+.heading[data-level="3"] {
   font-size: 1.25rem;
 }
 
-.ne-heading--h4 {
+.heading[data-level="4"] {
   font-size: 1.125rem;
 }
 
-.ne-heading--h5 {
+.heading[data-level="5"] {
   font-size: 1rem;
 }
 
-.ne-heading--h6 {
+.heading[data-level="6"] {
   font-size: 0.875rem;
 }
 
 /* Custom sizes */
-.ne-heading--xs {
+.heading[data-size="xs"] {
   font-size: 0.75rem;
 }
 
-.ne-heading--sm {
+.heading[data-size="sm"] {
   font-size: 0.875rem;
 }
 
-.ne-heading--md {
+.heading[data-size="md"] {
   font-size: 1rem;
 }
 
-.ne-heading--lg {
+.heading[data-size="lg"] {
   font-size: 1.125rem;
 }
 
-.ne-heading--xl {
+.heading[data-size="xl"] {
   font-size: 1.25rem;
 }
 
-.ne-heading--2xl {
+.heading[data-size="2xl"] {
   font-size: 1.5rem;
 }
 
-.ne-heading--3xl {
+.heading[data-size="3xl"] {
   font-size: 2rem;
 }
 
 /* Font weights */
-.ne-heading--normal {
+.heading[data-weight="normal"] {
   font-weight: 400;
 }
 
-.ne-heading--medium {
+.heading[data-weight="medium"] {
   font-weight: 500;
 }
 
-.ne-heading--semibold {
+.heading[data-weight="semibold"] {
   font-weight: 600;
 }
 
-.ne-heading--bold {
+.heading[data-weight="bold"] {
   font-weight: 700;
 }
 
 /* Colors */
-.ne-heading--primary {
+.heading[data-color="primary"] {
   color: #111827;
 }
 
-.ne-heading--secondary {
+.heading[data-color="secondary"] {
   color: #374151;
 }
 
-.ne-heading--muted {
+.heading[data-color="muted"] {
   color: #6b7280;
 }

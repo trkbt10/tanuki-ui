@@ -1,5 +1,5 @@
 import React from 'react';
-import './icons.module.css';
+import styles from './icons.module.css';
 
 export interface IconProps extends React.SVGAttributes<SVGElement> {
   size?: number | string;
@@ -15,7 +15,7 @@ const createIcon = (path: string, viewBox: string = '0 0 24 24') => {
   }, ref) => (
     <svg
       ref={ref}
-      className={`ne-icon ${className}`}
+      className={[styles.icon, className].filter(Boolean).join(' ')}
       width={size}
       height={size}
       viewBox={viewBox}

@@ -1,5 +1,5 @@
 import React from 'react';
-import './Input.module.css';
+import styles from './Input.module.css';
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: boolean;
@@ -12,10 +12,14 @@ export const Input: React.FC<InputProps> = ({
   className = '',
   ...props
 }) => {
-  const baseClass = 'ne-input';
-  const variantClass = `ne-input--${variant}`;
-  const errorClass = error ? 'ne-input--error' : '';
-  const classes = [baseClass, variantClass, errorClass, className].filter(Boolean).join(' ');
+  const classes = [styles.input, className].filter(Boolean).join(' ');
 
-  return <input className={classes} {...props} />;
+  return (
+    <input
+      className={classes}
+      data-variant={variant}
+      data-error={error ? 'true' : 'false'}
+      {...props}
+    />
+  );
 };

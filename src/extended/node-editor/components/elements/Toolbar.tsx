@@ -1,5 +1,5 @@
 import React from 'react';
-import './Toolbar.module.css';
+import styles from './Toolbar.module.css';
 
 export interface ToolbarProps extends React.HTMLAttributes<HTMLDivElement> {
   orientation?: 'horizontal' | 'vertical';
@@ -16,18 +16,14 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   children,
   ...props
 }) => {
-  const baseClass = 'ne-toolbar';
-  const orientationClass = `ne-toolbar--${orientation}`;
-  const variantClass = `ne-toolbar--${variant}`;
-  const sizeClass = `ne-toolbar--${size}`;
-  
-  const classes = [baseClass, orientationClass, variantClass, sizeClass, className]
-    .filter(Boolean)
-    .join(' ');
+  const classes = [styles.toolbar, className].filter(Boolean).join(' ');
 
   return (
     <div 
-      className={classes} 
+      className={classes}
+      data-orientation={orientation}
+      data-variant={variant}
+      data-size={size}
       role="toolbar"
       {...props}
     >
@@ -45,7 +41,7 @@ export const ToolbarGroup: React.FC<ToolbarGroupProps> = ({
   children,
   ...props
 }) => {
-  const classes = ['ne-toolbar__group', className].filter(Boolean).join(' ');
+  const classes = [styles.group, className].filter(Boolean).join(' ');
 
   return (
     <div className={classes} {...props}>
@@ -60,7 +56,7 @@ export const ToolbarSeparator: React.FC<ToolbarSeparatorProps> = ({
   className = '',
   ...props
 }) => {
-  const classes = ['ne-toolbar__separator', className].filter(Boolean).join(' ');
+  const classes = [styles.separator, className].filter(Boolean).join(' ');
 
   return <div className={classes} role="separator" {...props} />;
 };

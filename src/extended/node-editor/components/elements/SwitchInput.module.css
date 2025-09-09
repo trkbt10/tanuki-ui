@@ -1,10 +1,10 @@
-.ne-switch-container {
+.switchContainer {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-.ne-switch {
+.switch {
   display: inline-flex;
   align-items: center;
   cursor: pointer;
@@ -13,31 +13,31 @@
   transition: all 0.2s ease;
 }
 
-.ne-switch:focus {
+.switch:focus {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
-.ne-switch--disabled {
+.switch[data-disabled="true"] {
   cursor: not-allowed;
   opacity: 0.6;
 }
 
-.ne-switch__track {
+.track {
   position: relative;
   border-radius: 999px;
   transition: all 0.2s ease;
   background-color: #d1d5db;
 }
 
-.ne-switch--checked .ne-switch__track {
+.switch[data-checked="true"] .track {
   background-color: #3b82f6;
 }
 
-.ne-switch--disabled.ne-switch--checked .ne-switch__track {
+.switch[data-disabled="true"][data-checked="true"] .track {
   background-color: #9ca3af;
 }
 
-.ne-switch__thumb {
+.thumb {
   position: absolute;
   top: 2px;
   left: 2px;
@@ -48,56 +48,56 @@
 }
 
 /* Sizes */
-.ne-switch--small .ne-switch__track {
+.switch[data-size="small"] .track {
   width: 32px;
   height: 18px;
 }
 
-.ne-switch--small .ne-switch__thumb {
+.switch[data-size="small"] .thumb {
   width: 14px;
   height: 14px;
 }
 
-.ne-switch--small.ne-switch--checked .ne-switch__thumb {
+.switch[data-size="small"][data-checked="true"] .thumb {
   transform: translateX(14px);
 }
 
-.ne-switch--medium .ne-switch__track {
+.switch[data-size="medium"] .track {
   width: 44px;
   height: 24px;
 }
 
-.ne-switch--medium .ne-switch__thumb {
+.switch[data-size="medium"] .thumb {
   width: 20px;
   height: 20px;
 }
 
-.ne-switch--medium.ne-switch--checked .ne-switch__thumb {
+.switch[data-size="medium"][data-checked="true"] .thumb {
   transform: translateX(20px);
 }
 
-.ne-switch--large .ne-switch__track {
+.switch[data-size="large"] .track {
   width: 56px;
   height: 32px;
 }
 
-.ne-switch--large .ne-switch__thumb {
+.switch[data-size="large"] .thumb {
   width: 28px;
   height: 28px;
 }
 
-.ne-switch--large.ne-switch--checked .ne-switch__thumb {
+.switch[data-size="large"][data-checked="true"] .thumb {
   transform: translateX(24px);
 }
 
-.ne-switch-label {
+.switchLabel {
   font-size: 14px;
   color: #374151;
   cursor: pointer;
   user-select: none;
 }
 
-.ne-switch-label--disabled {
+.switchLabel[data-disabled="true"] {
   color: #9ca3af;
   cursor: not-allowed;
 }

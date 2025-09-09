@@ -1,4 +1,4 @@
-.ne-input {
+.input {
   width: 100%;
   font-family: inherit;
   font-size: 14px;
@@ -10,65 +10,65 @@
   outline: none;
 }
 
-.ne-input:focus {
+.input:focus {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
-.ne-input:disabled {
+.input:disabled {
   background-color: #f9fafb;
   color: #9ca3af;
   cursor: not-allowed;
 }
 
 /* Variants */
-.ne-input--default {
+.input[data-variant="default"] {
   padding: 8px 12px;
   border: 1px solid #d1d5db;
 }
 
-.ne-input--default:hover:not(:disabled) {
+.input[data-variant="default"]:hover:not(:disabled) {
   border-color: #9ca3af;
 }
 
-.ne-input--default:focus {
+.input[data-variant="default"]:focus {
   border-color: #3b82f6;
 }
 
-.ne-input--outline {
+.input[data-variant="outline"] {
   padding: 8px 12px;
   border: 2px solid #e5e7eb;
   background-color: transparent;
 }
 
-.ne-input--outline:hover:not(:disabled) {
+.input[data-variant="outline"]:hover:not(:disabled) {
   border-color: #d1d5db;
 }
 
-.ne-input--outline:focus {
+.input[data-variant="outline"]:focus {
   border-color: #3b82f6;
 }
 
-.ne-input--filled {
+.input[data-variant="filled"] {
   padding: 8px 12px;
   border: 1px solid transparent;
   background-color: #f3f4f6;
 }
 
-.ne-input--filled:hover:not(:disabled) {
+.input[data-variant="filled"]:hover:not(:disabled) {
   background-color: #e5e7eb;
 }
 
-.ne-input--filled:focus {
+.input[data-variant="filled"]:focus {
   background-color: white;
   border-color: #3b82f6;
 }
 
 /* Error state */
-.ne-input--error {
+.input[data-error="true"] {
   border-color: #ef4444;
 }
 
-.ne-input--error:focus {
+.input[data-error="true"]:focus {
   border-color: #ef4444;
   box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
 }

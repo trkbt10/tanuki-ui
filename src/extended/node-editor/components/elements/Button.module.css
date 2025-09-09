@@ -1,4 +1,4 @@
-.ne-button {
+.button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -12,69 +12,69 @@
   outline: none;
 }
 
-.ne-button:focus {
+.button:focus {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
-.ne-button:disabled {
+.button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
 
-/* Sizes */
-.ne-button--small {
+/* Sizes via data-size */
+.button[data-size="small"] {
   padding: 4px 8px;
   font-size: 12px;
   line-height: 1.4;
 }
 
-.ne-button--medium {
+.button[data-size="medium"] {
   padding: 8px 16px;
   font-size: 14px;
   line-height: 1.4;
 }
 
-.ne-button--large {
+.button[data-size="large"] {
   padding: 12px 24px;
   font-size: 16px;
   line-height: 1.4;
 }
 
-/* Variants */
-.ne-button--primary {
+/* Variants via data-variant */
+.button[data-variant="primary"] {
   background-color: #3b82f6;
   color: white;
 }
 
-.ne-button--primary:hover:not(:disabled) {
+.button[data-variant="primary"]:hover:not(:disabled) {
   background-color: #2563eb;
 }
 
-.ne-button--secondary {
+.button[data-variant="secondary"] {
   background-color: #e5e7eb;
   color: #374151;
 }
 
-.ne-button--secondary:hover:not(:disabled) {
+.button[data-variant="secondary"]:hover:not(:disabled) {
   background-color: #d1d5db;
 }
 
-.ne-button--danger {
+.button[data-variant="danger"] {
   background-color: #ef4444;
   color: white;
 }
 
-.ne-button--danger:hover:not(:disabled) {
+.button[data-variant="danger"]:hover:not(:disabled) {
   background-color: #dc2626;
 }
 
-.ne-button--ghost {
+.button[data-variant="ghost"] {
   background-color: transparent;
   color: #6b7280;
   border: 1px solid #d1d5db;
 }
 
-.ne-button--ghost:hover:not(:disabled) {
+.button[data-variant="ghost"]:hover:not(:disabled) {
   background-color: #f9fafb;
   color: #374151;
 }

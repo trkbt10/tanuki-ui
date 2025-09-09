@@ -1,4 +1,4 @@
-.ne-textarea {
+.textarea {
   width: 100%;
   font-family: inherit;
   font-size: 14px;
@@ -11,82 +11,82 @@
   min-height: 80px;
 }
 
-.ne-textarea:focus {
+.textarea:focus {
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
-.ne-textarea:disabled {
+.textarea:disabled {
   background-color: #f9fafb;
   color: #9ca3af;
   cursor: not-allowed;
 }
 
 /* Variants */
-.ne-textarea--default {
+.textarea[data-variant="default"] {
   padding: 8px 12px;
   border: 1px solid #d1d5db;
 }
 
-.ne-textarea--default:hover:not(:disabled) {
+.textarea[data-variant="default"]:hover:not(:disabled) {
   border-color: #9ca3af;
 }
 
-.ne-textarea--default:focus {
+.textarea[data-variant="default"]:focus {
   border-color: #3b82f6;
 }
 
-.ne-textarea--outline {
+.textarea[data-variant="outline"] {
   padding: 8px 12px;
   border: 2px solid #e5e7eb;
   background-color: transparent;
 }
 
-.ne-textarea--outline:hover:not(:disabled) {
+.textarea[data-variant="outline"]:hover:not(:disabled) {
   border-color: #d1d5db;
 }
 
-.ne-textarea--outline:focus {
+.textarea[data-variant="outline"]:focus {
   border-color: #3b82f6;
 }
 
-.ne-textarea--filled {
+.textarea[data-variant="filled"] {
   padding: 8px 12px;
   border: 1px solid transparent;
   background-color: #f3f4f6;
 }
 
-.ne-textarea--filled:hover:not(:disabled) {
+.textarea[data-variant="filled"]:hover:not(:disabled) {
   background-color: #e5e7eb;
 }
 
-.ne-textarea--filled:focus {
+.textarea[data-variant="filled"]:focus {
   background-color: white;
   border-color: #3b82f6;
 }
 
 /* Resize options */
-.ne-textarea--resize-none {
+.textarea[data-resize="none"] {
   resize: none;
 }
 
-.ne-textarea--resize-vertical {
+.textarea[data-resize="vertical"] {
   resize: vertical;
 }
 
-.ne-textarea--resize-horizontal {
+.textarea[data-resize="horizontal"] {
   resize: horizontal;
 }
 
-.ne-textarea--resize-both {
+.textarea[data-resize="both"] {
   resize: both;
 }
 
 /* Error state */
-.ne-textarea--error {
+.textarea[data-error="true"] {
   border-color: #ef4444;
 }
 
-.ne-textarea--error:focus {
+.textarea[data-error="true"]:focus {
   border-color: #ef4444;
   box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
 }

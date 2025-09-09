@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import './Dialog.module.css';
+import styles from './Dialog.module.css';
 
 export interface DialogProps {
   isOpen: boolean;
@@ -62,32 +62,29 @@ export const Dialog: React.FC<DialogProps> = ({
 
   if (!isOpen) return null;
 
-  const dialogClasses = [
-    'ne-dialog',
-    `ne-dialog--${size}`,
-    className
-  ].filter(Boolean).join(' ');
+  const dialogClasses = [styles.dialog, className].filter(Boolean).join(' ');
 
   return (
-    <div className="ne-dialog-overlay" onClick={handleOverlayClick}>
+    <div className={styles.overlay} onClick={handleOverlayClick}>
       <div
         ref={dialogRef}
         className={dialogClasses}
+        data-size={size}
         role="dialog"
         aria-modal="true"
         aria-labelledby={title ? 'dialog-title' : undefined}
         tabIndex={-1}
       >
         {(title || showCloseButton) && (
-          <div className="ne-dialog__header">
+          <div className={styles.header}>
             {title && (
-              <h2 id="dialog-title" className="ne-dialog__title">
+              <h2 id="dialog-title" className={styles.title}>
                 {title}
               </h2>
             )}
             {showCloseButton && (
               <button
-                className="ne-dialog__close"
+                className={styles.close}
                 onClick={onClose}
                 aria-label="Close dialog"
               >
@@ -96,7 +93,7 @@ export const Dialog: React.FC<DialogProps> = ({
             )}
           </div>
         )}
-        <div className="ne-dialog__content">
+        <div className={styles.content}>
           {children}
         </div>
       </div>

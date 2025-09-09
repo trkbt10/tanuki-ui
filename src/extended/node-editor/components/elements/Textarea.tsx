@@ -1,5 +1,5 @@
 import React from 'react';
-import './Textarea.module.css';
+import styles from './Textarea.module.css';
 
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   error?: boolean;
@@ -14,11 +14,15 @@ export const Textarea: React.FC<TextareaProps> = ({
   className = '',
   ...props
 }) => {
-  const baseClass = 'ne-textarea';
-  const variantClass = `ne-textarea--${variant}`;
-  const errorClass = error ? 'ne-textarea--error' : '';
-  const resizeClass = `ne-textarea--resize-${resize}`;
-  const classes = [baseClass, variantClass, errorClass, resizeClass, className].filter(Boolean).join(' ');
+  const classes = [styles.textarea, className].filter(Boolean).join(' ');
 
-  return <textarea className={classes} {...props} />;
+  return (
+    <textarea
+      className={classes}
+      data-variant={variant}
+      data-error={error ? 'true' : 'false'}
+      data-resize={resize}
+      {...props}
+    />
+  );
 };

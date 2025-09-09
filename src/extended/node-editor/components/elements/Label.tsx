@@ -1,5 +1,5 @@
 import React from 'react';
-import './Label.module.css';
+import styles from './Label.module.css';
 
 export interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   required?: boolean;
@@ -14,14 +14,12 @@ export const Label: React.FC<LabelProps> = ({
   children,
   ...props
 }) => {
-  const baseClass = 'ne-label';
-  const disabledClass = disabled ? 'ne-label--disabled' : '';
-  const classes = [baseClass, disabledClass, className].filter(Boolean).join(' ');
+  const classes = [styles.label, className].filter(Boolean).join(' ');
 
   return (
-    <label className={classes} {...props}>
+    <label className={classes} data-disabled={disabled ? 'true' : 'false'} {...props}>
       {children}
-      {required && <span className="ne-label__required">*</span>}
+      {required && <span className={styles.required}>*</span>}
     </label>
   );
 };

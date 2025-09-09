@@ -1,5 +1,5 @@
 import React from 'react';
-import './SwitchInput.module.css';
+import styles from './SwitchInput.module.css';
 
 export interface SwitchInputProps {
   checked: boolean;
@@ -20,11 +20,7 @@ export const SwitchInput: React.FC<SwitchInputProps> = ({
   id,
   className = '',
 }) => {
-  const baseClass = 'ne-switch';
-  const sizeClass = `ne-switch--${size}`;
-  const checkedClass = checked ? 'ne-switch--checked' : '';
-  const disabledClass = disabled ? 'ne-switch--disabled' : '';
-  const classes = [baseClass, sizeClass, checkedClass, disabledClass, className].filter(Boolean).join(' ');
+  const classes = [styles.switch, className].filter(Boolean).join(' ');
 
   const handleClick = () => {
     if (!disabled) {
@@ -40,9 +36,12 @@ export const SwitchInput: React.FC<SwitchInputProps> = ({
   };
 
   return (
-    <div className="ne-switch-container">
+    <div className={styles.switchContainer}>
       <div
         className={classes}
+        data-size={size}
+        data-checked={checked ? 'true' : 'false'}
+        data-disabled={disabled ? 'true' : 'false'}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
         role="switch"
@@ -51,14 +50,15 @@ export const SwitchInput: React.FC<SwitchInputProps> = ({
         tabIndex={disabled ? -1 : 0}
         id={id}
       >
-        <div className="ne-switch__track">
-          <div className="ne-switch__thumb" />
+        <div className={styles.track}>
+          <div className={styles.thumb} />
         </div>
       </div>
       {label && (
         <label 
           htmlFor={id} 
-          className={`ne-switch-label ${disabled ? 'ne-switch-label--disabled' : ''}`}
+          className={styles.switchLabel}
+          data-disabled={disabled ? 'true' : 'false'}
           onClick={handleClick}
         >
           {label}

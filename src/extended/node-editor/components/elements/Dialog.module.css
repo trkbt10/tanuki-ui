@@ -1,4 +1,4 @@
-.ne-dialog-overlay {
+.overlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -12,7 +12,7 @@
   padding: 16px;
 }
 
-.ne-dialog {
+.dialog {
   background-color: white;
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
@@ -24,22 +24,22 @@
 }
 
 /* Sizes */
-.ne-dialog--small {
+.dialog[data-size="small"] {
   width: 100%;
   max-width: 400px;
 }
 
-.ne-dialog--medium {
+.dialog[data-size="medium"] {
   width: 100%;
   max-width: 600px;
 }
 
-.ne-dialog--large {
+.dialog[data-size="large"] {
   width: 100%;
   max-width: 800px;
 }
 
-.ne-dialog--fullscreen {
+.dialog[data-size="fullscreen"] {
   width: 100vw;
   height: 100vh;
   max-width: none;
@@ -47,7 +47,7 @@
   border-radius: 0;
 }
 
-.ne-dialog__header {
+.header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -56,14 +56,14 @@
   flex-shrink: 0;
 }
 
-.ne-dialog__title {
+.title {
   margin: 0;
   font-size: 18px;
   font-weight: 600;
   color: #111827;
 }
 
-.ne-dialog__close {
+.close {
   background: none;
   border: none;
   font-size: 24px;
@@ -75,17 +75,17 @@
   transition: all 0.2s ease;
 }
 
-.ne-dialog__close:hover {
+.close:hover {
   color: #374151;
   background-color: #f3f4f6;
 }
 
-.ne-dialog__close:focus {
+.close:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
 }
 
-.ne-dialog__content {
+.content {
   padding: 20px;
   overflow-y: auto;
   flex: 1;

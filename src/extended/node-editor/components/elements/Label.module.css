@@ -1,4 +1,4 @@
-.ne-label {
+.label {
   display: block;
   font-size: 14px;
   font-weight: 500;
@@ -7,12 +7,12 @@
   line-height: 1.4;
 }
 
-.ne-label--disabled {
+.label[data-disabled="true"] {
   color: #9ca3af;
   cursor: not-allowed;
 }
 
-.ne-label__required {
+.required {
   color: #ef4444;
   margin-left: 2px;
   font-weight: 600;

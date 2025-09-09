@@ -1,5 +1,5 @@
 import React from 'react';
-import './Heading.module.css';
+import styles from './Heading.module.css';
 
 export interface HeadingProps extends React.HTMLAttributes<HTMLHeadingElement> {
   level?: 1 | 2 | 3 | 4 | 5 | 6;
@@ -19,19 +19,17 @@ export const Heading: React.FC<HeadingProps> = ({
   ...props
 }) => {
   const Tag = `h${level}` as React.ElementType;
-  
-  const baseClass = 'ne-heading';
-  const levelClass = `ne-heading--h${level}`;
-  const sizeClass = size ? `ne-heading--${size}` : '';
-  const weightClass = `ne-heading--${weight}`;
-  const colorClass = `ne-heading--${color}`;
-  
-  const classes = [baseClass, levelClass, sizeClass, weightClass, colorClass, className]
-    .filter(Boolean)
-    .join(' ');
+  const classes = [styles.heading, className].filter(Boolean).join(' ');
 
   return (
-    <Tag className={classes} {...props}>
+    <Tag
+      className={classes}
+      data-level={level}
+      data-weight={weight}
+      data-color={color}
+      {...(size ? { 'data-size': size } : {})}
+      {...props}
+    >
       {children}
     </Tag>
   );
