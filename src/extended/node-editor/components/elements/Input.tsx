@@ -6,20 +6,20 @@ export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> 
   variant?: 'default' | 'outline' | 'filled';
 }
 
-export const Input: React.FC<InputProps> = ({
-  error = false,
-  variant = 'default',
-  className = '',
-  ...props
-}) => {
-  const classes = [styles.input, className].filter(Boolean).join(' ');
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ error = false, variant = 'default', className = '', ...props }, ref) => {
+    const classes = [styles.input, className].filter(Boolean).join(' ');
 
-  return (
-    <input
-      className={classes}
-      data-variant={variant}
-      data-error={error ? 'true' : 'false'}
-      {...props}
-    />
-  );
-};
+    return (
+      <input
+        ref={ref}
+        className={classes}
+        data-variant={variant}
+        data-error={error ? 'true' : 'false'}
+        {...props}
+      />
+    );
+  }
+);
+
+Input.displayName = 'Input';

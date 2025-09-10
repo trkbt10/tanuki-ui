@@ -88,6 +88,13 @@ export const enMessages: I18nMessages = {
   inspectorMultipleSelection: "Multiple Selection",
   inspectorTabLayers: "Layers",
   inspectorTabProperties: "Properties",
+  inspectorTabHistory: "History",
+
+  // History Panel
+  historyUndo: "Undo",
+  historyRedo: "Redo",
+  historyEmpty: "No history yet",
+  historyTitle: "History",
 
   // Keyboard Shortcuts
   shortcutUndo: "Undo (Ctrl+Z)",

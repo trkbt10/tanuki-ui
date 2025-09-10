@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames, calculateContextMenuPosition, getViewportInfo } from "./elements";
+import { classNames, calculateContextMenuPosition, getViewportInfo, Input } from "./elements";
 import type { NodeDefinition } from "../types/NodeDefinition";
 import type { Position } from "../types/core";
 import { getNodeIcon } from "../utils/nodeUtils";
@@ -202,7 +202,7 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
       onKeyDown={handleKeyDown}
     >
       <div className={styles.searchHeader}>
-        <input
+        <Input
           ref={searchInputRef}
           id="node-search"
           name="nodeSearch"

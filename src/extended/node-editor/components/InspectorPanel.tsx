@@ -26,7 +26,11 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
   const activeTabIndex = actionState.inspectorActiveTab ?? 0;
   const setActiveTabIndex = (index: number) => actionDispatch(actionActions.setInspectorActiveTab(index));
   const { t } = useI18n();
-  const tabItems = [t("inspectorTabLayers") || "Layers", t("inspectorTabProperties") || "Properties", "History"]; 
+  const tabItems = [
+    t("inspectorTabLayers") || "Layers",
+    t("inspectorTabProperties") || "Properties",
+    t("inspectorTabHistory") || "History",
+  ];
 
   // Get selected node (for now, just show the first one)
   const selectedNode = actionState.selectedNodeIds.length > 0 ? nodeEditorState.nodes[actionState.selectedNodeIds[0]] : null;

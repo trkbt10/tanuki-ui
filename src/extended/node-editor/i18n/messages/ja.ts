@@ -88,6 +88,13 @@ export const jaMessages: I18nMessages = {
   inspectorMultipleSelection: "複数選択",
   inspectorTabLayers: "レイヤー",
   inspectorTabProperties: "プロパティ",
+  inspectorTabHistory: "履歴",
+
+  // History Panel
+  historyUndo: "元に戻す",
+  historyRedo: "やり直し",
+  historyEmpty: "履歴はまだありません",
+  historyTitle: "履歴",
 
   // Keyboard Shortcuts
   shortcutUndo: "元に戻す (Ctrl+Z)",

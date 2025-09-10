@@ -92,6 +92,13 @@ export interface I18nMessages {
   inspectorMultipleSelection?: string;
   inspectorTabLayers?: string;
   inspectorTabProperties?: string;
+  inspectorTabHistory?: string;
+
+  // History Panel
+  historyUndo?: string;
+  historyRedo?: string;
+  historyEmpty?: string;
+  historyTitle?: string;
 
   // Keyboard Shortcuts
   shortcutUndo: string;
