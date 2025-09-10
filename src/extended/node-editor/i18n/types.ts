@@ -83,6 +83,15 @@ export interface I18nMessages {
   inspectorVisible: string;
   inspectorLocked: string;
   inspectorExpanded: string;
+  inspectorGridSettings?: string;
+  inspectorShowGrid?: string;
+  inspectorSnapToGrid?: string;
+  inspectorGridSize?: string;
+  inspectorSnapThreshold?: string;
+  inspectorEmptyStatePrompt?: string;
+  inspectorMultipleSelection?: string;
+  inspectorTabLayers?: string;
+  inspectorTabProperties?: string;
 
   // Keyboard Shortcuts
   shortcutUndo: string;
@@ -140,6 +149,9 @@ export interface I18nMessages {
   formatNodes: string;
   formatConnections: string;
   formatSnapGrid: string;
+  // Generic field labels
+  fieldTitle?: string;
+  fieldContent?: string;
 }
 
 export type I18nKey = keyof I18nMessages;

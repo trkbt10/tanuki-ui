@@ -7,6 +7,7 @@ import { NodeLayer } from "./components/node/NodeLayer";
 import { ConnectionLayer } from "./components/connection/ConnectionLayer";
 import { StatusBar } from "./components/StatusBar";
 import { NodeSearchMenu } from "./components/NodeSearchMenu";
+import { ContextActionMenu } from "./components/ContextActionMenu";
 import { NodeCanvasProvider } from "./contexts/NodeCanvasContext";
 import { EditorActionStateProvider } from "./contexts/EditorActionStateContext";
 import { KeyboardShortcutProvider } from "./contexts/KeyboardShortcutContext";
@@ -25,6 +26,7 @@ import type { SettingsManager } from "./settings/SettingsManager";
 import { useSettings } from "./hooks/useSettings";
 import { classNames } from "./components/elements";
 import styles from "./NodeEditor.module.css";
+import { I18nProvider, type Locale, type I18nMessages } from "./i18n";
 
 export interface NodeEditorProps<TNodeDataTypeMap = {}> {
   /** Initial data for uncontrolled mode (like defaultValue) */
@@ -71,6 +73,10 @@ export interface NodeEditorProps<TNodeDataTypeMap = {}> {
   onLeftSidebarWidthChange?: (width: number) => void;
   /** Callback when right sidebar width changes */
   onRightSidebarWidthChange?: (width: number) => void;
+  // i18n options
+  locale?: Locale;
+  fallbackLocale?: Locale;
+  messagesOverride?: Partial<Record<Locale, Partial<I18nMessages>>>;
 }
 
 /**
@@ -102,8 +108,12 @@ export const NodeEditor = <TNodeDataTypeMap = {},>({
   rightSidebarMaxWidth,
   onLeftSidebarWidthChange,
   onRightSidebarWidthChange,
+  locale,
+  fallbackLocale,
+  messagesOverride,
 }: NodeEditorProps<TNodeDataTypeMap>) => {
   return (
+    <I18nProvider initialLocale={locale} fallbackLocale={fallbackLocale} messagesOverride={messagesOverride}>
     <NodeDefinitionProvider<TNodeDataTypeMap> nodeDefinitions={nodeDefinitions} includeDefaults={includeDefaultDefinitions}>
       <ExternalDataProvider refs={externalDataRefs}>
         <NodeEditorProvider
@@ -145,6 +155,7 @@ export const NodeEditor = <TNodeDataTypeMap = {},>({
         </NodeEditorProvider>
       </ExternalDataProvider>
     </NodeDefinitionProvider>
+    </I18nProvider>
   );
 };
 
@@ -391,14 +402,25 @@ const NodeEditorContent: React.FC<{
         </div>
       )}
 
-      {/* Context Menu */}
-      <NodeSearchMenu
-        position={actionState.contextMenu.position}
-        nodeDefinitions={nodeDefinitions}
-        onCreateNode={handleCreateNode}
-        onClose={() => actionDispatch(actionActions.hideContextMenu())}
-        visible={actionState.contextMenu.visible}
-      />
+      {/* Context Menus */}
+      {actionState.contextMenu.visible && !actionState.contextMenu.nodeId && !actionState.contextMenu.connectionId && (
+        <NodeSearchMenu
+          position={actionState.contextMenu.position}
+          nodeDefinitions={nodeDefinitions}
+          onCreateNode={handleCreateNode}
+          onClose={() => actionDispatch(actionActions.hideContextMenu())}
+          visible={true}
+        />
+      )}
+
+      {actionState.contextMenu.visible && (actionState.contextMenu.nodeId || actionState.contextMenu.connectionId) && (
+        <ContextActionMenu
+          position={actionState.contextMenu.position}
+          target={actionState.contextMenu.nodeId ? { type: "node", id: actionState.contextMenu.nodeId } : { type: "connection", id: actionState.contextMenu.connectionId! }}
+          visible={true}
+          onClose={() => actionDispatch(actionActions.hideContextMenu())}
+        />
+      )}
 
       {/* UI Overlay Layers - Fixed position, non-interactive, for UI customization */}
       {uiOverlayLayers && uiOverlayLayers.length > 0 && (

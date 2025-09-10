@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { Connection, Node, Port } from "../../types/core";
-import { calculateBezierPath } from "./utils/connectionUtils";
+import { calculateBezierPath, calculateBezierControlPoints, cubicBezierPoint, cubicBezierTangent } from "./utils/connectionUtils";
 import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
 import { classNames } from "../elements";
 import styles from "../../NodeEditor.module.css";
@@ -23,6 +23,7 @@ export interface ConnectionViewProps {
   onPointerDown?: (e: React.PointerEvent, connectionId: string) => void;
   onPointerEnter?: (e: React.PointerEvent, connectionId: string) => void;
   onPointerLeave?: (e: React.PointerEvent, connectionId: string) => void;
+  onContextMenu?: (e: React.MouseEvent, connectionId: string) => void;
 }
 
 /**
@@ -45,6 +46,7 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
   onPointerDown,
   onPointerEnter,
   onPointerLeave,
+  onContextMenu,
 }) => {
   // Get dynamic port positions
   const baseFromPosition = useDynamicConnectionPoint(fromNode.id, fromPort.id);
@@ -94,6 +96,20 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
     () => calculateBezierPath(fromPosition, toPosition, fromPort.position, toPort.position),
     [fromPosition.x, fromPosition.y, toPosition.x, toPosition.y, fromPort.position, toPort.position]
   );
+  // Compute mid-point and angle along the bezier at t=0.5
+  const midAndAngle = React.useMemo(() => {
+    const { cp1, cp2 } = calculateBezierControlPoints(
+      fromPosition,
+      toPosition,
+      fromPort.position,
+      toPort.position
+    );
+    const t = 0.5;
+    const pt = cubicBezierPoint(fromPosition, cp1, cp2, toPosition, t);
+    const tan = cubicBezierTangent(fromPosition, cp1, cp2, toPosition, t);
+    const angle = (Math.atan2(tan.y, tan.x) * 180) / Math.PI;
+    return { x: pt.x, y: pt.y, angle };
+  }, [fromPosition.x, fromPosition.y, toPosition.x, toPosition.y, fromPort.position, toPort.position]);
   // Calculate color based on state
   const strokeColor = React.useMemo(() => {
     if (isDragging && dragProgress > 0) {
@@ -130,19 +146,42 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
       )}
       data-connection-id={connection.id}
     >
-      {/* Invisible wider path for easier interaction */}
-      <path
-        d={pathData}
-        fill="none"
-        stroke="transparent"
-        strokeWidth={20}
-        style={{ cursor: "pointer" }}
-        onPointerDown={handlePointerDown}
-        onPointerEnter={handlePointerEnter}
-        onPointerLeave={handlePointerLeave}
-      />
-
-      {/* Visible connection line */}
+      {/* Flow stripes when hovered or selected */}
+      {(isSelected || isHovered) && (
+        <>
+          {/* Accent stripes */}
+          <path
+            d={pathData}
+            fill="none"
+            stroke={"var(--accentColor, #0066cc)"}
+            strokeWidth={isSelected || isHovered ? 3 : 2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={styles.connectionFlowStripe}
+            style={{
+              pointerEvents: "none",
+              strokeDasharray: "8 8",
+              // dashoffset animated by CSS keyframes
+            }}
+          />
+          {/* Background stripes, phase-shifted */}
+          <path
+            d={pathData}
+            fill="none"
+            stroke={"var(--controlBackground, #ffffff)"}
+            strokeWidth={isSelected || isHovered ? 3 : 2}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={styles.connectionFlowStripe}
+            style={{
+              pointerEvents: "none",
+              strokeDasharray: "8 8",
+              strokeDashoffset: -8, // phase shift to alternate with accent
+            }}
+          />
+        </>
+      )}
+      {/* Base connection line (hit test only on stroke). Stays under stripes. */}
       <path
         d={pathData}
         fill="none"
@@ -152,9 +191,31 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
         strokeLinejoin="round"
         style={{
           transition: "stroke 0.2s, stroke-width 0.2s",
-          pointerEvents: "none",
+          pointerEvents: "stroke",
+        }}
+        onPointerDown={handlePointerDown}
+        onPointerEnter={handlePointerEnter}
+        onPointerLeave={handlePointerLeave}
+        onContextMenu={(e) => {
+          e.stopPropagation();
+          onContextMenu?.(e, connection.id);
         }}
       />
+
+      {/* Direction chevron at mid-point, pointing to 'to' */}
+      <g
+        transform={`translate(${midAndAngle.x}, ${midAndAngle.y}) rotate(${midAndAngle.angle})`}
+        style={{ pointerEvents: "none" }}
+      >
+        <path
+          d="M -6 -4 L 0 0 L -6 4"
+          fill="none"
+          stroke={strokeColor}
+          strokeWidth={2}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </g>
 
       {/* Arrow marker at the end */}
       <defs>

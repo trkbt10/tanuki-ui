@@ -1,11 +1,11 @@
 .defaultNodeRenderer {
   padding: 12px;
   border-radius: 8px;
-  background-color: #ffffff;
+  background-color: var(--controlBackground, #ffffff);
 }
 
 .defaultNodeRendererSelected {
-  background-color: #e3f2fd;
+  background-color: var(--groupNodeActiveBackground, rgba(0, 102, 204, 0.05));
 }
 
 .defaultNodeRendererDragging {
@@ -26,7 +26,7 @@
 .nodeContent {
   margin: 4px 0 0;
   font-size: 12px;
-  color: #666;
+  color: var(--secondaryLabelColor, #666);
 }
 
 .inspectorContainer {
@@ -36,7 +36,7 @@
 .inspectorInput {
   width: 100%;
   padding: 4px 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--inputBorder, #e0e0e0);
   border-radius: 4px;
   font-size: 13px;
 }
@@ -44,7 +44,7 @@
 .inspectorTextarea {
   width: 100%;
   padding: 4px 8px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--inputBorder, #e0e0e0);
   border-radius: 4px;
   font-size: 13px;
   min-height: 60px;
@@ -56,22 +56,22 @@
   margin-bottom: 4px;
   font-size: 12px;
   font-weight: 500;
-  color: #666;
+  color: var(--secondaryLabelColor, #666);
 }
 
 .numberInputContainer {
   display: flex;
   align-items: center;
   gap: 6px;
-  background-color: #f5f5f5;
-  border: 1px solid #ddd;
+  background-color: var(--tertiarySystemBackground, #f5f5f5);
+  border: 1px solid var(--inputBorder, #e0e0e0);
   border-radius: 4px;
   padding: 4px 8px;
   font-size: 12px;
 }
 
 .numberInputLabel {
-  color: #666;
+  color: var(--secondaryLabelColor, #666);
   font-size: 11px;
   font-weight: 500;
   min-width: 12px;
@@ -115,7 +115,7 @@
 
 .typeDisplay {
   padding: 4px 8px;
-  background-color: #f5f5f5;
+  background-color: var(--tertiarySystemBackground, #f5f5f5);
   border-radius: 4px;
   font-size: 13px;
 }
@@ -123,13 +123,13 @@
 .deleteSection {
   margin-top: 16px;
   padding-top: 16px;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--inputBorder, #e0e0e0);
 }
 
 .deleteButton {
   padding: 8px 16px;
-  background-color: #dc3545;
-  color: white;
+  background-color: var(--cautionColor, #ff3b30);
+  color: var(--controlTextOnAccent, #fff);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -138,5 +138,5 @@
 }
 
 .deleteButton:hover {
-  background-color: #c82333;
+  filter: brightness(0.9);
 }

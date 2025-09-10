@@ -11,6 +11,7 @@ import { usePointerInteraction } from "../../hooks/usePointerInteraction";
 import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
 import { computeNodePortPositions } from "../../utils/computePortPositions";
 import { PORT_INTERACTION_THRESHOLD } from "../../constants/interaction";
+import { canConnectPorts } from "../../utils/connectionValidation";
 import styles from "../../NodeEditor.module.css";
 import type { Port } from "../../types/core";
 import { snapMultipleToGrid } from "../../utils/gridSnap";
@@ -23,7 +24,8 @@ import {
   collectInitialPositions,
   calculateNewPositions,
   handleGroupMovement,
-  getOtherPortInfo
+  getOtherPortInfo,
+  getConnectablePortIds
 } from "../../utils/nodeLayerHelpers";
 
 export interface NodeLayerProps {
@@ -37,7 +39,7 @@ export interface NodeLayerProps {
 export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEdit = true }) => {
   const { state: nodeEditorState, dispatch: nodeEditorDispatch, actions: nodeEditorActions, getNodePorts } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
-  const { state: canvasState } = useNodeCanvas();
+  const { state: canvasState, utils } = useNodeCanvas();
 
   // Helper to get node definition
   const getNodeDef = useNodeDefinitions();
@@ -89,14 +91,11 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       e.preventDefault();
       e.stopPropagation();
 
-      const position = {
-        x: e.clientX,
-        y: e.clientY,
-      };
-
-      actionDispatch(actionActions.showContextMenu(position, nodeId));
+      const position = { x: e.clientX, y: e.clientY };
+      const canvasPos = utils.screenToCanvas(e.clientX, e.clientY);
+      actionDispatch(actionActions.showContextMenu(position, nodeId, canvasPos));
     },
-    [actionDispatch, actionActions]
+    [actionDispatch, actionActions, utils]
   );
 
   const handleNodePointerDown = React.useCallback(
@@ -200,6 +199,14 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         };
         actionDispatch(actionActions.startConnectionDrag(actionPort));
         actionDispatch(actionActions.updateConnectionDrag(portPosition, null));
+        const connectable = getConnectablePortIds(
+          actionPort,
+          nodeEditorState.nodes,
+          getNodePorts,
+          nodeEditorState.connections,
+          (type: string) => getNodeDef.registry.get(type)
+        );
+        actionDispatch(actionActions.updateConnectablePorts(connectable));
         return;
       }
 
@@ -312,6 +319,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       }
 
       actionDispatch(actionActions.endConnectionDrag());
+      actionDispatch(actionActions.updateConnectablePorts(new Set()));
     },
     [
       actionState.connectionDragState,
@@ -333,13 +341,25 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         position: port.position,
       };
       actionDispatch(actionActions.setHoveredPort(actionPort));
+      const connectable = getConnectablePortIds(
+        actionPort,
+        nodeEditorState.nodes,
+        getNodePorts,
+        nodeEditorState.connections,
+        (type: string) => getNodeDef.registry.get(type)
+      );
+      actionDispatch(actionActions.updateConnectablePorts(connectable));
     },
-    [actionDispatch, actionActions]
+    [actionDispatch, actionActions, nodeEditorState.nodes, nodeEditorState.connections, getNodeDef, getNodePorts]
   );
 
   const handlePortPointerLeave = React.useCallback(() => {
     actionDispatch(actionActions.setHoveredPort(null));
-  }, [actionDispatch, actionActions]);
+    // Clear connectable highlight when leaving (unless dragging)
+    if (!actionState.connectionDragState) {
+      actionDispatch(actionActions.updateConnectablePorts(new Set()));
+    }
+  }, [actionDispatch, actionActions, actionState.connectionDragState]);
 
   // Global drag handler
   React.useEffect(() => {

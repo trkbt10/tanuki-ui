@@ -79,6 +79,15 @@ export const jaMessages: I18nMessages = {
   inspectorVisible: "表示",
   inspectorLocked: "ロック",
   inspectorExpanded: "展開",
+  inspectorGridSettings: "グリッド設定",
+  inspectorShowGrid: "グリッド表示",
+  inspectorSnapToGrid: "グリッドにスナップ",
+  inspectorGridSize: "グリッドサイズ",
+  inspectorSnapThreshold: "スナップ閾値",
+  inspectorEmptyStatePrompt: "プロパティを表示するにはノードまたは接続を選択してください",
+  inspectorMultipleSelection: "複数選択",
+  inspectorTabLayers: "レイヤー",
+  inspectorTabProperties: "プロパティ",
 
   // Keyboard Shortcuts
   shortcutUndo: "元に戻す (Ctrl+Z)",
@@ -136,4 +145,6 @@ export const jaMessages: I18nMessages = {
   formatNodes: "ノード",
   formatConnections: "接続",
   formatSnapGrid: "スナップ",
+  fieldTitle: "タイトル",
+  fieldContent: "内容",
 };

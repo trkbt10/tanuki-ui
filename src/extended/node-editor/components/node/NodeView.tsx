@@ -369,7 +369,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
                   onPointerEnter={onPortPointerEnter}
                   onPointerLeave={onPortPointerLeave}
                   isConnecting={actionState.connectionDragState?.fromPort.id === port.id}
-                  isConnectable={actionState.connectablePortIds.has(port.id)}
+                  isConnectable={actionState.connectablePortIds.has(`${port.nodeId}:${port.id}`)}
                   isCandidate={actionState.connectionDragState?.candidatePort?.id === port.id}
                   isHovered={hoveredPort?.id === port.id}
                   isConnected={connectedPorts?.has(port.id)}

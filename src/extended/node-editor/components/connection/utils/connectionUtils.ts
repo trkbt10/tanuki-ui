@@ -95,6 +95,115 @@ export const calculateBezierPath = (
 };
 
 /**
+ * Calculate cubic bezier control points using the same logic as calculateBezierPath
+ */
+export const calculateBezierControlPoints = (
+  from: Position,
+  to: Position,
+  fromPortPosition?: "left" | "right" | "top" | "bottom",
+  toPortPosition?: "left" | "right" | "top" | "bottom"
+): { cp1: Position; cp2: Position } => {
+  const distance = getDistance(from, to);
+  const minOffset = 40;
+  const maxOffset = 120;
+  let offset = Math.max(minOffset, Math.min(maxOffset, distance * 0.5));
+
+  const isOppositeFacing =
+    (fromPortPosition === "right" && toPortPosition === "left") ||
+    (fromPortPosition === "left" && toPortPosition === "right") ||
+    (fromPortPosition === "top" && toPortPosition === "bottom") ||
+    (fromPortPosition === "bottom" && toPortPosition === "top");
+
+  if (isOppositeFacing) {
+    offset = Math.max(offset, distance * 0.4);
+  }
+
+  let cp1x = from.x;
+  let cp1y = from.y;
+  let cp2x = to.x;
+  let cp2y = to.y;
+
+  switch (fromPortPosition) {
+    case "left":
+      cp1x = from.x - offset;
+      break;
+    case "right":
+      cp1x = from.x + offset;
+      break;
+    case "top":
+      cp1y = from.y - offset;
+      break;
+    case "bottom":
+      cp1y = from.y + offset;
+      break;
+    default:
+      cp1x = from.x + offset;
+  }
+
+  switch (toPortPosition) {
+    case "left":
+      cp2x = to.x - offset;
+      break;
+    case "right":
+      cp2x = to.x + offset;
+      break;
+    case "top":
+      cp2y = to.y - offset;
+      break;
+    case "bottom":
+      cp2y = to.y + offset;
+      break;
+    default:
+      cp2x = to.x - offset;
+  }
+
+  return { cp1: { x: cp1x, y: cp1y }, cp2: { x: cp2x, y: cp2y } };
+};
+
+/**
+ * Evaluate cubic bezier point at t
+ */
+export const cubicBezierPoint = (
+  p0: Position,
+  p1: Position,
+  p2: Position,
+  p3: Position,
+  t: number
+): Position => {
+  const mt = 1 - t;
+  const mt2 = mt * mt;
+  const t2 = t * t;
+  const a = mt2 * mt; // (1-t)^3
+  const b = 3 * mt2 * t; // 3(1-t)^2 t
+  const c = 3 * mt * t2; // 3(1-t) t^2
+  const d = t * t2; // t^3
+  return {
+    x: a * p0.x + b * p1.x + c * p2.x + d * p3.x,
+    y: a * p0.y + b * p1.y + c * p2.y + d * p3.y,
+  };
+};
+
+/**
+ * Evaluate cubic bezier tangent (first derivative) at t
+ */
+export const cubicBezierTangent = (
+  p0: Position,
+  p1: Position,
+  p2: Position,
+  p3: Position,
+  t: number
+): Position => {
+  const mt = 1 - t;
+  const a = 3 * mt * mt; // 3(1-t)^2
+  const b = 6 * mt * t;  // 6(1-t)t
+  const c = 3 * t * t;   // 3t^2
+  return {
+    x: a * (p1.x - p0.x) + b * (p2.x - p1.x) + c * (p3.x - p2.x),
+    y: a * (p1.y - p0.y) + b * (p2.y - p1.y) + c * (p3.y - p2.y),
+  };
+};
+
+/**
  * Calculate the midpoint of a bezier curve (approximation)
  */
 export const getConnectionMidpoint = (from: Position, to: Position): Position => {

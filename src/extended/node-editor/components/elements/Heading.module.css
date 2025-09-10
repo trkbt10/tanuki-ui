@@ -1,6 +1,6 @@
 .heading {
   margin: 0;
-  font-family: inherit;
+  font-family: var(--themeLabelFontFamily, inherit);
   line-height: 1.2;
 }
 
@@ -77,13 +77,13 @@
 
 /* Colors */
 .heading[data-color="primary"] {
-  color: #111827;
+  color: var(--textColor, #000000);
 }
 
 .heading[data-color="secondary"] {
-  color: #374151;
+  color: var(--secondaryLabelColor, #666666);
 }
 
 .heading[data-color="muted"] {
-  color: #6b7280;
+  color: var(--tertiaryLabelColor, #9ca3af);
 }

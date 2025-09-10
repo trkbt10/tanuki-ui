@@ -8,10 +8,24 @@ interface I18nProviderProps {
   children: React.ReactNode;
   initialLocale?: Locale;
   fallbackLocale?: Locale;
+  /**
+   * External message overrides or additions. You can provide partial maps per locale.
+   * Example: { ja: { addNode: "ノード追加(外部)" } }
+   */
+  messagesOverride?: Partial<Record<Locale, Partial<I18nMessages>>>;
 }
 
-export const I18nProvider: React.FC<I18nProviderProps> = ({ children, initialLocale = "en", fallbackLocale = "en" }) => {
+export const I18nProvider: React.FC<I18nProviderProps> = ({ children, initialLocale = "en", fallbackLocale = "en", messagesOverride }) => {
   const [locale, setLocale] = React.useState<Locale>(initialLocale);
+  const mergedMessages = React.useMemo(() => {
+    // Merge base messages with overrides per locale
+    if (!messagesOverride) return messages;
+    const result: Record<Locale, I18nMessages> = { ...messages } as Record<Locale, I18nMessages>;
+    (Object.keys(messagesOverride) as Locale[]).forEach((loc) => {
+      result[loc] = { ...(messages[loc] || messages[fallbackLocale]), ...(messagesOverride?.[loc] as Partial<I18nMessages>) } as I18nMessages;
+    });
+    return result;
+  }, [messagesOverride, fallbackLocale]);
 
   // Detect browser locale on mount
   React.useEffect(() => {
@@ -25,8 +39,8 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children, initialLoc
 
   const t = React.useCallback(
     (key: I18nKey, params?: Record<string, string | number>): string => {
-      const currentMessages = messages[locale] || messages[fallbackLocale];
-      let message = currentMessages[key] || messages[fallbackLocale][key] || key;
+      const currentMessages = mergedMessages[locale] || mergedMessages[fallbackLocale];
+      let message = currentMessages[key] || mergedMessages[fallbackLocale][key] || key;
 
       // Simple parameter interpolation
       if (params) {
@@ -37,12 +51,12 @@ export const I18nProvider: React.FC<I18nProviderProps> = ({ children, initialLoc
 
       return message;
     },
-    [locale, fallbackLocale],
+    [locale, fallbackLocale, mergedMessages],
   );
 
   const availableLocales = React.useMemo(() => {
-    return Object.keys(messages) as Locale[];
-  }, []);
+    return Object.keys(mergedMessages) as Locale[];
+  }, [mergedMessages]);
 
   const contextValue: I18nContextValue = React.useMemo(
     () => ({

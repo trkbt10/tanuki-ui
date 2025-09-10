@@ -14,7 +14,7 @@
 }
 
 .switch:focus {
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.25);
 }
 
 .switch[data-disabled="true"] {
@@ -26,22 +26,22 @@
   position: relative;
   border-radius: 999px;
   transition: all 0.2s ease;
-  background-color: #d1d5db;
+  background-color: var(--inputBorder, #e0e0e0);
 }
 
 .switch[data-checked="true"] .track {
-  background-color: #3b82f6;
+  background-color: var(--accentColor, #0066cc);
 }
 
 .switch[data-disabled="true"][data-checked="true"] .track {
-  background-color: #9ca3af;
+  background-color: var(--tertiaryLabelColor, #9ca3af);
 }
 
 .thumb {
   position: absolute;
   top: 2px;
   left: 2px;
-  background-color: white;
+  background-color: var(--controlBackground, #ffffff);
   border-radius: 50%;
   transition: all 0.2s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -92,12 +92,12 @@
 
 .switchLabel {
   font-size: 14px;
-  color: #374151;
+  color: var(--textColor, #000000);
   cursor: pointer;
   user-select: none;
 }
 
 .switchLabel[data-disabled="true"] {
-  color: #9ca3af;
+  color: var(--tertiaryLabelColor, #9ca3af);
   cursor: not-allowed;
 }

@@ -6,8 +6,9 @@ import { NodeInspector } from "./NodeInspector";
 import { NodeTreeList } from "./NodeTreeList";
 import { TabNav } from "./TabNav";
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
-import { classNames, Input, Label, H4, Toolbar } from "./elements";
+import { classNames, Input, Label, H4, Toolbar, SwitchInput } from "./elements";
 import styles from "../NodeEditor.module.css";
+import { useI18n } from "../i18n";
 
 export interface InspectorPanelProps {
   className?: string;
@@ -22,7 +23,8 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
   const { state: actionState } = useEditorActionState();
   const { state: canvasState, dispatch: canvasDispatch, actions: canvasActions } = useNodeCanvas();
   const [activeTabIndex, setActiveTabIndex] = React.useState(0);
-  const tabItems = ["Layers", "Properties"];
+  const { t } = useI18n();
+  const tabItems = [t("inspectorTabLayers") || "Layers", t("inspectorTabProperties") || "Properties"]; 
 
   // Get selected node (for now, just show the first one)
   const selectedNode = actionState.selectedNodeIds.length > 0 ? nodeEditorState.nodes[actionState.selectedNodeIds[0]] : null;
@@ -74,7 +76,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
 
             {selectedConnection && (
               <div className={styles.inspectorSection}>
-                <H4>Connection Properties</H4>
+                <H4>{t("inspectorConnectionProperties")}</H4>
                 <div className={styles.inspectorField}>
                   <label>From:</label>
                   <span className={styles.inspectorReadOnlyField}>
@@ -94,59 +96,45 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
 
             {!selectedNode && !selectedConnection && (
               <div className={styles.inspectorEmptyState}>
-                <p>Select a node or connection to view its properties</p>
+                <p>{t("inspectorEmptyStatePrompt")}</p>
               </div>
             )}
 
             {actionState.selectedNodeIds.length > 1 && (
               <div className={styles.inspectorSection}>
-                <H4>Multiple Selection</H4>
+                <H4>{t("inspectorMultipleSelection")}</H4>
                 <p>{actionState.selectedNodeIds.length} nodes selected</p>
               </div>
             )}
 
             {/* Grid Settings Section */}
             <div className={styles.inspectorSection}>
-              <H4>Grid Settings</H4>
+              <H4>{t("inspectorGridSettings")}</H4>
               <div className={styles.inspectorField}>
-                <Label>
-                  <Input
-                    id="grid-show"
-                    name="showGrid"
-                    type="checkbox"
-                    checked={canvasState.gridSettings.showGrid}
-                    onChange={(e) => {
-                      canvasDispatch(
-                        canvasActions.updateGridSettings({
-                          showGrid: e.target.checked,
-                        })
-                      );
-                    }}
-                  />
-                  Show Grid
-                </Label>
+                <SwitchInput
+                  id="grid-show"
+                  checked={canvasState.gridSettings.showGrid}
+                  onChange={(checked) =>
+                    canvasDispatch(canvasActions.updateGridSettings({ showGrid: checked }))
+                  }
+                  label={t("inspectorShowGrid")}
+                  size="medium"
+                />
               </div>
               <div className={styles.inspectorField}>
-                <Label>
-                  <Input
-                    id="grid-snap"
-                    name="snapToGrid"
-                    type="checkbox"
-                    checked={canvasState.gridSettings.snapToGrid}
-                    onChange={(e) => {
-                      canvasDispatch(
-                        canvasActions.updateGridSettings({
-                          snapToGrid: e.target.checked,
-                        })
-                      );
-                    }}
-                  />
-                  Snap to Grid
-                </Label>
+                <SwitchInput
+                  id="grid-snap"
+                  checked={canvasState.gridSettings.snapToGrid}
+                  onChange={(checked) =>
+                    canvasDispatch(canvasActions.updateGridSettings({ snapToGrid: checked }))
+                  }
+                  label={t("inspectorSnapToGrid")}
+                  size="medium"
+                />
               </div>
               <div className={styles.inspectorField}>
                 <Label htmlFor="grid-size">
-                  Grid Size:
+                  {t("inspectorGridSize")}:
                   <Input
                     id="grid-size"
                     name="gridSize"
@@ -172,7 +160,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
               </div>
               <div className={styles.inspectorField}>
                 <Label htmlFor="snap-threshold">
-                  Snap Threshold:
+                  {t("inspectorSnapThreshold")}:
                   <Input
                     id="snap-threshold"
                     name="snapThreshold"

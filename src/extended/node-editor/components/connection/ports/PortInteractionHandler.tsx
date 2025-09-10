@@ -39,7 +39,7 @@ export const PortInteractionHandler: React.FC<PortInteractionHandlerProps> = ({
   // Check port states
   const isHovered = actionState.hoveredPort?.id === port.id;
   const isConnecting = actionState.connectionDragState?.fromPort.id === port.id;
-  const isConnectable = actionState.connectablePortIds.has(port.id);
+  const isConnectable = actionState.connectablePortIds.has(`${port.nodeId}:${port.id}`);
   const isCandidate = actionState.connectionDragState?.candidatePort?.id === port.id;
   const isConnected = actionState.connectedPorts.has(port.id);
 

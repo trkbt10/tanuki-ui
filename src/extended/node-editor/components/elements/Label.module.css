@@ -1,19 +1,19 @@
 .label {
   display: block;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
-  color: #374151;
+  color: var(--secondaryLabelColor, #666666);
   margin-bottom: 4px;
   line-height: 1.4;
 }
 
 .label[data-disabled="true"] {
-  color: #9ca3af;
+  color: var(--tertiaryLabelColor, #9ca3af);
   cursor: not-allowed;
 }
 
 .required {
-  color: #ef4444;
+  color: var(--cautionColor, #ff3b30);
   margin-left: 2px;
   font-weight: 600;
 }

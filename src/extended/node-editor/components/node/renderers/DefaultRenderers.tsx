@@ -15,7 +15,11 @@ import {
   Label,
   Textarea
 } from "../../elements";
+import editorStyles from "../../../NodeEditor.module.css";
+import { H4 } from "../../elements";
+import { useI18n } from "../../../i18n";
 import alignmentStyles from "./AlignmentControls.module.css";
+import defaultStyles from "./DefaultRenderers.module.css";
 
 /**
  * Default node renderer
@@ -23,17 +27,15 @@ import alignmentStyles from "./AlignmentControls.module.css";
 export const DefaultNodeRenderer: React.FC<NodeRenderProps> = ({ node, isSelected, isDragging, isEditing, onStartEdit }) => {
   return (
     <div
-      style={{
-        padding: "12px",
-        borderRadius: "8px",
-        backgroundColor: isSelected ? "#e3f2fd" : "#ffffff",
-        opacity: isDragging ? 0.7 : 1,
-        cursor: isDragging ? "grabbing" : "grab",
-      }}
+      className={[
+        defaultStyles.defaultNodeRenderer,
+        isSelected ? defaultStyles.defaultNodeRendererSelected : "",
+        isDragging ? defaultStyles.defaultNodeRendererDragging : defaultStyles.defaultNodeRendererNotDragging,
+      ].filter(Boolean).join(" ")}
       onDoubleClick={onStartEdit}
     >
-      <h3 style={{ margin: 0, fontSize: "14px", fontWeight: 600 }}>{node.data.title || `Node ${node.id}`}</h3>
-      {node.data.content && <p style={{ margin: "4px 0 0", fontSize: "12px", color: "#666" }}>{String(node.data.content)}</p>}
+      <h3 className={defaultStyles.nodeTitle}>{node.data.title || `Node ${node.id}`}</h3>
+      {node.data.content && <p className={defaultStyles.nodeContent}>{String(node.data.content)}</p>}
     </div>
   );
 };
@@ -43,17 +45,19 @@ const InspectorInput = React.memo<{
   value: string;
   onChange: (value: string) => void;
   style?: React.CSSProperties;
+  className?: string;
   type?: string;
   placeholder?: string;
   id?: string;
   name?: string;
   "aria-label"?: string;
-}>(({ value, onChange, style, type = "text", placeholder, id, name, "aria-label": ariaLabel }) => (
+}>(({ value, onChange, style, className, type = "text", placeholder, id, name, "aria-label": ariaLabel }) => (
   <Input
     type={type}
     value={value}
     onChange={(e) => onChange(e.target.value)}
     style={style}
+    className={className}
     placeholder={placeholder}
     id={id}
     name={name}
@@ -67,11 +71,12 @@ const InspectorTextarea = React.memo<{
   value: string;
   onChange: (value: string) => void;
   style?: React.CSSProperties;
+  className?: string;
   id?: string;
   name?: string;
   "aria-label"?: string;
-}>(({ value, onChange, style, id, name, "aria-label": ariaLabel }) => (
-  <Textarea value={value} onChange={(e) => onChange(e.target.value)} style={style} id={id} name={name} aria-label={ariaLabel} />
+}>(({ value, onChange, style, className, id, name, "aria-label": ariaLabel }) => (
+  <Textarea value={value} onChange={(e) => onChange(e.target.value)} style={style} className={className} id={id} name={name} aria-label={ariaLabel} />
 ));
 InspectorTextarea.displayName = "InspectorTextarea";
 
@@ -88,15 +93,11 @@ const InspectorNumberInput = React.memo<{
     display: "flex",
     alignItems: "center",
     gap: "6px",
-    backgroundColor: "#f5f5f5",
-    border: "1px solid #ddd",
-    borderRadius: "4px",
-    padding: "4px 8px",
     fontSize: "12px",
   };
 
   const labelStyles: React.CSSProperties = {
-    color: "#666",
+    color: "var(--secondaryLabelColor, #666)",
     fontSize: "11px",
     fontWeight: 500,
     minWidth: "12px",
@@ -104,12 +105,10 @@ const InspectorNumberInput = React.memo<{
   };
 
   const inputStyles: React.CSSProperties = {
-    border: "none",
-    background: "transparent",
     fontSize: "12px",
-    outline: "none",
     width: "100%",
     textAlign: "right" as const,
+    color: "var(--textColor, #000)",
   };
 
   return (
@@ -119,7 +118,7 @@ const InspectorNumberInput = React.memo<{
         type="number"
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        style={inputStyles}
+        className={editorStyles.inspectorNumberInput}
         id={id}
         name={name}
         aria-label={ariaLabel}
@@ -199,6 +198,7 @@ interface ExtendedInspectorRenderProps extends InspectorRenderProps {
  */
 export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = React.memo(
   ({ node, onUpdateNode, onDeleteNode, selectedNodes = [], onAlignNodes }) => {
+    const { t } = useI18n();
     const inputStyles: React.CSSProperties = React.useMemo(
       () => ({
         width: "100%",
@@ -317,32 +317,32 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
 
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <h4 style={{ margin: 0, fontSize: "14px" }}>Node Properties</h4>
+        <H4 size="sm" color="secondary">{t("inspectorNodeProperties")}</H4>
 
         <div>
-          <Label htmlFor={`node-${node.id}-title`} style={labelStyles}>
-            Title:
+          <Label htmlFor={`node-${node.id}-title`}>
+            {t("fieldTitle") || "Title"}:
           </Label>
           <InspectorInput
             id={`node-${node.id}-title`}
             name="nodeTitle"
             value={node.data.title || ""}
             onChange={handleTitleChange}
-            style={inputStyles}
+            className={editorStyles.inspectorInput}
           />
         </div>
 
         {node.data.content !== undefined && (
           <div>
-            <Label htmlFor={`node-${node.id}-content`} style={labelStyles}>
-              Content:
+            <Label htmlFor={`node-${node.id}-content`}>
+              {t("fieldContent") || "Content"}:
             </Label>
             <InspectorTextarea
               id={`node-${node.id}-content`}
               name="nodeContent"
               value={String(node.data.content) || ""}
               onChange={handleContentChange}
-              style={textareaStyles}
+              className={editorStyles.inspectorTextarea}
             />
           </div>
         )}
@@ -350,8 +350,8 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         <AlignmentControls selectedNodes={selectedNodes} onAlign={handleAlignment} />
 
         <div>
-          <Label style={labelStyles}>Position & Size:</Label>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "4px" }}>
+          <Label>{t("inspectorPosition")} & {t("inspectorSize")}:</Label>
+          <div className={editorStyles.inspectorPositionInputs}>
             <InspectorNumberInput
               label="X"
               value={node.position.x}
@@ -388,27 +388,20 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         </div>
 
         <div>
-          <Label style={labelStyles}>Type:</Label>
-          <div
-            style={{
-              padding: "4px 8px",
-              backgroundColor: "#f5f5f5",
-              borderRadius: "4px",
-              fontSize: "13px",
-            }}
-          >
+          <Label>Type:</Label>
+          <div className={editorStyles.inspectorReadOnlyField}>
             {node.type}
           </div>
         </div>
 
         {node.type === "group" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-            <InspectorCheckbox checked={node.locked || false} onChange={handleLockedChange} label="Lock Layer" />
-            <InspectorCheckbox checked={node.visible !== false} onChange={handleVisibleChange} label="Visible" />
+            <InspectorCheckbox checked={node.locked || false} onChange={handleLockedChange} label={t("inspectorLocked")} />
+            <InspectorCheckbox checked={node.visible !== false} onChange={handleVisibleChange} label={t("inspectorVisible")} />
           </div>
         )}
 
-        <div style={{ paddingTop: "16px", borderTop: "1px solid #eee" }}>
+        <div>
           <Button
             onClick={onDeleteNode}
             style={{
@@ -416,7 +409,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
             }}
             variant="danger"
           >
-            Delete Node
+            {t("deleteNode")}
           </Button>
         </div>
       </div>

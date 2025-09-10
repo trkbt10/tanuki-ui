@@ -79,6 +79,15 @@ export const enMessages: I18nMessages = {
   inspectorVisible: "Visible",
   inspectorLocked: "Locked",
   inspectorExpanded: "Expanded",
+  inspectorGridSettings: "Grid Settings",
+  inspectorShowGrid: "Show Grid",
+  inspectorSnapToGrid: "Snap to Grid",
+  inspectorGridSize: "Grid Size",
+  inspectorSnapThreshold: "Snap Threshold",
+  inspectorEmptyStatePrompt: "Select a node or connection to view its properties",
+  inspectorMultipleSelection: "Multiple Selection",
+  inspectorTabLayers: "Layers",
+  inspectorTabProperties: "Properties",
 
   // Keyboard Shortcuts
   shortcutUndo: "Undo (Ctrl+Z)",
@@ -136,4 +145,6 @@ export const enMessages: I18nMessages = {
   formatNodes: "nodes",
   formatConnections: "connections",
   formatSnapGrid: "snap",
+  fieldTitle: "Title",
+  fieldContent: "Content",
 };

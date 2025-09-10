@@ -122,7 +122,7 @@ const DragConnection = React.memo(() => {
 const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
   const { state: nodeEditorState, portLookupMap } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
-  const { state: canvasState } = useNodeCanvas();
+  const { state: canvasState, utils } = useNodeCanvas();
   
   // Get dynamic port positions
   const fromPortPos = useDynamicConnectionPoint(connection.fromNodeId, connection.fromPortId);
@@ -182,6 +182,18 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
       actionDispatch(actionActions.setHoveredConnection(null));
     },
     [actionDispatch, actionActions]
+  );
+
+  const handleConnectionContextMenu = React.useCallback(
+    (e: React.MouseEvent, connectionId: string) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      const position = { x: e.clientX, y: e.clientY };
+      const canvasPos = utils.screenToCanvas(e.clientX, e.clientY);
+      actionDispatch(actionActions.showContextMenu(position, undefined, canvasPos, connectionId));
+    },
+    [actionDispatch, actionActions, utils]
   );
   const fromNode = nodeEditorState.nodes[connection.fromNodeId];
   const toNode = nodeEditorState.nodes[connection.toNodeId];
@@ -251,6 +263,7 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
       onPointerDown={handleConnectionPointerDown}
       onPointerEnter={handleConnectionPointerEnter}
       onPointerLeave={handleConnectionPointerLeave}
+      onContextMenu={handleConnectionContextMenu}
     />
   );
 };

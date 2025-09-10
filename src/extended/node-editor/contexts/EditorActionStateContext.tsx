@@ -33,7 +33,7 @@ export interface EditorActionState {
   connectionDisconnectState: ConnectionDisconnectState | null;
   hoveredPort: BasePort | null;
   connectedPorts: Set<PortId>;
-  connectablePortIds: Set<PortId>;
+  connectablePortIds: Set<string>; // composite key: `${nodeId}:${portId}`
   contextMenu: ContextMenuState;
 }
 
@@ -62,11 +62,11 @@ export type EditorActionStateAction =
   | { type: "END_CONNECTION_DISCONNECT" }
   | { type: "SET_HOVERED_PORT"; payload: { port: BasePort | null } }
   | { type: "UPDATE_CONNECTED_PORTS"; payload: { connectedPorts: Set<PortId> } }
-  | { type: "UPDATE_CONNECTABLE_PORTS"; payload: { connectablePortIds: Set<PortId> } }
+  | { type: "UPDATE_CONNECTABLE_PORTS"; payload: { connectablePortIds: Set<string> } }
   | { type: "START_NODE_RESIZE"; payload: { nodeId: NodeId; startPosition: Position; startSize: Size; handle: ResizeHandle } }
   | { type: "UPDATE_NODE_RESIZE"; payload: { currentSize: Size } }
   | { type: "END_NODE_RESIZE" }
-  | { type: "SHOW_CONTEXT_MENU"; payload: { position: Position; nodeId?: NodeId; canvasPosition?: Position } }
+  | { type: "SHOW_CONTEXT_MENU"; payload: { position: Position; nodeId?: NodeId; connectionId?: ConnectionId; canvasPosition?: Position } }
   | { type: "HIDE_CONTEXT_MENU" };
 
 // Editor action state reducer
@@ -298,6 +298,7 @@ export const editorActionStateReducer = (
           position: action.payload.position,
           canvasPosition: action.payload.canvasPosition,
           nodeId: action.payload.nodeId,
+          connectionId: action.payload.connectionId,
         },
       };
 
@@ -309,6 +310,7 @@ export const editorActionStateReducer = (
           position: { x: 0, y: 0 },
           canvasPosition: undefined,
           nodeId: undefined,
+          connectionId: undefined,
         },
       };
 
@@ -330,12 +332,13 @@ export const defaultEditorActionState: EditorActionState = {
   connectionDisconnectState: null,
   hoveredPort: null,
   connectedPorts: new Set<PortId>(),
-  connectablePortIds: new Set<PortId>(),
+  connectablePortIds: new Set<string>(),
   contextMenu: {
     visible: false,
     position: { x: 0, y: 0 },
     canvasPosition: undefined,
     nodeId: undefined,
+    connectionId: undefined,
   },
 };
 
@@ -398,7 +401,7 @@ export const editorActionStateActions = {
     type: "UPDATE_CONNECTED_PORTS",
     payload: { connectedPorts },
   }),
-  updateConnectablePorts: (connectablePortIds: Set<PortId>): EditorActionStateAction => ({
+  updateConnectablePorts: (connectablePortIds: Set<string>): EditorActionStateAction => ({
     type: "UPDATE_CONNECTABLE_PORTS",
     payload: { connectablePortIds },
   }),
@@ -429,9 +432,9 @@ export const editorActionStateActions = {
   endNodeResize: (): EditorActionStateAction => ({
     type: "END_NODE_RESIZE",
   }),
-  showContextMenu: (position: { x: number; y: number }, nodeId?: NodeId, canvasPosition?: { x: number; y: number }): EditorActionStateAction => ({
+  showContextMenu: (position: { x: number; y: number }, nodeId?: NodeId, canvasPosition?: { x: number; y: number }, connectionId?: ConnectionId): EditorActionStateAction => ({
     type: "SHOW_CONTEXT_MENU",
-    payload: { position, nodeId, canvasPosition },
+    payload: { position, nodeId, canvasPosition, connectionId },
   }),
   hideContextMenu: (): EditorActionStateAction => ({
     type: "HIDE_CONTEXT_MENU",
