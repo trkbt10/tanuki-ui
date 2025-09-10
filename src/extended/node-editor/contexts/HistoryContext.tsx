@@ -162,16 +162,26 @@ export const HistoryContext = React.createContext<HistoryContextValue | null>(nu
 export interface HistoryProviderProps {
   children: React.ReactNode;
   initialState?: Partial<HistoryState>;
+  /** Preferred: pass max entries as a stable prop; internally memo-updated */
+  maxEntries?: number;
 }
 
 export const HistoryProvider: React.FC<HistoryProviderProps> = ({
   children,
   initialState,
+  maxEntries,
 }) => {
   const [state, dispatch] = React.useReducer(
     historyReducer,
     { ...defaultHistoryState, ...initialState }
   );
+
+  // Apply maxEntries changes via reducer to avoid re-initialization patterns
+  React.useEffect(() => {
+    if (typeof maxEntries === 'number' && maxEntries > 0) {
+      dispatch(historyActions.setMaxEntries(maxEntries));
+    }
+  }, [maxEntries]);
 
   // Computed values
   const canUndo = state.currentIndex > 0;
@@ -202,7 +212,7 @@ export const HistoryProvider: React.FC<HistoryProviderProps> = ({
     return nextEntry || null;
   }, [canRedo, state.entries, state.currentIndex, dispatch]);
 
-  const contextValue: HistoryContextValue = {
+  const contextValue: HistoryContextValue = React.useMemo(() => ({
     state,
     dispatch,
     actions: historyActions,
@@ -212,7 +222,7 @@ export const HistoryProvider: React.FC<HistoryProviderProps> = ({
     pushEntry,
     undo,
     redo,
-  };
+  }), [state, dispatch, canUndo, canRedo, currentEntry, pushEntry, undo, redo]);
 
   return (
     <HistoryContext.Provider value={contextValue}>

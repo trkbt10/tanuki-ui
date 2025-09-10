@@ -82,6 +82,8 @@ export interface NodeEditorProps<TNodeDataTypeMap = {}> {
   autoSaveEnabled?: boolean;
   /** Override: auto-save interval in seconds */
   autoSaveInterval?: number;
+  /** Maximum number of history entries to keep */
+  historyMaxEntries?: number;
 }
 
 /**
@@ -118,6 +120,7 @@ export const NodeEditor = <TNodeDataTypeMap = {},>({
   messagesOverride,
   autoSaveEnabled,
   autoSaveInterval,
+  historyMaxEntries = 40,
 }: NodeEditorProps<TNodeDataTypeMap>) => {
   return (
     <I18nProvider initialLocale={locale} fallbackLocale={fallbackLocale} messagesOverride={messagesOverride}>
@@ -135,7 +138,7 @@ export const NodeEditor = <TNodeDataTypeMap = {},>({
         >
           <EditorActionStateProvider>
             <NodeCanvasProvider>
-              <HistoryProvider>
+              <HistoryProvider maxEntries={historyMaxEntries}>
                 <InlineEditingProvider>
                   <KeyboardShortcutProvider>
                     <NodeEditorContent

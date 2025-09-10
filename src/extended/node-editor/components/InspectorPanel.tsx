@@ -4,6 +4,7 @@ import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import { NodeInspector } from "./NodeInspector";
 import { NodeTreeList } from "./NodeTreeList";
+import { HistoryPanel } from "./HistoryPanel";
 import { TabNav } from "./TabNav";
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
 import { classNames, Input, Label, H4, Toolbar, SwitchInput } from "./elements";
@@ -25,7 +26,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
   const activeTabIndex = actionState.inspectorActiveTab ?? 0;
   const setActiveTabIndex = (index: number) => actionDispatch(actionActions.setInspectorActiveTab(index));
   const { t } = useI18n();
-  const tabItems = [t("inspectorTabLayers") || "Layers", t("inspectorTabProperties") || "Properties"]; 
+  const tabItems = [t("inspectorTabLayers") || "Layers", t("inspectorTabProperties") || "Properties", "History"]; 
 
   // Get selected node (for now, just show the first one)
   const selectedNode = actionState.selectedNodeIds.length > 0 ? nodeEditorState.nodes[actionState.selectedNodeIds[0]] : null;
@@ -67,7 +68,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
       <div className={classNames(styles.inspectorContent, activeTabIndex === 0 && styles.inspectorContentNoPadding)}>
         {activeTabIndex === 0 ? (
           <NodeTreeList />
-        ) : (
+        ) : activeTabIndex === 1 ? (
           <>
             {selectedNode && (
               <div className={styles.inspectorSection}>
@@ -187,6 +188,8 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
               </div>
             </div>
           </>
+        ) : (
+          <HistoryPanel />
         )}
       </div>
     </div>
