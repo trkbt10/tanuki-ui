@@ -5,7 +5,9 @@ import { useEditorActionState } from "../../../contexts/EditorActionStateContext
 import { useNodeCanvas } from "../../../contexts/NodeCanvasContext";
 import { useNodeDefinitions } from "../../../contexts/NodeDefinitionContext";
 import { usePointerDrag } from "../../../hooks/usePointerDrag";
-import { calculateConnectablePorts } from "../../../utils/connectionValidation";
+// Use the unified connectable ports calculator based on resolved ports
+import { getConnectablePortIds, isPortConnectable, createValidatedConnection } from "../../../utils/nodeLayerHelpers";
+// isPortConnectable imported above
 import { PORT_INTERACTION_THRESHOLD } from "../../../constants/interaction";
 
 export interface PortInteractionHandlerProps {
@@ -31,7 +33,7 @@ export const PortInteractionHandler: React.FC<PortInteractionHandlerProps> = ({
   node,
   children,
 }) => {
-  const { state: nodeEditorState, actions, dispatch } = useNodeEditor();
+  const { state: nodeEditorState, actions, dispatch, getNodePorts } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState } = useNodeCanvas();
   const { registry } = useNodeDefinitions();
@@ -39,7 +41,7 @@ export const PortInteractionHandler: React.FC<PortInteractionHandlerProps> = ({
   // Check port states
   const isHovered = actionState.hoveredPort?.id === port.id;
   const isConnecting = actionState.connectionDragState?.fromPort.id === port.id;
-  const isConnectable = actionState.connectablePortIds.has(`${port.nodeId}:${port.id}`);
+  const isConnectable = isPortConnectable(port, actionState.connectablePortIds);
   const isCandidate = actionState.connectionDragState?.candidatePort?.id === port.id;
   const isConnected = actionState.connectedPorts.has(port.id);
 
@@ -69,18 +71,19 @@ export const PortInteractionHandler: React.FC<PortInteractionHandlerProps> = ({
   const handleConnectionDragStart = React.useCallback((event: PointerEvent, portElement: HTMLElement) => {
     const portPos = getPortElementPosition(portElement);
     
-    // Calculate connectable ports based on fromPort
-    const connectablePorts = calculateConnectablePorts(
+    // Calculate connectable ports using resolved ports and NodeDefinitions
+    const connectablePorts = getConnectablePortIds(
       actionPort,
       nodeEditorState.nodes,
-      registry,
-      nodeEditorState.connections
+      getNodePorts,
+      nodeEditorState.connections,
+      (type: string) => registry.get(type)
     );
     
     // Start connection drag and update connectable ports
     actionDispatch(actionActions.startConnectionDrag(actionPort));
     actionDispatch(actionActions.updateConnectablePorts(connectablePorts));
-  }, [actionPort, getPortElementPosition, actionDispatch, actionActions, nodeEditorState.nodes, nodeEditorState.connections, registry]);
+  }, [actionPort, getPortElementPosition, actionDispatch, actionActions, nodeEditorState.nodes, nodeEditorState.connections, registry, getNodePorts]);
 
   const handleConnectionDragMove = React.useCallback((event: PointerEvent, delta: Position) => {
     const currentPos = {
@@ -106,28 +109,21 @@ export const PortInteractionHandler: React.FC<PortInteractionHandlerProps> = ({
     const { fromPort, candidatePort } = actionState.connectionDragState;
 
     if (candidatePort && fromPort.id !== candidatePort.id) {
-      // Check if we can create a connection
-      const canConnect = 
-        fromPort.type !== candidatePort.type && // Different port types
-        fromPort.nodeId !== candidatePort.nodeId; // Different nodes
-
-      if (canConnect) {
-        // Create the connection
-        const connection = {
-          fromNodeId: fromPort.type === "output" ? fromPort.nodeId : candidatePort.nodeId,
-          fromPortId: fromPort.type === "output" ? fromPort.id : candidatePort.id,
-          toNodeId: fromPort.type === "input" ? fromPort.nodeId : candidatePort.nodeId,
-          toPortId: fromPort.type === "input" ? fromPort.id : candidatePort.id,
-        };
-
-        dispatch(actions.addConnection(connection));
-      }
+      // Validate using unified rules and create connection if valid
+      const connection = createValidatedConnection(
+        fromPort,
+        candidatePort,
+        nodeEditorState.nodes,
+        nodeEditorState.connections,
+        (type: string) => registry.get(type)
+      );
+      if (connection) dispatch(actions.addConnection(connection));
     }
 
     // Clear drag state and connectable ports
     actionDispatch(actionActions.endConnectionDrag());
     actionDispatch(actionActions.updateConnectablePorts(new Set()));
-  }, [actionState.connectionDragState, dispatch, actions, actionDispatch, actionActions]);
+  }, [actionState.connectionDragState, dispatch, actions, actionDispatch, actionActions, nodeEditorState.nodes, nodeEditorState.connections, registry]);
 
   const { startDrag } = usePointerDrag({
     onStart: handleConnectionDragStart,

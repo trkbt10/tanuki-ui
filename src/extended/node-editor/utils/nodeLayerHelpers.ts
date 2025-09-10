@@ -108,11 +108,23 @@ export function createConnection(
  */
 export function isValidReconnection(
   fixedPort: Port,
-  targetPort: Port
+  targetPort: Port,
+  nodes: Record<string, Node>,
+  connections: Record<string, Connection>,
+  getNodeDefinition: (type: string) => NodeDefinition | undefined
 ): boolean {
-  const isCompatible = fixedPort.type !== targetPort.type;
-  const isSameNode = fixedPort.nodeId === targetPort.nodeId;
-  return isCompatible && !isSameNode;
+  if (fixedPort.type === targetPort.type) return false;
+  if (fixedPort.nodeId === targetPort.nodeId) return false;
+
+  const fromPort = fixedPort.type === "output" ? fixedPort : targetPort;
+  const toPort = fixedPort.type === "output" ? targetPort : fixedPort;
+
+  const fromNode = nodes[fromPort.nodeId];
+  const toNode = nodes[toPort.nodeId];
+  const fromDef = fromNode ? getNodeDefinition(fromNode.type) : undefined;
+  const toDef = toNode ? getNodeDefinition(toNode.type) : undefined;
+
+  return canConnectPorts(fromPort, toPort, fromDef, toDef, connections);
 }
 
 /**
@@ -177,6 +189,44 @@ export function getConnectablePortIds(
   });
 
   return result;
+}
+
+/**
+ * Create a connection only if valid according to canConnectPorts
+ */
+export function createValidatedConnection(
+  fromPort: Port,
+  toPort: Port,
+  nodes: Record<string, Node>,
+  connections: Record<string, Connection>,
+  getNodeDefinition: (type: string) => NodeDefinition | undefined
+): { fromNodeId: string; fromPortId: string; toNodeId: string; toPortId: string } | null {
+  const src = fromPort.type === "output" ? fromPort : toPort;
+  const dst = fromPort.type === "output" ? toPort : fromPort;
+
+  const fromNode = nodes[src.nodeId];
+  const toNode = nodes[dst.nodeId];
+  const fromDef = fromNode ? getNodeDefinition(fromNode.type) : undefined;
+  const toDef = toNode ? getNodeDefinition(toNode.type) : undefined;
+
+  if (!canConnectPorts(src, dst, fromDef, toDef, connections)) return null;
+
+  return {
+    fromNodeId: src.nodeId,
+    fromPortId: src.id,
+    toNodeId: dst.nodeId,
+    toPortId: dst.id,
+  };
+}
+
+/**
+ * Check if a given port is connectable based on precomputed connectable port ids.
+ * This centralizes the composite id logic used across components.
+ */
+export function isPortConnectable(port: Port, connectablePortIds?: Set<string>): boolean {
+  if (!connectablePortIds || connectablePortIds.size === 0) return false;
+  const compositeId = `${port.nodeId}:${port.id}`;
+  return connectablePortIds.has(compositeId);
 }
 
 /**

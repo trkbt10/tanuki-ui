@@ -188,6 +188,11 @@ export interface NodeDefinition<TNodeType extends string = string, TNodeDataType
   icon?: ReactNode;
   /** Category for grouping in UI */
   category?: string;
+  /**
+   * Maximum number of nodes of this type allowed within a single flow/editor.
+   * If undefined, no limit is enforced.
+   */
+  maxPerFlow?: number;
   /** Default data when creating a new node */
   defaultData?: TNodeType extends keyof TNodeDataTypeMap ? TNodeDataTypeMap[TNodeType] : Record<string, unknown>;
   /** Default size for new nodes */
@@ -403,4 +408,3 @@ export function asOriginalInspectorRender<TNodeType extends string>(
 ): (props: InspectorRenderProps) => ReactElement {
   return render as any;
 }
-

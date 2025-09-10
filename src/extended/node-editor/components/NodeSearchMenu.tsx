@@ -11,6 +11,8 @@ export interface NodeSearchMenuProps {
   onCreateNode: (nodeType: string, position: Position) => void;
   onClose: () => void;
   visible: boolean;
+  /** Node types that should be shown disabled due to per-flow limits */
+  disabledNodeTypes?: string[];
 }
 
 interface NodeCategory {
@@ -27,6 +29,7 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
   onCreateNode,
   onClose,
   visible,
+  disabledNodeTypes = [],
 }) => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -119,6 +122,8 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
     }
   }, [visible, position]);
 
+  const disabledSet = React.useMemo(() => new Set(disabledNodeTypes), [disabledNodeTypes]);
+
   // Handle keyboard navigation
   const handleKeyDown = React.useCallback(
     (e: React.KeyboardEvent) => {
@@ -135,8 +140,10 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
           e.preventDefault();
           if (allNodes[selectedIndex]) {
             const selectedNode = allNodes[selectedIndex].node;
-            onCreateNode(selectedNode.type, position);
-            onClose();
+            if (!disabledSet.has(selectedNode.type)) {
+              onCreateNode(selectedNode.type, position);
+              onClose();
+            }
           }
           break;
         case "Escape":
@@ -153,16 +160,17 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
           break;
       }
     },
-    [allNodes, selectedIndex, onCreateNode, position, onClose, categories, selectedCategory]
+    [allNodes, selectedIndex, onCreateNode, position, onClose, categories, selectedCategory, disabledSet]
   );
 
   // Handle node selection
   const handleNodeSelect = React.useCallback(
     (nodeType: string) => {
+      if (disabledSet.has(nodeType)) return; // Block selection when disabled
       onCreateNode(nodeType, position);
       onClose();
     },
-    [onCreateNode, position, onClose]
+    [onCreateNode, position, onClose, disabledSet]
   );
 
   // Handle click outside to close
@@ -233,13 +241,19 @@ export const NodeSearchMenu: React.FC<NodeSearchMenuProps> = ({
                   {category.nodes.map((node, nodeIndex) => {
                     const globalIndex = allNodes.findIndex((item) => item.node.type === node.type);
                     const isSelected = globalIndex === selectedIndex;
+                    const isDisabled = disabledSet.has(node.type);
 
                     return (
                       <div
                         key={node.type}
-                        className={classNames(styles.nodeItem, isSelected && styles.selectedNode)}
-                        onClick={() => handleNodeSelect(node.type)}
+                        className={classNames(
+                          styles.nodeItem,
+                          isSelected && styles.selectedNode,
+                          isDisabled && styles.disabledNode
+                        )}
+                        onClick={() => !isDisabled && handleNodeSelect(node.type)}
                         onMouseEnter={() => setSelectedIndex(globalIndex)}
+                        aria-disabled={isDisabled}
                       >
                         <div className={styles.nodeIcon}>{getNodeIcon(node.type, nodeDefinitions)}</div>
                         <div className={styles.nodeInfo}>

@@ -9,6 +9,7 @@ import { DefaultNodeRenderer } from "./renderers/DefaultRenderers";
 import { classNames } from "../elements";
 import styles from "../../NodeEditor.module.css";
 import { PortView } from "../connection/ports/PortView";
+import { isPortConnectable } from "../../utils/nodeLayerHelpers";
 import { ResizeHandle } from "../parts/ResizeHandle";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeResize } from "../../hooks/useNodeResize";
@@ -41,6 +42,7 @@ export interface NodeViewProps {
   connectingPort?: Port;
   hoveredPort?: Port;
   connectedPorts?: Set<string>;
+  connectablePortIds?: Set<string>;
   nodeRenderer?: (props: CustomNodeRendererProps) => React.ReactNode;
   externalData?: unknown;
   onUpdateNode?: (updates: Partial<Node>) => void;
@@ -61,6 +63,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
   connectingPort,
   hoveredPort,
   connectedPorts,
+  connectablePortIds,
   nodeRenderer,
   externalData,
   onUpdateNode,
@@ -360,6 +363,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
         return (
           <div className={styles.nodePorts}>
             {ports.map((port: Port) => {
+              const connectable = isPortConnectable(port, connectablePortIds);
               return (
                 <PortView
                   key={port.id}
@@ -369,7 +373,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
                   onPointerEnter={onPortPointerEnter}
                   onPointerLeave={onPortPointerLeave}
                   isConnecting={actionState.connectionDragState?.fromPort.id === port.id}
-                  isConnectable={actionState.connectablePortIds.has(`${port.nodeId}:${port.id}`)}
+                  isConnectable={connectable}
                   isCandidate={actionState.connectionDragState?.candidatePort?.id === port.id}
                   isHovered={hoveredPort?.id === port.id}
                   isConnected={connectedPorts?.has(port.id)}
@@ -411,7 +415,8 @@ const areEqual = (prevProps: NodeViewProps, nextProps: NodeViewProps): boolean =
     prevProps.node.id !== nextProps.node.id ||
     prevProps.isSelected !== nextProps.isSelected ||
     prevProps.isDragging !== nextProps.isDragging ||
-    prevProps.isResizing !== nextProps.isResizing
+    prevProps.isResizing !== nextProps.isResizing ||
+    prevProps.connectablePortIds !== nextProps.connectablePortIds
   ) {
     return false;
   }

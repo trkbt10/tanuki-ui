@@ -1,56 +1,5 @@
-import type { Port, NodeId, Node, Connection, PortId } from "../types/core";
-import type { NodeDefinition, NodeDefinitionRegistry } from "../types/NodeDefinition";
-
-/**
- * Calculate which ports can be connected to from a given source port
- */
-export const calculateConnectablePorts = (
-  fromPort: Port,
-  allNodes: Record<NodeId, Node>,
-  nodeDefinitions: NodeDefinitionRegistry,
-  connections: Record<string, Connection>
-): Set<PortId> => {
-  const connectablePorts = new Set<PortId>();
-  
-  console.log('🔍 Calculating connectable ports for:', fromPort);
-  
-  // Get fromPort's node definition
-  const fromNode = allNodes[fromPort.nodeId];
-  if (!fromNode) {
-    console.log('❌ FromNode not found');
-    return connectablePorts;
-  }
-  
-  const fromNodeDef = nodeDefinitions.get(fromNode.type);
-  
-  // Check all nodes and their ports
-  Object.values(allNodes).forEach(node => {
-    const nodeDefinition = nodeDefinitions.get(node.type);
-    if (!nodeDefinition?.ports) return;
-    
-    nodeDefinition.ports.forEach(portDef => {
-      const toPort: Port = {
-        id: `${node.id}-${portDef.id}`,
-        nodeId: node.id,
-        type: portDef.type,
-        label: portDef.label,
-        position: portDef.position,
-      };
-      
-      // Check if ports can be connected
-      const canConnect = canConnectPorts(fromPort, toPort, fromNodeDef, nodeDefinition, connections);
-      if (canConnect) {
-        console.log('✅ Can connect to:', toPort);
-        connectablePorts.add(toPort.id);
-      } else {
-        console.log('❌ Cannot connect to:', toPort, 'reason: type check failed');
-      }
-    });
-  });
-  
-  console.log('📋 Final connectable ports:', Array.from(connectablePorts));
-  return connectablePorts;
-};
+import type { Port, Connection } from "../types/core";
+import type { NodeDefinition } from "../types/NodeDefinition";
 
 /**
  * Check if two ports can be connected
@@ -80,28 +29,32 @@ export const canConnectPorts = (
     if (existingConnection) return false;
   }
   
-  // Check custom validation functions
+  // Check custom validation functions (both must allow)
   if (fromNodeDef?.validateConnection) {
-    return fromNodeDef.validateConnection(fromPort, toPort);
+    if (!fromNodeDef.validateConnection(fromPort, toPort)) return false;
   }
   if (toNodeDef?.validateConnection) {
-    return toNodeDef.validateConnection(fromPort, toPort);
+    if (!toNodeDef.validateConnection(fromPort, toPort)) return false;
   }
   
   // Check data type compatibility if specified
-  const fromPortDef = fromNodeDef?.ports?.find(p => p.id === fromPort.id.split('-').pop());
-  const toPortDef = toNodeDef?.ports?.find(p => p.id === toPort.id.split('-').pop());
+  const fromPortDef = fromNodeDef?.ports?.find(p => p.id === fromPort.id);
+  const toPortDef = toNodeDef?.ports?.find(p => p.id === toPort.id);
   
   if (fromPortDef?.dataType && toPortDef?.dataType) {
     if (fromPortDef.dataType !== toPortDef.dataType) return false;
   }
   
-  // Check max connections limit
-  if (connections && toPortDef?.maxConnections !== undefined) {
-    const toPortConnections = Object.values(connections).filter(conn => 
-      conn.toPortId === toPort.id
-    );
-    if (toPortConnections.length >= toPortDef.maxConnections) return false;
+  // Check max connections limit (both ends if defined)
+  if (connections) {
+    if (toPortDef?.maxConnections !== undefined) {
+      const toPortConnections = Object.values(connections).filter(conn => conn.toPortId === toPort.id);
+      if (toPortConnections.length >= toPortDef.maxConnections) return false;
+    }
+    if (fromPortDef?.maxConnections !== undefined) {
+      const fromPortConnections = Object.values(connections).filter(conn => conn.fromPortId === fromPort.id);
+      if (fromPortConnections.length >= fromPortDef.maxConnections) return false;
+    }
   }
   
   return true;

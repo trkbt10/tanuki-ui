@@ -22,7 +22,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   const nodeDefinitions = useNodeDefinitionList();
   const { actions: actionActions, dispatch: actionDispatch } = useEditorActionState();
   const { state: canvasState } = useNodeCanvas();
-  const { dispatch, actions } = useNodeEditor();
+  const { state: editorState, dispatch, actions } = useNodeEditor();
   
   // Get common node types for quick access
   const commonNodeTypes = React.useMemo(() => {
@@ -31,11 +31,26 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     ).slice(0, 5); // Limit to 5 most common types
   }, [nodeDefinitions]);
 
+  // Count nodes by type for disabling toolbar buttons
+  const nodeTypeCounts = React.useMemo(() => {
+    const counts = new Map<string, number>();
+    Object.values(editorState.nodes).forEach((n) => {
+      counts.set(n.type, (counts.get(n.type) || 0) + 1);
+    });
+    return counts;
+  }, [editorState.nodes]);
+
   const handleToolbarNodeCreate = React.useCallback((nodeType: string) => {
     const nodeDefinition = nodeDefinitions.find(def => def.type === nodeType);
     if (!nodeDefinition) {
       console.warn(`Node definition not found for type: ${nodeType}`);
       return;
+    }
+
+    // Enforce per-flow maximums if defined
+    const currentCount = nodeTypeCounts.get(nodeType) || 0;
+    if (typeof nodeDefinition.maxPerFlow === 'number' && currentCount >= nodeDefinition.maxPerFlow) {
+      return; // at limit; do not create
     }
 
     // Calculate center position of current viewport
@@ -61,7 +76,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     
     // Select the new node
     actionDispatch(actionActions.selectNode(nodeId, false));
-  }, [nodeDefinitions, canvasState.viewport, dispatch, actions, actionDispatch, actionActions]);
+  }, [nodeDefinitions, nodeTypeCounts, canvasState.viewport, dispatch, actions, actionDispatch, actionActions]);
 
   const showNodeSearchMenu = React.useCallback(() => {
     // Show context menu at center of viewport
@@ -87,6 +102,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         <Button
           key={nodeType.type}
           className={editorStyles.toolButton}
+          disabled={typeof nodeType.maxPerFlow === 'number' && (nodeTypeCounts.get(nodeType.type) || 0) >= (nodeType.maxPerFlow as number)}
           onClick={() => handleToolbarNodeCreate(nodeType.type)}
           title={`Add ${nodeType.displayName}`}
           aria-label={`Add ${nodeType.displayName}`}

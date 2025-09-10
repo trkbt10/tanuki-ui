@@ -25,7 +25,7 @@
 /* Variants */
 .textarea[data-variant="default"] {
   padding: 8px 12px;
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder, 1px solid #e0e0e0);
 }
 
 .textarea[data-variant="default"]:hover:not(:disabled) {
@@ -38,7 +38,7 @@
 
 .textarea[data-variant="outline"] {
   padding: 8px 12px;
-  border: 2px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder, 2px solid #e0e0e0);
   background-color: transparent;
 }
 

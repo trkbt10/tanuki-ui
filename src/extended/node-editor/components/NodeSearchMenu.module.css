@@ -176,6 +176,15 @@
   background: rgba(0, 102, 204, 0.1) !important;
 }
 
+.disabledNode {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.disabledNode:hover {
+  background: transparent;
+}
+
 .nodeIcon {
   font-size: 18px;
   width: 24px;

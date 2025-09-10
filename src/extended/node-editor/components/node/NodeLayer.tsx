@@ -11,7 +11,6 @@ import { usePointerInteraction } from "../../hooks/usePointerInteraction";
 import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
 import { computeNodePortPositions } from "../../utils/computePortPositions";
 import { PORT_INTERACTION_THRESHOLD } from "../../constants/interaction";
-import { canConnectPorts } from "../../utils/connectionValidation";
 import styles from "../../NodeEditor.module.css";
 import type { Port } from "../../types/core";
 import { snapMultipleToGrid } from "../../utils/gridSnap";
@@ -25,7 +24,8 @@ import {
   calculateNewPositions,
   handleGroupMovement,
   getOtherPortInfo,
-  getConnectablePortIds
+  getConnectablePortIds,
+  createValidatedConnection
 } from "../../utils/nodeLayerHelpers";
 
 export interface NodeLayerProps {
@@ -297,8 +297,20 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         const disconnectState = actionState.connectionDisconnectState;
         const fixedPort = disconnectState.fixedPort;
 
-        if (isValidReconnection(fixedPort, port)) {
-          const newConnection = createConnection(fixedPort, port);
+        if (isValidReconnection(
+          fixedPort,
+          port,
+          nodeEditorState.nodes,
+          nodeEditorState.connections,
+          (type: string) => getNodeDef.registry.get(type)
+        )) {
+          const newConnection = createValidatedConnection(
+            fixedPort,
+            port,
+            nodeEditorState.nodes,
+            nodeEditorState.connections,
+            (type: string) => getNodeDef.registry.get(type)
+          );
           if (newConnection) {
             nodeEditorDispatch(nodeEditorActions.addConnection(newConnection));
           }
@@ -312,11 +324,15 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       if (!actionState.connectionDragState) return;
 
       const fromPort = actionState.connectionDragState.fromPort;
-      const connection = createConnection(fromPort, port);
-      
-      if (connection) {
-        nodeEditorDispatch(nodeEditorActions.addConnection(connection));
-      }
+      const connection = createValidatedConnection(
+        fromPort,
+        port,
+        nodeEditorState.nodes,
+        nodeEditorState.connections,
+        (type: string) => getNodeDef.registry.get(type)
+      );
+
+      if (connection) nodeEditorDispatch(nodeEditorActions.addConnection(connection));
 
       actionDispatch(actionActions.endConnectionDrag());
       actionDispatch(actionActions.updateConnectablePorts(new Set()));
@@ -459,6 +475,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
           onPortPointerUp={handlePortPointerUp}
           onPortPointerEnter={handlePortPointerEnter}
           onPortPointerLeave={handlePortPointerLeave}
+          connectablePortIds={actionState.connectablePortIds}
           connectingPort={
             actionState.connectionDragState?.fromPort
               ? {

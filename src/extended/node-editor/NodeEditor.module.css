@@ -668,7 +668,7 @@
 .inspectorTextarea {
   width: 100%;
   padding: 3px .25em !important;
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder, 1px solid #c8c8c8) !important;
   border-radius: 4px;
   font-size: 12px;
   background: var(--controlBackground, #ffffff);
@@ -696,7 +696,7 @@
   flex: 1;
   /* Compact padding for small width usability */
   padding: 3px .25em !important;
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder, 1px solid #c8c8c8) !important;
   border-radius: 4px;
   font-size: 12px;
   background: var(--controlBackground, #ffffff);
@@ -708,6 +708,22 @@
 .inspectorNumberInput:focus {
   outline: none;
   border-color: var(--accentColor, #007aff);
+}
+
+.inspectorInput:hover,
+.inspectorTextarea:hover,
+.inspectorNumberInput:hover {
+  border-color: var(--inputBorderHover, #bdbdbd);
+}
+
+/* Unified section title for inspector */
+.inspectorSectionTitle {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--secondaryLabelColor, #666);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .inspectorReadOnlyField {

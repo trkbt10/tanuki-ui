@@ -317,7 +317,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
 
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <H4 size="sm" color="secondary">{t("inspectorNodeProperties")}</H4>
+        <H4 size="sm" color="secondary" className={editorStyles.inspectorSectionTitle}>{t("inspectorNodeProperties")}</H4>
 
         <div>
           <Label htmlFor={`node-${node.id}-title`}>
@@ -402,13 +402,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         )}
 
         <div>
-          <Button
-            onClick={onDeleteNode}
-            style={{
-              width: "100%",
-            }}
-            variant="danger"
-          >
+          <Button onClick={onDeleteNode} variant="danger" size="small">
             {t("deleteNode")}
           </Button>
         </div>

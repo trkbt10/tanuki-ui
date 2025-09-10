@@ -160,7 +160,8 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
             className={styles.connectionFlowStripe}
             style={{
               pointerEvents: "none",
-              strokeDasharray: "8 8",
+              strokeDasharray: "10 14",
+              strokeOpacity: isSelected ? 0.9 : 0.7,
               // dashoffset animated by CSS keyframes
             }}
           />
@@ -175,8 +176,9 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
             className={styles.connectionFlowStripe}
             style={{
               pointerEvents: "none",
-              strokeDasharray: "8 8",
-              strokeDashoffset: -8, // phase shift to alternate with accent
+              strokeDasharray: "10 14",
+              strokeDashoffset: -12, // phase shift to alternate with accent
+              strokeOpacity: 0.6,
             }}
           />
         </>

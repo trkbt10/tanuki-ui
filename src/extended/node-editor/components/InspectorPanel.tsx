@@ -76,7 +76,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
 
             {selectedConnection && (
               <div className={styles.inspectorSection}>
-                <H4>{t("inspectorConnectionProperties")}</H4>
+                <H4 className={styles.inspectorSectionTitle}>{t("inspectorConnectionProperties")}</H4>
                 <div className={styles.inspectorField}>
                   <label>From:</label>
                   <span className={styles.inspectorReadOnlyField}>
@@ -109,7 +109,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
 
             {/* Grid Settings Section */}
             <div className={styles.inspectorSection}>
-              <H4>{t("inspectorGridSettings")}</H4>
+              <H4 className={styles.inspectorSectionTitle}>{t("inspectorGridSettings")}</H4>
               <div className={styles.inspectorField}>
                 <SwitchInput
                   id="grid-show"
