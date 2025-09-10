@@ -31,8 +31,6 @@ export interface NodeWithPortOverrides extends Omit<Node, "ports"> {
 export interface PortResolver {
   /** Get all ports for a node */
   getNodePorts(node: Node, definition: NodeDefinition): Port[];
-  /** Get a specific port for a node */
-  getPort(node: Node, portId: string, definition: NodeDefinition): Port | undefined;
   /** Create a lookup map for all ports */
   createPortLookupMap(
     nodes: Record<NodeId, Node>,
@@ -92,14 +90,7 @@ export function getNodePorts(node: Node, definition: NodeDefinition): Port[] {
 /**
  * Get a specific port for a node
  */
-export function getPort(
-  node: Node,
-  portId: string,
-  definition: NodeDefinition
-): Port | undefined {
-  const ports = getNodePorts(node, definition);
-  return ports.find((p) => p.id === portId);
-}
+// Single port lookup is intentionally not exposed to encourage use of lookup maps
 
 /**
  * Create a lookup map for quick port access
@@ -134,9 +125,6 @@ export function createCachedPortResolver(): PortResolver & {
 } {
   // Cache for resolved ports per node
   const portCache = new Map<NodeId, Port[]>();
-  
-  // Cache for individual ports
-  const singlePortCache = new Map<string, Port | undefined>();
 
   return {
     getNodePorts(node: Node, definition: NodeDefinition): Port[] {
@@ -156,23 +144,6 @@ export function createCachedPortResolver(): PortResolver & {
       return ports;
     },
 
-    getPort(node: Node, portId: string, definition: NodeDefinition): Port | undefined {
-      const cacheKey = `${node.id}:${portId}`;
-      
-      // Check cache first
-      if (singlePortCache.has(cacheKey)) {
-        return singlePortCache.get(cacheKey);
-      }
-
-      // Get port
-      const port = getPort(node, portId, definition);
-      
-      // Cache the result
-      singlePortCache.set(cacheKey, port);
-      
-      return port;
-    },
-
     createPortLookupMap(
       nodes: Record<NodeId, Node>,
       getDefinition: (type: string) => NodeDefinition | undefined
@@ -182,20 +153,10 @@ export function createCachedPortResolver(): PortResolver & {
 
     clearCache() {
       portCache.clear();
-      singlePortCache.clear();
     },
 
     clearNodeCache(nodeId: NodeId) {
       portCache.delete(nodeId);
-      
-      // Clear single port cache entries for this node
-      const keysToDelete: string[] = [];
-      singlePortCache.forEach((_, key) => {
-        if (key.startsWith(`${nodeId}:`)) {
-          keysToDelete.push(key);
-        }
-      });
-      keysToDelete.forEach(key => singlePortCache.delete(key));
     },
   };
 }
@@ -205,6 +166,5 @@ export function createCachedPortResolver(): PortResolver & {
  */
 export const defaultPortResolver: PortResolver = {
   getNodePorts,
-  getPort,
   createPortLookupMap,
 };

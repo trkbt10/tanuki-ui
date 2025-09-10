@@ -9,8 +9,17 @@ export interface NodeEditorContextValue {
   isLoading: boolean;
   isSaving: boolean;
   handleSave: () => Promise<void>;
+  /**
+   * Returns ordered ports for a node, suitable for UI rendering.
+   * Preserves definition order and applies node-specific overrides.
+   * Note: For random access by (nodeId, portId) in hot paths, prefer `portLookupMap`.
+   */
   getNodePorts: (nodeId: NodeId) => Port[];
-  getPort: (nodeId: NodeId, portId: string) => Port | undefined;
+  /**
+   * O(1) lookup map for ports. Key format: "nodeId:portId".
+   * Recomputed when nodes/definitions change. Do not mutate.
+   * Use this for frequent single-port lookups (connections, hit tests, drags).
+   */
   portLookupMap: Map<string, { node: Node; port: Port }>;
 }
 
@@ -23,4 +32,3 @@ export const useNodeEditor = (): NodeEditorContextValue => {
 };
 
 export type { NodeEditorData };
-

@@ -33,6 +33,9 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
   const registry = nodeDefinitionsContext?.registry;
 
   const featureFlags = React.useMemo(() => getFeatureFlags(), []);
+  // Keep latest feature flags in a ref for stable callbacks
+  const featureFlagsRef = React.useRef(featureFlags);
+  featureFlagsRef.current = featureFlags;
   const portResolver = React.useMemo(() => createCachedPortResolver(), []);
 
   const initialData: NodeEditorData = React.useMemo(() => {
@@ -44,85 +47,110 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
 
   const [internalState, internalDispatch] = React.useReducer(nodeEditorReducer, initialData);
   const state = controlledData || internalState;
+  // Keep latest state and IO handlers in refs to avoid unstable callbacks/effects
+  const stateRef = React.useRef(state);
+  stateRef.current = state;
   const onDataChangeRef = React.useRef(onDataChange);
   onDataChangeRef.current = onDataChange;
+  const onSaveRef = React.useRef(onSave);
+  onSaveRef.current = onSave;
+  const onLoadRef = React.useRef(onLoad);
+  onLoadRef.current = onLoad;
 
+  // Stable dispatch that doesn't recreate per state change to reduce re-renders
   const dispatch: React.Dispatch<any> = React.useCallback(
     (action) => {
-      if (!controlledData) {
-        internalDispatch(action);
-      } else if (onDataChangeRef.current) {
-        const newState = nodeEditorReducer(state, action);
-        onDataChangeRef.current(newState);
+      if (controlledData) {
+        const newState = nodeEditorReducer(stateRef.current, action);
+        onDataChangeRef.current?.(newState);
+        return;
       }
+      // Uncontrolled: dispatch internally and notify external listener with computed next state
+      const nextState = nodeEditorReducer(stateRef.current, action);
+      internalDispatch(action);
+      onDataChangeRef.current?.(nextState);
     },
-    [controlledData, state]
+    [controlledData]
   );
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [isSaving, setIsSaving] = React.useState(false);
+  const isSavingRef = React.useRef(false);
+  React.useEffect(() => {
+    isSavingRef.current = isSaving;
+  }, [isSaving]);
 
   const settings = useSettings(settingsManager);
   const { autoSave, autoSaveInterval } = settings;
 
+  // Load once when registry is available; avoid effect-driven loops
+  const hasLoadedRef = React.useRef(false);
   React.useEffect(() => {
-    if (onLoad && !isLoading) {
-      setIsLoading(true);
-      Promise.resolve(onLoad())
-        .then((loadedData) => {
-          const { data, migrated, migrationResult } = loadDataWithMigration(
-            loadedData as VersionedNodeEditorData,
-            registry,
-            featureFlags.autoMigrateOnLoad
-          );
-          if (migrated && migrationResult && featureFlags.showMigrationWarnings) {
-            console.log("Node editor data migrated successfully:", migrationResult.statistics);
-            if (migrationResult.warnings.length > 0) {
-              console.warn("Migration warnings:", migrationResult.warnings);
-            }
+    if (hasLoadedRef.current) return;
+    if (!onLoadRef.current) return;
+    // Wait until registry is available when we need it for migration/ports
+    if (!registry) return;
+    hasLoadedRef.current = true;
+    setIsLoading(true);
+    Promise.resolve(onLoadRef.current())
+      .then((loadedData) => {
+        const { data, migrated, migrationResult } = loadDataWithMigration(
+          loadedData as VersionedNodeEditorData,
+          registry,
+          featureFlagsRef.current.autoMigrateOnLoad
+        );
+        if (migrated && migrationResult && featureFlagsRef.current.showMigrationWarnings) {
+          console.log("Node editor data migrated successfully:", migrationResult.statistics);
+          if (migrationResult.warnings.length > 0) {
+            console.warn("Migration warnings:", migrationResult.warnings);
           }
-          dispatch(nodeEditorActions.setNodeData(data));
-        })
-        .catch((error) => {
-          console.error("Failed to load node editor data:", error);
-        })
-        .finally(() => setIsLoading(false));
-    }
-  }, [featureFlags]);
+        }
+        dispatch(nodeEditorActions.setNodeData(data));
+      })
+      .catch((error) => {
+        console.error("Failed to load node editor data:", error);
+      })
+      .finally(() => setIsLoading(false));
+  }, [registry, dispatch]);
 
-  // In uncontrolled mode, notify external listener on every internal state change
-  const lastNotifiedStateRef = React.useRef<NodeEditorData | null>(null);
+  // Notification for onDataChange is handled inside dispatch (both modes)
+  // Additionally, fire a single initial notification in uncontrolled mode
   React.useEffect(() => {
-    if (controlledData) return; // controlled mode: notification happens via dispatch path
-    const cb = onDataChangeRef.current;
-    if (!cb) return;
-    // Avoid duplicate notifications when state identity hasn't changed
-    if (lastNotifiedStateRef.current === state) return;
-    lastNotifiedStateRef.current = state;
-    cb(state);
-  }, [controlledData, state]);
+    if (controlledData) return;
+    onDataChangeRef.current?.(stateRef.current);
+    // run once on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  // Stable save handler using refs to avoid re-creating on state changes
   const handleSave = React.useCallback(async () => {
-    if (onSave && !isSaving) {
+    const save = onSaveRef.current;
+    if (!save) return;
+    if (isSavingRef.current) return;
+    try {
       setIsSaving(true);
-      try {
-        const dataToSave = prepareDataForSave(state, featureFlags.saveInNewFormat);
-        await Promise.resolve(onSave(dataToSave));
-      } catch (error) {
-        console.error("Failed to save node editor data:", error);
-      } finally {
-        setIsSaving(false);
-      }
+      isSavingRef.current = true;
+      const dataToSave = prepareDataForSave(
+        stateRef.current,
+        featureFlagsRef.current.saveInNewFormat
+      );
+      await Promise.resolve(save(dataToSave));
+    } catch (error) {
+      console.error("Failed to save node editor data:", error);
+    } finally {
+      isSavingRef.current = false;
+      setIsSaving(false);
     }
-  }, [onSave, state, isSaving]);
+  }, []);
 
   React.useEffect(() => {
-    if (!autoSave || !onSave) return;
+    if (!autoSave || !onSaveRef.current) return;
     const intervalId = setInterval(() => {
-      if (!isSaving) handleSave();
+      // handleSave already checks saving state via ref
+      handleSave();
     }, autoSaveInterval * 1000);
     return () => clearInterval(intervalId);
-  }, [autoSave, autoSaveInterval, handleSave, isSaving]);
+  }, [autoSave, autoSaveInterval, handleSave]);
 
   const getNodePorts = React.useCallback(
     (nodeId: NodeId): Port[] => {
@@ -145,31 +173,6 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
         if (definition) return portResolver.getNodePorts(node, definition);
       }
       return node.ports || [];
-    },
-    [state.nodes, registry, portResolver, featureFlags.useInferredPortsOnly]
-  );
-
-  const getPort = React.useCallback(
-    (nodeId: NodeId, portId: string): Port | undefined => {
-      const node = state.nodes[nodeId];
-      if (!node) return undefined;
-      if (featureFlags.useInferredPortsOnly) {
-        if (!registry) {
-          console.error("NodeDefinitionRegistry is required when useInferredPortsOnly is enabled");
-          return undefined;
-        }
-        const definition = registry.get(node.type);
-        if (!definition) {
-          console.warn(`No definition found for node type: ${node.type}`);
-          return undefined;
-        }
-        return portResolver.getPort(node, portId, definition);
-      }
-      if (registry) {
-        const definition = registry.get(node.type);
-        if (definition) return portResolver.getPort(node, portId, definition);
-      }
-      return node.ports?.find((p) => p.id === portId);
     },
     [state.nodes, registry, portResolver, featureFlags.useInferredPortsOnly]
   );
@@ -206,10 +209,9 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
       isSaving,
       handleSave,
       getNodePorts,
-      getPort,
       portLookupMap,
     }),
-    [state, dispatch, isLoading, isSaving, handleSave, getNodePorts, getPort, portLookupMap]
+    [state, dispatch, isLoading, isSaving, handleSave, getNodePorts, portLookupMap]
   );
 
   return <NodeEditorContext.Provider value={contextValue}>{children}</NodeEditorContext.Provider>;

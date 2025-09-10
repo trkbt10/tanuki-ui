@@ -12,7 +12,7 @@ const Harness: React.FC = () => {
 describe("ExternalDataContext", () => {
   it("provides refs to nodes", () => {
     const refs: Record<string, ExternalDataReference> = {
-      "node-1": { type: "url", value: "https://example.com" },
+      "node-1": { id: "ref-1", type: "url", metadata: { href: "https://example.com" } },
     };
     const { getByTestId } = render(
       <ExternalDataProvider refs={refs}>
@@ -22,4 +22,3 @@ describe("ExternalDataContext", () => {
     expect(getByTestId("has-ref").textContent).toBe("true");
   });
 });
-
