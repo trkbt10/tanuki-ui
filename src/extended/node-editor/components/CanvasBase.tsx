@@ -4,7 +4,7 @@ import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeEditor } from "../contexts/node-editor";
 import { SelectionOverlay } from "./parts/SelectionOverlay";
 import { classNames } from "./elements";
-import styles from "../NodeEditor.module.css";
+import styles from "./CanvasBase.module.css";
 
 export interface CanvasBaseProps {
   children: React.ReactNode;

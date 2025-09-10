@@ -6,7 +6,7 @@ import { useNodeEditor } from "../contexts/node-editor";
 import { FloatingContainer } from "./parts/FloatingContainer";
 import { Button } from "./elements";
 import styles from "./Toolbar.module.css";
-import editorStyles from "../NodeEditor.module.css";
+import editorStyles from "./Toolbar.module.css";
 import { countNodesByType, canAddNodeType } from "../utils/nodeTypeLimits";
 
 export interface ToolbarProps {

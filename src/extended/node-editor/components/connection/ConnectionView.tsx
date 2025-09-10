@@ -3,7 +3,7 @@ import type { Connection, Node, Port } from "../../types/core";
 import { calculateBezierPath, calculateBezierControlPoints, cubicBezierPoint, cubicBezierTangent } from "./utils/connectionUtils";
 import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
 import { classNames } from "../elements";
-import styles from "../../NodeEditor.module.css";
+import styles from "./ConnectionView.module.css";
 
 export interface ConnectionViewProps {
   connection: Connection;
