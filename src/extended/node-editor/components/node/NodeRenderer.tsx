@@ -4,7 +4,7 @@ import { NodeView } from "./NodeView";
 import { NodeDragHandler } from "./NodeDragHandler";
 import { classNames } from "../elements";
 import { createMemoizedComponent, areNodesEqual } from "../../utils/memoization";
-import styles from "../../NodeEditor.module.css";
+import styles from "./NodeRenderer.module.css";
 
 export interface CustomNodeRendererProps {
   node: Node;

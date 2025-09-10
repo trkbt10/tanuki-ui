@@ -11,7 +11,7 @@ import { usePointerInteraction } from "../../hooks/usePointerInteraction";
 import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
 import { computeNodePortPositions } from "../../utils/computePortPositions";
 import { PORT_INTERACTION_THRESHOLD } from "../../constants/interaction";
-import styles from "../../NodeEditor.module.css";
+import styles from "./NodeLayer.module.css";
 import type { Port } from "../../types/core";
 import { snapMultipleToGrid } from "../../utils/gridSnap";
 import { NodeView } from "./NodeView";

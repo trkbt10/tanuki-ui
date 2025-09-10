@@ -7,7 +7,7 @@ import { useExternalDataRef } from "../../contexts/ExternalDataContext";
 import { useExternalData } from "../../hooks/useExternalData";
 import { DefaultNodeRenderer } from "./renderers/DefaultRenderers";
 import { classNames } from "../elements";
-import styles from "../../NodeEditor.module.css";
+import styles from "./NodeView.module.css";
 import { PortView } from "../connection/ports/PortView";
 import { isPortConnectable } from "../../utils/nodeLayerHelpers";
 import { ResizeHandle } from "../parts/ResizeHandle";
@@ -386,7 +386,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
 
       {/* Render resize handle when selected and not locked */}
       {isSelected && !node.locked && (
-        <ResizeHandle position="se" onResizeStart={handleResizeStart} isResizing={currentResizeHandle === "se"} />
+        <ResizeHandle position="se" onResizeStart={handleResizeStart} isResizing={currentResizeHandle === "se"} isVisible={true} />
       )}
     </div>
   );
