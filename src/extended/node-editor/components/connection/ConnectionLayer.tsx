@@ -67,7 +67,7 @@ const DragConnection = React.memo(() => {
     );
 
     return (
-      <g className={styles.dragConnection}>
+      <g className={styles.dragConnection} shapeRendering="geometricPrecision">
         <path
           d={pathData}
           fill="none"
@@ -76,6 +76,7 @@ const DragConnection = React.memo(() => {
           strokeDasharray="5,5"
           strokeLinecap="round"
           strokeLinejoin="round"
+          vectorEffect="non-scaling-stroke"
           style={{ pointerEvents: "none" }}
         />
       </g>
@@ -102,7 +103,7 @@ const DragConnection = React.memo(() => {
     );
 
     return (
-      <g className={styles.dragConnection}>
+      <g className={styles.dragConnection} shapeRendering="geometricPrecision">
         <path
           d={pathData}
           fill="none"
@@ -111,6 +112,7 @@ const DragConnection = React.memo(() => {
           strokeDasharray="8,4"
           strokeLinecap="round"
           strokeLinejoin="round"
+          vectorEffect="non-scaling-stroke"
           style={{ pointerEvents: "none" }}
         />
       </g>

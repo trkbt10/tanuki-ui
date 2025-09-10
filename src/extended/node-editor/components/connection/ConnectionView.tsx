@@ -144,46 +144,10 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
         isHovered && styles.connectionHovered,
         isDragging && styles.connectionDragging
       )}
+      shapeRendering="geometricPrecision"
       data-connection-id={connection.id}
     >
-      {/* Flow stripes when hovered or selected */}
-      {(isSelected || isHovered) && (
-        <>
-          {/* Accent stripes */}
-          <path
-            d={pathData}
-            fill="none"
-            stroke={"var(--accentColor, #0066cc)"}
-            strokeWidth={isSelected || isHovered ? 3 : 2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={styles.connectionFlowStripe}
-            style={{
-              pointerEvents: "none",
-              strokeDasharray: "10 14",
-              strokeOpacity: isSelected ? 0.9 : 0.7,
-              // dashoffset animated by CSS keyframes
-            }}
-          />
-          {/* Background stripes, phase-shifted */}
-          <path
-            d={pathData}
-            fill="none"
-            stroke={"var(--controlBackground, #ffffff)"}
-            strokeWidth={isSelected || isHovered ? 3 : 2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className={styles.connectionFlowStripe}
-            style={{
-              pointerEvents: "none",
-              strokeDasharray: "10 14",
-              strokeDashoffset: -12, // phase shift to alternate with accent
-              strokeOpacity: 0.6,
-            }}
-          />
-        </>
-      )}
-      {/* Base connection line (hit test only on stroke). Stays under stripes. */}
+      {/* Base connection line (hit test only on stroke). Draw first, stripes overlay. */}
       <path
         d={pathData}
         fill="none"
@@ -191,10 +155,12 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
         strokeWidth={isSelected || isHovered ? 3 : 2}
         strokeLinecap="round"
         strokeLinejoin="round"
+        vectorEffect="non-scaling-stroke"
         style={{
           transition: "stroke 0.2s, stroke-width 0.2s",
           pointerEvents: "stroke",
         }}
+        className={styles.connectionBase}
         onPointerDown={handlePointerDown}
         onPointerEnter={handlePointerEnter}
         onPointerLeave={handlePointerLeave}
@@ -203,6 +169,45 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
           onContextMenu?.(e, connection.id);
         }}
       />
+
+      {/* Flow stripes when hovered or selected (render after base so they appear on top) */}
+      {(isSelected || isHovered) && (
+        <>
+          {/* Accent stripes */}
+          <path
+            d={pathData}
+            fill="none"
+            stroke={"var(--accentColor, #0066cc)"}
+            strokeWidth={isSelected || isHovered ? 2.5 : 1.5}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            className={classNames(styles.connectionFlowStripe, styles.connectionStripeAccent)}
+            style={{
+              pointerEvents: "none",
+              strokeDasharray: "10 14",
+              strokeOpacity: isSelected ? 0.9 : 0.7,
+            }}
+          />
+          {/* Background stripes, phase-shifted */}
+          <path
+            d={pathData}
+            fill="none"
+            stroke={"var(--controlBackground, #ffffff)"}
+            strokeWidth={isSelected || isHovered ? 2.5 : 1.5}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            vectorEffect="non-scaling-stroke"
+            className={classNames(styles.connectionFlowStripe, styles.connectionStripeBg)}
+            style={{
+              pointerEvents: "none",
+              strokeDasharray: "10 14",
+              strokeDashoffset: -12,
+              strokeOpacity: 0.6,
+            }}
+          />
+        </>
+      )}
 
       {/* Direction chevron at mid-point, pointing to 'to' */}
       <g
@@ -230,7 +235,7 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
           markerHeight="6"
           orient="auto"
         >
-          <path d="M 0 0 L 10 5 L 0 10 z" fill={strokeColor} style={{ transition: "fill 0.2s" }} />
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={strokeColor} style={{ transition: "fill 0.2s" }} vectorEffect="non-scaling-stroke" />
         </marker>
       </defs>
 
@@ -241,6 +246,7 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
         stroke="transparent"
         markerEnd={`url(#arrow-${connection.id})`}
         style={{ pointerEvents: "none" }}
+        vectorEffect="non-scaling-stroke"
       />
     </g>
   );
