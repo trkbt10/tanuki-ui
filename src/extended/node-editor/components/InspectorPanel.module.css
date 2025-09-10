@@ -1,0 +1,110 @@
+.inspectorPanel {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--controlBackground, #ffffff);
+  border-left: 1px solid var(--inputBorder, #e0e0e0);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: -2px 0 .5em rgba(0, 0, 0, 0.1);
+}
+
+.inspectorHeader {
+  padding: .5em 0;
+  display: grid;
+  justify-content: center;
+  box-sizing: border-box;
+  box-shadow: var(--shadow, 0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.inspectorContent {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.inspectorContentNoPadding { padding: 0; }
+
+.inspectorSection { margin-bottom: 16px; }
+
+.inspectorSection label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  color: var(--secondaryLabelColor, #666);
+}
+
+.inspectorSection h4 {
+  margin: 0 0 12px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--secondaryLabelColor, #666);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inspectorField { margin-bottom: 12px; }
+
+.inspectorField label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--textColor, #000);
+}
+
+.inspectorInput,
+.inspectorTextarea {
+  width: 100%;
+  padding: 3px .25em !important;
+  border: var(--inputBorder, 1px solid #c8c8c8) !important;
+  border-radius: 4px;
+  font-size: 12px;
+  background: var(--controlBackground, #ffffff);
+  color: var(--textColor, #000);
+  box-sizing: border-box;
+}
+
+.inspectorInput:focus,
+.inspectorTextarea:focus {
+  outline: none;
+  border-color: var(--accentColor, #007aff);
+}
+
+.inspectorInput:hover,
+.inspectorTextarea:hover {
+  border-color: var(--inputBorderHover, #bdbdbd);
+}
+
+.inspectorSectionTitle {
+  margin: 0 0 8px 0;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--secondaryLabelColor, #666);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inspectorReadOnlyField {
+  display: block;
+  padding: 6px .5em;
+  font-size: 12px;
+  color: var(--secondaryLabelColor, #666);
+  background: var(--tertiarySystemBackground, #f9f9f9);
+  border-radius: 4px;
+  border: 1px solid var(--inputBorder, #e0e0e0);
+  box-sizing: border-box;
+}
+
+.inspectorEmptyState {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--secondaryLabelColor, #666);
+  font-size: 12px;
+  box-sizing: border-box;
+}
+

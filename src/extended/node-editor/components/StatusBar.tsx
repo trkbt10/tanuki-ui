@@ -5,7 +5,7 @@ import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import type { SettingsManager } from "../settings/SettingsManager";
 import { classNames } from "./elements";
 import { StatusSection, statusSectionStyles } from "./parts";
-import styles from "../NodeEditor.module.css";
+import styles from "./StatusBar.module.css";
 
 export interface StatusBarProps {
   className?: string;

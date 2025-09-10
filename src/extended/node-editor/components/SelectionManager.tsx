@@ -6,7 +6,8 @@ import { useNodeCanvas } from "../contexts/NodeCanvasContext";
 import { classNames } from "./elements";
 import { getNodeBoundingBox, createBoundingBoxFromCorners, doRectanglesIntersect } from "../utils/boundingBoxUtils";
 import { SpatialGrid } from "../utils/lookupUtils";
-import styles from "../NodeEditor.module.css";
+import styles from "./SelectionManager.module.css";
+import { SelectionOverlay } from "./parts";
 
 export interface SelectionManagerProps {
   children: React.ReactNode;
@@ -121,38 +122,11 @@ export const SelectionManager: React.FC<SelectionManagerProps> = ({ children }) 
     };
   }, [isSelecting, handlePointerMove, handlePointerUp]);
 
-  // Render selection box
-  const renderSelectionBox = () => {
-    if (!actionState.selectionBox) return null;
-
-    const { start, end } = actionState.selectionBox;
-    const left = Math.min(start.x, end.x);
-    const top = Math.min(start.y, end.y);
-    const width = Math.abs(end.x - start.x);
-    const height = Math.abs(end.y - start.y);
-
-    return (
-      <div
-        className={styles.selectionBoxOverlay}
-        style={{
-          left: `${left}px`,
-          top: `${top}px`,
-          width: `${width}px`,
-          height: `${height}px`,
-          transform: `translate(${canvasState.viewport.offset.x}px, ${canvasState.viewport.offset.y}px) scale(${canvasState.viewport.scale})`,
-          transformOrigin: "top left",
-        }}
-      />
-    );
-  };
+  // Render selection box overlay layer
+  const renderSelectionBox = () => <SelectionOverlay />;
 
   return (
-    <div
-      ref={containerRef}
-      className={styles.selectionContainer}
-      onPointerDown={handlePointerDown}
-      style={{ width: "100%", height: "100%", position: "relative" }}
-    >
+    <div ref={containerRef} className={styles.selectionContainer} onPointerDown={handlePointerDown}>
       {children}
       {renderSelectionBox()}
     </div>

@@ -7,7 +7,7 @@ import { NodeTreeList } from "./NodeTreeList";
 import { TabNav } from "./TabNav";
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
 import { classNames, Input, Label, H4, Toolbar, SwitchInput } from "./elements";
-import styles from "../NodeEditor.module.css";
+import styles from "./InspectorPanel.module.css";
 import { useI18n } from "../i18n";
 
 export interface InspectorPanelProps {

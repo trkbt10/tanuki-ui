@@ -78,6 +78,10 @@ export interface NodeEditorProps<TNodeDataTypeMap = {}> {
   locale?: Locale;
   fallbackLocale?: Locale;
   messagesOverride?: Partial<Record<Locale, Partial<I18nMessages>>>;
+  /** Override: enable/disable auto-save regardless of settings */
+  autoSaveEnabled?: boolean;
+  /** Override: auto-save interval in seconds */
+  autoSaveInterval?: number;
 }
 
 /**
@@ -112,6 +116,8 @@ export const NodeEditor = <TNodeDataTypeMap = {},>({
   locale,
   fallbackLocale,
   messagesOverride,
+  autoSaveEnabled,
+  autoSaveInterval,
 }: NodeEditorProps<TNodeDataTypeMap>) => {
   return (
     <I18nProvider initialLocale={locale} fallbackLocale={fallbackLocale} messagesOverride={messagesOverride}>
@@ -124,6 +130,8 @@ export const NodeEditor = <TNodeDataTypeMap = {},>({
           onSave={onSave}
           onLoad={onLoad}
           settingsManager={settingsManager}
+          autoSaveEnabled={autoSaveEnabled}
+          autoSaveInterval={autoSaveInterval}
         >
           <EditorActionStateProvider>
             <NodeCanvasProvider>
@@ -137,6 +145,8 @@ export const NodeEditor = <TNodeDataTypeMap = {},>({
                       uiOverlayLayers={uiOverlayLayers}
                       settingsManager={settingsManager}
                       toolbar={toolbar}
+                      autoSaveEnabled={autoSaveEnabled}
+                      autoSaveInterval={autoSaveInterval}
                       leftSidebar={leftSidebar}
                       rightSidebar={rightSidebar}
                       leftSidebarInitialWidth={leftSidebarInitialWidth}
@@ -167,6 +177,8 @@ const NodeEditorContent: React.FC<{
   uiOverlayLayers?: React.ReactNode[];
   settingsManager?: SettingsManager;
   toolbar?: React.ReactNode;
+  autoSaveEnabled?: boolean;
+  autoSaveInterval?: number;
   leftSidebar?: React.ReactNode;
   rightSidebar?: React.ReactNode;
   leftSidebarInitialWidth?: number;
@@ -184,6 +196,8 @@ const NodeEditorContent: React.FC<{
   uiOverlayLayers,
   settingsManager,
   toolbar,
+  autoSaveEnabled,
+  autoSaveInterval,
   leftSidebar,
   rightSidebar,
   leftSidebarInitialWidth,
@@ -262,8 +276,6 @@ const NodeEditorContent: React.FC<{
     showMinimap,
     showStatusBar,
     theme,
-    autoSave,
-    autoSaveInterval,
     smoothAnimations,
     doubleClickToEdit,
     fontSize,
@@ -271,6 +283,10 @@ const NodeEditorContent: React.FC<{
     gridOpacity,
     canvasBackground,
   } = settings;
+  const settingsAutoSave = settings.autoSave;
+  const settingsAutoSaveInterval = settings.autoSaveInterval;
+  const effectiveAutoSave = autoSaveEnabled ?? settingsAutoSave;
+  const effectiveAutoSaveInterval = (autoSaveInterval ?? settingsAutoSaveInterval) ?? 30;
   // Apply settings-based CSS custom properties
   const editorStyles = React.useMemo(
     () =>
@@ -400,7 +416,7 @@ const NodeEditorContent: React.FC<{
                 </PortPositionProvider>
               </CanvasBase>
 
-              {showStatusBar && <StatusBar autoSave={autoSave} isSaving={isSaving} settingsManager={settingsManager} />}
+              {showStatusBar && <StatusBar autoSave={effectiveAutoSave} isSaving={isSaving} settingsManager={settingsManager} />}
             </div>
           </ColumnLayout>
         </div>

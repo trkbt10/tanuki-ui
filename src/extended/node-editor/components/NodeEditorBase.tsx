@@ -1,7 +1,7 @@
 import * as React from "react";
 import { classNames } from "./elements";
 import { useNodeEditorShortcuts } from "../hooks/useNodeEditorShortcuts";
-import styles from "../NodeEditor.module.css";
+import styles from "./NodeEditorBase.module.css";
 
 interface NodeEditorBaseProps {
   children: React.ReactNode;

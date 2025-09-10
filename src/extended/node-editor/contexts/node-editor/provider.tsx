@@ -18,6 +18,10 @@ export interface NodeEditorProviderProps {
   onSave?: (data: NodeEditorData) => void | Promise<void>;
   onLoad?: () => NodeEditorData | Promise<NodeEditorData>;
   settingsManager?: SettingsManager;
+  /** Enable/disable auto-save (overrides settings) */
+  autoSaveEnabled?: boolean;
+  /** Auto-save interval in seconds (overrides settings) */
+  autoSaveInterval?: number;
 }
 
 export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
@@ -28,6 +32,8 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
   onLoad,
   onSave,
   settingsManager,
+  autoSaveEnabled,
+  autoSaveInterval,
 }) => {
   const nodeDefinitionsContext = React.useContext(NodeDefinitionContext);
   const registry = nodeDefinitionsContext?.registry;
@@ -81,7 +87,9 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
   }, [isSaving]);
 
   const settings = useSettings(settingsManager);
-  const { autoSave, autoSaveInterval } = settings;
+  const { autoSave: settingsAutoSave, autoSaveInterval: settingsAutoSaveInterval } = settings;
+  const effectiveAutoSave = autoSaveEnabled ?? settingsAutoSave;
+  const effectiveAutoSaveInterval = (autoSaveInterval ?? settingsAutoSaveInterval) ?? 30;
 
   // Load once when registry is available; avoid effect-driven loops
   const hasLoadedRef = React.useRef(false);
@@ -144,13 +152,13 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
   }, []);
 
   React.useEffect(() => {
-    if (!autoSave || !onSaveRef.current) return;
+    if (!effectiveAutoSave || !onSaveRef.current) return;
     const intervalId = setInterval(() => {
       // handleSave already checks saving state via ref
       handleSave();
-    }, autoSaveInterval * 1000);
+    }, effectiveAutoSaveInterval * 1000);
     return () => clearInterval(intervalId);
-  }, [autoSave, autoSaveInterval, handleSave]);
+  }, [effectiveAutoSave, effectiveAutoSaveInterval, handleSave]);
 
   const getNodePorts = React.useCallback(
     (nodeId: NodeId): Port[] => {
