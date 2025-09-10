@@ -256,6 +256,12 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
       toNode={toNode}
       fromPort={fromPort}
       toPort={toPort}
+      isActive={
+        actionState.selectedConnectionIds.includes(connection.id) ||
+        actionState.hoveredConnectionId === connection.id ||
+        actionState.selectedNodeIds.includes(connection.fromNodeId) ||
+        actionState.selectedNodeIds.includes(connection.toNodeId)
+      }
       fromNodePosition={fromNodeData.previewPosition || undefined}
       toNodePosition={toNodeData.previewPosition || undefined}
       fromNodeSize={fromNodeData.previewSize || undefined}

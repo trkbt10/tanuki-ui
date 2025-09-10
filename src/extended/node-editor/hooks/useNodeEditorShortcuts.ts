@@ -186,4 +186,94 @@ export const useNodeEditorShortcuts = () => {
       }
     }, [canRedo, performRedo])
   );
+
+  // Clipboard for copy/cut/paste of nodes
+  const clipboardRef = React.useRef<{ nodes: any[]; connections: any[] } | null>(null);
+
+  // Copy
+  useRegisterShortcut(
+    { key: "c", ctrl: true },
+    React.useCallback(() => {
+      const selected = actionState.selectedNodeIds;
+      if (selected.length === 0) return;
+      const nodes = selected
+        .map((id) => nodeEditorState.nodes[id])
+        .filter(Boolean)
+        .map((n) => ({ id: n.id, type: n.type, position: n.position, size: n.size, data: n.data }));
+      const selSet = new Set(selected);
+      const connections = Object.values(nodeEditorState.connections).filter(
+        (c) => selSet.has(c.fromNodeId) && selSet.has(c.toNodeId)
+      ).map((c) => ({ fromNodeId: c.fromNodeId, fromPortId: c.fromPortId, toNodeId: c.toNodeId, toPortId: c.toPortId }));
+      clipboardRef.current = { nodes, connections };
+      console.log('Copied nodes:', nodes.length, 'connections:', connections.length);
+    }, [actionState.selectedNodeIds, nodeEditorState.nodes, nodeEditorState.connections])
+  );
+
+  // Cut
+  useRegisterShortcut(
+    { key: "x", ctrl: true },
+    React.useCallback(() => {
+      const selected = actionState.selectedNodeIds;
+      if (selected.length === 0) return;
+      // Copy first
+      const nodes = selected
+        .map((id) => nodeEditorState.nodes[id])
+        .filter(Boolean)
+        .map((n) => ({ id: n.id, type: n.type, position: n.position, size: n.size, data: n.data }));
+      const selSet = new Set(selected);
+      const connections = Object.values(nodeEditorState.connections).filter(
+        (c) => selSet.has(c.fromNodeId) && selSet.has(c.toNodeId)
+      ).map((c) => ({ fromNodeId: c.fromNodeId, fromPortId: c.fromPortId, toNodeId: c.toNodeId, toPortId: c.toPortId }));
+      clipboardRef.current = { nodes, connections };
+
+      // Delete nodes
+      selected.forEach((nodeId) => nodeEditorDispatch(nodeEditorActions.deleteNode(nodeId)));
+      actionDispatch(actionActions.clearSelection());
+    }, [actionState.selectedNodeIds, nodeEditorDispatch, nodeEditorActions, actionDispatch, actionActions, nodeEditorState.nodes, nodeEditorState.connections])
+  );
+
+  // Paste
+  useRegisterShortcut(
+    { key: "v", ctrl: true },
+    React.useCallback(() => {
+      const clip = clipboardRef.current;
+      if (!clip || clip.nodes.length === 0) return;
+      const idMap = new Map<string, string>();
+
+      // Add nodes with new ids and slight offset
+      clip.nodes.forEach((n) => {
+        const newId = Math.random().toString(36).slice(2, 10);
+        idMap.set(n.id, newId);
+        nodeEditorDispatch(
+          nodeEditorActions.addNodeWithId({
+            id: newId,
+            type: n.type,
+            position: { x: n.position.x + 40, y: n.position.y + 40 },
+            size: n.size,
+            data: { ...n.data, title: typeof n.data?.title === 'string' ? `${n.data.title} Copy` : n.data?.title },
+          } as any)
+        );
+      });
+
+      // Recreate internal connections among pasted nodes
+      clip.connections.forEach((c) => {
+        const fromId = idMap.get(c.fromNodeId);
+        const toId = idMap.get(c.toNodeId);
+        if (fromId && toId) {
+          nodeEditorDispatch(
+            nodeEditorActions.addConnection({
+              fromNodeId: fromId,
+              fromPortId: c.fromPortId,
+              toNodeId: toId,
+              toPortId: c.toPortId,
+            })
+          );
+        }
+      });
+
+      // Select pasted nodes
+      const newIds = Array.from(idMap.values());
+      actionDispatch(actionActions.selectAllNodes(newIds));
+    }, [nodeEditorDispatch, nodeEditorActions, actionDispatch, actionActions])
+  );
 };

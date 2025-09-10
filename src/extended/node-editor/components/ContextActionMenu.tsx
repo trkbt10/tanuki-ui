@@ -100,6 +100,18 @@ export const ContextActionMenu: React.FC<ContextActionMenuProps> = ({ position, 
         {target.type === "node" && (
           <>
             <li className={styles.menuSectionTitle}>{t("inspectorNodeProperties")}</li>
+            <li
+              className={styles.menuItem}
+              onClick={() => {
+                if (target.type !== "node") return;
+                // Ensure node is selected and switch inspector to Properties tab
+                actionDispatch(actionActions.selectNode(target.id, false));
+                actionDispatch(actionActions.setInspectorActiveTab(1));
+                onClose();
+              }}
+            >
+              {t("contextMenuEditNode")}
+            </li>
             <li className={styles.menuItem} onClick={handleDuplicateNode}>{t("contextMenuDuplicateNode")}</li>
             <li className={classNames(styles.menuItem, styles.menuItemDanger)} onClick={handleDeleteNode}>{t("contextMenuDeleteNode")}</li>
           </>

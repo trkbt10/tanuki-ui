@@ -13,6 +13,7 @@ export interface ConnectionViewProps {
   toPort: Port;
   isSelected: boolean;
   isHovered: boolean;
+  isActive?: boolean;
   isDragging?: boolean;
   dragProgress?: number; // 0-1 for visual feedback during disconnect
   // Optional override positions for preview during drag
@@ -37,6 +38,7 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
   toPort,
   isSelected,
   isHovered,
+  isActive,
   isDragging,
   dragProgress = 0,
   fromNodePosition,
@@ -111,6 +113,8 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
     return { x: pt.x, y: pt.y, angle };
   }, [fromPosition.x, fromPosition.y, toPosition.x, toPosition.y, fromPort.position, toPort.position]);
   // Calculate color based on state
+  const active = isActive || isSelected || isHovered;
+
   const strokeColor = React.useMemo(() => {
     if (isDragging && dragProgress > 0) {
       // Interpolate to warning color during drag
@@ -118,10 +122,9 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
       const warningColor = "var(--cautionColor, #ff3b30)";
       return dragProgress > 0.5 ? warningColor : normalColor;
     }
-    if (isSelected) return "var(--accentColor, #0066cc)";
-    if (isHovered) return "var(--connectionHoverColor, #666)";
+    if (active) return "var(--accentColor, #0066cc)";
     return "var(--connectionColor, #999)";
-  }, [isDragging, dragProgress, isSelected, isHovered]);
+  }, [isDragging, dragProgress, active]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     e.stopPropagation();
@@ -171,7 +174,7 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
       />
 
       {/* Flow stripes when hovered or selected (render after base so they appear on top) */}
-      {(isSelected || isHovered) && (
+      {active && (
         <>
           {/* Accent stripes */}
           <path
@@ -186,7 +189,7 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
             style={{
               pointerEvents: "none",
               strokeDasharray: "10 14",
-              strokeOpacity: isSelected ? 0.9 : 0.7,
+              strokeOpacity: active ? 0.9 : 0.7,
             }}
           />
           {/* Background stripes, phase-shifted */}

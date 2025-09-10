@@ -8,6 +8,10 @@ export const nodeEditorReducer = (state: NodeEditorData, action: NodeEditorActio
       const node = { ...action.payload.node, id } as Node;
       return { ...state, nodes: { ...state.nodes, [id]: node } };
     }
+    case "ADD_NODE_WITH_ID": {
+      const node = action.payload.node as Node;
+      return { ...state, nodes: { ...state.nodes, [node.id]: node } };
+    }
     case "UPDATE_NODE": {
       const { nodeId, updates } = action.payload;
       const node = state.nodes[nodeId];

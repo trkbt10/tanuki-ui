@@ -2,6 +2,7 @@ import type { Connection, ConnectionId, Node, NodeEditorData, NodeId, Position }
 
 export type NodeEditorAction =
   | { type: "ADD_NODE"; payload: { node: Omit<Node, "id"> } }
+  | { type: "ADD_NODE_WITH_ID"; payload: { node: Node } }
   | { type: "UPDATE_NODE"; payload: { nodeId: NodeId; updates: Partial<Node> } }
   | { type: "DELETE_NODE"; payload: { nodeId: NodeId } }
   | { type: "MOVE_NODE"; payload: { nodeId: NodeId; position: Position } }
@@ -20,6 +21,10 @@ export type NodeEditorAction =
 export const nodeEditorActions = {
   addNode: (node: Omit<Node, "id">): NodeEditorAction => ({
     type: "ADD_NODE",
+    payload: { node },
+  }),
+  addNodeWithId: (node: Node): NodeEditorAction => ({
+    type: "ADD_NODE_WITH_ID",
     payload: { node },
   }),
   updateNode: (nodeId: NodeId, updates: Partial<Node>): NodeEditorAction => ({

@@ -35,6 +35,7 @@ export interface EditorActionState {
   connectedPorts: Set<PortId>;
   connectablePortIds: Set<string>; // composite key: `${nodeId}:${portId}`
   contextMenu: ContextMenuState;
+  inspectorActiveTab: number;
 }
 
 // Editor action state actions
@@ -67,7 +68,8 @@ export type EditorActionStateAction =
   | { type: "UPDATE_NODE_RESIZE"; payload: { currentSize: Size } }
   | { type: "END_NODE_RESIZE" }
   | { type: "SHOW_CONTEXT_MENU"; payload: { position: Position; nodeId?: NodeId; connectionId?: ConnectionId; canvasPosition?: Position } }
-  | { type: "HIDE_CONTEXT_MENU" };
+  | { type: "HIDE_CONTEXT_MENU" }
+  | { type: "SET_INSPECTOR_ACTIVE_TAB"; payload: { index: number } };
 
 // Editor action state reducer
 export const editorActionStateReducer = (
@@ -314,6 +316,12 @@ export const editorActionStateReducer = (
         },
       };
 
+    case "SET_INSPECTOR_ACTIVE_TAB":
+      return {
+        ...state,
+        inspectorActiveTab: action.payload.index,
+      };
+
     default:
       return state;
   }
@@ -340,6 +348,7 @@ export const defaultEditorActionState: EditorActionState = {
     nodeId: undefined,
     connectionId: undefined,
   },
+  inspectorActiveTab: 0,
 };
 
 // Editor action state action creators
@@ -438,6 +447,10 @@ export const editorActionStateActions = {
   }),
   hideContextMenu: (): EditorActionStateAction => ({
     type: "HIDE_CONTEXT_MENU",
+  }),
+  setInspectorActiveTab: (index: number): EditorActionStateAction => ({
+    type: "SET_INSPECTOR_ACTIVE_TAB",
+    payload: { index },
   }),
 };
 

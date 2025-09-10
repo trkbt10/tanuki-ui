@@ -20,9 +20,10 @@ export interface InspectorPanelProps {
  */
 export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => {
   const { state: nodeEditorState, actions: nodeEditorActions, dispatch: nodeEditorDispatch } = useNodeEditor();
-  const { state: actionState } = useEditorActionState();
+  const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState, dispatch: canvasDispatch, actions: canvasActions } = useNodeCanvas();
-  const [activeTabIndex, setActiveTabIndex] = React.useState(0);
+  const activeTabIndex = actionState.inspectorActiveTab ?? 0;
+  const setActiveTabIndex = (index: number) => actionDispatch(actionActions.setInspectorActiveTab(index));
   const { t } = useI18n();
   const tabItems = [t("inspectorTabLayers") || "Layers", t("inspectorTabProperties") || "Properties"]; 
 
