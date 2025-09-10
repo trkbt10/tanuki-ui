@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "Node",
-    "module": "CommonJS",
-    
+    "moduleResolution": "bundler",
+    "module": "es2022",
+
     "newLine": "LF",
     "sourceMap": true,
     "declaration": true,
@@ -23,8 +23,5 @@
     "jsx": "react",
     "types": ["vitest/globals", "vite/client"]
   },
-  "include": [
-    "./src/**/*",
-    "./__tests__/**/*"
-  ]
+  "include": ["./src/**/*", "./__tests__/**/*"]
 }
