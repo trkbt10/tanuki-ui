@@ -90,7 +90,7 @@ describe("NodeEditorContext reducer - updates", () => {
     expect(updated.connections.c2).toBeUndefined();
   });
 
-  it("ADD_CONNECTION enforces single connection per input port (last wins)", () => {
+  it("ADD_CONNECTION does not enforce connection limits (validation is upstream)", () => {
     const initial: NodeEditorData = {
       nodes: {
         a: { id: "a", type: "t", position: { x: 0, y: 0 }, data: {} },
@@ -102,8 +102,7 @@ describe("NodeEditorContext reducer - updates", () => {
     const s1 = nodeEditorReducer(initial, nodeEditorActions.addConnection({ fromNodeId: "a", fromPortId: "out", toNodeId: "c", toPortId: "in" }));
     const s2 = nodeEditorReducer(s1, nodeEditorActions.addConnection({ fromNodeId: "b", fromPortId: "out", toNodeId: "c", toPortId: "in" }));
     const conns = Object.values(s2.connections);
-    expect(conns.length).toBe(1);
-    expect(conns[0]).toEqual(expect.objectContaining({ fromNodeId: "b", toNodeId: "c", toPortId: "in" }));
+    expect(conns.length).toBe(2);
   });
 
   it("DUPLICATE_NODES creates offset copy with 'Copy' title and tracks lastDuplicatedNodeIds", () => {
@@ -207,4 +206,3 @@ describe("onDataChange loop prevention", () => {
     expect(calls).toBe(1);
   });
 });
-

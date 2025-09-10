@@ -105,7 +105,7 @@ export interface PortDefinition {
   /** Whether this port is required */
   required?: boolean;
   /** Maximum number of connections (default: 1 for input, unlimited for output) */
-  maxConnections?: number;
+  maxConnections?: number | "unlimited";
 }
 
 /**

@@ -5,6 +5,9 @@ import type { Position } from "../types/core";
 import { useNodeEditorActions } from "../hooks/useNodeEditorActions";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useI18n } from "../i18n";
+import { useNodeEditor } from "../contexts/node-editor";
+import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
+import { canAddNodeType, countNodesByType } from "../utils/nodeTypeLimits";
 
 export type ContextTarget =
   | { type: "node"; id: string }
@@ -21,6 +24,8 @@ export const ContextActionMenu: React.FC<ContextActionMenuProps> = ({ position, 
   const { t } = useI18n();
   const editorActions = useNodeEditorActions();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
+  const { state: editorState } = useNodeEditor();
+  const nodeDefinitions = useNodeDefinitionList();
   const [menuPosition, setMenuPosition] = React.useState({ x: position.x, y: position.y });
   const menuRef = React.useRef<HTMLDivElement>(null);
 
@@ -59,6 +64,13 @@ export const ContextActionMenu: React.FC<ContextActionMenuProps> = ({ position, 
 
   const handleDuplicateNode = () => {
     if (target.type !== "node") return;
+    const node = editorState.nodes[target.id];
+    if (!node) return;
+    const counts = countNodesByType(editorState);
+    if (!canAddNodeType(node.type, nodeDefinitions, counts)) {
+      onClose();
+      return;
+    }
     editorActions.duplicateNodes([target.id]);
     onClose();
   };

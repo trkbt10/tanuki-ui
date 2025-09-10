@@ -6,7 +6,7 @@ export type NodeEditorAction =
   | { type: "DELETE_NODE"; payload: { nodeId: NodeId } }
   | { type: "MOVE_NODE"; payload: { nodeId: NodeId; position: Position } }
   | { type: "MOVE_NODES"; payload: { updates: Record<NodeId, Position> } }
-  | { type: "ADD_CONNECTION"; payload: { connection: Omit<Connection, "id"> } }
+  | { type: "ADD_CONNECTION"; payload: { connection: Omit<Connection, "id">; allowMultiToPort?: boolean } }
   | { type: "DELETE_CONNECTION"; payload: { connectionId: ConnectionId } }
   | { type: "SET_NODE_DATA"; payload: { data: NodeEditorData } }
   | { type: "RESTORE_STATE"; payload: { data: NodeEditorData } }
@@ -38,9 +38,9 @@ export const nodeEditorActions = {
     type: "MOVE_NODES",
     payload: { updates },
   }),
-  addConnection: (connection: Omit<Connection, "id">): NodeEditorAction => ({
+  addConnection: (connection: Omit<Connection, "id">, options?: { allowMultiToPort?: boolean }): NodeEditorAction => ({
     type: "ADD_CONNECTION",
-    payload: { connection },
+    payload: { connection, allowMultiToPort: options?.allowMultiToPort },
   }),
   deleteConnection: (connectionId: ConnectionId): NodeEditorAction => ({
     type: "DELETE_CONNECTION",
@@ -81,4 +81,3 @@ export const nodeEditorActions = {
 };
 
 export type { NodeEditorData };
-

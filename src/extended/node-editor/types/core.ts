@@ -37,7 +37,7 @@ export interface Port {
   nodeId: NodeId;
   position: PortPosition;
   dataType?: string;
-  maxConnections?: number;
+  maxConnections?: number | "unlimited";
   allowedNodeTypes?: string[];
   allowedPortTypes?: string[];
 }

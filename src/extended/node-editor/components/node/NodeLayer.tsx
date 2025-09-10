@@ -188,8 +188,10 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         hasConnection: existingConnections.length > 0,
       };
 
-      // Handle new connection if not connected
-      if (existingConnections.length === 0) {
+      // Start new connection drag when:
+      // - the port has no connections, or
+      // - it's an output port (outputs default to multi-connection unless limited by definition)
+      if (existingConnections.length === 0 || port.type === "output") {
         const actionPort: Port = {
           id: port.id,
           nodeId: port.nodeId,

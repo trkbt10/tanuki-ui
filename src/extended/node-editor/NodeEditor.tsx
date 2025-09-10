@@ -27,6 +27,7 @@ import { useSettings } from "./hooks/useSettings";
 import { classNames } from "./components/elements";
 import styles from "./NodeEditor.module.css";
 import { I18nProvider, type Locale, type I18nMessages } from "./i18n";
+import { countNodesByType, getDisabledNodeTypes, canAddNodeType } from "./utils/nodeTypeLimits";
 
 export interface NodeEditorProps<TNodeDataTypeMap = {}> {
   /** Initial data for uncontrolled mode (like defaultValue) */
@@ -201,20 +202,10 @@ const NodeEditorContent: React.FC<{
   const nodeDefinitions = useNodeDefinitionList();
 
   // Count nodes by type for max-per-flow enforcement
-  const nodeTypeCounts = React.useMemo(() => {
-    const counts = new Map<string, number>();
-    Object.values(editorState.nodes).forEach((n) => {
-      counts.set(n.type, (counts.get(n.type) || 0) + 1);
-    });
-    return counts;
-  }, [editorState.nodes]);
+  const nodeTypeCounts = React.useMemo(() => countNodesByType(editorState), [editorState]);
 
   // Determine which node types should be disabled in palette based on maxPerFlow
-  const disabledNodeTypes = React.useMemo(() => {
-    return nodeDefinitions
-      .filter((def) => typeof def.maxPerFlow === 'number' && (nodeTypeCounts.get(def.type) || 0) >= (def.maxPerFlow as number))
-      .map((def) => def.type);
-  }, [nodeDefinitions, nodeTypeCounts]);
+  const disabledNodeTypes = React.useMemo(() => getDisabledNodeTypes(nodeDefinitions, nodeTypeCounts), [nodeDefinitions, nodeTypeCounts]);
 
   // Compute port positions whenever nodes change
   const [portPositions, setPortPositions] = React.useState<EditorPortPositions>(() => new Map());
@@ -323,11 +314,7 @@ const NodeEditorContent: React.FC<{
       };
 
       // Enforce per-flow maximums if defined
-      const currentCount = nodeTypeCounts.get(nodeType) || 0;
-      if (typeof nodeDefinition.maxPerFlow === 'number' && currentCount >= nodeDefinition.maxPerFlow) {
-        // At limit: do not add
-        return;
-      }
+      if (!canAddNodeType(nodeType, nodeDefinitions, nodeTypeCounts)) return;
 
       // Create new node with definition defaults
       const newNode = {

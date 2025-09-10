@@ -7,6 +7,7 @@ import { FloatingContainer } from "./parts/FloatingContainer";
 import { Button } from "./elements";
 import styles from "./Toolbar.module.css";
 import editorStyles from "../NodeEditor.module.css";
+import { countNodesByType, canAddNodeType } from "../utils/nodeTypeLimits";
 
 export interface ToolbarProps {
   className?: string;
@@ -32,13 +33,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
   }, [nodeDefinitions]);
 
   // Count nodes by type for disabling toolbar buttons
-  const nodeTypeCounts = React.useMemo(() => {
-    const counts = new Map<string, number>();
-    Object.values(editorState.nodes).forEach((n) => {
-      counts.set(n.type, (counts.get(n.type) || 0) + 1);
-    });
-    return counts;
-  }, [editorState.nodes]);
+  const nodeTypeCounts = React.useMemo(() => countNodesByType(editorState), [editorState]);
 
   const handleToolbarNodeCreate = React.useCallback((nodeType: string) => {
     const nodeDefinition = nodeDefinitions.find(def => def.type === nodeType);
@@ -48,10 +43,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
     }
 
     // Enforce per-flow maximums if defined
-    const currentCount = nodeTypeCounts.get(nodeType) || 0;
-    if (typeof nodeDefinition.maxPerFlow === 'number' && currentCount >= nodeDefinition.maxPerFlow) {
-      return; // at limit; do not create
-    }
+    if (!canAddNodeType(nodeType, nodeDefinitions, nodeTypeCounts)) return;
 
     // Calculate center position of current viewport
     const viewport = canvasState.viewport;
@@ -102,7 +94,7 @@ export const Toolbar: React.FC<ToolbarProps> = ({
         <Button
           key={nodeType.type}
           className={editorStyles.toolButton}
-          disabled={typeof nodeType.maxPerFlow === 'number' && (nodeTypeCounts.get(nodeType.type) || 0) >= (nodeType.maxPerFlow as number)}
+          disabled={!canAddNodeType(nodeType.type, nodeDefinitions, nodeTypeCounts)}
           onClick={() => handleToolbarNodeCreate(nodeType.type)}
           title={`Add ${nodeType.displayName}`}
           aria-label={`Add ${nodeType.displayName}`}

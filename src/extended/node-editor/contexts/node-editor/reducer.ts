@@ -41,12 +41,8 @@ export const nodeEditorReducer = (state: NodeEditorData, action: NodeEditorActio
     case "ADD_CONNECTION": {
       const { connection } = action.payload;
       const id = generateId();
-      const existing = Object.entries(state.connections).filter(
-        ([, conn]) => conn.toNodeId === connection.toNodeId && conn.toPortId === connection.toPortId
-      );
-      const pruned = { ...state.connections };
-      existing.forEach(([connId]) => delete pruned[connId]);
-      return { ...state, connections: { ...pruned, [id]: { ...connection, id } } };
+      // Assume upstream validation enforces maxConnections; reducer simply adds
+      return { ...state, connections: { ...state.connections, [id]: { ...connection, id } } };
     }
     case "DELETE_CONNECTION": {
       const { connectionId } = action.payload;
@@ -157,4 +153,3 @@ export function generateId(): string {
 }
 
 export type { NodeEditorData };
-

@@ -4,6 +4,8 @@ import { useNodeEditor } from "../contexts/node-editor";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useHistoryIntegration } from "./useHistoryIntegration";
 import { useAutoLayout } from "./useAutoLayout";
+import { filterDuplicableNodeIds } from "../utils/nodeTypeLimits";
+import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
 
 /**
  * Hook that registers all standard node editor keyboard shortcuts
@@ -13,6 +15,7 @@ export const useNodeEditorShortcuts = () => {
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { performUndo, performRedo, canUndo, canRedo } = useHistoryIntegration();
   const { applyLayout } = useAutoLayout();
+  const nodeDefinitions = useNodeDefinitionList();
 
   // Delete selected nodes
   useRegisterShortcut(
@@ -109,10 +112,13 @@ export const useNodeEditorShortcuts = () => {
     React.useCallback(() => {
       console.log('Duplicate shortcut triggered');
       if (actionState.selectedNodeIds.length > 0) {
-        // Use the built-in duplicateNodes action for consistency
-        nodeEditorDispatch(nodeEditorActions.duplicateNodes(actionState.selectedNodeIds));
+        // Respect per-type limits by filtering duplicable ids
+        const allowed = filterDuplicableNodeIds(actionState.selectedNodeIds, nodeEditorState, nodeDefinitions);
+        if (allowed.length > 0) {
+          nodeEditorDispatch(nodeEditorActions.duplicateNodes(allowed));
+        }
       }
-    }, [actionState.selectedNodeIds, nodeEditorDispatch, nodeEditorActions])
+    }, [actionState.selectedNodeIds, nodeEditorDispatch, nodeEditorActions, nodeEditorState, nodeDefinitions])
   );
 
   // Auto-select duplicated nodes when they are created

@@ -8,7 +8,7 @@ export interface PortOverride {
   /** References port from definition */
   portId: string;
   /** Override max connections */
-  maxConnections?: number;
+  maxConnections?: number | "unlimited";
   /** Override allowed node types */
   allowedNodeTypes?: string[];
   /** Override allowed port types */

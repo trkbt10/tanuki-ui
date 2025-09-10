@@ -11,6 +11,13 @@ export const canConnectPorts = (
   toNodeDef?: NodeDefinition,
   connections?: Record<string, Connection>
 ): boolean => {
+  // Helper to normalize max: number | "unlimited" | undefined -> number | undefined
+  const normalizeMax = (value: number | "unlimited" | undefined, defaultValue: number): number | undefined => {
+    if (value === "unlimited") return undefined; // no limit
+    if (typeof value === "number") return value;
+    return defaultValue;
+  };
+
   // Basic connection rules
   if (fromPort.type === toPort.type) return false; // Same type cannot connect
   if (fromPort.nodeId === toPort.nodeId) return false; // Same node cannot connect
@@ -20,13 +27,15 @@ export const canConnectPorts = (
   if (fromPort.type === "output" && toPort.type !== "input") return false;
   if (fromPort.type === "input" && toPort.type !== "output") return false;
   
-  // Check if connection already exists
+  // Check if identical connection already exists (match both node and port ids)
   if (connections) {
-    const existingConnection = Object.values(connections).find(conn => 
-      (conn.fromPortId === fromPort.id && conn.toPortId === toPort.id) ||
-      (conn.fromPortId === toPort.id && conn.toPortId === fromPort.id)
+    const exists = Object.values(connections).some(conn =>
+      (conn.fromNodeId === fromPort.nodeId && conn.fromPortId === fromPort.id &&
+       conn.toNodeId === toPort.nodeId && conn.toPortId === toPort.id) ||
+      (conn.fromNodeId === toPort.nodeId && conn.fromPortId === toPort.id &&
+       conn.toNodeId === fromPort.nodeId && conn.toPortId === fromPort.id)
     );
-    if (existingConnection) return false;
+    if (exists) return false;
   }
   
   // Check custom validation functions (both must allow)
@@ -45,18 +54,24 @@ export const canConnectPorts = (
     if (fromPortDef.dataType !== toPortDef.dataType) return false;
   }
   
-  // Check max connections limit (both ends if defined)
+  // Check max connections limit (default for all ports is 1; "unlimited" removes the limit)
   if (connections) {
-    if (toPortDef?.maxConnections !== undefined) {
-      const toPortConnections = Object.values(connections).filter(conn => conn.toPortId === toPort.id);
-      if (toPortConnections.length >= toPortDef.maxConnections) return false;
+    const toMax = normalizeMax(toPortDef?.maxConnections, 1);
+    if (toMax !== undefined) {
+      const toPortConnections = Object.values(connections).filter(
+        conn => conn.toNodeId === toPort.nodeId && conn.toPortId === toPort.id
+      );
+      if (toPortConnections.length >= toMax) return false;
     }
-    if (fromPortDef?.maxConnections !== undefined) {
-      const fromPortConnections = Object.values(connections).filter(conn => conn.fromPortId === fromPort.id);
-      if (fromPortConnections.length >= fromPortDef.maxConnections) return false;
+    const fromMax = normalizeMax(fromPortDef?.maxConnections, 1);
+    if (fromMax !== undefined) {
+      const fromPortConnections = Object.values(connections).filter(
+        conn => conn.fromNodeId === fromPort.nodeId && conn.fromPortId === fromPort.id
+      );
+      if (fromPortConnections.length >= fromMax) return false;
     }
   }
-  
+
   return true;
 };
 
