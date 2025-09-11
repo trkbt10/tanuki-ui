@@ -14,6 +14,7 @@ export interface ConnectionViewProps {
   isSelected: boolean;
   isHovered: boolean;
   isActive?: boolean;
+  adjacentToSelectedNode?: boolean;
   isDragging?: boolean;
   dragProgress?: number; // 0-1 for visual feedback during disconnect
   // Optional override positions for preview during drag
@@ -41,6 +42,7 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
   isActive,
   isDragging,
   dragProgress = 0,
+  adjacentToSelectedNode = false,
   fromNodePosition,
   toNodePosition,
   fromNodeSize,
@@ -112,8 +114,11 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
     const angle = (Math.atan2(tan.y, tan.x) * 180) / Math.PI;
     return { x: pt.x, y: pt.y, angle };
   }, [fromPosition.x, fromPosition.y, toPosition.x, toPosition.y, fromPort.position, toPort.position]);
-  // Calculate color based on state
-  const active = isActive || isSelected || isHovered;
+  // Active state for styles
+  // - Stripes should appear only when hovered or selected
+  // - Color can respond to broader active state (hover/selected/related)
+  const stripesActive = isSelected || adjacentToSelectedNode;
+  const colorActive = isSelected || isHovered; // color highlight only for direct selection/hover
 
   const strokeColor = React.useMemo(() => {
     if (isDragging && dragProgress > 0) {
@@ -122,9 +127,9 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
       const warningColor = "var(--cautionColor, #ff3b30)";
       return dragProgress > 0.5 ? warningColor : normalColor;
     }
-    if (active) return "var(--accentColor, #0066cc)";
+    if (colorActive) return "var(--accentColor, #0066cc)";
     return "var(--connectionColor, #999)";
-  }, [isDragging, dragProgress, active]);
+  }, [isDragging, dragProgress, colorActive]);
 
   const handlePointerDown = (e: React.PointerEvent) => {
     e.stopPropagation();
@@ -174,7 +179,7 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
       />
 
       {/* Flow stripes when hovered or selected (render after base so they appear on top) */}
-      {active && (
+      {stripesActive && (
         <>
           {/* Accent stripes */}
           <path
@@ -189,8 +194,9 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
             style={{
               pointerEvents: "none",
               strokeDasharray: "10 14",
-              strokeOpacity: active ? 0.9 : 0.7,
+              strokeOpacity: stripesActive ? 0.9 : 0.7,
             }}
+            data-testid="connection-flow-stripe"
           />
           {/* Background stripes, phase-shifted */}
           <path
@@ -208,6 +214,7 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
               strokeDashoffset: -12,
               strokeOpacity: 0.6,
             }}
+            data-testid="connection-flow-stripe"
           />
         </>
       )}
@@ -262,6 +269,8 @@ const areEqual = (prevProps: ConnectionViewProps, nextProps: ConnectionViewProps
     prevProps.connection.id !== nextProps.connection.id ||
     prevProps.isSelected !== nextProps.isSelected ||
     prevProps.isHovered !== nextProps.isHovered ||
+    prevProps.isActive !== nextProps.isActive ||
+    prevProps.adjacentToSelectedNode !== nextProps.adjacentToSelectedNode ||
     prevProps.isDragging !== nextProps.isDragging ||
     prevProps.dragProgress !== nextProps.dragProgress
   ) {

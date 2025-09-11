@@ -100,7 +100,8 @@ export const CanvasBase: React.FC<CanvasBaseProps> = ({ children, className, sho
       // Left click for box selection (if not clicking on interactive elements)
       // More permissive targeting - only exclude specific interactive elements
       const target = e.target as Element;
-      const isInteractiveElement = target?.closest?.('.nodeView, .port, .connectionGroup, button, input, textarea, [role="button"]');
+      // Use data- attributes (CSS Modules class names are hashed)
+      const isInteractiveElement = target?.closest?.('[data-node-id], [data-port-id], [data-connection-id], button, input, textarea, [role="button"]');
       
       
       // Allow box selection unless clicking on interactive elements
@@ -239,6 +240,14 @@ export const CanvasBase: React.FC<CanvasBaseProps> = ({ children, className, sho
     actionDispatch(actionActions.showContextMenu(position, undefined, canvasPosition));
   }, [actionDispatch, actionActions, utils]);
 
+  // Handle double click to open Node Search
+  const handleDoubleClick = React.useCallback((e: React.MouseEvent) => {
+    // Convert screen coordinates to canvas coordinates using utils
+    const canvasPosition = utils.screenToCanvas(e.clientX, e.clientY);
+    const position = { x: e.clientX, y: e.clientY };
+    actionDispatch(actionActions.showContextMenu(position, undefined, canvasPosition, undefined, 'search'));
+  }, [actionDispatch, actionActions, utils]);
+
   // Handle keyboard shortcuts (Figma style)
   React.useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -311,6 +320,7 @@ export const CanvasBase: React.FC<CanvasBaseProps> = ({ children, className, sho
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onContextMenu={handleContextMenu}
+      onDoubleClick={handleDoubleClick}
       role="application"
       aria-label="Node Editor Canvas"
     >

@@ -22,12 +22,14 @@ import type { EditorPortPositions } from "./types/portPosition";
 import { useEditorActionState } from "./contexts/EditorActionStateContext";
 import { useNodeCanvas } from "./contexts/NodeCanvasContext";
 import type { NodeDefinition, ExternalDataReference } from "./types/NodeDefinition";
+import type { Port as CorePort } from "./types/core";
 import type { SettingsManager } from "./settings/SettingsManager";
 import { useSettings } from "./hooks/useSettings";
 import { classNames } from "./components/elements";
 import styles from "./NodeEditor.module.css";
 import { I18nProvider, type Locale, type I18nMessages } from "./i18n";
 import { countNodesByType, getDisabledNodeTypes, canAddNodeType } from "./utils/nodeTypeLimits";
+import { canConnectPorts } from "./utils/connectionValidation";
 
 export interface NodeEditorProps<TNodeDataTypeMap = {}> {
   /** Initial data for uncontrolled mode (like defaultValue) */
@@ -345,16 +347,43 @@ const NodeEditorContent: React.FC<{
         // Ports are no longer assigned here - they will be inferred from NodeDefinition
       };
 
-      // Add node to editor
-      dispatch(actions.addNode(newNode));
+      // Add node to editor with the predetermined id
+      dispatch(actions.addNodeWithId(newNode));
 
-      // Select the new node
-      actionDispatch(actionActions.selectNode(nodeId, false));
+      // Do not auto-select the new node to avoid unintended adjacent highlighting
+
+      // If creation was triggered from connection drag, try to connect
+      const fromPort = actionState.contextMenu.fromPort;
+      if (fromPort) {
+        const fromNode = editorState.nodes[fromPort.nodeId];
+        const fromDef = fromNode ? nodeDefinitions.find((d) => d.type === fromNode.type) : undefined;
+        const toDef = nodeDefinition;
+        const toPorts = toDef.ports || [];
+        const targetPortDef = toPorts.find((p) => {
+          if (p.type === fromPort.type) return false;
+          const tempPort: CorePort = { id: p.id, type: p.type, label: p.label, nodeId, position: p.position };
+          return canConnectPorts(
+            fromPort.type === "output" ? fromPort : tempPort,
+            fromPort.type === "output" ? tempPort : fromPort,
+            fromDef,
+            toDef,
+            editorState.connections
+          );
+        });
+        if (targetPortDef) {
+          const tempPort: CorePort = { id: targetPortDef.id, type: targetPortDef.type, label: targetPortDef.label, nodeId, position: targetPortDef.position };
+          const connection =
+            fromPort.type === "output"
+              ? { fromNodeId: fromPort.nodeId, fromPortId: fromPort.id, toNodeId: nodeId, toPortId: tempPort.id }
+              : { fromNodeId: nodeId, fromPortId: tempPort.id, toNodeId: fromPort.nodeId, toPortId: fromPort.id };
+          dispatch(actions.addConnection(connection));
+        }
+      }
 
       // Hide context menu
       actionDispatch(actionActions.hideContextMenu());
     },
-    [nodeDefinitions, dispatch, actions, actionDispatch, actionActions, actionState.contextMenu.canvasPosition, utils]
+    [nodeDefinitions, dispatch, actions, actionDispatch, actionActions, actionState.contextMenu.canvasPosition, actionState.contextMenu.fromPort, editorState.connections, editorState.nodes, utils]
   );
 
   // Register save keyboard shortcut
@@ -432,21 +461,30 @@ const NodeEditorContent: React.FC<{
       )}
 
       {/* Context Menus */}
-      {actionState.contextMenu.visible && !actionState.contextMenu.nodeId && !actionState.contextMenu.connectionId && (
+      {actionState.contextMenu.visible && actionState.contextMenu.mode === 'search' && (
         <NodeSearchMenu
           position={actionState.contextMenu.position}
           nodeDefinitions={nodeDefinitions}
-          disabledNodeTypes={disabledNodeTypes}
+          disabledNodeTypes={(() => {
+            const allowed = actionState.contextMenu.allowedNodeTypes;
+            if (!allowed) return disabledNodeTypes;
+            const allowedSet = new Set(allowed);
+            const flowDisabled = new Set(disabledNodeTypes);
+            const extraDisabled = nodeDefinitions
+              .map((d) => d.type)
+              .filter((t) => !allowedSet.has(t));
+            return Array.from(new Set([...Array.from(flowDisabled), ...extraDisabled]));
+          })()}
           onCreateNode={handleCreateNode}
           onClose={() => actionDispatch(actionActions.hideContextMenu())}
           visible={true}
         />
       )}
 
-      {actionState.contextMenu.visible && (actionState.contextMenu.nodeId || actionState.contextMenu.connectionId) && (
+      {actionState.contextMenu.visible && actionState.contextMenu.mode !== 'search' && (
         <ContextActionMenu
           position={actionState.contextMenu.position}
-          target={actionState.contextMenu.nodeId ? { type: "node", id: actionState.contextMenu.nodeId } : { type: "connection", id: actionState.contextMenu.connectionId! }}
+          target={actionState.contextMenu.nodeId ? { type: "node", id: actionState.contextMenu.nodeId } : actionState.contextMenu.connectionId ? { type: "connection", id: actionState.contextMenu.connectionId } : { type: 'canvas' }}
           visible={true}
           onClose={() => actionDispatch(actionActions.hideContextMenu())}
         />

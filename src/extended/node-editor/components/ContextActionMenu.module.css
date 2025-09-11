@@ -54,10 +54,15 @@
   text-transform: uppercase;
 }
 
+.shortcutHint {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--tertiaryLabelColor, #9ca3af);
+}
+
 .separator {
   height: 1px;
   margin: 6px 4px;
   background: var(--inputBorder, #e0e0e0);
   border: 0;
 }
-

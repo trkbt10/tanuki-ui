@@ -27,6 +27,8 @@ import {
   getConnectablePortIds,
   createValidatedConnection
 } from "../../utils/nodeLayerHelpers";
+import { canConnectPorts } from "../../utils/connectionValidation";
+import type { Port as CorePort } from "../../types/core";
 
 export interface NodeLayerProps {
   className?: string;
@@ -446,6 +448,44 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       actionDispatch(actionActions.updateConnectionDrag(canvasPosition, null));
     },
     onPointerUp: () => {
+      const drag = actionState.connectionDragState;
+      if (!drag) {
+        actionDispatch(actionActions.endConnectionDrag());
+        return;
+      }
+      const { fromPort, candidatePort, toPosition } = drag;
+      if (!candidatePort || fromPort.id === candidatePort.id) {
+        // Open Node Search filtered by connectable node types at drop position
+        const screen = utils.canvasToScreen(toPosition.x, toPosition.y);
+        const defs = getNodeDef.registry.getAll();
+        const fromNode = nodeEditorState.nodes[fromPort.nodeId];
+        const fromDef = fromNode ? getNodeDef.registry.get(fromNode.type) : undefined;
+        const allowed: string[] = [];
+        defs.forEach((def) => {
+          const ports = def.ports || [];
+          const ok = ports.some((p) => {
+            if (p.type === fromPort.type) return false;
+            const tempPort: CorePort = { id: p.id, type: p.type, label: p.label, nodeId: 'new', position: p.position };
+            return canConnectPorts(
+              fromPort.type === 'output' ? fromPort : tempPort,
+              fromPort.type === 'output' ? tempPort : fromPort,
+              fromDef,
+              def,
+              nodeEditorState.connections
+            );
+          });
+          if (ok) allowed.push(def.type);
+        });
+        actionDispatch(actionActions.showContextMenu(
+          { x: screen.x, y: screen.y },
+          undefined,
+          { x: toPosition.x, y: toPosition.y },
+          undefined,
+          'search',
+          allowed,
+          fromPort
+        ));
+      }
       actionDispatch(actionActions.endConnectionDrag());
     },
   });
@@ -463,7 +503,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
   });
 
   return (
-    <div className={classNames(styles.nodeLayer, className)}>
+    <div className={classNames(styles.nodeLayer, className)} data-node-layer>
       {sortedNodes.map((node) => (
         <NodeView
           key={node.id}

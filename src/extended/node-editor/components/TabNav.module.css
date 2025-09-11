@@ -10,16 +10,16 @@
 
 .tabButton {
   flex: 1;
-  padding: 8px 16px;
+  padding: 4px 8px;
   background: transparent;
   border: none;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--secondaryLabelColor, #666);
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
-  min-height: 36px;
+  min-height: 28px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,4 +45,3 @@
   background: var(--accentColor, #007AFF);
   color: var(--controlTextColor--primary, #ffffff);
 }
-

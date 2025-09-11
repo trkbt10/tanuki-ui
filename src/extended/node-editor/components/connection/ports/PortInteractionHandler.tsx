@@ -7,6 +7,7 @@ import { useNodeDefinitions } from "../../../contexts/NodeDefinitionContext";
 import { usePointerDrag } from "../../../hooks/usePointerDrag";
 // Use the unified connectable ports calculator based on resolved ports
 import { getConnectablePortIds, isPortConnectable, createValidatedConnection } from "../../../utils/nodeLayerHelpers";
+import { canConnectPorts } from "../../../utils/connectionValidation";
 // isPortConnectable imported above
 import { PORT_INTERACTION_THRESHOLD } from "../../../constants/interaction";
 

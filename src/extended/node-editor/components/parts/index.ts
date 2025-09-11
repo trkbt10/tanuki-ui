@@ -1,5 +1,7 @@
 export { StatusSection, statusSectionStyles } from "./StatusSection";
 export type { StatusSectionProps } from "./StatusSection";
+export { PropertySection } from "./PropertySection";
+export type { PropertySectionProps } from "./PropertySection";
 
 export { FloatingContainer } from "./FloatingContainer";
 export type { FloatingContainerProps } from "./FloatingContainer";

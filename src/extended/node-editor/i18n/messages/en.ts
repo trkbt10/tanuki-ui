@@ -12,7 +12,9 @@ export const enMessages: I18nMessages = {
   delete: "Delete",
   edit: "Edit",
   copy: "Copy",
+  cut: "Cut",
   paste: "Paste",
+  addConnection: "Add Connection…",
 
   // Node Editor UI
   addNode: "Add Node",
@@ -89,6 +91,7 @@ export const enMessages: I18nMessages = {
   inspectorTabLayers: "Layers",
   inspectorTabProperties: "Properties",
   inspectorTabHistory: "History",
+  inspectorTabSettings: "Settings",
 
   // History Panel
   historyUndo: "Undo",

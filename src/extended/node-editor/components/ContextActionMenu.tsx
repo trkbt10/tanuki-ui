@@ -1,5 +1,6 @@
 import * as React from "react";
 import { classNames, calculateContextMenuPosition, getViewportInfo } from "./elements";
+import { EditIcon, DeleteIcon, DuplicateIcon, CopyIcon, CutIcon, PasteIcon, PlusIcon } from "./elements/icons";
 import styles from "./ContextActionMenu.module.css";
 import type { Position } from "../types/core";
 import { useNodeEditorActions } from "../hooks/useNodeEditorActions";
@@ -8,10 +9,12 @@ import { useI18n } from "../i18n";
 import { useNodeEditor } from "../contexts/node-editor";
 import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
 import { canAddNodeType, countNodesByType } from "../utils/nodeTypeLimits";
+import { getClipboard, setClipboard } from "../utils/clipboard";
 
 export type ContextTarget =
   | { type: "node"; id: string }
-  | { type: "connection"; id: string };
+  | { type: "connection"; id: string }
+  | { type: "canvas" };
 
 export interface ContextActionMenuProps {
   position: Position;
@@ -56,6 +59,11 @@ export const ContextActionMenu: React.FC<ContextActionMenuProps> = ({ position, 
 
   if (!visible) return null;
 
+  const isMac = typeof navigator !== 'undefined' && /Mac|iPod|iPhone|iPad/.test(navigator.platform);
+  const shortcut = (mac: string, win: string) => (
+    <span className={styles.shortcutHint}>{isMac ? mac : win}</span>
+  );
+
   const handleDeleteNode = () => {
     if (target.type !== "node") return;
     editorActions.deleteNode(target.id);
@@ -72,6 +80,77 @@ export const ContextActionMenu: React.FC<ContextActionMenuProps> = ({ position, 
       return;
     }
     editorActions.duplicateNodes([target.id]);
+    onClose();
+  };
+
+  const handleCopySelected = () => {
+    let selected = actionState.selectedNodeIds;
+    if (target.type === 'node' && !selected.includes(target.id)) {
+      selected = [target.id];
+    }
+    if (selected.length === 0) return;
+    const nodes = selected
+      .map((id) => editorState.nodes[id])
+      .filter(Boolean)
+      .map((n) => ({ id: n.id, type: n.type, position: n.position, size: n.size, data: n.data }));
+    const selSet = new Set(selected);
+    const connections = Object.values(editorState.connections).filter(
+      (c) => selSet.has(c.fromNodeId) && selSet.has(c.toNodeId)
+    ).map((c) => ({ fromNodeId: c.fromNodeId, fromPortId: c.fromPortId, toNodeId: c.toNodeId, toPortId: c.toPortId }));
+    setClipboard({ nodes, connections });
+    onClose();
+  };
+
+  const handleCutSelected = () => {
+    let selected = actionState.selectedNodeIds;
+    if (target.type === 'node' && !selected.includes(target.id)) {
+      selected = [target.id];
+    }
+    if (selected.length === 0) return;
+    const nodes = selected
+      .map((id) => editorState.nodes[id])
+      .filter(Boolean)
+      .map((n) => ({ id: n.id, type: n.type, position: n.position, size: n.size, data: n.data }));
+    const selSet = new Set(selected);
+    const connections = Object.values(editorState.connections).filter(
+      (c) => selSet.has(c.fromNodeId) && selSet.has(c.toNodeId)
+    ).map((c) => ({ fromNodeId: c.fromNodeId, fromPortId: c.fromPortId, toNodeId: c.toNodeId, toPortId: c.toPortId }));
+    setClipboard({ nodes, connections });
+    selected.forEach((nodeId) => editorActions.deleteNode(nodeId));
+    actionDispatch(actionActions.clearSelection());
+    onClose();
+  };
+
+  const handlePasteFromClipboard = () => {
+    const clip = getClipboard();
+    if (!clip || clip.nodes.length === 0) return;
+    const idMap = new Map<string, string>();
+    clip.nodes.forEach((n) => {
+      const newId = Math.random().toString(36).slice(2, 10);
+      idMap.set(n.id, newId);
+      const newNode = {
+        id: newId,
+        type: n.type,
+        position: { x: n.position.x + 40, y: n.position.y + 40 },
+        size: n.size,
+        data: { ...(n.data || {}), title: typeof n.data?.title === 'string' ? `${n.data.title} Copy` : n.data?.title },
+      };
+      editorActions.addNodeWithId(newNode);
+    });
+    clip.connections.forEach((c) => {
+      const fromId = idMap.get(c.fromNodeId);
+      const toId = idMap.get(c.toNodeId);
+      if (fromId && toId) {
+        editorActions.addConnection({
+          fromNodeId: fromId,
+          fromPortId: c.fromPortId,
+          toNodeId: toId,
+          toPortId: c.toPortId,
+        });
+      }
+    });
+    const newIds = Array.from(idMap.values());
+    actionDispatch(actionActions.selectAllNodes(newIds));
     onClose();
   };
 
@@ -110,16 +189,46 @@ export const ContextActionMenu: React.FC<ContextActionMenuProps> = ({ position, 
                 onClose();
               }}
             >
-              {t("contextMenuEditNode")}
+              <EditIcon size={14} /> {t("contextMenuEditNode")}
             </li>
-            <li className={styles.menuItem} onClick={handleDuplicateNode}>{t("contextMenuDuplicateNode")}</li>
-            <li className={classNames(styles.menuItem, styles.menuItemDanger)} onClick={handleDeleteNode}>{t("contextMenuDeleteNode")}</li>
+            <li className={styles.menuItem} onClick={handleDuplicateNode}>
+              <DuplicateIcon size={14} /> {t("contextMenuDuplicateNode")} {shortcut('⌘D', 'Ctrl+D')}
+            </li>
+            <li className={styles.menuItem} onClick={handleCopySelected}>
+              <CopyIcon size={14} /> {t('copy')} {shortcut('⌘C', 'Ctrl+C')}
+            </li>
+            <li className={styles.menuItem} onClick={handleCutSelected}>
+              <CutIcon size={14} /> {t('cut') || 'Cut'} {shortcut('⌘X', 'Ctrl+X')}
+            </li>
+            <li className={styles.menuItem} onClick={handlePasteFromClipboard}>
+              <PasteIcon size={14} /> {t('paste')} {shortcut('⌘V', 'Ctrl+V')}
+            </li>
+            <li className={classNames(styles.menuItem, styles.menuItemDanger)} onClick={handleDeleteNode}>
+              <DeleteIcon size={14} /> {t("contextMenuDeleteNode")}
+            </li>
           </>
         )}
         {target.type === "connection" && (
           <>
             <li className={styles.menuSectionTitle}>{t("inspectorConnectionProperties")}</li>
             <li className={classNames(styles.menuItem, styles.menuItemDanger)} onClick={handleDeleteConnection}>{t("contextMenuDeleteConnection")}</li>
+          </>
+        )}
+        {target.type === 'canvas' && (
+          <>
+            <li
+              className={styles.menuItem}
+              onClick={() => {
+                // Close this menu then open NodeSearch at the same screen position
+                onClose();
+                actionDispatch(actionActions.showContextMenu(menuPosition, undefined, undefined, undefined, 'search'));
+              }}
+            >
+              <PlusIcon size={14} /> {t('addConnection') || 'Add Connection…'}
+            </li>
+            <li className={styles.menuItem} onClick={() => handlePasteFromClipboard()}>
+              <PasteIcon size={14} /> {t('paste')} {shortcut('⌘V', 'Ctrl+V')}
+            </li>
           </>
         )}
       </ul>

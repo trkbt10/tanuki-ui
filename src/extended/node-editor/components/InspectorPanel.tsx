@@ -8,6 +8,7 @@ import { HistoryPanel } from "./HistoryPanel";
 import { TabNav } from "./TabNav";
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
 import { classNames, Input, Label, H4, Toolbar, SwitchInput } from "./elements";
+import { PropertySection } from "./parts";
 import styles from "./InspectorPanel.module.css";
 import { useI18n } from "../i18n";
 
@@ -30,6 +31,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
     t("inspectorTabLayers") || "Layers",
     t("inspectorTabProperties") || "Properties",
     t("inspectorTabHistory") || "History",
+    t("inspectorTabSettings") || "Settings",
   ];
 
   // Get selected node (for now, just show the first one)
@@ -112,10 +114,13 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
                 <p>{actionState.selectedNodeIds.length} nodes selected</p>
               </div>
             )}
-
-            {/* Grid Settings Section */}
-            <div className={styles.inspectorSection}>
-              <H4 className={styles.inspectorSectionTitle}>{t("inspectorGridSettings")}</H4>
+          </>
+        ) : activeTabIndex === 2 ? (
+          <HistoryPanel />
+        ) : (
+          <>
+            {/* Settings Tab: Move Grid Settings here */}
+            <PropertySection title={t("inspectorGridSettings")}>
               <div className={styles.inspectorField}>
                 <SwitchInput
                   id="grid-show"
@@ -190,10 +195,8 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
                   />
                 </Label>
               </div>
-            </div>
+            </PropertySection>
           </>
-        ) : (
-          <HistoryPanel />
         )}
       </div>
     </div>

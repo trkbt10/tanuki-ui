@@ -10,6 +10,7 @@ export function useNodeEditorActions() {
 
   return React.useMemo(() => ({
     addNode: (node: Parameters<typeof actions.addNode>[0]) => dispatch(actions.addNode(node)),
+    addNodeWithId: (node: Parameters<typeof actions.addNodeWithId>[0]) => dispatch(actions.addNodeWithId(node)),
     updateNode: (nodeId: Parameters<typeof actions.updateNode>[0], updates: Parameters<typeof actions.updateNode>[1]) => dispatch(actions.updateNode(nodeId, updates)),
     deleteNode: (nodeId: Parameters<typeof actions.deleteNode>[0]) => dispatch(actions.deleteNode(nodeId)),
     moveNode: (nodeId: Parameters<typeof actions.moveNode>[0], position: Parameters<typeof actions.moveNode>[1]) => dispatch(actions.moveNode(nodeId, position)),

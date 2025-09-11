@@ -1,8 +1,9 @@
 import * as React from "react";
 import { useHistory } from "../contexts/HistoryContext";
-import { Button } from "./elements";
+import { Button, H4 } from "./elements";
 import { useI18n } from "../i18n";
 import styles from "./HistoryPanel.module.css";
+import inspectorStyles from "./InspectorPanel.module.css";
 
 export const HistoryPanel: React.FC = () => {
   const { state, canUndo, canRedo, undo, redo } = useHistory();
@@ -12,9 +13,9 @@ export const HistoryPanel: React.FC = () => {
 
   return (
     <div className={styles.historyPanel}>
-      <div aria-label={t('historyTitle') || 'History'} style={{ fontWeight: 600, marginBottom: 6 }}>
+      <H4 className={inspectorStyles.inspectorSectionTitle} aria-label={t('historyTitle') || 'History'}>
         {t('historyTitle') || 'History'}
-      </div>
+      </H4>
       <div className={styles.historyControls}>
         <Button size="small" variant="secondary" onClick={() => undo()} disabled={!canUndo}>
           {t('historyUndo') || 'Undo'}

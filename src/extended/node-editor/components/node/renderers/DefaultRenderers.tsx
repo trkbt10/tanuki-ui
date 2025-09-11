@@ -16,7 +16,7 @@ import {
   Textarea
 } from "../../elements";
 import editorStyles from "../../../NodeEditor.module.css";
-import { H4 } from "../../elements";
+import { PropertySection } from "../../parts";
 import { useI18n } from "../../../i18n";
 import alignmentStyles from "./AlignmentControls.module.css";
 import defaultStyles from "./DefaultRenderers.module.css";
@@ -316,9 +316,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
     );
 
     return (
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-        <H4 size="sm" color="secondary" className={editorStyles.inspectorSectionTitle}>{t("inspectorNodeProperties")}</H4>
-
+      <PropertySection title={t("inspectorNodeProperties")}> 
         <div>
           <Label htmlFor={`node-${node.id}-title`}>
             {t("fieldTitle") || "Title"}:
@@ -406,7 +404,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
             {t("deleteNode")}
           </Button>
         </div>
-      </div>
+      </PropertySection>
     );
   }
 );

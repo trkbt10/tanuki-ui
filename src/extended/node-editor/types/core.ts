@@ -148,6 +148,9 @@ export interface ContextMenuState {
   canvasPosition?: Position;
   nodeId?: NodeId;
   connectionId?: ConnectionId;
+  mode?: 'menu' | 'search';
+  allowedNodeTypes?: string[];
+  fromPort?: Port;
 }
 
 // Grid settings

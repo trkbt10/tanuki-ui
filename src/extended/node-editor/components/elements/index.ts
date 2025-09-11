@@ -46,6 +46,9 @@ export {
   MinusIcon,
   EditIcon,
   DeleteIcon,
+  CopyIcon,
+  CutIcon,
+  PasteIcon,
   SearchIcon,
   SettingsIcon,
   type IconProps

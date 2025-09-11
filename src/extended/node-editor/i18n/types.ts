@@ -16,7 +16,9 @@ export interface I18nMessages {
   delete: string;
   edit: string;
   copy: string;
+  cut?: string;
   paste: string;
+  addConnection?: string;
 
   // Node Editor UI
   addNode: string;
@@ -93,6 +95,7 @@ export interface I18nMessages {
   inspectorTabLayers?: string;
   inspectorTabProperties?: string;
   inspectorTabHistory?: string;
+  inspectorTabSettings?: string;
 
   // History Panel
   historyUndo?: string;

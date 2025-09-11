@@ -67,7 +67,7 @@ export type EditorActionStateAction =
   | { type: "START_NODE_RESIZE"; payload: { nodeId: NodeId; startPosition: Position; startSize: Size; handle: ResizeHandle } }
   | { type: "UPDATE_NODE_RESIZE"; payload: { currentSize: Size } }
   | { type: "END_NODE_RESIZE" }
-  | { type: "SHOW_CONTEXT_MENU"; payload: { position: Position; nodeId?: NodeId; connectionId?: ConnectionId; canvasPosition?: Position } }
+  | { type: "SHOW_CONTEXT_MENU"; payload: { position: Position; nodeId?: NodeId; connectionId?: ConnectionId; canvasPosition?: Position; mode?: 'menu' | 'search'; allowedNodeTypes?: string[]; fromPort?: BasePort } }
   | { type: "HIDE_CONTEXT_MENU" }
   | { type: "SET_INSPECTOR_ACTIVE_TAB"; payload: { index: number } };
 
@@ -123,6 +123,9 @@ export const editorActionStateReducer = (
         selectedNodeIds: [],
         selectedConnectionIds: [],
         selectionBox: null,
+        hoveredConnectionId: null,
+        hoveredNodeId: null,
+        hoveredPort: null,
       };
 
     case "SELECT_ALL_NODES":
@@ -301,6 +304,9 @@ export const editorActionStateReducer = (
           canvasPosition: action.payload.canvasPosition,
           nodeId: action.payload.nodeId,
           connectionId: action.payload.connectionId,
+          mode: action.payload.mode || 'menu',
+          allowedNodeTypes: action.payload.allowedNodeTypes,
+          fromPort: action.payload.fromPort,
         },
       };
 
@@ -347,6 +353,9 @@ export const defaultEditorActionState: EditorActionState = {
     canvasPosition: undefined,
     nodeId: undefined,
     connectionId: undefined,
+    mode: 'menu',
+    allowedNodeTypes: undefined,
+    fromPort: undefined,
   },
   inspectorActiveTab: 0,
 };
@@ -441,9 +450,9 @@ export const editorActionStateActions = {
   endNodeResize: (): EditorActionStateAction => ({
     type: "END_NODE_RESIZE",
   }),
-  showContextMenu: (position: { x: number; y: number }, nodeId?: NodeId, canvasPosition?: { x: number; y: number }, connectionId?: ConnectionId): EditorActionStateAction => ({
+  showContextMenu: (position: { x: number; y: number }, nodeId?: NodeId, canvasPosition?: { x: number; y: number }, connectionId?: ConnectionId, mode?: 'menu' | 'search', allowedNodeTypes?: string[], fromPort?: BasePort): EditorActionStateAction => ({
     type: "SHOW_CONTEXT_MENU",
-    payload: { position, nodeId, canvasPosition, connectionId },
+    payload: { position, nodeId, canvasPosition, connectionId, mode, allowedNodeTypes, fromPort },
   }),
   hideContextMenu: (): EditorActionStateAction => ({
     type: "HIDE_CONTEXT_MENU",

@@ -12,7 +12,9 @@ export const jaMessages: I18nMessages = {
   delete: "削除",
   edit: "編集",
   copy: "コピー",
+  cut: "切り取り",
   paste: "貼り付け",
+  addConnection: "接続の追加…",
 
   // Node Editor UI
   addNode: "ノード追加",
@@ -89,6 +91,7 @@ export const jaMessages: I18nMessages = {
   inspectorTabLayers: "レイヤー",
   inspectorTabProperties: "プロパティ",
   inspectorTabHistory: "履歴",
+  inspectorTabSettings: "設定",
 
   // History Panel
   historyUndo: "元に戻す",
