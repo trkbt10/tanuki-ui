@@ -160,7 +160,7 @@
   box-sizing: border-box;
 }
 
-/* Toolbar button styles moved to components/Toolbar.module.css */
+/* Toolbar button styles moved to components/elements/Toolbar.module.css */
 
 .contextMenu {
   position: absolute;
@@ -598,20 +598,6 @@
   flex: 0 0 auto;
 }
 
-/* Top Toolbar */
-/* Top toolbar styles moved to components/Toolbar.module.css */
-
-/* Node layer styles moved to components/node/NodeLayer.module.css */
-
-/* Node view styles moved to components/node/NodeView.module.css */
-
-/* Port styles moved to components/connection/ports/PortView.module.css */
-
-/* Connection styles moved to components/connection/*.module.css */
-
-/* Selection overlay styles moved to components/parts */
-
-/* Loading/Saving Overlay */
 .loadingOverlay {
   position: absolute;
   top: 0;

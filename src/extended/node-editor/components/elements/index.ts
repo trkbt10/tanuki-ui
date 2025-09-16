@@ -17,13 +17,13 @@ export {
   H6, 
   type HeadingProps 
 } from './Heading';
-export { 
-  Toolbar, 
-  ToolbarGroup, 
-  ToolbarSeparator, 
-  type ToolbarProps,
-  type ToolbarGroupProps,
-  type ToolbarSeparatorProps
+export {
+  NodeEditorToolbar,
+  NodeEditorToolbarGroup,
+  NodeEditorToolbarSeparator,
+  type NodeEditorToolbarProps,
+  type NodeEditorToolbarGroupProps,
+  type NodeEditorToolbarSeparatorProps,
 } from './Toolbar';
 
 // Icons
