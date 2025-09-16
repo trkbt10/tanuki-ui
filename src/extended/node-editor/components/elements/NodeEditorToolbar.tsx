@@ -5,7 +5,7 @@ import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
 import { useNodeEditor } from "../../contexts/node-editor";
 import { FloatingContainer } from "../parts/FloatingContainer";
 import { Button } from "./Button";
-import styles from "./Toolbar.module.css";
+import styles from "./NodeEditorToolbar.module.css";
 import { countNodesByType, canAddNodeType } from "../../utils/nodeTypeLimits";
 
 export interface NodeEditorToolbarProps extends React.HTMLAttributes<HTMLDivElement> {

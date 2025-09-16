@@ -69,12 +69,12 @@ export { Minimap, DebugOverlay, GridToolbox } from "./components/layers";
 export type { MinimapProps, DebugOverlayProps, GridToolboxProps } from "./components/layers";
 
 // UI components
-export { NodeEditorToolbar } from "./components/elements/Toolbar";
+export { NodeEditorToolbar } from "./components/elements/NodeEditorToolbar";
 export { FloatingContainer } from "./components/parts/FloatingContainer";
 export { ColumnLayout } from "./components/ColumnLayout";
 export { InspectorPanel } from "./components/InspectorPanel";
 export { NodeInspector } from "./components/NodeInspector";
-export type { NodeEditorToolbarProps } from "./components/elements/Toolbar";
+export type { NodeEditorToolbarProps } from "./components/elements/NodeEditorToolbar";
 export type { FloatingContainerProps } from "./components/parts/FloatingContainer";
 export type { ColumnLayoutProps } from "./components/ColumnLayout";
 export type { InspectorPanelProps } from "./components/InspectorPanel";

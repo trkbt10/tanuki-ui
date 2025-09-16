@@ -160,7 +160,7 @@
   box-sizing: border-box;
 }
 
-/* Toolbar button styles moved to components/elements/Toolbar.module.css */
+/* Toolbar button styles moved to components/elements/NodeEditorToolbar.module.css */
 
 .contextMenu {
   position: absolute;
