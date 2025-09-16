@@ -5,7 +5,7 @@
   width: 100%;
   height: 100%;
   background-color: var(--controlBackground, #ffffff);
-  border-left: 1px solid var(--inputBorder, #e0e0e0);
+  border-left: var(--inputBorder);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -13,7 +13,7 @@
 }
 
 .inspectorHeader {
-  padding: .5em 0;
+  padding: var(--node-editor-inspector-space-sm) 0;
   display: grid;
   justify-content: center;
   box-sizing: border-box;
@@ -23,43 +23,69 @@
 .inspectorContent {
   flex: 1;
   overflow-y: auto;
-  padding: 12px;
+  padding: var(--node-editor-inspector-content-padding);
   box-sizing: border-box;
 }
 
-.inspectorContentNoPadding { padding: 0; }
+.inspectorContentNoPadding {
+  padding: 0;
+}
 
-.inspectorSection { margin-bottom: 16px; }
+.inspectorSection {
+  margin-bottom: var(--node-editor-inspector-section-gap);
+}
+
+.customInspectorBlock {
+  margin-bottom: var(--node-editor-inspector-section-gap);
+}
 
 /* Shared body layout for section content */
 .sectionBody {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--node-editor-inspector-section-gap);
+}
+
+.sectionHeader {
+  display: grid;
+  grid-template-columns: auto minmax(auto, max-content);
+  align-items: baseline;
+  column-gap: var(--node-editor-inspector-header-gap);
+  row-gap: var(--node-editor-inspector-space-xs);
+  padding: var(--node-editor-inspector-header-padding-top) 0 var(--node-editor-inspector-header-padding-bottom);
+  margin-bottom: var(--node-editor-inspector-space-xs);
+  border-bottom: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
+}
+
+.sectionHeaderMeta {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: var(--node-editor-inspector-inline-gap);
+  font-size: var(--node-editor-inspector-font-size-meta);
+  line-height: var(--node-editor-inspector-line-height-meta);
+  font-weight: 500;
+  color: var(--secondaryLabelColor, #666);
+  text-transform: none;
 }
 
 .inspectorSection label {
   display: block;
-  margin-bottom: 4px;
-  font-size: 12px;
+  margin-bottom: var(--node-editor-inspector-field-gap);
+  font-size: var(--node-editor-inspector-font-size-body);
+  line-height: var(--node-editor-inspector-line-height-body);
   color: var(--secondaryLabelColor, #666);
 }
 
-.inspectorSection h4 {
-  margin: 0 0 12px 0;
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--secondaryLabelColor, #666);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+.inspectorField {
+  margin-bottom: var(--node-editor-inspector-section-gap);
 }
-
-.inspectorField { margin-bottom: 12px; }
 
 .inspectorField label {
   display: block;
-  margin-bottom: 4px;
-  font-size: 12px;
+  margin-bottom: var(--node-editor-inspector-field-gap);
+  font-size: var(--node-editor-inspector-font-size-body);
+  line-height: var(--node-editor-inspector-line-height-body);
   font-weight: 500;
   color: var(--textColor, #000);
 }
@@ -70,7 +96,8 @@
   padding: 3px .25em !important;
   border: var(--inputBorder, 1px solid #c8c8c8) !important;
   border-radius: 4px;
-  font-size: 12px;
+  font-size: var(--node-editor-inspector-font-size-body);
+  line-height: var(--node-editor-inspector-line-height-body);
   background: var(--controlBackground, #ffffff);
   color: var(--textColor, #000);
   box-sizing: border-box;
@@ -88,29 +115,31 @@
 }
 
 .inspectorSectionTitle {
-  margin: 0 0 8px 0;
-  font-size: 12px;
-  font-weight: 600;
+  margin: 0;
   color: var(--secondaryLabelColor, #666);
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-size: var(--node-editor-inspector-font-size-title);
+  line-height: var(--node-editor-inspector-line-height-title);
+  letter-spacing: 0.08em;
 }
 
 .inspectorReadOnlyField {
   display: block;
-  padding: 6px .5em;
-  font-size: 12px;
+  padding: var(--node-editor-inspector-space-sm) var(--node-editor-inspector-space-sm);
+  font-size: var(--node-editor-inspector-font-size-body);
+  line-height: var(--node-editor-inspector-line-height-body);
   color: var(--secondaryLabelColor, #666);
   background: var(--tertiarySystemBackground, #f9f9f9);
   border-radius: 4px;
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder);
   box-sizing: border-box;
 }
 
 .inspectorEmptyState {
   text-align: center;
-  padding: 32px 16px;
+  padding: var(--node-editor-inspector-empty-padding-vertical) var(--node-editor-inspector-empty-padding-horizontal);
   color: var(--secondaryLabelColor, #666);
-  font-size: 12px;
+  font-size: var(--node-editor-inspector-font-size-body);
+  line-height: var(--node-editor-inspector-line-height-body);
   box-sizing: border-box;
 }

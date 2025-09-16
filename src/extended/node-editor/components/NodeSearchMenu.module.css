@@ -12,7 +12,7 @@
   max-width: 480px;
   max-height: 480px;
   background: var(--controlBackground, #ffffff);
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder);
   border-radius: .75em;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15),
     0 2px 8px rgba(0, 0, 0, 0.08);
@@ -38,7 +38,7 @@
 
 .searchHeader {
   padding: 12px 16px;
-  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  border-bottom: var(--inputBorder);
   background: var(--tableHeaderBackgroundColor, #f8f8f8);
   position: relative;
   box-sizing: border-box;
@@ -49,7 +49,7 @@
 .searchInput {
   width: 100%;
   padding: 8px 12px;
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder);
   border-radius: 6px;
   font-size: 14px;
   font-weight: 400;
@@ -85,7 +85,7 @@
 .searchHint kbd {
   padding: 2px 4px;
   background: var(--tableHeaderBackgroundColor, #f0f0f0);
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder);
   border-radius: 3px;
   font-size: 10px;
   font-family: var(--inputFont, ui-monospace, SFMono-Regular, "SF Mono", Consolas, monospace);
@@ -123,7 +123,7 @@
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.15s ease;
-  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  border-bottom: var(--inputBorder);
   position: sticky;
   top: 0;
   z-index: 1;
@@ -248,7 +248,7 @@
 
 .searchFooter {
   padding: 8px 16px;
-  border-top: 1px solid var(--inputBorder, #e0e0e0);
+  border-top: var(--inputBorder);
   background: var(--tableHeaderBackgroundColor, #f8f8f8);
   font-size: 11px;
   color: var(--secondaryLabelColor, #666666);

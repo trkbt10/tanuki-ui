@@ -89,6 +89,7 @@ export const enMessages: I18nMessages = {
   inspectorEmptyStatePrompt: "Select a node or connection to view its properties",
   inspectorMultipleSelection: "Multiple Selection",
   inspectorTabLayers: "Layers",
+  inspectorLayersNodeCount: "{{count}} nodes",
   inspectorTabProperties: "Properties",
   inspectorTabHistory: "History",
   inspectorTabSettings: "Settings",

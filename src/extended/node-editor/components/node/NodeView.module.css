@@ -1,7 +1,7 @@
 .nodeView {
   position: absolute;
   background-color: var(--controlBackground, #ffffff);
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder);
   border-radius: .5em;
   box-shadow: 0 2px .5em rgba(0, 0, 0, 0.1);
   min-width: 150px;
@@ -13,17 +13,36 @@
   overflow: visible;
 }
 
-.nodeView:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
-.nodeView.locked { opacity: 0.7; cursor: not-allowed; border-color: var(--cautionColor, #ff3b30); }
-.nodeView.locked:hover { box-shadow: 0 2px .5em rgba(255, 59, 48, 0.2); }
-.nodeView.selected { border-color: var(--accentColor, #0066cc); box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2); }
-.nodeView.dragging { opacity: 0.8; cursor: grabbing; z-index: 1000; }
+.nodeView:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.nodeView.locked {
+  opacity: 0.7;
+  cursor: not-allowed;
+  border-color: var(--cautionColor, #ff3b30);
+}
+
+.nodeView.locked:hover {
+  box-shadow: 0 2px .5em rgba(255, 59, 48, 0.2);
+}
+
+.nodeView.selected {
+  border-color: var(--accentColor, #0066cc);
+  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+}
+
+.nodeView.dragging {
+  opacity: 0.8;
+  cursor: grabbing;
+  z-index: 1000;
+}
 
 .nodeHeader {
   position: relative;
   padding: .5em 12px;
   font-weight: 500;
-  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  border-bottom: var(--inputBorder);
   background-color: var(--tableHeaderBackgroundColor, #f0f0f0);
   border-radius: .5em .5em 0 0;
   height: 40px;
@@ -32,8 +51,16 @@
   box-sizing: border-box;
 }
 
-.interactiveDragHandle { cursor: move; background-color: var(--tableHeaderBackgroundColorHover, #e5e5e5); transition: background-color 0.2s ease; }
-.interactiveDragHandle:hover { background-color: var(--tableHeaderBackgroundColorActive, #d8d8d8); }
+.interactiveDragHandle {
+  cursor: move;
+  background-color: var(--tableHeaderBackgroundColorHover, #e5e5e5);
+  transition: background-color 0.2s ease;
+}
+
+.interactiveDragHandle:hover {
+  background-color: var(--tableHeaderBackgroundColorActive, #d8d8d8);
+}
+
 .interactiveDragHandle::before {
   content: "⋮⋮";
   position: absolute;
@@ -60,8 +87,14 @@
   transition: background-color 0.2s;
   box-sizing: border-box;
 }
-.nodeTitle:hover { background-color: var(--hoverBackground, rgba(0, 0, 0, 0.05)); }
-.interactiveDragHandle .nodeTitle { padding-left: 20px; }
+
+.nodeTitle:hover {
+  background-color: var(--hoverBackground, rgba(0, 0, 0, 0.05));
+}
+
+.interactiveDragHandle .nodeTitle {
+  padding-left: 20px;
+}
 
 .nodeTitleInput {
   flex: 1;
@@ -78,23 +111,81 @@
   box-sizing: border-box;
 }
 
-.lockIcon { position: absolute; top: 4px; right: 4px; font-size: 12px; opacity: 0.8; pointer-events: none; }
-.nodeContent { padding: 12px; box-sizing: border-box; }
+.lockIcon {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 12px;
+  opacity: 0.8;
+  pointer-events: none;
+}
 
-.groupNode { background-color: var(--groupNodeBackground, rgba(240, 240, 240, 0.7)); border-style: dashed; border-width: 2px; border-color: var(--groupNodeBorder, #ccc); z-index: 1; }
-.groupNode.groupHasChildren { border-color: var(--groupNodeActiveColor, #0066cc); background-color: var(--groupNodeActiveBackground, rgba(0, 102, 204, 0.05)); }
-.groupCollapsed { color: var(--secondaryLabelColor, #666); font-style: italic; }
-.groupExpanded { color: var(--textColor, #000); }
+.nodeContent {
+  padding: 12px;
+  box-sizing: border-box;
+}
 
-.nodeInfo { border-color: var(--accentColor, #0066cc); background-color: rgba(0, 102, 204, 0.05); }
-.nodeSuccess { border-color: var(--successColor, #34c759); background-color: rgba(52, 199, 89, 0.05); }
-.nodeWarning { border-color: var(--warningColor, #ff9500); background-color: rgba(255, 149, 0, 0.05); }
-.nodeError { border-color: var(--cautionColor, #ff3b30); background-color: rgba(255, 59, 48, 0.05); }
-.nodeDisabled { opacity: 0.5; pointer-events: none; }
+.groupNode {
+  background-color: var(--groupNodeBackground, rgba(240, 240, 240, 0.7));
+  border-style: dashed;
+  border-width: 2px;
+  border-color: var(--groupNodeBorder, #ccc);
+  z-index: 1;
+}
 
-.nodePorts { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-.customNodeContent { width: 100%; height: 100%; position: relative; }
+.groupNode.groupHasChildren {
+  border-color: var(--groupNodeActiveColor, #0066cc);
+  background-color: var(--groupNodeActiveBackground, rgba(0, 102, 204, 0.05));
+}
+
+.groupCollapsed {
+  color: var(--secondaryLabelColor, #666);
+  font-style: italic;
+}
+
+.groupExpanded {
+  color: var(--textColor, #000);
+}
+
+.nodeInfo {
+  border-color: var(--accentColor, #0066cc);
+  background-color: rgba(0, 102, 204, 0.05);
+}
+
+.nodeSuccess {
+  border-color: var(--successColor, #34c759);
+  background-color: rgba(52, 199, 89, 0.05);
+}
+
+.nodeWarning {
+  border-color: var(--warningColor, #ff9500);
+  background-color: rgba(255, 149, 0, 0.05);
+}
+
+.nodeError {
+  border-color: var(--cautionColor, #ff3b30);
+  background-color: rgba(255, 59, 48, 0.05);
+}
+
+.nodeDisabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.nodePorts {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.customNodeContent {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 
 /* Placeholder class to keep API parity */
 .resizing {}
-

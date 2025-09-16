@@ -93,6 +93,7 @@ export interface I18nMessages {
   inspectorEmptyStatePrompt?: string;
   inspectorMultipleSelection?: string;
   inspectorTabLayers?: string;
+  inspectorLayersNodeCount?: string;
   inspectorTabProperties?: string;
   inspectorTabHistory?: string;
   inspectorTabSettings?: string;

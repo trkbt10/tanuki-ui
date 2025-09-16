@@ -89,6 +89,7 @@ export const jaMessages: I18nMessages = {
   inspectorEmptyStatePrompt: "プロパティを表示するにはノードまたは接続を選択してください",
   inspectorMultipleSelection: "複数選択",
   inspectorTabLayers: "レイヤー",
+  inspectorLayersNodeCount: "ノード数: {{count}}",
   inspectorTabProperties: "プロパティ",
   inspectorTabHistory: "履歴",
   inspectorTabSettings: "設定",

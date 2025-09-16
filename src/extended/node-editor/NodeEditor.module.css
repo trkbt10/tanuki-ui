@@ -25,7 +25,7 @@
 .node {
   position: absolute;
   background-color: var(--controlBackground, #ffffff);
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder);
   border-radius: .5em;
   box-shadow: 0 2px .5em rgba(0, 0, 0, 0.1);
   min-width: 150px;
@@ -62,7 +62,7 @@
   position: relative;
   padding: .5em 12px;
   font-weight: 500;
-  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  border-bottom: var(--inputBorder);
   background-color: var(--tableHeaderBackgroundColor, #f0f0f0);
   border-radius: .5em .5em 0 0;
   height: 40px;
@@ -138,7 +138,9 @@
   font-style: italic;
 }
 
-.groupExpanded { /* moved to components/node/NodeView.module.css */ }
+.groupExpanded {
+  /* moved to components/node/NodeView.module.css */
+}
 
 /* Node visual variants moved to components/node/NodeView.module.css */
 
@@ -151,7 +153,7 @@
   display: flex;
   gap: .5em;
   background-color: var(--controlBackground, #ffffff);
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder);
   border-radius: .5em;
   padding: .5em;
   box-shadow: 0 2px .5em rgba(0, 0, 0, 0.1);
@@ -163,7 +165,7 @@
 .contextMenu {
   position: absolute;
   background-color: var(--controlBackground, #ffffff);
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder);
   border-radius: .5em;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 4px;
@@ -510,7 +512,8 @@
   background: var(--controlBackground, #ffffff);
   color: var(--textColor, #000);
   box-sizing: border-box;
-  min-width: 0; /* Allow shrinking inside flex container */
+  min-width: 0;
+  /* Allow shrinking inside flex container */
 }
 
 .inspectorNumberInput:focus {
@@ -541,7 +544,7 @@
   color: var(--secondaryLabelColor, #666);
   background: var(--tertiarySystemBackground, #f9f9f9);
   border-radius: 4px;
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder);
   box-sizing: border-box;
 }
 
@@ -567,7 +570,7 @@
 .editorToolbar {
   flex: 0 0 auto;
   background: var(--controlBackground, #ffffff);
-  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  border-bottom: var(--inputBorder);
   padding: .5em 16px;
   display: flex;
   align-items: center;
@@ -621,7 +624,7 @@
 
 .loadingIndicator {
   background-color: var(--controlBackground, #ffffff);
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder);
   border-radius: .5em;
   padding: 16px 32px;
   font-size: 14px;
@@ -683,7 +686,7 @@
 .minimap {
   width: 200px;
   background: var(--controlBackground, rgba(255, 255, 255, 0.9));
-  border: 1px solid var(--inputBorder, #e0e0e0);
+  border: var(--inputBorder);
   border-radius: .5em;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   backdrop-filter: blur(.5em);
@@ -696,7 +699,7 @@
   font-size: 12px;
   font-weight: 600;
   color: var(--textColor, #000);
-  border-bottom: 1px solid var(--inputBorder, #e0e0e0);
+  border-bottom: var(--inputBorder);
 }
 
 .minimapContent {

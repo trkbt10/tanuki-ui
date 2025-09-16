@@ -16,12 +16,12 @@
   overflow: hidden;
   min-width: 200px;
   max-width: 600px;
-  border-right: 1px solid var(--inputBorder, #e0e0e0);
+  border-right: var(--inputBorder);
 }
 
 .rightSidebar {
   border-right: none;
-  border-left: 1px solid var(--inputBorder, #e0e0e0);
+  border-left: var(--inputBorder);
 }
 
 .mainContent {

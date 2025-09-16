@@ -29,6 +29,7 @@ import {
 } from "../../utils/nodeLayerHelpers";
 import { canConnectPorts } from "../../utils/connectionValidation";
 import type { Port as CorePort } from "../../types/core";
+import { planConnectionChange, ConnectionSwitchBehavior } from "../../utils/connectionSwitchBehavior";
 
 export interface NodeLayerProps {
   className?: string;
@@ -200,6 +201,10 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
           type: port.type,
           label: port.label,
           position: port.position,
+          dataType: port.dataType,
+          maxConnections: port.maxConnections,
+          allowedNodeTypes: port.allowedNodeTypes,
+          allowedPortTypes: port.allowedPortTypes,
         };
         actionDispatch(actionActions.startConnectionDrag(actionPort));
         actionDispatch(actionActions.updateConnectionDrag(portPosition, null));
@@ -328,15 +333,34 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       if (!actionState.connectionDragState) return;
 
       const fromPort = actionState.connectionDragState.fromPort;
-      const connection = createValidatedConnection(
+      const plan = planConnectionChange({
         fromPort,
-        port,
-        nodeEditorState.nodes,
-        nodeEditorState.connections,
-        (type: string) => getNodeDef.registry.get(type)
-      );
+        toPort: port,
+        nodes: nodeEditorState.nodes,
+        connections: nodeEditorState.connections,
+        getNodeDefinition: (type: string) => getNodeDef.registry.get(type),
+      });
 
-      if (connection) nodeEditorDispatch(nodeEditorActions.addConnection(connection));
+      switch (plan.behavior) {
+        case ConnectionSwitchBehavior.Replace:
+          if (plan.connection) {
+            plan.connectionIdsToReplace.forEach((connectionId) => {
+              nodeEditorDispatch(nodeEditorActions.deleteConnection(connectionId));
+            });
+            nodeEditorDispatch(nodeEditorActions.addConnection(plan.connection));
+          }
+          break;
+
+        case ConnectionSwitchBehavior.Append:
+          if (plan.connection) {
+            nodeEditorDispatch(nodeEditorActions.addConnection(plan.connection));
+          }
+          break;
+
+        case ConnectionSwitchBehavior.Ignore:
+        default:
+          break;
+      }
 
       actionDispatch(actionActions.endConnectionDrag());
       actionDispatch(actionActions.updateConnectablePorts(new Set()));
@@ -359,6 +383,10 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         type: port.type,
         label: port.label,
         position: port.position,
+        dataType: port.dataType,
+        maxConnections: port.maxConnections,
+        allowedNodeTypes: port.allowedNodeTypes,
+        allowedPortTypes: port.allowedPortTypes,
       };
       actionDispatch(actionActions.setHoveredPort(actionPort));
       const connectable = getConnectablePortIds(

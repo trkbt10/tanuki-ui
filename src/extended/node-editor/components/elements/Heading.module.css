@@ -30,6 +30,12 @@
 }
 
 /* Custom sizes */
+.heading[data-size="compact"] {
+  font-size: var(--node-editor-inspector-font-size-title, 0.7rem);
+  line-height: var(--node-editor-inspector-line-height-title, 1.2);
+  letter-spacing: 0.04em;
+}
+
 .heading[data-size="xs"] {
   font-size: 0.75rem;
 }

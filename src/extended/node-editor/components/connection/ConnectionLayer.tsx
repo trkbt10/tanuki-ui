@@ -294,13 +294,7 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
       toNode={toNode}
       fromPort={fromPort}
       toPort={toPort}
-      isActive={
-        actionState.selectedConnectionIds.includes(connection.id) ||
-        actionState.hoveredConnectionId === connection.id ||
-        actionState.selectedNodeIds.includes(connection.fromNodeId) ||
-        actionState.selectedNodeIds.includes(connection.toNodeId)
-      }
-      adjacentToSelectedNode={
+      isAdjacentToSelectedNode={
         actionState.selectedNodeIds.includes(connection.fromNodeId) ||
         actionState.selectedNodeIds.includes(connection.toNodeId)
       }

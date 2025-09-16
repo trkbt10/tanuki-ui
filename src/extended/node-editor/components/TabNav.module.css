@@ -10,10 +10,11 @@
 
 .tabButton {
   flex: 1;
-  padding: 4px 8px;
+  padding: var(--node-editor-inspector-space-xs) var(--node-editor-inspector-space-sm);
   background: transparent;
   border: none;
-  font-size: 12px;
+  font-size: var(--node-editor-inspector-font-size-meta);
+  line-height: var(--node-editor-inspector-line-height-meta);
   font-weight: 500;
   color: var(--secondaryLabelColor, #666);
   cursor: pointer;

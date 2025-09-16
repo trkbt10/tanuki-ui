@@ -13,8 +13,8 @@ export interface ConnectionViewProps {
   toPort: Port;
   isSelected: boolean;
   isHovered: boolean;
-  isActive?: boolean;
-  adjacentToSelectedNode?: boolean;
+  // True when this connection touches a selected node
+  isAdjacentToSelectedNode?: boolean;
   isDragging?: boolean;
   dragProgress?: number; // 0-1 for visual feedback during disconnect
   // Optional override positions for preview during drag
@@ -39,10 +39,9 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
   toPort,
   isSelected,
   isHovered,
-  isActive,
   isDragging,
   dragProgress = 0,
-  adjacentToSelectedNode = false,
+  isAdjacentToSelectedNode = false,
   fromNodePosition,
   toNodePosition,
   fromNodeSize,
@@ -114,11 +113,11 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
     const angle = (Math.atan2(tan.y, tan.x) * 180) / Math.PI;
     return { x: pt.x, y: pt.y, angle };
   }, [fromPosition.x, fromPosition.y, toPosition.x, toPosition.y, fromPort.position, toPort.position]);
-  // Active state for styles
-  // - Stripes should appear only when hovered or selected
-  // - Color can respond to broader active state (hover/selected/related)
-  const stripesActive = isSelected || adjacentToSelectedNode;
-  const colorActive = isSelected || isHovered; // color highlight only for direct selection/hover
+  // Visual state control
+  // - Stripes appear when the connection itself is selected OR it is adjacent to a selected node.
+  // - Color highlight responds to direct selection or hover of the connection itself.
+  const stripesActive = isSelected || isAdjacentToSelectedNode;
+  const colorActive = isSelected || isHovered;
 
   const strokeColor = React.useMemo(() => {
     if (isDragging && dragProgress > 0) {
@@ -269,8 +268,7 @@ const areEqual = (prevProps: ConnectionViewProps, nextProps: ConnectionViewProps
     prevProps.connection.id !== nextProps.connection.id ||
     prevProps.isSelected !== nextProps.isSelected ||
     prevProps.isHovered !== nextProps.isHovered ||
-    prevProps.isActive !== nextProps.isActive ||
-    prevProps.adjacentToSelectedNode !== nextProps.adjacentToSelectedNode ||
+    prevProps.isAdjacentToSelectedNode !== nextProps.isAdjacentToSelectedNode ||
     prevProps.isDragging !== nextProps.isDragging ||
     prevProps.dragProgress !== nextProps.dragProgress
   ) {

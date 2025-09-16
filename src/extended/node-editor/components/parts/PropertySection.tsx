@@ -5,6 +5,8 @@ import inspectorStyles from "../InspectorPanel.module.css";
 export interface PropertySectionProps {
   title: string;
   className?: string;
+  bodyClassName?: string;
+  headerRight?: React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -13,14 +15,18 @@ export interface PropertySectionProps {
  * - Reusable sidebar section with a small, uppercase title
  * - Applies consistent vertical spacing (Figma-like)
  */
-export const PropertySection: React.FC<PropertySectionProps> = ({ title, className, children }) => {
+export const PropertySection: React.FC<PropertySectionProps> = ({ title, className, bodyClassName, headerRight, children }) => {
   return (
     <section className={[inspectorStyles.inspectorSection, className].filter(Boolean).join(" ")}> 
-      <H4 className={inspectorStyles.inspectorSectionTitle}>{title}</H4>
-      <div className={inspectorStyles.sectionBody}>{children}</div>
+      <div className={inspectorStyles.sectionHeader}>
+        <H4 size="compact" weight="semibold" className={inspectorStyles.inspectorSectionTitle}>
+          {title}
+        </H4>
+        {headerRight ? <div className={inspectorStyles.sectionHeaderMeta}>{headerRight}</div> : null}
+      </div>
+      <div className={[inspectorStyles.sectionBody, bodyClassName].filter(Boolean).join(" ")}>{children}</div>
     </section>
   );
 };
 
 PropertySection.displayName = "PropertySection";
-

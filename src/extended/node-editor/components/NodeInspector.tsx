@@ -6,6 +6,7 @@ import { useNodeDefinition } from "../contexts/NodeDefinitionContext";
 import { useExternalDataRef } from "../contexts/ExternalDataContext";
 import { useExternalData } from "../hooks/useExternalData";
 import { DefaultInspectorRenderer } from "../components/node/renderers/DefaultRenderers";
+import inspectorStyles from "./InspectorPanel.module.css";
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
 
 export interface NodeInspectorProps {
@@ -86,7 +87,7 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
       <>
         {/* Custom inspector first */}
         {nodeDefinition?.renderInspector && (
-          <div style={{ marginBottom: "16px" }}>
+          <div className={inspectorStyles.customInspectorBlock}>
             {nodeDefinition.renderInspector(inspectorProps)}
           </div>
         )}

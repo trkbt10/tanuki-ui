@@ -13,7 +13,8 @@ import {
   Button,
   Input,
   Label,
-  Textarea
+  Textarea,
+  classNames
 } from "../../elements";
 import editorStyles from "../../../NodeEditor.module.css";
 import { PropertySection } from "../../parts";
@@ -89,36 +90,14 @@ const InspectorNumberInput = React.memo<{
   name?: string;
   "aria-label"?: string;
 }>(({ value, onChange, label, id, name, "aria-label": ariaLabel }) => {
-  const containerStyles: React.CSSProperties = {
-    display: "flex",
-    alignItems: "center",
-    gap: "6px",
-    fontSize: "12px",
-  };
-
-  const labelStyles: React.CSSProperties = {
-    color: "var(--secondaryLabelColor, #666)",
-    fontSize: "11px",
-    fontWeight: 500,
-    minWidth: "12px",
-    textAlign: "center" as const,
-  };
-
-  const inputStyles: React.CSSProperties = {
-    fontSize: "12px",
-    width: "100%",
-    textAlign: "right" as const,
-    color: "var(--textColor, #000)",
-  };
-
   return (
-    <div style={containerStyles}>
-      <span style={labelStyles}>{label}</span>
+    <div className={defaultStyles.numberInputContainer}>
+      <span className={defaultStyles.numberInputLabel}>{label}</span>
       <Input
         type="number"
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className={editorStyles.inspectorNumberInput}
+        className={classNames(defaultStyles.numberInput, editorStyles.inspectorNumberInput)}
         id={id}
         name={name}
         aria-label={ariaLabel}
@@ -136,9 +115,9 @@ const InspectorCheckbox = React.memo<{
   id?: string;
   name?: string;
 }>(({ checked, onChange, label, id, name }) => (
-  <label htmlFor={id} style={{ display: "flex", alignItems: "center", gap: "6px", cursor: "pointer" }}>
+  <label htmlFor={id} className={defaultStyles.checkboxContainer}>
     <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} id={id} name={name} />
-    <span style={{ fontSize: "13px" }}>{label}</span>
+    <span className={defaultStyles.checkboxText}>{label}</span>
   </label>
 ));
 InspectorCheckbox.displayName = "InspectorCheckbox";
@@ -199,28 +178,6 @@ interface ExtendedInspectorRenderProps extends InspectorRenderProps {
 export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = React.memo(
   ({ node, onUpdateNode, onDeleteNode, selectedNodes = [], onAlignNodes }) => {
     const { t } = useI18n();
-    const inputStyles: React.CSSProperties = React.useMemo(
-      () => ({
-        width: "100%",
-        padding: "4px 8px",
-        border: "1px solid #ddd",
-        borderRadius: "4px",
-        fontSize: "13px",
-      }),
-      []
-    );
-
-    const labelStyles: React.CSSProperties = React.useMemo(
-      () => ({
-        display: "block",
-        marginBottom: "4px",
-        fontSize: "12px",
-        fontWeight: 500,
-        color: "#666",
-      }),
-      []
-    );
-
     // Memoized update handlers
     const handleTitleChange = React.useCallback(
       (title: string) => {
@@ -296,23 +253,6 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         onAlignNodes(alignmentType, selectedNodes);
       },
       [onAlignNodes, selectedNodes]
-    );
-
-    const textareaStyles = React.useMemo(
-      () => ({
-        ...inputStyles,
-        minHeight: "60px",
-        resize: "vertical" as const,
-      }),
-      [inputStyles]
-    );
-
-    const halfWidthInputStyles = React.useMemo(
-      () => ({
-        ...inputStyles,
-        width: "50%",
-      }),
-      [inputStyles]
     );
 
     return (
@@ -393,7 +333,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         </div>
 
         {node.type === "group" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+          <div className={defaultStyles.groupInspectorOptions}>
             <InspectorCheckbox checked={node.locked || false} onChange={handleLockedChange} label={t("inspectorLocked")} />
             <InspectorCheckbox checked={node.visible !== false} onChange={handleVisibleChange} label={t("inspectorVisible")} />
           </div>

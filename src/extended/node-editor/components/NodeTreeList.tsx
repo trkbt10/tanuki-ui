@@ -4,8 +4,10 @@ import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
 import { Node, NodeId } from "../types/core";
 import { getNodeIcon } from "../utils/nodeUtils";
-import { CloseIcon } from "./elements";
+import { CloseIcon, classNames } from "./elements";
+import { PropertySection } from "./parts";
 import styles from "./NodeTreeList.module.css";
+import { useI18n } from "../i18n";
 
 interface DragState {
   draggingNodeId: NodeId | null;
@@ -301,6 +303,7 @@ export interface NodeTreeListProps {
 export const NodeTreeList: React.FC<NodeTreeListProps> = ({ className }) => {
   const { state: editorState, dispatch: editorDispatch, actions: editorActions } = useNodeEditor();
   const { dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
+  const { t } = useI18n();
   
   const [dragState, setDragState] = React.useState<DragState>({
     draggingNodeId: null,
@@ -375,15 +378,19 @@ export const NodeTreeList: React.FC<NodeTreeListProps> = ({ className }) => {
     }
   }, [editorState.nodes, editorDispatch, editorActions]);
   
+  const totalNodes = Object.keys(editorState.nodes).length;
+  const layerTitleKey = t("inspectorTabLayers");
+  const layerTitle = layerTitleKey === "inspectorTabLayers" ? "Layers" : layerTitleKey;
+  const nodeCountKey = t("inspectorLayersNodeCount", { count: totalNodes });
+  const nodeCountLabel = nodeCountKey === "inspectorLayersNodeCount" ? `${totalNodes} nodes` : nodeCountKey;
+
   return (
-    <div className={`${styles.nodeTreeList} ${className || ""}`}>
-      <div className={styles.header}>
-        <h3 className={styles.title}>Layers</h3>
-        <div className={styles.nodeCount}>
-          {Object.keys(editorState.nodes).length} nodes
-        </div>
-      </div>
-      
+    <PropertySection
+      title={layerTitle}
+      headerRight={<span className={styles.nodeCount}>{nodeCountLabel}</span>}
+      className={classNames(styles.nodeTreeList, className)}
+      bodyClassName={styles.nodeTreeListBody}
+    >
       <div className={styles.treeContainer} onClick={handleDeselectAll}>
         {sortedRootNodes.length === 0 ? (
           <div className={styles.emptyState}>
@@ -402,6 +409,6 @@ export const NodeTreeList: React.FC<NodeTreeListProps> = ({ className }) => {
           ))
         )}
       </div>
-    </div>
+    </PropertySection>
   );
 };

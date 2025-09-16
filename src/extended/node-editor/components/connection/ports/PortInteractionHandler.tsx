@@ -6,8 +6,8 @@ import { useNodeCanvas } from "../../../contexts/NodeCanvasContext";
 import { useNodeDefinitions } from "../../../contexts/NodeDefinitionContext";
 import { usePointerDrag } from "../../../hooks/usePointerDrag";
 // Use the unified connectable ports calculator based on resolved ports
-import { getConnectablePortIds, isPortConnectable, createValidatedConnection } from "../../../utils/nodeLayerHelpers";
-import { canConnectPorts } from "../../../utils/connectionValidation";
+import { getConnectablePortIds, isPortConnectable } from "../../../utils/nodeLayerHelpers";
+import { planConnectionChange, ConnectionSwitchBehavior } from "../../../utils/connectionSwitchBehavior";
 // isPortConnectable imported above
 import { PORT_INTERACTION_THRESHOLD } from "../../../constants/interaction";
 
@@ -47,13 +47,17 @@ export const PortInteractionHandler: React.FC<PortInteractionHandlerProps> = ({
   const isConnected = actionState.connectedPorts.has(port.id);
 
   // Convert to Port for actions
-  const actionPort: Port = {
+  const actionPort = React.useMemo<Port>(() => ({
     id: port.id,
     nodeId: port.nodeId,
     type: port.type,
     label: port.label,
     position: port.position,
-  };
+    dataType: port.dataType,
+    maxConnections: port.maxConnections,
+    allowedNodeTypes: port.allowedNodeTypes,
+    allowedPortTypes: port.allowedPortTypes,
+  }), [port]);
 
   // Get port element position for connection dragging
   const getPortElementPosition = React.useCallback((portElement: HTMLElement): Position => {
@@ -110,21 +114,49 @@ export const PortInteractionHandler: React.FC<PortInteractionHandlerProps> = ({
     const { fromPort, candidatePort } = actionState.connectionDragState;
 
     if (candidatePort && fromPort.id !== candidatePort.id) {
-      // Validate using unified rules and create connection if valid
-      const connection = createValidatedConnection(
+      const plan = planConnectionChange({
         fromPort,
-        candidatePort,
-        nodeEditorState.nodes,
-        nodeEditorState.connections,
-        (type: string) => registry.get(type)
-      );
-      if (connection) dispatch(actions.addConnection(connection));
+        toPort: candidatePort,
+        nodes: nodeEditorState.nodes,
+        connections: nodeEditorState.connections,
+        getNodeDefinition: (type: string) => registry.get(type),
+      });
+
+      switch (plan.behavior) {
+        case ConnectionSwitchBehavior.Replace:
+          if (plan.connection) {
+            plan.connectionIdsToReplace.forEach((connectionId) => {
+              dispatch(actions.deleteConnection(connectionId));
+            });
+            dispatch(actions.addConnection(plan.connection));
+          }
+          break;
+
+        case ConnectionSwitchBehavior.Append:
+          if (plan.connection) {
+            dispatch(actions.addConnection(plan.connection));
+          }
+          break;
+
+        case ConnectionSwitchBehavior.Ignore:
+        default:
+          break;
+      }
     }
 
     // Clear drag state and connectable ports
     actionDispatch(actionActions.endConnectionDrag());
     actionDispatch(actionActions.updateConnectablePorts(new Set()));
-  }, [actionState.connectionDragState, dispatch, actions, actionDispatch, actionActions, nodeEditorState.nodes, nodeEditorState.connections, registry]);
+  }, [
+    actionState.connectionDragState,
+    dispatch,
+    actions,
+    actionDispatch,
+    actionActions,
+    nodeEditorState.nodes,
+    nodeEditorState.connections,
+    registry,
+  ]);
 
   const { startDrag } = usePointerDrag({
     onStart: handleConnectionDragStart,
