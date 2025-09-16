@@ -115,11 +115,13 @@ button.button {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
 }
 
-.body .child+.child {
-  margin-left: 8px;
+.body>.child {
+  min-width: 0;
 }
+
 
 .separator {
   align-self: center;

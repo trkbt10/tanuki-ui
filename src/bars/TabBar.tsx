@@ -14,7 +14,7 @@ export const TabBar: React.FC<{
       onSelect(item, index);
       setSelectedItemIndex(index);
     },
-    [onSelect],
+    [onSelect]
   );
   return (
     <nav className={style.tabbar} tabIndex={tabIndex}>
@@ -40,7 +40,7 @@ const TabItem: React.FC<{
       e.preventDefault();
       onSelect(item, tabIndex);
     },
-    [onSelect, item, tabIndex],
+    [onSelect, item, tabIndex]
   );
   return (
     <li className={style.tabitem} data-selected={selected}>

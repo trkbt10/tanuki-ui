@@ -2,7 +2,7 @@ import * as React from "react";
 import { usePrevious } from "react-use";
 import { ChevronMark } from "../blocks/ChevronMark";
 import { SearchIcon } from "../blocks/SearchIcon";
-import style from "./Toolbar.module.css";
+import classes from "./Toolbar.module.css";
 type Variants = "combobox" | "noborder" | string;
 const PushButton = React.forwardRef<
   HTMLButtonElement | HTMLAnchorElement | HTMLInputElement,
@@ -10,10 +10,10 @@ const PushButton = React.forwardRef<
 >(({ children, variant, ...props }, ref) => {
   const Element = props.as ?? "button";
   return (
-    <Element className={style.button} data-variant={variant} {...props} ref={ref}>
+    <Element className={classes.button} data-variant={variant} {...props} ref={ref}>
       {children}
       {variant === "combobox" && (
-        <i className={style.pullDownMark} role="none">
+        <i className={classes.pullDownMark} role="none">
           <ChevronMark></ChevronMark>
         </i>
       )}
@@ -32,12 +32,12 @@ const NavigationButton = React.forwardRef<HTMLButtonElement, NavigationButtonPro
       <button
         {...restProps}
         type={type ?? "button"}
-        className={style.button}
+        className={classes.button}
         data-variant="navigation"
         data-direction={direction}
         ref={ref}
       >
-        <span className={style.navigationButtonIcon}>
+        <span className={classes.navigationButtonIcon}>
           <ChevronMark size={16} direction={direction === "back" ? "left" : "right"} />
         </span>
         {children}
@@ -60,11 +60,11 @@ ForwardButton.displayName = "ForwardButton";
 const PullDown = React.forwardRef<HTMLSelectElement, React.SelectHTMLAttributes<HTMLSelectElement> & { variant?: Variants }>(
   ({ variant, ...props }, ref) => {
     return (
-      <div className={style.button} data-variant={variant}>
+      <div className={classes.button} data-variant={variant}>
         <select {...props} ref={ref}>
           {props.children}
         </select>
-        <div role="none" className={style.pullDownMark}>
+        <div role="none" className={classes.pullDownMark}>
           <ChevronMark></ChevronMark>
         </div>
       </div>
@@ -90,7 +90,7 @@ const InputField = React.memo(
     }
   >(({ children, variant, ...props }, ref) => {
     return (
-      <input className={style.input} type={props.type ?? "text"} {...props} ref={ref} data-vatiant={variant}>
+      <input className={classes.input} type={props.type ?? "text"} {...props} ref={ref} data-vatiant={variant}>
         {children}
       </input>
     );
@@ -99,8 +99,8 @@ const InputField = React.memo(
 InputField.displayName = "InputField";
 const SearchField: React.FC<React.ComponentPropsWithRef<typeof InputField>> = (props) => {
   return (
-    <div className={style.withIcon}>
-      <i className={style.icon}>
+    <div className={classes.withIcon}>
+      <i className={classes.icon}>
         <SearchIcon size={17} />
       </i>
       <InputField {...props} type="search" placeholder={props.placeholder ?? "Search..."} />
@@ -115,7 +115,7 @@ const Title: React.FC<
   }>
 > = React.memo(({ title, subTitle, children }) => {
   return (
-    <div className={style.title}>
+    <div className={classes.title}>
       {children}
       {title && <strong>{title}</strong>}
       {subTitle && <small>{subTitle}</small>}
@@ -127,10 +127,10 @@ Title.displayName = "Title";
 const Body = React.forwardRef<HTMLDivElement, React.PropsWithChildren<React.JSX.IntrinsicElements["div"]>>(
   ({ children, ...props }, ref) => {
     return (
-      <div className={style.body} {...props} ref={ref}>
+      <div className={classes.body} {...props} ref={ref}>
         {React.Children.map(children, (child, i) => {
           return (
-            <div className={style.child} key={i}>
+            <div className={classes.child} key={i}>
               {child}
             </div>
           );
@@ -141,7 +141,7 @@ const Body = React.forwardRef<HTMLDivElement, React.PropsWithChildren<React.JSX.
 );
 Body.displayName = "Body";
 
-const Separator = React.memo(() => <hr className={style.separator} role="separator" />);
+const Separator = React.memo(() => <hr className={classes.separator} role="separator" />);
 
 const Segment: React.FC<
   React.PropsWithChildren<{
@@ -154,7 +154,7 @@ const Segment: React.FC<
     onClick(index);
   }, [index, onClick]);
   return (
-    <div className={style.segment} data-is-active={isActive} onClick={memorizedOnClick}>
+    <div className={classes.segment} data-is-active={isActive} onClick={memorizedOnClick}>
       {children}
     </div>
   );
@@ -187,7 +187,7 @@ const SegmentedControl = React.memo(
       return React.Children.toArray(children);
     }, [children, items]);
     return (
-      <div className={style.segmentControl}>
+      <div className={classes.segmentControl}>
         {mergedItems.map((item, i) => {
           return (
             <Segment key={i} index={i} onClick={setSelectedIndex} isActive={selectedIndex === i}>
@@ -211,7 +211,7 @@ export const Toolbar = ({
   style?: React.CSSProperties;
 }>) => {
   return (
-    <div className={style.toolbar} role="toolbar" style={css}>
+    <div className={classes.toolbar} role="toolbar" style={css}>
       {children}
     </div>
   );
