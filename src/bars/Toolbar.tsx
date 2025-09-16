@@ -1,6 +1,7 @@
 import * as React from "react";
 import { usePrevious } from "react-use";
 import { ChevronMark } from "../blocks/ChevronMark";
+import { ChevronLeftIcon, ChevronRightIcon } from "../blocks/ChevronLeftIcon";
 import style from "./Toolbar.module.css";
 import { SearchIcon } from "../blocks/SearchIcon";
 type Variants = "combobox" | "noborder" | string;
@@ -21,6 +22,43 @@ const PushButton = React.forwardRef<
   );
 });
 PushButton.displayName = "PushButton";
+
+type NavigationButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  label?: React.ReactNode;
+};
+
+const NavigationButton = React.forwardRef<
+  HTMLButtonElement,
+  NavigationButtonProps & { direction: "back" | "forward" }
+>(({ direction, label, children, className, type, ...props }, ref) => {
+  const IconComponent = direction === "back" ? ChevronLeftIcon : ChevronRightIcon;
+  const content = label ?? children;
+  const combinedClassName = [style.button, style.navigationButton, className].filter(Boolean).join(" ");
+  return (
+    <button
+      {...props}
+      type={type ?? "button"}
+      className={combinedClassName.trim()}
+      ref={ref}
+    >
+      <span className={style.navigationButtonIcon}>
+        <IconComponent size={16} />
+      </span>
+      {content ?? null}
+    </button>
+  );
+});
+NavigationButton.displayName = "NavigationButton";
+
+const BackButton = React.forwardRef<HTMLButtonElement, NavigationButtonProps>((props, ref) => {
+  return <NavigationButton {...props} direction="back" ref={ref} />;
+});
+BackButton.displayName = "BackButton";
+
+const ForwardButton = React.forwardRef<HTMLButtonElement, NavigationButtonProps>((props, ref) => {
+  return <NavigationButton {...props} direction="forward" ref={ref} />;
+});
+ForwardButton.displayName = "ForwardButton";
 const PullDown = React.forwardRef<HTMLSelectElement, React.SelectHTMLAttributes<HTMLSelectElement> & { variant?: Variants }>(
   ({ variant, ...props }, ref) => {
     return (
@@ -196,6 +234,8 @@ export const BarItems = {
   ComboBox,
   PopUpButton,
   Spacer,
+  BackButton,
+  ForwardButton,
 };
 Toolbar.SegmentedControl = SegmentedControl;
 Toolbar.Toolbar = Toolbar;
@@ -210,3 +250,5 @@ Toolbar.Segment = Segment;
 Toolbar.ComboBox = ComboBox;
 Toolbar.PopUpButton = PopUpButton;
 Toolbar.Spacer = Spacer;
+Toolbar.BackButton = BackButton;
+Toolbar.ForwardButton = ForwardButton;

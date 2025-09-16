@@ -26,6 +26,8 @@ export const Basic = () => {
           <option value="B">B</option>
           <option value="C">C</option>
         </BarItems.PopUpButton>
+        <BarItems.BackButton />
+        <BarItems.ForwardButton />
         <BarItems.SearchField></BarItems.SearchField>
       </BarItems.Body>
     </BarItems.Body>
@@ -75,4 +77,15 @@ export const Title = () => {
 
 export const Separator = () => {
   return <BarItems.Separator></BarItems.Separator>;
+};
+
+export const NavigationButtons = () => {
+  return (
+    <BarItems.Body>
+      <BarItems.BackButton />
+      <BarItems.ForwardButton />
+      <BarItems.BackButton label="Back" />
+      <BarItems.ForwardButton label="Forward" />
+    </BarItems.Body>
+  );
 };
