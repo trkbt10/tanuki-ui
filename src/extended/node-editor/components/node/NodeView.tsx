@@ -10,6 +10,7 @@ import { classNames } from "../elements";
 import styles from "./NodeView.module.css";
 import { PortView } from "../connection/ports/PortView";
 import { isPortConnectable } from "../../utils/nodeLayerHelpers";
+import type { ConnectablePortsResult } from "../../utils/connectablePortPlanner";
 import { ResizeHandle } from "../parts/ResizeHandle";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeResize } from "../../hooks/useNodeResize";
@@ -42,7 +43,7 @@ export interface NodeViewProps {
   connectingPort?: Port;
   hoveredPort?: Port;
   connectedPorts?: Set<string>;
-  connectablePortIds?: Set<string>;
+  connectablePorts?: ConnectablePortsResult;
   nodeRenderer?: (props: CustomNodeRendererProps) => React.ReactNode;
   externalData?: unknown;
   onUpdateNode?: (updates: Partial<Node>) => void;
@@ -63,7 +64,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
   connectingPort,
   hoveredPort,
   connectedPorts,
-  connectablePortIds,
+  connectablePorts,
   nodeRenderer,
   externalData,
   onUpdateNode,
@@ -363,7 +364,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
         return (
           <div className={styles.nodePorts}>
             {ports.map((port: Port) => {
-              const connectable = isPortConnectable(port, connectablePortIds);
+              const connectable = isPortConnectable(port, connectablePorts);
               return (
                 <PortView
                   key={port.id}
@@ -416,7 +417,7 @@ const areEqual = (prevProps: NodeViewProps, nextProps: NodeViewProps): boolean =
     prevProps.isSelected !== nextProps.isSelected ||
     prevProps.isDragging !== nextProps.isDragging ||
     prevProps.isResizing !== nextProps.isResizing ||
-    prevProps.connectablePortIds !== nextProps.connectablePortIds
+    prevProps.connectablePorts !== nextProps.connectablePorts
   ) {
     return false;
   }

@@ -1,6 +1,7 @@
 import type { Port, Node, Connection, GridSettings } from "../types/core";
 import type { NodeDefinition } from "../types/NodeDefinition";
 import { canConnectPorts } from "./connectionValidation";
+import type { ConnectablePortsResult } from "./connectablePortPlanner";
 
 /**
  * Check if a port has any connections
@@ -220,13 +221,27 @@ export function createValidatedConnection(
 }
 
 /**
- * Check if a given port is connectable based on precomputed connectable port ids.
- * This centralizes the composite id logic used across components.
+ * Check if a given port is connectable based on precomputed connectable port descriptors.
+ * Only considers ports whose descriptor indicates they are valid destinations.
  */
-export function isPortConnectable(port: Port, connectablePortIds?: Set<string>): boolean {
-  if (!connectablePortIds || connectablePortIds.size === 0) return false;
+export function isPortConnectable(
+  port: Port,
+  connectablePorts?: ConnectablePortsResult | { ids: Set<string> }
+): boolean {
+  if (!connectablePorts) return false;
+
   const compositeId = `${port.nodeId}:${port.id}`;
-  return connectablePortIds.has(compositeId);
+
+  if ("descriptors" in connectablePorts) {
+    const descriptor = connectablePorts.descriptors.get(compositeId);
+    if (!descriptor) return false;
+    // Only treat opposite IO as connectable safety net
+    return descriptor.portType !== descriptor.source.portType;
+  }
+
+  const ids = connectablePorts.ids ?? connectablePorts;
+  if (!ids || ids.size === 0) return false;
+  return ids.has(compositeId);
 }
 
 /**

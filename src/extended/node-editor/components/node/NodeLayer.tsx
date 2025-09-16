@@ -15,21 +15,21 @@ import styles from "./NodeLayer.module.css";
 import type { Port } from "../../types/core";
 import { snapMultipleToGrid } from "../../utils/gridSnap";
 import { NodeView } from "./NodeView";
-import { 
-  getPortConnections, 
-  getNodesToDrag, 
-  createConnection, 
+import {
+  getPortConnections,
+  getNodesToDrag,
+  createConnection,
   isValidReconnection,
   collectInitialPositions,
   calculateNewPositions,
   handleGroupMovement,
   getOtherPortInfo,
-  getConnectablePortIds,
-  createValidatedConnection
+  createValidatedConnection,
 } from "../../utils/nodeLayerHelpers";
 import { canConnectPorts } from "../../utils/connectionValidation";
 import type { Port as CorePort } from "../../types/core";
 import { planConnectionChange, ConnectionSwitchBehavior } from "../../utils/connectionSwitchBehavior";
+import { computeConnectablePortIds, emptyConnectablePorts } from "../../utils/connectablePortPlanner";
 
 export interface NodeLayerProps {
   className?: string;
@@ -208,13 +208,13 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         };
         actionDispatch(actionActions.startConnectionDrag(actionPort));
         actionDispatch(actionActions.updateConnectionDrag(portPosition, null));
-        const connectable = getConnectablePortIds(
-          actionPort,
-          nodeEditorState.nodes,
+        const connectable = computeConnectablePortIds({
+          fallbackPort: actionPort,
+          nodes: nodeEditorState.nodes,
+          connections: nodeEditorState.connections,
           getNodePorts,
-          nodeEditorState.connections,
-          (type: string) => getNodeDef.registry.get(type)
-        );
+          getNodeDefinition: (type: string) => getNodeDef.registry.get(type),
+        });
         actionDispatch(actionActions.updateConnectablePorts(connectable));
         return;
       }
@@ -363,7 +363,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       }
 
       actionDispatch(actionActions.endConnectionDrag());
-      actionDispatch(actionActions.updateConnectablePorts(new Set()));
+      actionDispatch(actionActions.updateConnectablePorts(emptyConnectablePorts()));
     },
     [
       actionState.connectionDragState,
@@ -389,23 +389,34 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         allowedPortTypes: port.allowedPortTypes,
       };
       actionDispatch(actionActions.setHoveredPort(actionPort));
-      const connectable = getConnectablePortIds(
-        actionPort,
-        nodeEditorState.nodes,
+      const connectable = computeConnectablePortIds({
+        dragState: actionState.connectionDragState,
+        disconnectState: actionState.connectionDisconnectState,
+        fallbackPort: actionPort,
+        nodes: nodeEditorState.nodes,
+        connections: nodeEditorState.connections,
         getNodePorts,
-        nodeEditorState.connections,
-        (type: string) => getNodeDef.registry.get(type)
-      );
+        getNodeDefinition: (type: string) => getNodeDef.registry.get(type),
+      });
       actionDispatch(actionActions.updateConnectablePorts(connectable));
     },
-    [actionDispatch, actionActions, nodeEditorState.nodes, nodeEditorState.connections, getNodeDef, getNodePorts]
+    [
+      actionDispatch,
+      actionActions,
+      actionState.connectionDragState,
+      actionState.connectionDisconnectState,
+      nodeEditorState.nodes,
+      nodeEditorState.connections,
+      getNodeDef,
+      getNodePorts,
+    ]
   );
 
   const handlePortPointerLeave = React.useCallback(() => {
     actionDispatch(actionActions.setHoveredPort(null));
     // Clear connectable highlight when leaving (unless dragging)
     if (!actionState.connectionDragState) {
-      actionDispatch(actionActions.updateConnectablePorts(new Set()));
+      actionDispatch(actionActions.updateConnectablePorts(emptyConnectablePorts()));
     }
   }, [actionDispatch, actionActions, actionState.connectionDragState]);
 
@@ -545,7 +556,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
           onPortPointerUp={handlePortPointerUp}
           onPortPointerEnter={handlePortPointerEnter}
           onPortPointerLeave={handlePortPointerLeave}
-          connectablePortIds={actionState.connectablePortIds}
+          connectablePorts={actionState.connectablePorts}
           connectingPort={
             actionState.connectionDragState?.fromPort
               ? {

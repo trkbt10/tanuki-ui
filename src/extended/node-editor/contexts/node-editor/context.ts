@@ -1,6 +1,8 @@
 import * as React from "react";
 import type { Node, NodeEditorData, NodeId, Port } from "../../types/core";
 import type { nodeEditorActions as actions } from "./actions";
+import type { Settings } from "../../hooks/useSettings";
+import type { SettingsManager } from "../../settings/SettingsManager";
 
 export interface NodeEditorContextValue {
   state: NodeEditorData;
@@ -21,6 +23,9 @@ export interface NodeEditorContextValue {
    * Use this for frequent single-port lookups (connections, hit tests, drags).
    */
   portLookupMap: Map<string, { node: Node; port: Port }>;
+  settings: Settings;
+  settingsManager?: SettingsManager;
+  updateSetting: (key: string, value: unknown) => void;
 }
 
 export const NodeEditorContext = React.createContext<NodeEditorContextValue | null>(null);

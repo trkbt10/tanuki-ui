@@ -13,6 +13,8 @@ import {
   ConnectionDisconnectState,
   ContextMenuState,
 } from "../types/core";
+import type { ConnectablePortsResult } from "../utils/connectablePortPlanner";
+import { emptyConnectablePorts } from "../utils/connectablePortPlanner";
 
 // Selection box specific to action state
 export interface SelectionBox {
@@ -33,7 +35,7 @@ export interface EditorActionState {
   connectionDisconnectState: ConnectionDisconnectState | null;
   hoveredPort: BasePort | null;
   connectedPorts: Set<PortId>;
-  connectablePortIds: Set<string>; // composite key: `${nodeId}:${portId}`
+  connectablePorts: ConnectablePortsResult;
   contextMenu: ContextMenuState;
   inspectorActiveTab: number;
 }
@@ -63,7 +65,7 @@ export type EditorActionStateAction =
   | { type: "END_CONNECTION_DISCONNECT" }
   | { type: "SET_HOVERED_PORT"; payload: { port: BasePort | null } }
   | { type: "UPDATE_CONNECTED_PORTS"; payload: { connectedPorts: Set<PortId> } }
-  | { type: "UPDATE_CONNECTABLE_PORTS"; payload: { connectablePortIds: Set<string> } }
+  | { type: "UPDATE_CONNECTABLE_PORTS"; payload: { connectablePorts: ConnectablePortsResult } }
   | { type: "START_NODE_RESIZE"; payload: { nodeId: NodeId; startPosition: Position; startSize: Size; handle: ResizeHandle } }
   | { type: "UPDATE_NODE_RESIZE"; payload: { currentSize: Size } }
   | { type: "END_NODE_RESIZE" }
@@ -259,7 +261,7 @@ export const editorActionStateReducer = (
     case "UPDATE_CONNECTABLE_PORTS":
       return {
         ...state,
-        connectablePortIds: action.payload.connectablePortIds,
+        connectablePorts: action.payload.connectablePorts,
       };
 
     case "START_NODE_RESIZE": {
@@ -346,7 +348,7 @@ export const defaultEditorActionState: EditorActionState = {
   connectionDisconnectState: null,
   hoveredPort: null,
   connectedPorts: new Set<PortId>(),
-  connectablePortIds: new Set<string>(),
+  connectablePorts: emptyConnectablePorts(),
   contextMenu: {
     visible: false,
     position: { x: 0, y: 0 },
@@ -419,9 +421,9 @@ export const editorActionStateActions = {
     type: "UPDATE_CONNECTED_PORTS",
     payload: { connectedPorts },
   }),
-  updateConnectablePorts: (connectablePortIds: Set<string>): EditorActionStateAction => ({
+  updateConnectablePorts: (connectablePorts: ConnectablePortsResult): EditorActionStateAction => ({
     type: "UPDATE_CONNECTABLE_PORTS",
-    payload: { connectablePortIds },
+    payload: { connectablePorts },
   }),
   startConnectionDisconnect: (
     originalConnection: { id: ConnectionId; fromNodeId: NodeId; fromPortId: PortId; toNodeId: NodeId; toPortId: PortId },

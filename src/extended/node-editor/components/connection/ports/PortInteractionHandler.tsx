@@ -6,8 +6,9 @@ import { useNodeCanvas } from "../../../contexts/NodeCanvasContext";
 import { useNodeDefinitions } from "../../../contexts/NodeDefinitionContext";
 import { usePointerDrag } from "../../../hooks/usePointerDrag";
 // Use the unified connectable ports calculator based on resolved ports
-import { getConnectablePortIds, isPortConnectable } from "../../../utils/nodeLayerHelpers";
+import { isPortConnectable } from "../../../utils/nodeLayerHelpers";
 import { planConnectionChange, ConnectionSwitchBehavior } from "../../../utils/connectionSwitchBehavior";
+import { computeConnectablePortIds, emptyConnectablePorts } from "../../../utils/connectablePortPlanner";
 // isPortConnectable imported above
 import { PORT_INTERACTION_THRESHOLD } from "../../../constants/interaction";
 
@@ -42,7 +43,7 @@ export const PortInteractionHandler: React.FC<PortInteractionHandlerProps> = ({
   // Check port states
   const isHovered = actionState.hoveredPort?.id === port.id;
   const isConnecting = actionState.connectionDragState?.fromPort.id === port.id;
-  const isConnectable = isPortConnectable(port, actionState.connectablePortIds);
+  const isConnectable = isPortConnectable(port, actionState.connectablePorts);
   const isCandidate = actionState.connectionDragState?.candidatePort?.id === port.id;
   const isConnected = actionState.connectedPorts.has(port.id);
 
@@ -77,13 +78,13 @@ export const PortInteractionHandler: React.FC<PortInteractionHandlerProps> = ({
     const portPos = getPortElementPosition(portElement);
     
     // Calculate connectable ports using resolved ports and NodeDefinitions
-    const connectablePorts = getConnectablePortIds(
-      actionPort,
-      nodeEditorState.nodes,
+    const connectablePorts = computeConnectablePortIds({
+      fallbackPort: actionPort,
+      nodes: nodeEditorState.nodes,
+      connections: nodeEditorState.connections,
       getNodePorts,
-      nodeEditorState.connections,
-      (type: string) => registry.get(type)
-    );
+      getNodeDefinition: (type: string) => registry.get(type),
+    });
     
     // Start connection drag and update connectable ports
     actionDispatch(actionActions.startConnectionDrag(actionPort));
@@ -146,7 +147,7 @@ export const PortInteractionHandler: React.FC<PortInteractionHandlerProps> = ({
 
     // Clear drag state and connectable ports
     actionDispatch(actionActions.endConnectionDrag());
-    actionDispatch(actionActions.updateConnectablePorts(new Set()));
+    actionDispatch(actionActions.updateConnectablePorts(emptyConnectablePorts()));
   }, [
     actionState.connectionDragState,
     dispatch,

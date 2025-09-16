@@ -57,6 +57,8 @@ function getThemeSetting(settingsManager: SettingsManager, key: string, defaultV
   return isValidTheme(value) ? value : defaultValue;
 }
 
+export type { Settings };
+
 export function useSettings(settingsManager?: SettingsManager): Settings {
   const [settingsVersion, setSettingsVersion] = React.useState(0);
 

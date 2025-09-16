@@ -90,6 +90,9 @@ export interface I18nMessages {
   inspectorSnapToGrid?: string;
   inspectorGridSize?: string;
   inspectorSnapThreshold?: string;
+  inspectorGeneralSettings?: string;
+  inspectorAutoSave?: string;
+  inspectorAutoSaveInterval?: string;
   inspectorEmptyStatePrompt?: string;
   inspectorMultipleSelection?: string;
   inspectorTabLayers?: string;

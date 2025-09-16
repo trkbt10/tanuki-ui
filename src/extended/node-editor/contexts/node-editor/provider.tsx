@@ -2,6 +2,7 @@ import * as React from "react";
 import type { Node, NodeEditorData, NodeId, Port } from "../../types/core";
 import { useSettings } from "../../hooks";
 import type { SettingsManager } from "../../settings/SettingsManager";
+import type { SettingValue } from "../../settings/types";
 import { createCachedPortResolver } from "../../utils/portResolver";
 import { NodeDefinitionContext } from "../NodeDefinitionContext";
 import { loadDataWithMigration, prepareDataForSave, type VersionedNodeEditorData } from "../../utils/dataMigration";
@@ -208,6 +209,18 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
     portResolver.clearCache();
   }, [state.nodes, portResolver]);
 
+  const updateSetting = React.useCallback(
+    (key: string, value: unknown) => {
+      if (!settingsManager) return;
+      try {
+        settingsManager.setValue(key, value as SettingValue);
+      } catch (error) {
+        console.error(`Failed to update setting ${key}:`, error);
+      }
+    },
+    [settingsManager]
+  );
+
   const contextValue = React.useMemo(
     () => ({
       state,
@@ -218,8 +231,11 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
       handleSave,
       getNodePorts,
       portLookupMap,
+      settings,
+      settingsManager,
+      updateSetting,
     }),
-    [state, dispatch, isLoading, isSaving, handleSave, getNodePorts, portLookupMap]
+    [state, dispatch, isLoading, isSaving, handleSave, getNodePorts, portLookupMap, settings, settingsManager, updateSetting]
   );
 
   return <NodeEditorContext.Provider value={contextValue}>{children}</NodeEditorContext.Provider>;

@@ -158,3 +158,15 @@ export const planConnectionChange = ({
 };
 
 export type { BehaviorContext };
+
+export const getConnectionSwitchContext = (
+  port: Port,
+  nodes: Record<NodeId, Node>,
+  connections: Record<string, Connection>,
+  getNodeDefinition: (type: string) => NodeDefinition | undefined
+): BehaviorContext => determineBehaviorForPort(port, nodes, connections, getNodeDefinition);
+
+export const createConnectionSnapshotWithout = (
+  connections: Record<string, Connection>,
+  toRemove: Connection[]
+): Record<string, Connection> => createConnectionMapWithout(connections, toRemove);

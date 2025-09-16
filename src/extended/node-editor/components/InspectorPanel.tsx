@@ -21,7 +21,14 @@ export interface InspectorPanelProps {
  * Uses Context to receive information from NodeEditor and EditorActionState
  */
 export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => {
-  const { state: nodeEditorState, actions: nodeEditorActions, dispatch: nodeEditorDispatch } = useNodeEditor();
+  const {
+    state: nodeEditorState,
+    actions: nodeEditorActions,
+    dispatch: nodeEditorDispatch,
+    settings,
+    settingsManager,
+    updateSetting,
+  } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState, dispatch: canvasDispatch, actions: canvasActions } = useNodeCanvas();
   const activeTabIndex = actionState.inspectorActiveTab ?? 0;
@@ -64,6 +71,39 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
     },
     [nodeEditorDispatch, nodeEditorActions]
   );
+
+  const [autoSaveIntervalInput, setAutoSaveIntervalInput] = React.useState<string>(
+    () => String(settings.autoSaveInterval ?? 30)
+  );
+
+  React.useEffect(() => {
+    setAutoSaveIntervalInput(String(settings.autoSaveInterval ?? 30));
+  }, [settings.autoSaveInterval]);
+
+  const handleAutoSaveToggle = React.useCallback(
+    (enabled: boolean) => {
+      updateSetting("general.autoSave", enabled);
+    },
+    [updateSetting]
+  );
+
+  const handleAutoSaveIntervalChange = React.useCallback(
+    (value: string) => {
+      setAutoSaveIntervalInput(value);
+    },
+    []
+  );
+
+  const handleAutoSaveIntervalBlur = React.useCallback(() => {
+    const interval = parseInt(autoSaveIntervalInput, 10);
+    if (!Number.isNaN(interval) && interval >= 5 && interval <= 3600) {
+      updateSetting("general.autoSaveInterval", interval);
+    } else {
+      setAutoSaveIntervalInput(String(settings.autoSaveInterval ?? 30));
+    }
+  }, [autoSaveIntervalInput, settings.autoSaveInterval, updateSetting]);
+
+  const settingsWritable = Boolean(settingsManager);
 
   return (
     <div className={classNames(styles.inspectorPanel, className)}>
@@ -120,8 +160,8 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
         ) : (
           <>
             {/* Settings Tab: Move Grid Settings here */}
-            <PropertySection title={t("inspectorGridSettings")}>
-              <div className={styles.inspectorField}>
+            <PropertySection title={t("inspectorGridSettings")} bodyClassName={styles.settingsSectionBody}>
+              <div className={styles.settingsField}>
                 <SwitchInput
                   id="grid-show"
                   checked={canvasState.gridSettings.showGrid}
@@ -132,7 +172,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
                   size="medium"
                 />
               </div>
-              <div className={styles.inspectorField}>
+              <div className={styles.settingsField}>
                 <SwitchInput
                   id="grid-snap"
                   checked={canvasState.gridSettings.snapToGrid}
@@ -143,7 +183,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
                   size="medium"
                 />
               </div>
-              <div className={styles.inspectorField}>
+              <div className={styles.settingsField}>
                 <Label htmlFor="grid-size">
                   {t("inspectorGridSize")}:
                   <Input
@@ -169,7 +209,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
                   />
                 </Label>
               </div>
-              <div className={styles.inspectorField}>
+              <div className={styles.settingsField}>
                 <Label htmlFor="snap-threshold">
                   {t("inspectorSnapThreshold")}:
                   <Input
@@ -192,6 +232,41 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
                       }
                     }}
                     aria-label="Snap threshold in pixels"
+                  />
+                </Label>
+              </div>
+            </PropertySection>
+
+            <PropertySection
+              title={t("inspectorGeneralSettings") || "General"}
+              bodyClassName={styles.settingsSectionBody}
+            >
+              <div className={styles.settingsField}>
+                <SwitchInput
+                  id="auto-save"
+                  checked={settings.autoSave}
+                  onChange={handleAutoSaveToggle}
+                  label={t("inspectorAutoSave")}
+                  size="medium"
+                  disabled={!settingsWritable}
+                />
+              </div>
+              <div className={styles.settingsField}>
+                <Label htmlFor="auto-save-interval">
+                  {t("inspectorAutoSaveInterval")}
+                  <Input
+                    id="auto-save-interval"
+                    name="autoSaveInterval"
+                    type="number"
+                    className={styles.inspectorInput}
+                    value={autoSaveIntervalInput}
+                    min={5}
+                    max={3600}
+                    step={5}
+                    onChange={(e) => handleAutoSaveIntervalChange(e.target.value)}
+                    onBlur={handleAutoSaveIntervalBlur}
+                    disabled={!settingsWritable}
+                    aria-label="Auto-save interval in seconds"
                   />
                 </Label>
               </div>

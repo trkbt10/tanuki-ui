@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { NodeRenderProps, InspectorRenderProps } from "../../../types/NodeDefinition";
 import type { Node } from "../../../types/core";
-import { 
+import {
   AlignLeftIcon,
   AlignCenterIcon,
   AlignRightIcon,
@@ -13,8 +13,7 @@ import {
   Button,
   Input,
   Label,
-  Textarea,
-  classNames
+  Textarea
 } from "../../elements";
 import editorStyles from "../../../NodeEditor.module.css";
 import { PropertySection } from "../../parts";
@@ -97,7 +96,7 @@ const InspectorNumberInput = React.memo<{
         type="number"
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        className={classNames(defaultStyles.numberInput, editorStyles.inspectorNumberInput)}
+        className={defaultStyles.numberInput}
         id={id}
         name={name}
         aria-label={ariaLabel}
