@@ -7,7 +7,7 @@ import { NodeTreeList } from "./NodeTreeList";
 import { HistoryPanel } from "./HistoryPanel";
 import { TabNav } from "./TabNav";
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
-import { classNames, Input, Label, H4, Toolbar, SwitchInput } from "./elements";
+import { classNames, Input, Label, H4, SwitchInput } from "./elements";
 import { PropertySection } from "./parts";
 import styles from "./InspectorPanel.module.css";
 import { useI18n } from "../i18n";
@@ -72,8 +72,8 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
     [nodeEditorDispatch, nodeEditorActions]
   );
 
-  const [autoSaveIntervalInput, setAutoSaveIntervalInput] = React.useState<string>(
-    () => String(settings.autoSaveInterval ?? 30)
+  const [autoSaveIntervalInput, setAutoSaveIntervalInput] = React.useState<string>(() =>
+    String(settings.autoSaveInterval ?? 30)
   );
 
   React.useEffect(() => {
@@ -87,12 +87,9 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
     [updateSetting]
   );
 
-  const handleAutoSaveIntervalChange = React.useCallback(
-    (value: string) => {
-      setAutoSaveIntervalInput(value);
-    },
-    []
-  );
+  const handleAutoSaveIntervalChange = React.useCallback((value: string) => {
+    setAutoSaveIntervalInput(value);
+  }, []);
 
   const handleAutoSaveIntervalBlur = React.useCallback(() => {
     const interval = parseInt(autoSaveIntervalInput, 10);
@@ -165,9 +162,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
                 <SwitchInput
                   id="grid-show"
                   checked={canvasState.gridSettings.showGrid}
-                  onChange={(checked) =>
-                    canvasDispatch(canvasActions.updateGridSettings({ showGrid: checked }))
-                  }
+                  onChange={(checked) => canvasDispatch(canvasActions.updateGridSettings({ showGrid: checked }))}
                   label={t("inspectorShowGrid")}
                   size="medium"
                 />
@@ -176,9 +171,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
                 <SwitchInput
                   id="grid-snap"
                   checked={canvasState.gridSettings.snapToGrid}
-                  onChange={(checked) =>
-                    canvasDispatch(canvasActions.updateGridSettings({ snapToGrid: checked }))
-                  }
+                  onChange={(checked) => canvasDispatch(canvasActions.updateGridSettings({ snapToGrid: checked }))}
                   label={t("inspectorSnapToGrid")}
                   size="medium"
                 />
@@ -237,10 +230,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className }) => 
               </div>
             </PropertySection>
 
-            <PropertySection
-              title={t("inspectorGeneralSettings") || "General"}
-              bodyClassName={styles.settingsSectionBody}
-            >
+            <PropertySection title={t("inspectorGeneralSettings") || "General"} bodyClassName={styles.settingsSectionBody}>
               <div className={styles.settingsField}>
                 <SwitchInput
                   id="auto-save"
