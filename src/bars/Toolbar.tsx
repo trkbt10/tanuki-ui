@@ -1,9 +1,8 @@
 import * as React from "react";
 import { usePrevious } from "react-use";
 import { ChevronMark } from "../blocks/ChevronMark";
-import { ChevronLeftIcon, ChevronRightIcon } from "../blocks/ChevronLeftIcon";
-import style from "./Toolbar.module.css";
 import { SearchIcon } from "../blocks/SearchIcon";
+import style from "./Toolbar.module.css";
 type Variants = "combobox" | "noborder" | string;
 const PushButton = React.forwardRef<
   HTMLButtonElement | HTMLAnchorElement | HTMLInputElement,
@@ -27,27 +26,25 @@ type NavigationButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   label?: React.ReactNode;
 };
 
-const NavigationButton = React.forwardRef<
-  HTMLButtonElement,
-  NavigationButtonProps & { direction: "back" | "forward" }
->(({ direction, label, children, className, type, ...props }, ref) => {
-  const IconComponent = direction === "back" ? ChevronLeftIcon : ChevronRightIcon;
-  const content = label ?? children;
-  const combinedClassName = [style.button, style.navigationButton, className].filter(Boolean).join(" ");
-  return (
-    <button
-      {...props}
-      type={type ?? "button"}
-      className={combinedClassName.trim()}
-      ref={ref}
-    >
-      <span className={style.navigationButtonIcon}>
-        <IconComponent size={16} />
-      </span>
-      {content ?? null}
-    </button>
-  );
-});
+const NavigationButton = React.forwardRef<HTMLButtonElement, NavigationButtonProps & { direction: "back" | "forward" }>(
+  ({ direction, children, className, type, ...restProps }, ref) => {
+    return (
+      <button
+        {...restProps}
+        type={type ?? "button"}
+        className={style.button}
+        data-variant="navigation"
+        data-direction={direction}
+        ref={ref}
+      >
+        <span className={style.navigationButtonIcon}>
+          <ChevronMark size={16} direction={direction === "back" ? "left" : "right"} />
+        </span>
+        {children}
+      </button>
+    );
+  }
+);
 NavigationButton.displayName = "NavigationButton";
 
 const BackButton = React.forwardRef<HTMLButtonElement, NavigationButtonProps>((props, ref) => {
@@ -59,6 +56,7 @@ const ForwardButton = React.forwardRef<HTMLButtonElement, NavigationButtonProps>
   return <NavigationButton {...props} direction="forward" ref={ref} />;
 });
 ForwardButton.displayName = "ForwardButton";
+
 const PullDown = React.forwardRef<HTMLSelectElement, React.SelectHTMLAttributes<HTMLSelectElement> & { variant?: Variants }>(
   ({ variant, ...props }, ref) => {
     return (
@@ -71,7 +69,7 @@ const PullDown = React.forwardRef<HTMLSelectElement, React.SelectHTMLAttributes<
         </div>
       </div>
     );
-  },
+  }
 );
 PullDown.displayName = "PullDown";
 
@@ -96,7 +94,7 @@ const InputField = React.memo(
         {children}
       </input>
     );
-  }),
+  })
 );
 InputField.displayName = "InputField";
 const SearchField: React.FC<React.ComponentPropsWithRef<typeof InputField>> = (props) => {
@@ -139,7 +137,7 @@ const Body = React.forwardRef<HTMLDivElement, React.PropsWithChildren<React.JSX.
         })}
       </div>
     );
-  },
+  }
 );
 Body.displayName = "Body";
 
@@ -199,7 +197,7 @@ const SegmentedControl = React.memo(
         })}
       </div>
     );
-  },
+  }
 );
 SegmentedControl.displayName = "SegmentedControl";
 const Spacer: React.FC = () => {

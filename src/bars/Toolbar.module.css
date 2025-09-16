@@ -163,9 +163,6 @@ button.button {
   margin: 0;
   background: var(--appMainToolbarFloatingBackground, transparent);
   box-shadow: var(--scrolledAppMainToolbarBoxShadow);
-  transition:
-    box-shadow 0.24s ease-out,
-    background 0.24s ease-out;
   transition-delay: 0.4s, 0;
 }
 
@@ -200,7 +197,7 @@ button.button {
   border-right: 1px solid transparent;
 }
 
-.navigationButton {
+.button[data-variant~="navigation"] {
   display: inline-flex;
   align-items: center;
   gap: 4px;
