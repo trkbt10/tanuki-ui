@@ -4,6 +4,7 @@ import { components } from "../catalog/components";
 import { H1, H2, H3, H4, P, Section, Article, Button, Select, Option, Div, Aside, Toolbar } from "tanuki-ui";
 import { HeaderMainLayout } from "tanuki-ui/layouts";
 import styles from "./ComponentView.module.css";
+import ToolbarShowcase from "./ToolbarShowcase";
 
 const ComponentView: React.FC = () => {
   const { category, name } = useParams<{ category: string; name: string }>();
@@ -27,7 +28,22 @@ const ComponentView: React.FC = () => {
     return <P>Component not found</P>;
   }
 
+  const isToolbarShowcase = category === "bars" && name === "Toolbar";
+
   const renderComponentDemo = () => {
+    if (isToolbarShowcase) {
+      return (
+        <Section className={styles.previewSection}>
+          <Section className={styles.basicExample}>
+            <H4 className={styles.sectionTitle}>包括的なツールバーの例</H4>
+            <div className={styles.demoSection}>
+              <ToolbarShowcase />
+            </div>
+          </Section>
+        </Section>
+      );
+    }
+
     // 新しい形式（3d-controlsなど）の場合
     if (component.component) {
       return (
@@ -70,6 +86,88 @@ const ComponentView: React.FC = () => {
     );
   };
 
+  const usageSnippet = isToolbarShowcase
+    ? `import React from "react";
+import { Toolbar } from "tanuki-ui";
+
+export function ProjectToolbar() {
+  const stageLabels = ["準備完了", "進行中", "ブロック中"];
+  const [stage, setStage] = React.useState(0);
+  const [filter, setFilter] = React.useState("all");
+  const [branch, setBranch] = React.useState("main");
+  const [sortOrder, setSortOrder] = React.useState("latest");
+
+  return (
+    <>
+      <Toolbar>
+        <Toolbar.Body>
+          <Toolbar.BackButton aria-label="戻る" />
+          <Toolbar.ForwardButton aria-label="進む" />
+          <Toolbar.Title title="Tanuki UI" subTitle="Project overview" />
+          <Toolbar.SegmentedControl
+            items={["概要", "コミット", "パイプライン"]}
+            onSelect={(index) => console.log("Segment", index)}
+          />
+          <Toolbar.Spacer />
+          <Toolbar.SearchField placeholder="検索" />
+          <Toolbar.Separator />
+          <Toolbar.PushButton>新規 MR</Toolbar.PushButton>
+          <Toolbar.PullDown
+            value={filter}
+            onChange={(event) => setFilter(event.target.value)}
+          >
+            <option value="all">すべて</option>
+            <option value="mine">自分</option>
+          </Toolbar.PullDown>
+        </Toolbar.Body>
+      </Toolbar>
+
+      <Toolbar.Toolbar>
+        <Toolbar.Body>
+          <Toolbar.Title title="レビュー待ち" />
+          <div style={{ display: "flex", gap: "4px" }}>
+            {stageLabels.map((label, index) => (
+              <Toolbar.Segment
+                key={label}
+                index={index}
+                onClick={setStage}
+                isActive={stage === index}
+              >
+                {label}
+              </Toolbar.Segment>
+            ))}
+          </div>
+          <Toolbar.ComboBox
+            value={branch}
+            onChange={(event) => setBranch(event.target.value)}
+          >
+            <option value="main">main</option>
+            <option value="develop">develop</option>
+            <option value="release">release</option>
+          </Toolbar.ComboBox>
+          <Toolbar.PopUpButton
+            value={sortOrder}
+            onChange={(event) => setSortOrder(event.target.value)}
+          >
+            <option value="latest">最新</option>
+            <option value="oldest">古い順</option>
+          </Toolbar.PopUpButton>
+          <Toolbar.PushButton variant="combobox">
+            その他の操作
+          </Toolbar.PushButton>
+        </Toolbar.Body>
+      </Toolbar.Toolbar>
+    </>
+  );
+}`
+    : `import { ${name} } from 'tanuki-ui';
+
+function MyComponent() {
+  return (
+    <${name}>サンプル</${name}>
+  );
+}`;
+
   return (
     <HeaderMainLayout
       header={
@@ -104,13 +202,7 @@ const ComponentView: React.FC = () => {
               </div>
               <pre className={styles.codeBlock}>
                 <code>
-                  {`import { ${name} } from 'tanuki-ui';
-
-function MyComponent() {
-  return (
-    <${name}>サンプル</${name}>
-  );
-}`}
+                  {usageSnippet}
                 </code>
               </pre>
             </div>

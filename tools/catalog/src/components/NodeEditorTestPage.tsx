@@ -62,7 +62,7 @@ const NodeEditorTestPage: React.FC = () => {
         <MathEvaluatorContext.Provider value={mathContextValue}>
           <NodeEditor
             data={editorData}
-            onDataChange={setEditorData}
+            onDataChange={(d) => { console.log('[TestEditor onDataChange]', d); setEditorData(d); }}
             nodeDefinitions={nodeDefinitions}
           />
         </MathEvaluatorContext.Provider>
@@ -74,7 +74,7 @@ const NodeEditorTestPage: React.FC = () => {
       return (
         <NodeEditor<FeaturesNodeDataTypeMap>
           data={editorData}
-          onDataChange={setEditorData}
+          onDataChange={(d) => { console.log('[TestEditor onDataChange]', d); setEditorData(d); }}
           nodeDefinitions={nodeDefinitions}
         />
       );
@@ -84,7 +84,7 @@ const NodeEditorTestPage: React.FC = () => {
     return (
       <NodeEditor
         data={editorData}
-        onDataChange={setEditorData}
+        onDataChange={(d) => { console.log('[TestEditor onDataChange]', d); setEditorData(d); }}
         nodeDefinitions={nodeDefinitions}
       />
     );
