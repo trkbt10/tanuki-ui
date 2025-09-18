@@ -154,9 +154,13 @@
   --tableBoxShadow: var(--cardBoxShadow, none);
   --tableBackgroundColor: rgba(255, 255, 255, 1);
   --tableBorderColor: rgba(121, 116, 126, 0.12);
+  --tableBorderWidth: 0;
+  --tableBorderStyle: solid;
   --tableHeaderTextColor: rgba(73, 69, 79, 1);
   --tableHeaderBackgroundColor: rgba(255, 251, 254, 1);
   --tableHeaderBorderColor: rgba(121, 116, 126, 0.12);
+  --tableHeaderBorderWidth: 1px;
+  --tableHeaderBorderStyle: solid;
   --tableHeaderFont: 500 14px/20px var(--themeDefaultFontFamily);
   --tableHeaderPadding: var(--tableCellPadding, 0 0.5em);
   --tableHeaderTextAlign: left;
@@ -592,6 +596,8 @@
     --tableCellBorderWidth: 1px;
     --tableCellBorderStyle: solid;
     --tableBackgroundColor: rgba(28, 27, 31, 1);
+    --tableBorderWidth: 0;
+    --tableBorderStyle: solid;
     --tableHoverBackground: rgba(208, 193, 238, 0.08);
     --progressBackground: rgba(49, 45, 56, 1);
     --progressForeground: rgba(208, 193, 238, 1);

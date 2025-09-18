@@ -171,7 +171,7 @@ export function LiquidGlassFilter({
             <feBlend in={bumpMap ? "glaze" : "edgeTint"} in2="refracted" mode="overlay" result="layeredGlass" />
             <feBlend in="layeredGlass" in2="sheen" mode="screen" result="withSheen" />
             <feComposite in="withSheen" in2="SourceAlpha" operator="in" result="finalGlass" />
-            <feColorMatrix in="finalGlass" type="saturate" values="1.1" />
+            <feColorMatrix in="finalGlass" type="saturate" values="1.08" />
           </filter>
         </defs>
       </svg>

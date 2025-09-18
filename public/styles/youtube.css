@@ -180,10 +180,14 @@
   --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: var(--youtube-white);
   --tableBorderColor: var(--youtube-border);
+  --tableBorderWidth: 1px;
+  --tableBorderStyle: solid;
   --tableHeaderTextColor: var(--youtube-text-primary);
   --tableHeaderBackgroundColor: #fafafa;
   --tableHeaderBorderColor: var(--youtube-border);
   --tableHeaderFont: normal normal 500 14px/1.4 var(--themeDefaultFontFamily);
+  --tableHeaderBorderWidth: 1px;
+  --tableHeaderBorderStyle: solid;
   --tableRowTextColor: var(--youtube-text-primary);
   --tableRowBackgroundColor: var(--youtube-white);
   --tableRowBorderColor: var(--youtube-border);

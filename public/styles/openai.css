@@ -147,19 +147,22 @@
   --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: var(--windowBackgroundColor);
   --tableBorderColor: var(--openaiGray200);
+  --tableBorderWidth: 1px;
+  --tableBorderStyle: solid;
   --tableHeaderTextColor: var(--textColor);
   --tableHeaderBackgroundColor: var(--openaiGray50);
   --tableHeaderBorderColor: var(--openaiGray200);
+  --tableHeaderBorderWidth: 1px;
+  --tableHeaderBorderStyle: solid;
   --tableRowTextColor: var(--textColor);
   --tableRowBackgroundColor: var(--windowBackgroundColor);
   --tableRowBorderColor: var(--openaiGray100);
   --tableRowAlternateTextColor: var(--textColor);
   --tableRowAlternateBackgroundColor: var(--openaiGray50);
   --tableRowAlternateBorderColor: var(--openaiGray100);
-  --tableCellBorder: 1px solid var(--openaiGray100);
   --tableCellBorderWidth: 1px;
   --tableCellBorderStyle: solid;
-
+  --tableCellBorder: 1px solid var(--openaiGray100);
   /* Dialog */
   --dialogBackground: var(--windowBackgroundColor);
   --dialogBoxShadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 0 10px rgba(0, 0, 0, 0.04);
@@ -374,12 +377,18 @@
     --tableCellBorderStyle: solid;
     --tableBackgroundColor: var(--windowBackgroundColor);
     --tableBorderColor: var(--openaiGray700);
+    --tableBorderWidth: 1px;
+    --tableBorderStyle: solid;
     --tableHeaderBackgroundColor: var(--openaiGray800);
     --tableHeaderBorderColor: var(--openaiGray700);
+    --tableHeaderBorderWidth: 1px;
+    --tableHeaderBorderStyle: solid;
     --tableRowBackgroundColor: var(--windowBackgroundColor);
     --tableRowBorderColor: var(--openaiGray700);
     --tableRowAlternateBackgroundColor: var(--openaiGray800);
     --tableRowAlternateBorderColor: var(--openaiGray700);
+    --tableCellBorderWidth: 1px;
+    --tableCellBorderStyle: solid;
 
     /* Dialog Dark */
     --dialogBackground: var(--openaiGray800);

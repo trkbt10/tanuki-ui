@@ -163,10 +163,14 @@
   --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: rgba(255, 255, 255, 1);
   --tableBorderColor: rgba(128, 128, 128, 1);
+  --tableBorderWidth: 1px;
+  --tableBorderStyle: solid;
   --tableHeaderTextColor: rgba(0, 0, 0, 1);
   --tableHeaderBackgroundColor: rgba(192, 192, 192, 1);
   --tableHeaderBorderColor: rgba(128, 128, 128, 1);
   --tableHeaderFont: 700 11px var(--themeDefaultFontFamily);
+  --tableHeaderBorderWidth: 1px;
+  --tableHeaderBorderStyle: solid;
   --tableRowTextColor: rgba(0, 0, 0, 1);
   --tableRowBackgroundColor: rgba(255, 255, 255, 1);
   --tableRowBorderColor: rgba(192, 192, 192, 1);

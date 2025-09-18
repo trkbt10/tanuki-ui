@@ -113,9 +113,13 @@
   --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: rgba(255, 255, 255, 1);
   --tableBorderColor: rgba(0, 0, 0, 0.098039);
+  --tableBorderWidth: 1px;
+  --tableBorderStyle: solid;
   --tableHeaderTextColor: rgba(0, 0, 0, 0.847059);
   --tableHeaderBackgroundColor: rgba(255, 255, 255, 0.7);
   --tableHeaderBorderColor: rgba(0, 0, 0, 0.098039);
+  --tableHeaderBorderWidth: 1px;
+  --tableHeaderBorderStyle: solid;
   --tableRowTextColor: rgba(0, 0, 0, 0.847059);
   --tableRowBackgroundColor: rgba(255, 255, 255, 1);
   --tableRowBorderColor: rgba(0, 0, 0, 0.098039);
@@ -348,9 +352,13 @@
     --tableCellBorderStyle: solid;
     --tableBackgroundColor: rgba(33, 28, 38, 1);
     --tableBorderColor: rgba(255, 255, 255, 0.498039);
+    --tableBorderWidth: 1px;
+    --tableBorderStyle: solid;
     --tableHeaderTextColor: rgba(255, 255, 255, 0.7);
     --tableHeaderBackgroundColor: rgba(33, 28, 38, 1);
     --tableHeaderBorderColor: rgba(255, 255, 255, 0.15);
+    --tableHeaderBorderWidth: 1px;
+    --tableHeaderBorderStyle: solid;
 
     --tableRowTextColor: rgba(255, 255, 255, 0.9);
     --tableRowAlternateTextColor: rgba(255, 255, 255, 0.8);

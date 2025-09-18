@@ -202,9 +202,13 @@
   --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: rgba(255, 255, 255, 1);
   --tableBorderColor: rgba(0, 0, 0, 0.08);
+  --tableBorderWidth: 1px;
+  --tableBorderStyle: solid;
   --tableHeaderTextColor: rgba(0, 0, 0, 0.847059);
   --tableHeaderBackgroundColor: rgba(251, 251, 251, 1);
   --tableHeaderBorderColor: rgba(0, 0, 0, 0.08);
+  --tableHeaderBorderWidth: 1px;
+  --tableHeaderBorderStyle: solid;
   --tableHeaderFont: 600 14px/1.428571 var(--themeDefaultFontFamily);
   --tableRowTextColor: rgba(0, 0, 0, 0.847059);
   --tableRowBackgroundColor: rgba(255, 255, 255, 1);
@@ -523,9 +527,13 @@
     --tableCellBorderStyle: solid;
     --tableBackgroundColor: rgba(32, 32, 32, 1);
     --tableBorderColor: rgba(255, 255, 255, 0.08);
+    --tableBorderWidth: 1px;
+    --tableBorderStyle: solid;
     --tableHeaderTextColor: rgba(255, 255, 255, 0.7);
     --tableHeaderBackgroundColor: rgba(32, 32, 32, 1);
     --tableHeaderBorderColor: rgba(255, 255, 255, 0.15);
+    --tableHeaderBorderWidth: 1px;
+    --tableHeaderBorderStyle: solid;
     --tableRowTextColor: rgba(255, 255, 255, 0.9);
     --tableRowBackgroundColor: rgba(32, 32, 32, 1);
     --tableRowBorderColor: rgba(255, 255, 255, 0.08);
@@ -534,6 +542,8 @@
     --tableRowAlternateBorderColor: rgba(255, 255, 255, 0.08);
     --tableHoverBackground: rgba(255, 255, 255, 0.08);
     --tableHoverTextColor: rgba(255, 255, 255, 0.9);
+    --tableCellBorderWidth: 1px;
+    --tableCellBorderStyle: solid;
 
     /* Toolbar Styles */
     --toolbarBackground: rgba(32, 32, 32, 0.8);

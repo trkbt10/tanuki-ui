@@ -170,9 +170,13 @@
   --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: var(--awsCardBackground);
   --tableBorderColor: var(--awsBorder);
+  --tableBorderWidth: 1px;
+  --tableBorderStyle: solid;
   --tableHeaderTextColor: var(--awsTextSecondary);
   --tableHeaderBackgroundColor: var(--awsDeepSquidInk);
   --tableHeaderBorderColor: var(--awsBorder);
+  --tableHeaderBorderWidth: 1px;
+  --tableHeaderBorderStyle: solid;
   --tableRowTextColor: var(--awsTextPrimary);
   --tableRowBackgroundColor: var(--awsCardBackground);
   --tableRowBorderColor: var(--awsBorderDark);
@@ -415,6 +419,12 @@
     --tableBackgroundColor: var(--awsCardBackground);
     --tableHeaderBackgroundColor: var(--awsDeepSquidInk);
     --tableRowAlternateBackgroundColor: var(--awsDeepSquidInk);
+    --tableBorderWidth: 1px;
+    --tableBorderStyle: solid;
+    --tableHeaderBorderWidth: 1px;
+    --tableHeaderBorderStyle: solid;
+    --tableCellBorderWidth: 1px;
+    --tableCellBorderStyle: solid;
 
     /* Dialog light */
     --dialogBoxShadow: 0 2px 8px 0 rgba(0, 0, 0, 0.15);

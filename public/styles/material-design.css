@@ -176,9 +176,13 @@
   --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: var(--mdSurface);
   --tableBorderColor: var(--mdOutlineVariant);
+  --tableBorderWidth: 1px;
+  --tableBorderStyle: solid;
   --tableHeaderTextColor: var(--mdOnSurfaceVariant);
   --tableHeaderBackgroundColor: var(--mdSurfaceVariant);
   --tableHeaderBorderColor: var(--mdOutlineVariant);
+  --tableHeaderBorderWidth: 1px;
+  --tableHeaderBorderStyle: solid;
   --tableRowTextColor: var(--mdOnSurface);
   --tableRowBackgroundColor: var(--mdSurface);
   --tableRowBorderColor: var(--mdOutlineVariant);
@@ -495,6 +499,10 @@
     --tableCellBorderWidth: 1px;
     --tableCellBorderStyle: solid;
     --tableRowAlternateBackgroundColor: rgba(208, 188, 255, 0.04);
+    --tableBorderWidth: 1px;
+    --tableBorderStyle: solid;
+    --tableHeaderBorderWidth: 1px;
+    --tableHeaderBorderStyle: solid;
     
     /* Sidebar dark */
     --sidebarListItemDetailsBackground: var(--mdSurface);

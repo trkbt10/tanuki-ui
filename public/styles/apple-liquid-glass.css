@@ -205,9 +205,13 @@
   --tableBackgroundColor: rgba(255, 255, 255, 0.08);
   --tableBackdropFilter: blur(1.5625em) saturate(1.4) brightness(1.05);
   --tableBorderColor: rgba(0, 0, 0, 0.1);
+  --tableBorderWidth: 1px;
+  --tableBorderStyle: solid;
   --tableHeaderTextColor: rgba(0, 0, 0, 0.9);
   --tableHeaderBackgroundColor: rgba(255, 255, 255, 0.15);
   --tableHeaderBorderColor: rgba(0, 0, 0, 0.08);
+  --tableHeaderBorderWidth: 1px;
+  --tableHeaderBorderStyle: solid;
   --tableRowTextColor: rgba(0, 0, 0, 0.85);
   --tableRowBackgroundColor: rgba(255, 255, 255, 0.05);
   --tableRowBorderColor: rgba(0, 0, 0, 0.06);
@@ -276,28 +280,25 @@
 
   /* Button Primary - Liquid Glass */
   --controlBoxShadow--primary: 
-    0 0 0 0.5px rgba(255, 255, 255, 0.75),
-    0 0 0 1px rgba(0, 122, 255, 0.42),
-    0 8px 28px rgba(0, 122, 255, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+    0 0 0 0.5px rgba(255, 255, 255, 0.7),
+    0 0 0 1px rgba(0, 122, 255, 0.28),
+    0 6px 22px rgba(0, 122, 255, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
   --controlBackground--primary: 
-    linear-gradient(180deg, 
-      rgba(0, 122, 255, 0.82) 0%, 
-      rgba(0, 122, 255, 0.68) 55%, 
-      rgba(0, 122, 255, 0.76) 100%);
-  --controlBackdropFilter--primary: var(--liquidGlassBackdropMedium);
+    linear-gradient(180deg,
+      color-mix(in srgb, rgba(255, 255, 255, 0.92) 70%, rgba(0, 122, 255, 0.78) 30%) 0%,
+      color-mix(in srgb, rgba(255, 255, 255, 0.88) 65%, rgba(0, 122, 255, 0.75) 35%) 100%);
+  --controlBackdropFilter--primary: var(--liquidGlassBackdropSoft);
   --controlTextColor--primary: rgba(255, 255, 255, 0.95);
   --controlHoverTextColor--primary: rgba(255, 255, 255, 1);
   --controlHoverBackground--primary: 
-    linear-gradient(180deg, 
-      rgba(0, 122, 255, 0.88) 0%, 
-      rgba(0, 122, 255, 0.72) 55%, 
-      rgba(0, 122, 255, 0.84) 100%);
+    linear-gradient(180deg,
+      color-mix(in srgb, rgba(255, 255, 255, 0.95) 65%, rgba(0, 122, 255, 0.85) 35%) 0%,
+      color-mix(in srgb, rgba(255, 255, 255, 0.9) 60%, rgba(0, 122, 255, 0.8) 40%) 100%);
   --controlFocusBackground--primary: 
-    linear-gradient(180deg, 
-      rgba(0, 122, 255, 0.94) 0%, 
-      rgba(0, 122, 255, 0.78) 55%, 
-      rgba(0, 122, 255, 0.88) 100%);
+    linear-gradient(180deg,
+      color-mix(in srgb, rgba(255, 255, 255, 0.96) 55%, rgba(0, 122, 255, 0.9) 45%) 0%,
+      color-mix(in srgb, rgba(255, 255, 255, 0.9) 55%, rgba(0, 122, 255, 0.85) 45%) 100%);
   --controlFocusTextColor--primary: rgba(255, 255, 255, 1);
 
   /* Button Secondary - Refined Glass */
@@ -380,36 +381,36 @@
     0 16px 64px rgba(0, 0, 0, 0.1);
 
   /* Tab item - Floating Glass */
-  --tabBarBackground: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(73, 164, 255, 0.16) 100%);
+  --tabBarBackground: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.08) 100%);
   --tabBarBackdropFilter: var(--liquidGlassBackdropStrong);
   --tabBarFilter: var(--liquidGlassFilterRef);
   --tabBarBoxShadow: 
-    0 0 0 0.5px rgba(255, 255, 255, 0.55),
-    0 0 0 1px rgba(255, 255, 255, 0.18),
-    0 14px 40px rgba(12, 28, 60, 0.16);
+    0 0 0 0.5px rgba(255, 255, 255, 0.62),
+    0 12px 34px rgba(10, 26, 55, 0.14);
   --tabBarBorderRadius: calc(var(--space-lg) * 3.1);
   --tabBarPadding: 0.35em 0.65em;
   --tabBarGap: 0.4em;
   --tabItemHeight: 3.1em;
   --tabItemMinWidth: 4.5em;
-  --tabItemTextColor: rgba(18, 24, 34, 0.46);
-  --tabItemIconColor: rgba(18, 24, 34, 0.54);
-  --tabItemIconSize: 1.2em;
-  --tabItemLabelFont: normal normal 500 0.8125em/1.2 var(--themeLabelFontFamily);
+  --tabItemTextColor: rgba(18, 26, 38, 0.54);
+  --tabItemIconColor: rgba(18, 26, 38, 0.6);
+  --tabItemIconSize: 1.15em;
+  --tabItemLabelFont: normal normal 500 0.78em/1.15 var(--themeLabelFontFamily);
   --tabItemBoxShadow: none;
   --tabBarLayout: center;
-  --tabItemBackground-selected: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.58) 100%);
-  --tabItemBackdropFilter-selected: var(--liquidGlassBackdropSoft);
+  --tabItemBackground-selected: linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(240, 248, 255, 0.58) 100%);
+  --tabItemBackdropFilter-selected: var(--liquidGlassBackdropMedium);
   --tabItemFilter-selected: var(--liquidGlassFilterRef);
   --tabItemBoxShadow-selected: 
-    0 0 0 0.5px color-mix(in srgb, rgba(255, 255, 255, 0.64) 88%, var(--accentColor) 12%),
-    0 10px 32px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 var(--liquidGlassSheen);
-  --tabItemTextColor-selected: color-mix(in srgb, var(--accentColor) 48%, rgba(12, 18, 27, 0.9) 52%);
-  --tabItemIconColor-selected: color-mix(in srgb, rgba(0, 122, 255, 0.85) 70%, rgba(12, 18, 27, 0.4) 30%);
+    0 0 0 0.5px rgba(255, 255, 255, 0.68),
+    0 8px 26px rgba(10, 28, 60, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  --tabItemTextColor-selected: color-mix(in srgb, rgba(0, 122, 255, 0.82) 45%, rgba(12, 18, 27, 0.9) 55%);
+  --tabItemIconColor-selected: color-mix(in srgb, rgba(0, 122, 255, 0.9) 60%, rgba(12, 18, 27, 0.6) 40%);
   --tabItemLabelUppercase: none;
   --tabItemIndicatorGlow: 0 12px 24px rgba(0, 122, 255, 0.18);
   --tabItemBadgeBackground: var(--accent-glow);
+  --tabItemHighlightOverlay: linear-gradient(180deg, rgba(255, 255, 255, 0.42) 0%, rgba(255, 255, 255, 0.1) 65%, rgba(125, 160, 210, 0.12) 100%);
 
   --scrolledAppMainToolbarBoxShadow: 
     0 0 0 0.5px color-mix(in srgb, rgba(255, 255, 255, 0.55) 60%, var(--accentColor) 40%),
@@ -690,6 +691,10 @@ input[type="submit"].liquid-glass-control,
   letter-spacing: var(--controlTextLetterSpacing);
   position: relative;
   overflow: hidden;
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 0.22s cubic-bezier(0.19, 1, 0.22, 1);
+  will-change: transform;
 }
 
 button.liquid-glass-control:focus-visible,
@@ -703,6 +708,53 @@ button.liquid-glass-control.primary,
   color: var(--controlTextColor--primary);
   box-shadow: var(--controlBoxShadow--primary);
   backdrop-filter: var(--controlBackdropFilter--primary);
+}
+
+button.liquid-glass-control:hover,
+input[type="button"].liquid-glass-control:hover,
+input[type="submit"].liquid-glass-control:hover,
+.liquid-glass-control button:hover,
+.liquid-glass-control .button:hover,
+.liquid-glass-control .tanuki-button:hover {
+  transform: scale(1.1);
+}
+
+button.liquid-glass-control:active,
+input[type="button"].liquid-glass-control:active,
+input[type="submit"].liquid-glass-control:active,
+.liquid-glass-control button:active,
+.liquid-glass-control .button:active,
+.liquid-glass-control .tanuki-button:active {
+  transform: scale(1.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button.liquid-glass-control,
+  input[type="button"].liquid-glass-control,
+  input[type="submit"].liquid-glass-control,
+  .liquid-glass-control button,
+  .liquid-glass-control .button,
+  .liquid-glass-control .tanuki-button {
+    transition: none;
+  }
+
+  button.liquid-glass-control:hover,
+  input[type="button"].liquid-glass-control:hover,
+  input[type="submit"].liquid-glass-control:hover,
+  .liquid-glass-control button:hover,
+  .liquid-glass-control .button:hover,
+  .liquid-glass-control .tanuki-button:hover {
+    transform: scale(1);
+  }
+
+  button.liquid-glass-control:active,
+  input[type="button"].liquid-glass-control:active,
+  input[type="submit"].liquid-glass-control:active,
+  .liquid-glass-control button:active,
+  .liquid-glass-control .button:active,
+  .liquid-glass-control .tanuki-button:active {
+    transform: scale(1);
+  }
 }
 
 button.liquid-glass-control::after,
@@ -845,12 +897,39 @@ textarea.liquid-glass-field::placeholder {
   color: var(--tabItemTextColor);
   font: var(--tabItemLabelFont);
   gap: 0.25em;
-  transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, transform 0.25s cubic-bezier(0.2, 0.7, 0.3, 1);
+  transform: translateY(0);
+  position: relative;
+  overflow: hidden;
 }
 
 .liquid-glass-tabbar .tab-item .icon {
   font-size: var(--tabItemIconSize);
   color: var(--tabItemIconColor);
+}
+
+.liquid-glass-tabbar .tab-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--tabItemHighlightOverlay);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.liquid-glass-tabbar .tab-item.is-active::before,
+.liquid-glass-tabbar .tab-item:hover::before {
+  opacity: 1;
+}
+
+.liquid-glass-tabbar .tab-item:hover {
+  transform: translateY(-2px);
+}
+
+.liquid-glass-tabbar .tab-item:active {
+  transform: translateY(0);
 }
 
 .liquid-glass-tabbar .tab-item.is-active {
@@ -870,6 +949,11 @@ textarea.liquid-glass-field::placeholder {
   inset: 0;
   background: var(--liquidGlassOverlay);
   pointer-events: none;
+}
+
+.liquid-glass-tabbar .tab-item.is-active::before,
+.liquid-glass-tabbar .tab-item:hover::before {
+  opacity: 1;
 }
 
 .liquid-glass-tabbar .tab-item.is-active .icon {

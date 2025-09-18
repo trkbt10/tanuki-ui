@@ -169,9 +169,13 @@
   --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: var(--githubCanvasDefault);
   --tableBorderColor: var(--githubBorderDefault);
+  --tableBorderWidth: 1px;
+  --tableBorderStyle: solid;
   --tableHeaderTextColor: var(--githubFgDefault);
   --tableHeaderBackgroundColor: var(--githubCanvasSubtle);
   --tableHeaderBorderColor: var(--githubBorderDefault);
+  --tableHeaderBorderWidth: 1px;
+  --tableHeaderBorderStyle: solid;
   --tableRowTextColor: var(--githubFgDefault);
   --tableRowBackgroundColor: var(--githubCanvasDefault);
   --tableRowBorderColor: var(--githubBorderMuted);

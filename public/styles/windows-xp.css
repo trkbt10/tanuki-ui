@@ -314,6 +314,8 @@
   --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: #ffffff;
   --tableBorderColor: #aca899;
+  --tableBorderWidth: 1px;
+  --tableBorderStyle: solid;
   --tableBoxShadow: 
     /* Sunken list view effect */
     inset -1px -1px 0 #ffffff,
@@ -328,6 +330,8 @@
     #f0f0e9 50%,
     #e8e8e0 100%);
   --tableHeaderBorderColor: #aca899;
+  --tableHeaderBorderWidth: 1px;
+  --tableHeaderBorderStyle: solid;
   --tableHeaderBoxShadow: 
     inset 0 -1px 0 #716f64,
     inset 0 -2px 0 #d4d0c8;
@@ -338,6 +342,8 @@
   --tableRowAlternateTextColor: #000000;
   --tableRowAlternateBackgroundColor: #f5f5ed;
   --tableRowAlternateBorderColor: #f2f2f2;
+  --tableCellBorderWidth: 1px;
+  --tableCellBorderStyle: solid;
   --tableCellBorder: 1px solid #f2f2f2;
   --tableCellBorderWidth: 1px;
   --tableCellBorderStyle: solid;
