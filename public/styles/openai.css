@@ -118,6 +118,33 @@
   --systemBlueColor: var(--openaiBlue);
 
   /* Table */
+  --tableFont: var(--textFont, normal normal 400 13px/1.230769 var(--themeLabelFontFamily));
+  --tableLetterSpacing: var(--textLetterSpacing, 0);
+  --tableBackground: var(--tableBackgroundColor, var(--windowBackgroundColor, transparent));
+  --tableBorderSpacing: 0;
+  --tableBorderRadius: var(--cardBorderRadius, 0);
+  --tableBoxShadow: var(--cardBoxShadow, none);
+  --tableHeaderPadding: var(--tableCellPadding, 0 0.5em);
+  --tableHeaderTextAlign: left;
+  --tableHeaderLetterSpacing: var(--labelLetterSpacing, 0);
+  --tableHeaderHeight: var(--tableHeaderMinHeight, var(--tableCellMinHeight, 24px));
+  --tableHeaderBackground: var(--tableHeaderGradient, var(--tableHeaderBackgroundColor, transparent));
+  --tableHeaderDivider: 1px solid var(--openaiGray200);
+  --tableHeaderDividerOffsetX: 0;
+  --tableHeaderDividerOffsetY: 50%;
+  --tableHeaderDividerHeight: 1em;
+  --tableHeaderDividerOpacity: 1;
+  --tableHeaderStickyBackground: var(--tableHeaderBackground);
+  --tableHeaderBackdropFilter: var(--backgroundBackdropFilter, none);
+  --tableHeaderStickyShadow: var(--tableHeaderBoxShadow, var(--tableBoxShadow, none));
+  --tableRowBackground: var(--tableRowBackgroundColor, var(--tableBackground, transparent));
+  --tableRowAlternateBackground: var(--tableRowAlternateBackgroundColor, var(--tableRowBackground));
+  --tableRowHoverBackground: var(--tableHoverBackground, var(--tableRowAlternateBackground));
+  --tableRowHoverTextColor: var(--tableHoverTextColor, var(--tableRowTextColor, inherit));
+  --tableRowSelectedBackground: var(--tableRowSelectedBackgroundColor, var(--tableRowHoverBackground));
+  --tableRowSelectedTextColor: var(--tableHoverTextColor, var(--tableRowTextColor, inherit));
+  --tableRowTransition: background-color 0.2s ease, color 0.2s ease;
+  --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: var(--windowBackgroundColor);
   --tableBorderColor: var(--openaiGray200);
   --tableHeaderTextColor: var(--textColor);
@@ -129,6 +156,9 @@
   --tableRowAlternateTextColor: var(--textColor);
   --tableRowAlternateBackgroundColor: var(--openaiGray50);
   --tableRowAlternateBorderColor: var(--openaiGray100);
+  --tableCellBorder: 1px solid var(--openaiGray100);
+  --tableCellBorderWidth: 1px;
+  --tableCellBorderStyle: solid;
 
   /* Dialog */
   --dialogBackground: var(--windowBackgroundColor);
@@ -323,6 +353,10 @@
     --inputFocusBorder: 1px solid var(--accentColor);
 
     /* Table Dark */
+    --tableHeaderDivider: 1px solid var(--openaiGray700);
+    --tableCellBorder: 1px solid var(--openaiGray700);
+    --tableCellBorderWidth: 1px;
+    --tableCellBorderStyle: solid;
     --tableBackgroundColor: var(--windowBackgroundColor);
     --tableBorderColor: var(--openaiGray700);
     --tableHeaderBackgroundColor: var(--openaiGray800);

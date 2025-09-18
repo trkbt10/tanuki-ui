@@ -206,12 +206,42 @@
   --tabItemFont-selected: normal normal 600 14px/1.4 var(--themeLabelFontFamily);
 
   /* Table - Switch style */
+  --tableFont: var(--textFont, normal normal 400 13px/1.230769 var(--themeLabelFontFamily));
+  --tableLetterSpacing: var(--textLetterSpacing, 0);
+  --tableBackground: var(--tableBackgroundColor, var(--windowBackgroundColor, transparent));
+  --tableBorderSpacing: 0;
+  --tableBorderRadius: var(--cardBorderRadius, 0);
+  --tableBoxShadow: var(--cardBoxShadow, none);
+  --tableHeaderPadding: var(--tableCellPadding, 0 0.5em);
+  --tableHeaderTextAlign: left;
+  --tableHeaderLetterSpacing: var(--labelLetterSpacing, 0);
+  --tableHeaderHeight: var(--tableHeaderMinHeight, var(--tableCellMinHeight, 24px));
+  --tableHeaderBackground: var(--tableHeaderGradient, var(--tableHeaderBackgroundColor, transparent));
+  --tableHeaderDivider: 1px solid var(--switchMediumGray);
+  --tableHeaderDividerOffsetX: 0;
+  --tableHeaderDividerOffsetY: 50%;
+  --tableHeaderDividerHeight: 1em;
+  --tableHeaderDividerOpacity: 1;
+  --tableHeaderStickyBackground: var(--tableHeaderBackground);
+  --tableHeaderBackdropFilter: var(--backgroundBackdropFilter, none);
+  --tableHeaderStickyShadow: var(--tableHeaderBoxShadow, var(--tableBoxShadow, none));
+  --tableRowBackground: var(--tableRowBackgroundColor, var(--tableBackground, transparent));
+  --tableRowAlternateBackground: var(--tableRowAlternateBackgroundColor, var(--tableRowBackground));
+  --tableRowHoverBackground: var(--tableHoverBackground, var(--tableRowAlternateBackground));
+  --tableRowHoverTextColor: var(--tableHoverTextColor, var(--tableRowTextColor, inherit));
+  --tableRowSelectedBackground: var(--tableRowSelectedBackgroundColor, var(--tableRowHoverBackground));
+  --tableRowSelectedTextColor: var(--tableHoverTextColor, var(--tableRowTextColor, inherit));
+  --tableRowTransition: background-color 0.2s ease, color 0.2s ease;
+  --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: var(--switchWhite);
   --tableBorderColor: var(--switchMediumGray);
   --tableHeaderBackgroundColor: var(--switchCardGray);
   --tableHeaderBorderColor: var(--switchMediumGray);
   --tableRowHoverBackground: var(--switchLightGray);
   --tableRowSelectedBackground: rgba(0, 209, 209, 0.1);
+  --tableCellBorder: 1px solid var(--switchMediumGray);
+  --tableCellBorderWidth: 1px;
+  --tableCellBorderStyle: solid;
 
   /* Card - Switch game card style */
   --cardBackground: var(--switchWhite);

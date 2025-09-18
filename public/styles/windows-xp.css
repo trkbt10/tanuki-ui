@@ -285,6 +285,33 @@
       rgba(255, 255, 255, 0) 100%);
 
   /* Table Styles - XP List View Style */
+  --tableFont: var(--textFont, normal normal 400 13px/1.230769 var(--themeLabelFontFamily));
+  --tableLetterSpacing: var(--textLetterSpacing, 0);
+  --tableBackground: var(--tableBackgroundColor, var(--windowBackgroundColor, transparent));
+  --tableBorderSpacing: 0;
+  --tableBorderRadius: var(--cardBorderRadius, 0);
+  --tableBoxShadow: var(--cardBoxShadow, none);
+  --tableHeaderPadding: var(--tableCellPadding, 0 0.5em);
+  --tableHeaderTextAlign: left;
+  --tableHeaderLetterSpacing: var(--labelLetterSpacing, 0);
+  --tableHeaderHeight: var(--tableHeaderMinHeight, var(--tableCellMinHeight, 24px));
+  --tableHeaderBackground: var(--tableHeaderGradient, var(--tableHeaderBackgroundColor, transparent));
+  --tableHeaderDivider: 1px solid #d4d0c8;
+  --tableHeaderDividerOffsetX: 0;
+  --tableHeaderDividerOffsetY: 50%;
+  --tableHeaderDividerHeight: 1em;
+  --tableHeaderDividerOpacity: 1;
+  --tableHeaderStickyBackground: var(--tableHeaderBackground);
+  --tableHeaderBackdropFilter: var(--backgroundBackdropFilter, none);
+  --tableHeaderStickyShadow: var(--tableHeaderBoxShadow, var(--tableBoxShadow, none));
+  --tableRowBackground: var(--tableRowBackgroundColor, var(--tableBackground, transparent));
+  --tableRowAlternateBackground: var(--tableRowAlternateBackgroundColor, var(--tableRowBackground));
+  --tableRowHoverBackground: var(--tableHoverBackground, var(--tableRowAlternateBackground));
+  --tableRowHoverTextColor: var(--tableHoverTextColor, var(--tableRowTextColor, inherit));
+  --tableRowSelectedBackground: var(--tableRowSelectedBackgroundColor, var(--tableRowHoverBackground));
+  --tableRowSelectedTextColor: var(--tableHoverTextColor, var(--tableRowTextColor, inherit));
+  --tableRowTransition: background-color 0.2s ease, color 0.2s ease;
+  --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: #ffffff;
   --tableBorderColor: #aca899;
   --tableBoxShadow: 
@@ -311,6 +338,9 @@
   --tableRowAlternateTextColor: #000000;
   --tableRowAlternateBackgroundColor: #f5f5ed;
   --tableRowAlternateBorderColor: #f2f2f2;
+  --tableCellBorder: 1px solid #f2f2f2;
+  --tableCellBorderWidth: 1px;
+  --tableCellBorderStyle: solid;
   --tableHoverBackground: #b6d6ff;
   --tableHoverTextColor: #000000;
   --tableCellPadding: 3px 5px;

@@ -173,6 +173,33 @@
   --titleBarPadding: 0 16px;
 
   /* Table Styles */
+  --tableFont: var(--textFont, normal normal 400 13px/1.230769 var(--themeLabelFontFamily));
+  --tableLetterSpacing: var(--textLetterSpacing, 0);
+  --tableBackground: var(--tableBackgroundColor, var(--windowBackgroundColor, transparent));
+  --tableBorderSpacing: 0;
+  --tableBorderRadius: var(--cardBorderRadius, 0);
+  --tableBoxShadow: var(--cardBoxShadow, none);
+  --tableHeaderPadding: var(--tableCellPadding, 0 0.5em);
+  --tableHeaderTextAlign: left;
+  --tableHeaderLetterSpacing: var(--labelLetterSpacing, 0);
+  --tableHeaderHeight: var(--tableHeaderMinHeight, var(--tableCellMinHeight, 24px));
+  --tableHeaderBackground: var(--tableHeaderGradient, var(--tableHeaderBackgroundColor, transparent));
+  --tableHeaderDivider: 1px solid rgba(0, 0, 0, 0.08);
+  --tableHeaderDividerOffsetX: 0;
+  --tableHeaderDividerOffsetY: 50%;
+  --tableHeaderDividerHeight: 1em;
+  --tableHeaderDividerOpacity: 1;
+  --tableHeaderStickyBackground: var(--tableHeaderBackground);
+  --tableHeaderBackdropFilter: var(--backgroundBackdropFilter, none);
+  --tableHeaderStickyShadow: var(--tableHeaderBoxShadow, var(--tableBoxShadow, none));
+  --tableRowBackground: var(--tableRowBackgroundColor, var(--tableBackground, transparent));
+  --tableRowAlternateBackground: var(--tableRowAlternateBackgroundColor, var(--tableRowBackground));
+  --tableRowHoverBackground: var(--tableHoverBackground, var(--tableRowAlternateBackground));
+  --tableRowHoverTextColor: var(--tableHoverTextColor, var(--tableRowTextColor, inherit));
+  --tableRowSelectedBackground: var(--tableRowSelectedBackgroundColor, var(--tableRowHoverBackground));
+  --tableRowSelectedTextColor: var(--tableHoverTextColor, var(--tableRowTextColor, inherit));
+  --tableRowTransition: background-color 0.2s ease, color 0.2s ease;
+  --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
   --tableBackgroundColor: rgba(255, 255, 255, 1);
   --tableBorderColor: rgba(0, 0, 0, 0.08);
   --tableHeaderTextColor: rgba(0, 0, 0, 0.847059);
@@ -188,6 +215,9 @@
   --tableHoverBackground: rgba(0, 0, 0, 0.04);
   --tableHoverTextColor: rgba(0, 0, 0, 0.847059);
   --tableCellPadding: 8px 16px;
+  --tableCellBorder: 1px solid rgba(0, 0, 0, 0.08);
+  --tableCellBorderWidth: 1px;
+  --tableCellBorderStyle: solid;
   --tableBorder: 1px solid rgba(0, 0, 0, 0.08);
 
   /* Toolbar Styles */
@@ -487,6 +517,10 @@
     --titleBarTextColor: rgba(255, 255, 255, 0.847059);
 
     /* Table Styles */
+    --tableHeaderDivider: 1px solid rgba(255, 255, 255, 0.08);
+    --tableCellBorder: 1px solid rgba(255, 255, 255, 0.08);
+    --tableCellBorderWidth: 1px;
+    --tableCellBorderStyle: solid;
     --tableBackgroundColor: rgba(32, 32, 32, 1);
     --tableBorderColor: rgba(255, 255, 255, 0.08);
     --tableHeaderTextColor: rgba(255, 255, 255, 0.7);
