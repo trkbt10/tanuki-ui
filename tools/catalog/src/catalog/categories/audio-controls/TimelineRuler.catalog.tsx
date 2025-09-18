@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { TimelineRuler, Playhead } from "tanuki-ui/extended/audio-controls";
+import { Div, Label, Input } from "tanuki-ui";
+import { DemoStack } from "../../../components/DemoLayouts";
 import { CatalogMeta } from "../../../CatalogMeta";
 
 export const TimelineRulerMeta: CatalogMeta = {
@@ -17,7 +19,7 @@ export const TimelineRulerBasic = () => {
   ]);
 
   return (
-    <div style={{ position: "relative", width: "100%" }}>
+    <Div style={{ position: "relative", width: "100%" }}>
       <TimelineRuler
         duration={120}
         currentTime={currentTime}
@@ -36,7 +38,7 @@ export const TimelineRulerBasic = () => {
         }}
       />
       <Playhead position={currentTime} duration={120} height={100} onSeek={setCurrentTime} />
-    </div>
+    </Div>
   );
 };
 
@@ -44,20 +46,20 @@ export const TimelineRulerWithZoom = () => {
   const [zoom, setZoom] = useState(1);
 
   return (
-    <div>
-      <div style={{ marginBottom: "16px" }}>
-        <label>Zoom: {zoom.toFixed(2)}x</label>
-        <input
+    <DemoStack>
+      <DemoStack style={{ gap: '0.5rem' }}>
+        <Label htmlFor="timeline-zoom">Zoom: {zoom.toFixed(2)}x</Label>
+        <Input
+          id="timeline-zoom"
           type="range"
           min="0.1"
           max="10"
           step="0.1"
           value={zoom}
           onChange={(e) => setZoom(parseFloat(e.target.value))}
-          style={{ marginLeft: "8px" }}
         />
-      </div>
+      </DemoStack>
       <TimelineRuler duration={300} zoom={zoom} onZoomChange={setZoom} />
-    </div>
+    </DemoStack>
   );
 };

@@ -1,0 +1,26 @@
+.card {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.list {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.sectionTitle {
+  margin-bottom: 0.5rem;
+}
+
+.codeBlock {
+  margin: 0;
+}
+
+.referenceList {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding-left: 1.2rem;
+}

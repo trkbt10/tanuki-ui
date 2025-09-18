@@ -336,9 +336,9 @@ export const additionalElements: ComponentDemo[] = [
       basic: (
         <TanukiUI.Address>
           〒100-0001
-          <br />
+          <TanukiUI.Br />
           東京都千代田区千代田1-1
-          <br />
+          <TanukiUI.Br />
           Tel: 03-1234-5678
         </TanukiUI.Address>
       )
@@ -352,12 +352,12 @@ export const additionalElements: ComponentDemo[] = [
     examples: {
       basic: (
         <TanukiUI.Descriptions>
-          <dt>名前</dt>
-          <dd>Tanuki UI</dd>
-          <dt>種類</dt>
-          <dd>React UIライブラリ</dd>
-          <dt>特徴</dt>
-          <dd>HTMLの基本要素をそのまま使用可能</dd>
+          <TanukiUI.Dt>名前</TanukiUI.Dt>
+          <TanukiUI.Dd>Tanuki UI</TanukiUI.Dd>
+          <TanukiUI.Dt>種類</TanukiUI.Dt>
+          <TanukiUI.Dd>React UIライブラリ</TanukiUI.Dd>
+          <TanukiUI.Dt>特徴</TanukiUI.Dt>
+          <TanukiUI.Dd>HTMLの基本要素をそのまま使用可能</TanukiUI.Dd>
         </TanukiUI.Descriptions>
       )
     }

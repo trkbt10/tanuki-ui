@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { XyPad } from "tanuki-ui/extended/audio-controls";
+import { H4 } from "tanuki-ui";
+import { DemoRow, DemoStack, DemoCard } from "../../../components/DemoLayouts";
 import { CatalogMeta } from "../../../CatalogMeta";
 
 export const XyPadMeta: CatalogMeta = {
@@ -50,35 +52,39 @@ export const XyPadCustomRange = () => {
   const [y, setY] = useState(0);
 
   return (
-    <div style={{ display: "flex", gap: "32px" }}>
-      <div>
-        <h4>Standard (0-100)</h4>
-        <XyPad
-          x={x}
-          y={y}
-          onChange={(newX, newY) => {
-            setX(newX);
-            setY(newY);
-          }}
-        />
-      </div>
-      <div>
-        <h4>Bipolar (-1 to +1)</h4>
-        <XyPad
-          x={x}
-          y={y}
-          minX={-1}
-          maxX={1}
-          minY={-1}
-          maxY={1}
-          defaultX={0}
-          defaultY={0}
-          onChange={(newX, newY) => {
-            setX(newX);
-            setY(newY);
-          }}
-        />
-      </div>
-    </div>
+    <DemoRow style={{ gap: "32px" }}>
+      <DemoCard>
+        <DemoStack>
+          <H4>Standard (0-100)</H4>
+          <XyPad
+            x={x}
+            y={y}
+            onChange={(newX, newY) => {
+              setX(newX);
+              setY(newY);
+            }}
+          />
+        </DemoStack>
+      </DemoCard>
+      <DemoCard>
+        <DemoStack>
+          <H4>Bipolar (-1 to +1)</H4>
+          <XyPad
+            x={x}
+            y={y}
+            minX={-1}
+            maxX={1}
+            minY={-1}
+            maxY={1}
+            defaultX={0}
+            defaultY={0}
+            onChange={(newX, newY) => {
+              setX(newX);
+              setY(newY);
+            }}
+          />
+        </DemoStack>
+      </DemoCard>
+    </DemoRow>
   );
 };

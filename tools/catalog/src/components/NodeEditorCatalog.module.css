@@ -1,0 +1,145 @@
+.page {
+  margin: 0 auto;
+  max-width: 1280px;
+  padding: 32px 24px;
+  display: grid;
+  gap: 32px;
+}
+
+.header {
+  display: grid;
+  gap: 12px;
+}
+
+.lead {
+  margin: 0;
+  max-width: 720px;
+  color: var(--secondaryLabelColor, #4b5563);
+}
+
+.helperText {
+  margin: 0;
+  color: var(--tertiaryLabelColor, #6b7280);
+  font: var(--captionFont, 400 0.85rem/1.5 var(--themeLabelFontFamily, system-ui, sans-serif));
+}
+
+.main {
+  display: grid;
+  gap: 40px;
+}
+
+.section {
+  display: grid;
+  gap: 24px;
+}
+
+.sectionIntro {
+  display: grid;
+  gap: 12px;
+  max-width: 720px;
+}
+
+.layoutRow {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.controlPanel {
+  display: grid;
+  gap: 16px;
+  padding: 20px;
+  border-radius: var(--cardBorderRadius, 12px);
+  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
+  background: var(--cardBackground, var(--secondaryBackgroundColor, #ffffff));
+  box-shadow: var(--cardBoxShadow, 0 1px 3px rgba(15, 23, 42, 0.08));
+}
+
+.inlineControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.indicator {
+  margin: 0;
+  color: var(--secondaryLabelColor, #4b5563);
+}
+
+.editorSurface {
+  border-radius: var(--cardBorderRadius, 12px);
+  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.12));
+  background: var(--windowBackgroundColor, #ffffff);
+  overflow: hidden;
+  height: 600px;
+}
+
+.editorSurfaceInner {
+  width: 100%;
+  height: 100%;
+}
+
+.datasetSummary {
+  margin: 0;
+  color: var(--secondaryLabelColor, #4b5563);
+}
+
+.dataPanel {
+  border-radius: var(--cardBorderRadius, 12px);
+  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
+  background: var(--secondaryBackgroundColor, rgba(0, 0, 0, 0.04));
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.dataDump {
+  margin: 0;
+  background: var(--windowBackgroundColor, #ffffff);
+  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
+  border-radius: var(--controlBorderRadius, 8px);
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow: auto;
+  max-height: 320px;
+}
+
+.testGrid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.testCard {
+  border-radius: var(--cardBorderRadius, 12px);
+  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
+  background: var(--cardBackground, var(--secondaryBackgroundColor, #ffffff));
+  padding: 16px;
+  display: grid;
+  gap: 12px;
+}
+
+.testCardTitle {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--labelColor, #111827);
+}
+
+.testCardBody {
+  margin: 0;
+  color: var(--secondaryLabelColor, #4b5563);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 24px 16px;
+  }
+
+  .editorSurface {
+    height: 520px;
+  }
+}

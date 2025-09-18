@@ -5,7 +5,12 @@ import { components } from "./catalog/components";
 import ComponentView from "./components/ComponentView";
 import HomePage from "./components/HomePage";
 import FormCatalog from "./components/FormCatalog";
-import NodeEditorTestPage from "./components/NodeEditorTestPage";
+import TableCatalog from "./components/TableCatalog";
+import SegmentedControlCatalog from "./components/SegmentedControlCatalog";
+import ResizerCatalog from "./components/ResizerCatalog";
+import TabBarCatalog from "./components/TabBarCatalog";
+import DrawerCatalog from "./components/DrawerCatalog";
+import NodeEditorCatalog from "./components/NodeEditorCatalog";
 import CategoryPage from "./components/CategoryPage";
 import Sidebar from "./components/Sidebar";
 
@@ -26,7 +31,12 @@ function App() {
           <Routes>
             <Route index element={<HomePage />} />
             <Route path="/form-catalog" element={<FormCatalog />} />
-            <Route path="/node-editor-test" element={<NodeEditorTestPage />} />
+            <Route path="/component/lists/Table" element={<TableCatalog />} />
+            <Route path="/component/controls/SegmentedControl" element={<SegmentedControlCatalog />} />
+            <Route path="/component/controls/Resizer" element={<ResizerCatalog />} />
+            <Route path="/component/bars/TabBar" element={<TabBarCatalog />} />
+            <Route path="/component/other/Drawer" element={<DrawerCatalog />} />
+            <Route path="/component/extended/NodeEditor" element={<NodeEditorCatalog />} />
             <Route path="/component/:category" element={<CategoryPage />} />
             <Route path="/component/:category/:name" element={<ComponentView />} />
           </Routes>

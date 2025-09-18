@@ -1,0 +1,126 @@
+.page {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 32px 24px;
+  display: grid;
+  gap: 32px;
+}
+
+.header {
+  display: grid;
+  gap: 12px;
+  text-align: center;
+}
+
+.lead {
+  margin: 0 auto;
+  max-width: 720px;
+  color: var(--secondaryLabelColor, #4b5563);
+}
+
+.main {
+  display: grid;
+  gap: 40px;
+}
+
+.section {
+  display: grid;
+  gap: 24px;
+}
+
+.sectionIntro {
+  display: grid;
+  gap: 12px;
+  max-width: 720px;
+}
+
+.exampleGrid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.exampleCard {
+  display: grid;
+  gap: 16px;
+  padding: var(--cardPadding, 20px);
+  border-radius: var(--cardBorderRadius, 12px);
+  border: var(--cardBorder, 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08)));
+  background: var(--cardBackground, var(--secondaryBackgroundColor, #ffffff));
+  box-shadow: var(--cardBoxShadow, 0 1px 3px rgba(15, 23, 42, 0.08));
+}
+
+.deviceFrame {
+  border-radius: 24px;
+  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
+  background: var(--windowBackgroundColor, #ffffff);
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.12);
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 360px;
+}
+
+.viewport {
+  padding: 24px;
+  display: grid;
+  gap: 12px;
+}
+
+.activeSummary {
+  margin: 0;
+  color: var(--secondaryLabelColor, #4b5563);
+}
+
+.compactBar {
+  display: grid;
+  gap: 12px;
+  border-radius: calc(var(--cardBorderRadius, 12px) - 4px);
+  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
+  background: var(--windowBackgroundColor, #ffffff);
+  padding: 16px;
+}
+
+.inlineControls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.helperText {
+  margin: 0;
+  color: var(--tertiaryLabelColor, #6b7280);
+  font: var(--captionFont, 400 0.85rem/1.5 var(--themeLabelFontFamily, system-ui, sans-serif));
+}
+
+.codeBlock {
+  margin: 0;
+  border-radius: var(--controlBorderRadius, 8px);
+  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
+  background: var(--secondaryBackgroundColor, rgba(0, 0, 0, 0.04));
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.tokenBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--tertiarySystemFillColor, rgba(0, 0, 0, 0.05));
+  color: var(--linkColor, #2563eb);
+  font: var(--captionFont, 500 0.75rem/1.4 var(--themeLabelFontFamily, system-ui, sans-serif));
+}
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 24px 16px;
+  }
+}

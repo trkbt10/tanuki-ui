@@ -1,5 +1,6 @@
 import React from 'react';
 import * as TanukiUI from 'tanuki-ui';
+import { DemoCard, DemoStack } from '../../components/DemoLayouts';
 import { ComponentDemo } from '../types';
 
 // List Elements
@@ -252,19 +253,21 @@ export const listElements: ComponentDemo[] = [
     component: TanukiUI.SortableList,
     examples: {
       basic: (
-        <div>
+        <DemoCard>
           <TanukiUI.H4>ソート可能リスト</TanukiUI.H4>
-          <TanukiUI.P>ドラッグ&ドロップで並び替え可能なリストです</TanukiUI.P>
-          <TanukiUI.SortableList
-            items={[
-              { id: '1', text: 'アイテム 1' },
-              { id: '2', text: 'アイテム 2' },
-              { id: '3', text: 'アイテム 3' }
-            ]}
-            setItems={() => {}}
-            element={(item) => <TanukiUI.Li>{item.text}</TanukiUI.Li>}
-          />
-        </div>
+          <DemoStack>
+            <TanukiUI.P>ドラッグ&ドロップで並び替え可能なリストです</TanukiUI.P>
+            <TanukiUI.SortableList
+              items={[
+                { id: '1', text: 'アイテム 1' },
+                { id: '2', text: 'アイテム 2' },
+                { id: '3', text: 'アイテム 3' }
+              ]}
+              setItems={() => {}}
+              element={(item) => <TanukiUI.Li>{item.text}</TanukiUI.Li>}
+            />
+          </DemoStack>
+        </DemoCard>
       )
     }
   }

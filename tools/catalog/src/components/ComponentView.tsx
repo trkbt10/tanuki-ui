@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { components } from "../catalog/components";
-import { H1, H2, H3, H4, P, Section, Article, Button, Select, Option, Div, Aside, Toolbar } from "tanuki-ui";
+import { H1, H2, H3, H4, P, Section, Article, Button, Select, Option, Aside, Toolbar, Pre, Code } from "tanuki-ui";
 import { HeaderMainLayout } from "tanuki-ui/layouts";
 import styles from "./ComponentView.module.css";
 import ToolbarShowcase from "./ToolbarShowcase";
+import SpecialComponentGuide from "./SpecialComponentGuide";
 
 const ComponentView: React.FC = () => {
   const { category, name } = useParams<{ category: string; name: string }>();
@@ -29,6 +30,7 @@ const ComponentView: React.FC = () => {
   }
 
   const isToolbarShowcase = category === "bars" && name === "Toolbar";
+  const guide = component.meta?.guide;
 
   const renderComponentDemo = () => {
     if (isToolbarShowcase) {
@@ -178,7 +180,7 @@ function MyComponent() {
                 {categoryData.icon} {name}
               </strong>
               <small>
-                {component.meta?.description || component.description} - {categoryData.name}
+                {component.meta?.description || component.description} - {categoryData.name} / {categoryData.group === 'html' ? 'HTML標準要素' : '拡張コンポーネント'}
               </small>
             </Toolbar.Title>
           </Toolbar.Body>
@@ -187,6 +189,13 @@ function MyComponent() {
     >
       <div className={styles.container}>
         <Article>
+          {guide && (
+            <Section>
+              <H3 className={styles.sectionTitle}>設計ガイド</H3>
+              <SpecialComponentGuide componentName={name} guide={guide} />
+            </Section>
+          )}
+
           {/* プレビュー */}
           <Section>
             <H2>プレビュー</H2>
@@ -200,11 +209,11 @@ function MyComponent() {
               <div className={styles.codeHeader}>
                 使用例
               </div>
-              <pre className={styles.codeBlock}>
-                <code>
+              <Pre className={styles.codeBlock}>
+                <Code>
                   {usageSnippet}
-                </code>
-              </pre>
+                </Code>
+              </Pre>
             </div>
           </Section>
 
@@ -225,7 +234,9 @@ function MyComponent() {
                   {component.props.map((prop, index) => (
                     <tr key={index}>
                       <td>{prop.name}</td>
-                      <td><span className={styles.propType}>{prop.type}</span></td>
+                      <td>
+                        <Code>{prop.type}</Code>
+                      </td>
                       <td>{prop.description || "-"}</td>
                       <td className={prop.required ? styles.propRequired : ""}>{prop.required ? "✓" : "-"}</td>
                     </tr>
@@ -242,9 +253,9 @@ function MyComponent() {
               このコンポーネントは HTML の標準要素をベースとしており、すべての標準属性をサポートしています。
               従来の HTML 要素と同じように使用できるため、既存のスタイルやスクリプトとの互換性を保ちます。
             </P>
-            <pre className={styles.htmlCodeBlock}>
-              <code>
-                {`// 標準のHTML属性が使用可能
+            <Pre className={styles.htmlCodeBlock}>
+              <Code>
+{`// 標準のHTML属性が使用可能
 <${name}
   className="my-class"
   id="my-id"
@@ -254,8 +265,8 @@ function MyComponent() {
 >
   コンテンツ
 </${name}>`}
-              </code>
-            </pre>
+              </Code>
+            </Pre>
           </Section>
         </Article>
       </div>

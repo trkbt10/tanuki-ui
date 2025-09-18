@@ -23,6 +23,19 @@
   line-height: 1.6;
 }
 
+.groupBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.25rem 0.6rem;
+  background: var(--tertiarySystemFillColor);
+  border-radius: 999px;
+  color: var(--secondaryLabelColor);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+}
+
 .stats {
   display: flex;
   gap: 2rem;
@@ -57,7 +70,7 @@
   border: 1px solid var(--separatorColor);
   border-radius: 0.75rem;
   padding: 1.5rem;
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   cursor: pointer;
 }
 
@@ -95,7 +108,7 @@
   color: var(--labelColor);
   text-decoration: none;
   font-size: 0.875rem;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
 
 .variantLink:hover {

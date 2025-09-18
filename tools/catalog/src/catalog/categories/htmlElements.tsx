@@ -46,6 +46,19 @@ export const htmlElements: ComponentDemo[] = [
       )
     }
   },
+  {
+    name: 'Span',
+    description: 'インライン汎用要素',
+    category: 'elements',
+    component: TanukiUI.Span,
+    examples: {
+      basic: (
+        <TanukiUI.P>
+          インラインの<TanukiUI.Span style={{ color: 'var(--linkColor)' }}>一部だけを装飾</TanukiUI.Span>するときに利用します。
+        </TanukiUI.P>
+      )
+    }
+  },
   
   // 区切り要素  
   {
@@ -60,6 +73,32 @@ export const htmlElements: ComponentDemo[] = [
           <TanukiUI.Hr />
           <TanukiUI.P>下のセクション</TanukiUI.P>
         </TanukiUI.Div>
+      )
+    }
+  },
+  {
+    name: 'Br',
+    description: '改行要素',
+    category: 'elements',
+    component: TanukiUI.Br,
+    examples: {
+      basic: (
+        <TanukiUI.P>
+          一行目 <TanukiUI.Br /> 二行目
+        </TanukiUI.P>
+      )
+    }
+  },
+  {
+    name: 'Wbr',
+    description: '部分改行ヒント',
+    category: 'elements',
+    component: TanukiUI.Wbr,
+    examples: {
+      basic: (
+        <TanukiUI.P style={{ maxWidth: '220px' }}>
+          非常に長い単語の中で<TanukiUI.Wbr />適切に改行されます
+        </TanukiUI.P>
       )
     }
   },
@@ -79,6 +118,19 @@ export const htmlElements: ComponentDemo[] = [
     }
   },
   {
+    name: 'B',
+    description: '太字テキスト (物理的強調)',
+    category: 'elements',
+    component: TanukiUI.B,
+    examples: {
+      basic: (
+        <TanukiUI.P>
+          <TanukiUI.B>強調したい語</TanukiUI.B>を視覚的に太字にします。
+        </TanukiUI.P>
+      )
+    }
+  },
+  {
     name: 'Em',
     description: '強調テキスト（斜体）',
     category: 'elements',
@@ -87,6 +139,45 @@ export const htmlElements: ComponentDemo[] = [
       basic: (
         <TanukiUI.P>
           これは<TanukiUI.Em>強調された</TanukiUI.Em>テキストです。
+        </TanukiUI.P>
+      )
+    }
+  },
+  {
+    name: 'I',
+    description: '斜体テキスト (物理的強調)',
+    category: 'elements',
+    component: TanukiUI.I,
+    examples: {
+      basic: (
+        <TanukiUI.P>
+          書籍名などに<TanukiUI.I>イタリック体</TanukiUI.I>を用いるケースに適しています。
+        </TanukiUI.P>
+      )
+    }
+  },
+  {
+    name: 'U',
+    description: '下線付きテキスト',
+    category: 'elements',
+    component: TanukiUI.U,
+    examples: {
+      basic: (
+        <TanukiUI.P>
+          手書きの<TanukiUI.U>署名風</TanukiUI.U>など特定の表現に使用します。
+        </TanukiUI.P>
+      )
+    }
+  },
+  {
+    name: 'S',
+    description: '取り消し線付きテキスト',
+    category: 'elements',
+    component: TanukiUI.S,
+    examples: {
+      basic: (
+        <TanukiUI.P>
+          <TanukiUI.S>旧価格</TanukiUI.S> 新価格 2,480円
         </TanukiUI.P>
       )
     }
@@ -295,6 +386,32 @@ export const htmlElements: ComponentDemo[] = [
       basic: (
         <TanukiUI.P>
           この<TanukiUI.Ruby>漢字<TanukiUI.Rt>かんじ</TanukiUI.Rt></TanukiUI.Ruby>にはルビがついています。
+        </TanukiUI.P>
+      )
+    }
+  },
+  {
+    name: 'Bdi',
+    description: '双方向テキスト分離要素',
+    category: 'elements',
+    component: TanukiUI.Bdi,
+    examples: {
+      basic: (
+        <TanukiUI.P>
+          ユーザー名: <TanukiUI.Bdi dir="auto">مثال</TanukiUI.Bdi>
+        </TanukiUI.P>
+      )
+    }
+  },
+  {
+    name: 'Bdo',
+    description: 'テキストの書字方向を指定',
+    category: 'elements',
+    component: TanukiUI.Bdo,
+    examples: {
+      basic: (
+        <TanukiUI.P>
+          標準: مثال / 強制: <TanukiUI.Bdo dir="rtl">مثال</TanukiUI.Bdo>
         </TanukiUI.P>
       )
     }

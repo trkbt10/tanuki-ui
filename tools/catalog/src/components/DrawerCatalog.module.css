@@ -1,0 +1,105 @@
+.page {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 32px 24px;
+  display: grid;
+  gap: 32px;
+}
+
+.header {
+  display: grid;
+  gap: 12px;
+  text-align: center;
+}
+
+.lead {
+  margin: 0 auto;
+  max-width: 720px;
+  color: var(--secondaryLabelColor, #4b5563);
+}
+
+.main {
+  display: grid;
+  gap: 40px;
+}
+
+.section {
+  display: grid;
+  gap: 24px;
+}
+
+.sectionIntro {
+  display: grid;
+  gap: 12px;
+  max-width: 720px;
+}
+
+.triggerRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.helperText {
+  margin: 0;
+  color: var(--tertiaryLabelColor, #6b7280);
+  font: var(--captionFont, 400 0.85rem/1.5 var(--themeLabelFontFamily, system-ui, sans-serif));
+}
+
+.drawerBody {
+  display: grid;
+  gap: 16px;
+  padding: 16px 0 0 0;
+}
+
+.drawerList {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drawerListItem {
+  border-radius: var(--controlBorderRadius, 8px);
+  padding: 12px 14px;
+  background: var(--secondaryBackgroundColor, rgba(0, 0, 0, 0.04));
+  color: var(--labelColor, #111827);
+}
+
+.sheetContent {
+  display: grid;
+  gap: 12px;
+}
+
+.codeBlock {
+  margin: 0;
+  border-radius: var(--controlBorderRadius, 8px);
+  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
+  background: var(--secondaryBackgroundColor, rgba(0, 0, 0, 0.04));
+  padding: 16px;
+  overflow-x: auto;
+}
+
+.badgeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tokenBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--tertiarySystemFillColor, rgba(0, 0, 0, 0.05));
+  color: var(--linkColor, #2563eb);
+  font: var(--captionFont, 500 0.75rem/1.4 var(--themeLabelFontFamily, system-ui, sans-serif));
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 24px 16px;
+  }
+}

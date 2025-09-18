@@ -151,7 +151,8 @@
   font-weight: 600;
 }
 
-.propType {
+.propsTable code {
+  display: inline-block;
   font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, monospace;
   background: #f1f3f4;
   padding: 2px 6px;

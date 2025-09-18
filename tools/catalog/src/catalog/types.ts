@@ -1,4 +1,7 @@
 import React from 'react';
+import type { CatalogMeta } from '../CatalogMeta';
+
+export type CategoryGroup = 'html' | 'custom';
 
 export interface ComponentDemo {
   name: string;
@@ -15,11 +18,13 @@ export interface ComponentDemo {
     description?: string;
     required?: boolean;
   }>;
+  meta?: CatalogMeta;
 }
 
 export interface CategoryInfo {
   name: string;
   description: string;
   icon: string;
+  group: CategoryGroup;
   components: ComponentDemo[];
 }

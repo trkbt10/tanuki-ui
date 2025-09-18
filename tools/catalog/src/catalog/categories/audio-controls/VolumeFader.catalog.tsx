@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { VolumeFader } from "tanuki-ui/extended/audio-controls";
+import { H4 } from "tanuki-ui";
+import { DemoRow, DemoStack, DemoCard } from "../../../components/DemoLayouts";
 import { CatalogMeta } from "../../../CatalogMeta";
 
 export const VolumeFaderMeta: CatalogMeta = {
@@ -24,15 +26,19 @@ export const VolumeFaderCustomRange = () => {
   const [value, setValue] = useState(0);
 
   return (
-    <div style={{ display: "flex", gap: "32px" }}>
-      <div>
-        <h4>Standard (-60 to +12 dB)</h4>
-        <VolumeFader value={value} onChange={setValue} />
-      </div>
-      <div>
-        <h4>Limited (-20 to +6 dB)</h4>
-        <VolumeFader value={value} onChange={setValue} min={-20} max={6} />
-      </div>
-    </div>
+    <DemoRow style={{ gap: "32px" }}>
+      <DemoCard>
+        <DemoStack>
+          <H4>Standard (-60 to +12 dB)</H4>
+          <VolumeFader value={value} onChange={setValue} />
+        </DemoStack>
+      </DemoCard>
+      <DemoCard>
+        <DemoStack>
+          <H4>Limited (-20 to +6 dB)</H4>
+          <VolumeFader value={value} onChange={setValue} min={-20} max={6} />
+        </DemoStack>
+      </DemoCard>
+    </DemoRow>
   );
 };

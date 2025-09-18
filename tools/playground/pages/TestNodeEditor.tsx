@@ -4,7 +4,7 @@ import type { NodeEditorData } from "@/extended/node-editor/types/core";
 import { SettingsManager } from "@/extended/node-editor/settings/SettingsManager";
 import { defaultSettings } from "@/extended/node-editor/settings/defaultSettings";
 import { Minimap, GridToolbox } from "@/extended/node-editor/components/layers";
-import { Toolbar } from "@/extended/node-editor/components/Toolbar";
+import { NodeEditorToolbar } from "@/extended/node-editor";
 import { useNodeDataFlow } from "../components/NodeDataFlow";
 import { createAllTestNodeDefinitions } from "../test-nodes";
 export const TestNodeEditor: React.FC = () => {
@@ -466,7 +466,7 @@ export const TestNodeEditor: React.FC = () => {
           onDataChange={setEditorData}
           settingsManager={settingsManager}
           uiOverlayLayers={uiOverlayLayers}
-          toolbar={<Toolbar />}
+          toolbar={<NodeEditorToolbar />}
           nodeDefinitions={customNodeDefinitions}
           includeDefaultDefinitions={true}
         />

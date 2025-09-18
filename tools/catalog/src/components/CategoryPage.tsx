@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useParams } from "react-router";
 import { components } from "../catalog/components";
-import { H1, H2, P, Section, Article, Nav, Header, Main, Div } from "tanuki-ui";
+import { H1, H2, P, Section, Article, Nav, Header, Main, Card, Small } from "tanuki-ui";
 import styles from "./CategoryPage.module.css";
 
 const CategoryPage: React.FC = () => {
@@ -39,6 +39,9 @@ const CategoryPage: React.FC = () => {
         <P className={styles.description}>
           {categoryData.description}
         </P>
+        <Small className={styles.groupBadge}>
+          {categoryData.group === 'html' ? 'HTML標準要素グループ' : '拡張コンポーネントグループ'}
+        </Small>
       </Header>
 
       <Main>
@@ -50,7 +53,7 @@ const CategoryPage: React.FC = () => {
                 to={`/component/${category}/${components[0].name}`}
                 className={styles.componentCardLink}
               >
-                <Div className={styles.componentCard}>
+                <Card className={styles.componentCard}>
                   <H2 className={styles.componentName}>{baseName}</H2>
                   
                   {components[0].meta && (
@@ -75,7 +78,7 @@ const CategoryPage: React.FC = () => {
                       );
                     })}
                   </Nav>
-                </Div>
+                </Card>
               </Link>
             ))}
           </div>

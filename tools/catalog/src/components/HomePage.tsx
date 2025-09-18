@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import { components } from "../catalog/components";
-import { H1, H2, H3, P, Section, Article, Nav, Header, Main, Div } from "tanuki-ui";
+import { H1, H2, H3, P, Section, Article, Nav, Header, Main, Card, Pre, Code, Small } from "tanuki-ui";
 import styles from "./HomePage.module.css";
 
 const HomePage: React.FC = () => {
@@ -9,13 +9,51 @@ const HomePage: React.FC = () => {
 
   // カテゴリをグリッド表示用に整理
   const categoryEntries = Object.entries(components);
+  const htmlCategories = categoryEntries.filter(([, info]) => info.group === "html");
+  const customCategories = categoryEntries.filter(([, info]) => info.group === "custom");
+
+  const renderCategoryCards = (entries: typeof categoryEntries) => (
+    <div className={styles.categoryGrid}>
+      {entries.map(([categoryKey, category]) => (
+        <Card key={categoryKey} className={styles.card}>
+          <header className={styles.cardHeader}>
+            <H3 className={styles.cardTitle}>{category.name}</H3>
+            <div className={styles.badge}>
+              {category.components.length} 個
+            </div>
+          </header>
+
+          <P className={styles.cardDescription}>
+            {category.description}
+          </P>
+
+          <Nav className={styles.componentTags}>
+            {category.components.slice(0, 6).map((component) => (
+              <Link
+                key={component.name}
+                to={`/component/${categoryKey}/${component.name}`}
+                className={styles.tag}
+              >
+                {component.name}
+              </Link>
+            ))}
+            {category.components.length > 6 && (
+              <Small className={styles.moreCount}>
+                +{category.components.length - 6} more
+              </Small>
+            )}
+          </Nav>
+        </Card>
+      ))}
+    </div>
+  );
 
   return (
     <Article className={styles.container}>
       <Header className={styles.heroSection}>
-        <H1 className={styles.heroTitle}>🦝 Tanuki UI</H1>
+        <H1 className={styles.heroTitle}>Tanuki UI Catalog</H1>
         <P className={styles.heroSubtitle}>
-          HTMLの基本要素をそのまま使える React UI ライブラリ
+          HTMLの基本要素をそのまま使える React UI ライブラリのダイジェスト
         </P>
         <Section className={styles.statsGrid}>
           <div className={styles.statItem}>
@@ -39,12 +77,12 @@ const HomePage: React.FC = () => {
 
       <Main>
         <Section className={styles.section}>
-          <H2 className={styles.sectionTitle}>🌟 特殊ページ</H2>
+          <H2 className={styles.sectionTitle}>特殊ページ</H2>
           <div className={styles.grid}>
-            <Div className={styles.card}>
+            <Card className={styles.card}>
               <H3 className={styles.formLinkTitle}>
                 <Link to="/form-catalog" className={styles.formLink}>
-                  📝 Form Elements Catalog
+                  Form Elements Catalog
                 </Link>
               </H3>
               <P className={styles.formDescription}>
@@ -53,54 +91,26 @@ const HomePage: React.FC = () => {
               <P className={styles.formSubDescription}>
                 全てのフォームコンポーネントの動作確認とベストプラクティスを学べます。
               </P>
-            </Div>
+            </Card>
           </div>
         </Section>
 
         <Section className={styles.section}>
-          <H2 className={styles.sectionTitle}>📚 コンポーネントカテゴリ</H2>
-          <div className={styles.categoryGrid}>
-            {categoryEntries.map(([categoryKey, category]) => (
-              <Div key={categoryKey} className={styles.card}>
-                <header className={styles.cardHeader}>
-                  <H3 className={styles.cardTitle}>
-                    {category.icon} {category.name}
-                  </H3>
-                  <div className={styles.badge}>
-                    {category.components.length} 個
-                  </div>
-                </header>
+          <H2 className={styles.sectionTitle}>HTML ベースコンポーネント</H2>
+          {renderCategoryCards(htmlCategories)}
+        </Section>
 
-                <P className={styles.cardDescription}>
-                  {category.description}
-                </P>
-
-                <Nav className={styles.componentTags}>
-                  {category.components.slice(0, 6).map((component) => (
-                    <Link
-                      key={component.name}
-                      to={`/component/${categoryKey}/${component.name}`}
-                      className={styles.tag}
-                    >
-                      {component.name}
-                    </Link>
-                  ))}
-                  {category.components.length > 6 && (
-                    <span className={styles.moreCount}>
-                      +{category.components.length - 6} more
-                    </span>
-                  )}
-                </Nav>
-              </Div>
-            ))}
-          </div>
+        <Section className={styles.section}>
+          <H2 className={styles.sectionTitle}>拡張コンポーネント</H2>
+          {renderCategoryCards(customCategories)}
         </Section>
 
         <Section>
-          <H2 className={styles.sectionTitle}>🚀 はじめ方</H2>
-          <Div className={styles.card}>
-            <pre className={styles.codeBlock}>
-              {`# インストール
+          <H2 className={styles.sectionTitle}>はじめ方</H2>
+          <Card className={styles.card}>
+            <Pre className={styles.codeBlock}>
+              <Code>
+{`# インストール
 npm install tanuki-ui
 
 # 使用例
@@ -116,8 +126,9 @@ function App() {
     </>
   );
 }`}
-            </pre>
-          </Div>
+              </Code>
+            </Pre>
+          </Card>
         </Section>
       </Main>
     </Article>

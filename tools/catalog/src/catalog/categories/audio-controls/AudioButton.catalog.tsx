@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { AudioButton } from 'tanuki-ui/extended/audio-controls';
+import { DemoRow } from '../../../components/DemoLayouts';
 import { CatalogMeta } from '../../../CatalogMeta';
 
 export const AudioButtonMeta: CatalogMeta = {
@@ -16,7 +17,7 @@ export const AudioButtonBasic = () => {
   const [isSoloed, setIsSoloed] = useState(false);
 
   return (
-    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+    <DemoRow style={{ gap: '16px', alignItems: 'center' }}>
       <AudioButton
         variant="play"
         isActive={isPlaying}
@@ -65,7 +66,7 @@ export const AudioButtonBasic = () => {
         }}
         keyBinding="s"
       />
-    </div>
+    </DemoRow>
   );
 };
 
@@ -73,7 +74,7 @@ export const AudioButtonSizes = () => {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+    <DemoRow style={{ gap: '16px', alignItems: 'center' }}>
       <AudioButton
         variant="toggle"
         size="small"
@@ -92,7 +93,7 @@ export const AudioButtonSizes = () => {
         isActive={isActive}
         onClick={() => setIsActive(!isActive)}
       />
-    </div>
+    </DemoRow>
   );
 };
 
@@ -100,7 +101,7 @@ export const AudioButtonShapes = () => {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+    <DemoRow style={{ gap: '16px', alignItems: 'center' }}>
       <AudioButton
         variant="play"
         shape="circle"
@@ -118,6 +119,6 @@ export const AudioButtonShapes = () => {
         isActive={isActive}
         onClick={() => setIsActive(!isActive)}
       />
-    </div>
+    </DemoRow>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { LoopToggle } from "tanuki-ui/extended/audio-controls";
+import { DemoRow } from "../../../components/DemoLayouts";
 import { CatalogMeta } from "../../../CatalogMeta";
 
 export const LoopToggleMeta: CatalogMeta = {
@@ -24,10 +25,10 @@ export const LoopToggleSizes = () => {
   const [isLooping, setIsLooping] = useState(false);
 
   return (
-    <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+    <DemoRow style={{ alignItems: "center" }}>
       <LoopToggle size="small" isLooping={isLooping} onToggle={setIsLooping} />
       <LoopToggle size="medium" isLooping={isLooping} onToggle={setIsLooping} />
       <LoopToggle size="large" isLooping={isLooping} onToggle={setIsLooping} />
-    </div>
+    </DemoRow>
   );
 };

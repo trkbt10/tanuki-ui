@@ -1,7 +1,7 @@
 import React from 'react';
 import * as TanukiUI from 'tanuki-ui';
 import { ComponentDemo } from '../types';
-import NodeEditorShowcase from '../../components/NodeEditorShowcase';
+import { specialGuides } from '../specialGuides';
 
 // Interactive Dialog Components
 const InteractiveDialog: React.FC<{ title: string; content: string }> = ({ title, content }) => {
@@ -79,6 +79,11 @@ export const dialogElements: ComponentDemo[] = [
     description: 'モーダルダイアログ',
     category: 'dialogs',
     component: TanukiUI.Dialog,
+    meta: {
+      title: 'Dialog',
+      category: 'dialogs',
+      description: 'ネイティブ <dialog> を拡張したモーダルコンポーネント',
+    },
     examples: {
       basic: <InteractiveDialog title="ダイアログタイトル" content="ダイアログの内容です。" />
     }
@@ -88,6 +93,12 @@ export const dialogElements: ComponentDemo[] = [
     description: 'シンプルなモーダル',
     category: 'dialogs',
     component: TanukiUI.Modal,
+    meta: {
+      title: 'Modal',
+      category: 'dialogs',
+      description: 'オーバーレイ表示のためのモーダルコンポーネント',
+      guide: specialGuides.Modal,
+    },
     examples: {
       basic: <InteractiveModal title="モーダルタイトル" content="モーダルの内容です。" />
     }
@@ -97,6 +108,12 @@ export const dialogElements: ComponentDemo[] = [
     description: 'アラートダイアログ',
     category: 'dialogs',
     component: TanukiUI.Alert,
+    meta: {
+      title: 'Alert',
+      category: 'dialogs',
+      description: '即時フィードバックに適した Alert コンポーネント',
+      guide: specialGuides.Alert,
+    },
     examples: {
       basic: (
         <>
@@ -121,6 +138,12 @@ export const navigationElements: ComponentDemo[] = [
     description: '階層構造のサイドバーリスト',
     category: 'navigations',
     component: TanukiUI.SidebarList.List,
+     meta: {
+       title: 'SidebarList',
+       category: 'navigations',
+       description: '階層的なサイドナビゲーションを提供するコンポーネント',
+       guide: specialGuides.SidebarList,
+     },
     examples: {
       basic: (
         <TanukiUI.SidebarList.List>
@@ -135,6 +158,12 @@ export const navigationElements: ComponentDemo[] = [
     description: 'ソート可能なタブナビゲーション',
     category: 'navigations',
     component: TanukiUI.TabNav,
+    meta: {
+      title: 'TabNav',
+      category: 'navigations',
+      description: 'ドラッグ並び替え可能なタブナビゲーション',
+      guide: specialGuides.TabNav,
+    },
     examples: {
       basic: (
         <TanukiUI.TabNav
@@ -158,6 +187,12 @@ export const barElements: ComponentDemo[] = [
     description: 'シンプルなタブバー',
     category: 'bars',
     component: TanukiUI.TabBar,
+    meta: {
+      title: 'TabBar',
+      category: 'bars',
+      description: '画面下部の切り替え用タブバー',
+      guide: specialGuides.TabBar,
+    },
     examples: {
       basic: (
         <TanukiUI.TabBar
@@ -175,6 +210,12 @@ export const barElements: ComponentDemo[] = [
     description: '多機能ツールバー',
     category: 'bars',
     component: TanukiUI.Toolbar,
+    meta: {
+      title: 'Toolbar',
+      category: 'bars',
+      description: '複数の操作を束ねるフレキシブルなツールバー',
+      guide: specialGuides.Toolbar,
+    },
     examples: {
       basic: (
         <TanukiUI.Toolbar>
@@ -188,17 +229,7 @@ export const barElements: ComponentDemo[] = [
 ];
 
 // Extended Components
-export const extendedElements: ComponentDemo[] = [
-  {
-    name: 'NodeEditor',
-    description: 'ビジュアルプログラミング用ノードエディター',
-    category: 'extended',
-    component: NodeEditorShowcase,
-    examples: {
-      basic: <NodeEditorShowcase />
-    }
-  }
-];
+export const extendedElements: ComponentDemo[] = [];
 
 // Other Elements
 export const otherElements: ComponentDemo[] = [

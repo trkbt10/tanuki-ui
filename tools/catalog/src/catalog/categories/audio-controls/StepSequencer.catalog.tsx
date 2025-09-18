@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { StepSequencer } from "tanuki-ui/extended/audio-controls";
+import { Button } from "tanuki-ui";
+import { DemoStack } from "../../../components/DemoLayouts";
 import { CatalogMeta } from "../../../CatalogMeta";
 
 export const StepSequencerMeta: CatalogMeta = {
@@ -22,10 +24,10 @@ export const StepSequencerBasic = () => {
   }, [isPlaying]);
 
   return (
-    <div>
-      <button onClick={() => setIsPlaying(!isPlaying)} style={{ marginBottom: "16px" }}>
+    <DemoStack>
+      <Button onClick={() => setIsPlaying(!isPlaying)}>
         {isPlaying ? "Stop" : "Play"}
-      </button>
+      </Button>
       <StepSequencer
         steps={16}
         tracks={4}
@@ -33,7 +35,7 @@ export const StepSequencerBasic = () => {
         isPlaying={isPlaying}
         trackLabels={["Kick", "Snare", "Hi-Hat", "Open Hat"]}
       />
-    </div>
+    </DemoStack>
   );
 };
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { MetronomeToggle } from "tanuki-ui/extended/audio-controls";
+import { DemoRow } from "../../../components/DemoLayouts";
 import { CatalogMeta } from "../../../CatalogMeta";
 
 export const MetronomeToggleMeta: CatalogMeta = {
@@ -29,10 +30,10 @@ export const MetronomeToggleSizes = () => {
   const [isActive, setIsActive] = useState(false);
 
   return (
-    <div style={{ display: "flex", gap: "16px", alignItems: "center" }}>
+    <DemoRow style={{ gap: "16px", alignItems: "center" }}>
       <MetronomeToggle size="small" isActive={isActive} onToggle={setIsActive} />
       <MetronomeToggle size="medium" isActive={isActive} onToggle={setIsActive} />
       <MetronomeToggle size="large" isActive={isActive} onToggle={setIsActive} />
-    </div>
+    </DemoRow>
   );
 };
