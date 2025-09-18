@@ -1,11 +1,16 @@
 .table {
   display: table;
   width: 100%;
-  font: normal normal 400 13px/1.230769 var(--themeLabelFontFamily);
-  letter-spacing: 0.006154em;
-  background: var(--tableBackgroundColor);
-  border-spacing: 0;
-  border: var(--tableBorder, var(--tableBorderWidth, 4px) var(--tableBorderStyle, double) var(--tableBorderColor, #444));
+  font: var(--tableFont, normal normal 400 13px/1.230769 var(--themeLabelFontFamily));
+  letter-spacing: var(--tableLetterSpacing, 0.006154em);
+  background: var(--tableBackground, var(--tableBackgroundColor, var(--windowBackgroundColor, transparent)));
+  border-spacing: var(--tableBorderSpacing, 0);
+  border: var(
+    --tableBorder,
+    var(--tableBorderWidth, 4px) var(--tableBorderStyle, double) var(--tableBorderColor, #444)
+  );
+  border-radius: var(--tableBorderRadius, 0);
+  box-shadow: var(--tableBoxShadow, none);
 }
 
 .table thead {
@@ -22,27 +27,37 @@
 
 .table thead th {
   box-sizing: border-box;
-  padding: 0 0.5em;
-
-  text-align: left;
-  font: normal normal 500 11px/1.6 var(--themeLabelFontFamily);
-  letter-spacing: 0;
-  height: 24px;
-  color: var(--tableHeaderTextColor);
-  border-bottom: var(--tableHeaderBorder, var(--tableHeaderBorderWidth, 4px) var(--tableHeaderBorderStyle, double) var(--tableHeaderBorderColor, #444));
+  padding: var(--tableHeaderPadding, 0 0.5em);
+  text-align: var(--tableHeaderTextAlign, left);
+  font: var(--tableHeaderFont, normal normal 500 11px/1.6 var(--themeLabelFontFamily));
+  letter-spacing: var(--tableHeaderLetterSpacing, 0);
+  height: var(--tableHeaderHeight, 24px);
+  color: var(--tableHeaderTextColor, inherit);
+  background: var(
+    --tableHeaderBackground,
+    var(--tableHeaderGradient, var(--tableHeaderBackgroundColor, transparent))
+  );
+  border-bottom: var(
+    --tableHeaderBorder,
+    var(--tableHeaderBorderWidth, 4px) var(--tableHeaderBorderStyle, double) var(--tableHeaderBorderColor, #444)
+  );
+  box-shadow: var(--tableHeaderBoxShadow, none);
 }
 
 .table thead th::after {
   position: absolute;
-  right: 0;
+  right: var(--tableHeaderDividerOffsetX, 0);
   z-index: 0;
-  top: 50%;
+  top: var(--tableHeaderDividerOffsetY, 50%);
   transform: translateY(-50%);
-
-  height: 1em;
+  height: var(--tableHeaderDividerHeight, 1em);
   display: block;
   content: "";
-  border-right: var(--tableCellBorder, var(--tableCellBorderWidth, 2px) var(--tableCellBorderStyle, solid) var(--tableHeaderBorderColor, #444));
+  border-right: var(
+    --tableHeaderDivider,
+    var(--tableCellBorder, var(--tableCellBorderWidth, 2px) var(--tableCellBorderStyle, solid) var(--tableHeaderBorderColor, #444))
+  );
+  opacity: var(--tableHeaderDividerOpacity, 1);
 }
 
 .table thead th:last-child::after {
@@ -53,27 +68,60 @@
   position: sticky;
   top: 0;
   z-index: 1;
-
-  background: var(--tableHeaderBackgroundColor);
-  backdrop-filter: var(--backgroundBackdropFilter);
+  background: var(
+    --tableHeaderStickyBackground,
+    var(--tableHeaderBackground, var(--tableHeaderGradient, var(--tableHeaderBackgroundColor, transparent)))
+  );
+  backdrop-filter: var(--tableHeaderBackdropFilter, var(--backgroundBackdropFilter));
+  box-shadow: var(--tableHeaderStickyShadow, var(--tableHeaderBoxShadow, none));
 }
 
 .table tbody td {
   box-sizing: border-box;
-  padding: 0 0.5em;
-  letter-spacing: 0;
-  border-right: var(--tableCellBorder, var(--tableCellBorderWidth, 2px) var(--tableCellBorderStyle, solid) var(--tableBorderColor, #444));
-  border-bottom: var(--tableRowBorder, var(--tableRowBorderWidth, 1px) var(--tableRowBorderStyle, solid) var(--tableRowBorderColor, #ccc));
+  padding: var(--tableCellPadding, 0 0.5em);
+  letter-spacing: var(--tableCellLetterSpacing, 0);
+  min-height: var(--tableCellMinHeight, auto);
+  background-color: var(--tableCellBackground, transparent);
+  border-right: var(
+    --tableCellBorder,
+    var(--tableCellBorderWidth, 2px) var(--tableCellBorderStyle, solid) var(--tableBorderColor, #444)
+  );
+  border-bottom: var(
+    --tableRowBorder,
+    var(--tableRowBorderWidth, 1px) var(--tableRowBorderStyle, solid) var(--tableRowBorderColor, #ccc)
+  );
 }
 
 .table tbody tr {
-  color: var(--tableRowTextColor);
-  background: var(--tableRowBackgroundColor);
+  color: var(--tableRowTextColor, inherit);
+  background: var(--tableRowBackground, var(--tableRowBackgroundColor, transparent));
+  transition: var(--tableRowTransition, background-color 0.2s ease, color 0.2s ease);
 }
 
 .table tbody tr:nth-child(2n) {
-  background: var(--tableRowAlternateBackgroundColor);
-  color: var(--tableRowAlternateTextColor);
+  background: var(
+    --tableRowAlternateBackground,
+    var(--tableRowAlternateBackgroundColor, var(--tableRowBackground, var(--tableRowBackgroundColor, transparent)))
+  );
+  color: var(--tableRowAlternateTextColor, var(--tableRowTextColor, inherit));
+}
+
+.table tbody tr:hover {
+  background: var(
+    --tableRowHoverBackground,
+    var(--tableHoverBackground, var(--backgroundHover, var(--tableRowAlternateBackground, var(--tableRowBackground, var(--tableRowBackgroundColor, transparent)))))
+  );
+  color: var(--tableRowHoverTextColor, var(--tableHoverTextColor, var(--tableRowTextColor, inherit)));
+}
+
+.table tbody tr.isSelected,
+.table tbody tr[aria-selected="true"],
+.table tbody tr[data-selected="true"] {
+  background: var(
+    --tableRowSelectedBackground,
+    var(--tableRowHoverBackground, var(--tableHoverBackground, var(--tableRowAlternateBackground, var(--tableRowBackground, var(--tableRowBackgroundColor, transparent)))))
+  );
+  color: var(--tableRowSelectedTextColor, var(--tableRowHoverTextColor, var(--tableHoverTextColor, var(--tableRowTextColor, inherit))));
 }
 
 .table tbody td:last-child {
