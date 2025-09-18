@@ -22,7 +22,7 @@
   
   /* Typography Scale (em for context-aware scaling) */
   --text-xs: 0.75em;
-  --text-sm: 0.875em;
+  --text-sm: 0.95em;
   --text-base: 1em;
   --text-lg: 1.125em;
   --text-xl: 1.25em;
@@ -47,17 +47,21 @@
 
   /* Liquid Glass filter integration */
   --liquidGlassFilterRef: url(#liquid-glass-filter);
-  --liquidGlassBackdropStrong: blur(2.25em) saturate(1.9) brightness(1.12);
-  --liquidGlassBackdropMedium: blur(1.875em) saturate(1.65) brightness(1.08);
-  --liquidGlassBackdropSoft: blur(1.25em) saturate(1.45) brightness(1.04);
-  --liquidGlassSheen: color-mix(in srgb, rgba(255, 255, 255, 0.85) 70%, transparent);
-  --liquidGlassEdgeTint: color-mix(in srgb, rgba(255, 255, 255, 0.4) 60%, var(--accentColor) 40%);
-  --liquidGlassAmbient: color-mix(in srgb, rgba(255, 255, 255, 0.12) 80%, rgba(15, 76, 129, 0.12) 20%);
+  --liquidGlassBackdropStrong: blur(2.5em) saturate(1.95) brightness(1.08);
+  --liquidGlassBackdropMedium: blur(2.15em) saturate(1.72) brightness(1.05);
+  --liquidGlassBackdropSoft: blur(1.5em) saturate(1.46) brightness(1.02);
+  --liquidGlassSheen: rgba(255, 255, 255, 0.5);
+  --liquidGlassEdgeTint: color-mix(in srgb, rgba(255, 255, 255, 0.4) 90%, rgba(0, 122, 255, 0.2) 10%);
+  --liquidGlassAmbient: color-mix(in srgb, rgba(255, 255, 255, 0.2) 88%, rgba(0, 122, 255, 0.1) 12%);
+  --liquidGlassShadowSoft: 0 16px 36px rgba(15, 35, 70, 0.12);
+  --liquidGlassShadowLifted: 0 26px 64px rgba(10, 28, 60, 0.16);
+  --liquidGlassOverlay: linear-gradient(180deg, rgba(255, 255, 255, 0.32) 0%, rgba(255, 255, 255, 0.06) 100%);
 
   /* Advanced color mixing */
-  --glass-tint: color-mix(in srgb, rgba(255, 255, 255, 0.92) 85%, transparent);
-  --accent-tint: color-mix(in srgb, var(--accentColor) 22%, transparent);
-  --wallpaper-tint: color-mix(in srgb, var(--accentColor) 14%, rgba(255, 255, 255, 0.9) 86%);
+  --glass-tint: color-mix(in srgb, rgba(255, 255, 255, 0.94) 92%, transparent);
+  --accent-tint: color-mix(in srgb, rgba(0, 122, 255, 0.72) 12%, transparent);
+  --accent-glow: color-mix(in srgb, rgba(0, 122, 255, 0.82) 65%, rgba(255, 255, 255, 0.7) 35%);
+  --wallpaper-tint: color-mix(in srgb, rgba(255, 255, 255, 0.92) 92%, rgba(0, 122, 255, 0.65) 8%);
   
   /* Dynamic contrast ratios */
   --high-contrast-text: rgba(0, 0, 0, 0.95);
@@ -76,29 +80,28 @@
   --textFont: normal normal 400 var(--text-sm)/1.4 var(--themeLabelFontFamily);
 
   /* Base Colors - Liquid Glass Theme */
-  --textColor: rgba(0, 0, 0, 0.9);
+  --textColor: rgba(12, 18, 27, 0.9);
   --accentColor: rgba(0, 122, 255, 1);
   --cautionColor: rgba(255, 59, 48, 1);
   accent-color: var(--accentColor);
 
   /* Liquid Glass Window - Enhanced */
-  --windowBackgroundColor: color-mix(in srgb, var(--wallpaper-tint) 32%, rgba(255, 255, 255, 0.08) 68%);
+  --windowBackgroundColor: color-mix(in srgb, rgba(255, 255, 255, 0.15) 82%, var(--wallpaper-tint) 18%);
   --windowBackdropFilter: var(--liquidGlassBackdropStrong);
   --windowFilter: var(--liquidGlassFilterRef);
   --windowBoxShadow: 
-    0 0 0 0.5px color-mix(in srgb, rgba(255, 255, 255, 0.62) 70%, var(--accentColor) 30%),
+    0 0 0 0.5px color-mix(in srgb, rgba(255, 255, 255, 0.6) 90%, rgba(0, 122, 255, 0.5) 10%),
     0 0 0 1px rgba(255, 255, 255, 0.18),
-    0 1px 3px rgba(0, 0, 0, 0.03),
-    0 4px 16px rgba(0, 0, 0, 0.05),
-    0 18px 68px rgba(0, 0, 0, 0.09),
-    inset 0 1px 0 var(--liquidGlassSheen);
+    0 10px 34px rgba(8, 20, 45, 0.08),
+    0 24px 86px rgba(8, 20, 45, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.38);
 
   /* Liquid Glass Text Colors - Refined */
-  --labelColor: rgba(0, 0, 0, 0.9);
-  --secondaryLabelColor: rgba(0, 0, 0, 0.65);
-  --tertiaryLabelColor: rgba(0, 0, 0, 0.45);
-  --quaternaryLabelColor: rgba(0, 0, 0, 0.25);
-  --placeholderTextColor: rgba(0, 0, 0, 0.55);
+  --labelColor: rgba(12, 18, 27, 0.9);
+  --secondaryLabelColor: rgba(24, 32, 44, 0.66);
+  --tertiaryLabelColor: rgba(28, 40, 54, 0.45);
+  --quaternaryLabelColor: rgba(28, 40, 54, 0.26);
+  --placeholderTextColor: rgba(28, 40, 54, 0.45);
   --selectedTextColor: rgba(0, 0, 0, 0.95);
   --textBackgroundColor: rgba(255, 255, 255, 0.3);
   --selectedTextBackgroundColor: rgba(0, 122, 255, 0.25);
@@ -116,8 +119,8 @@
   /* Liquid Glass Controls */
   --controlAccentColor: rgba(0, 122, 255, 1);
   --controlColor: rgba(255, 255, 255, 0.6);
-  --controlTextColor: rgba(0, 0, 0, 0.85);
-  --disabledControlTextColor: rgba(0, 0, 0, 0.3);
+  --controlTextColor: rgba(18, 24, 34, 0.9);
+  --disabledControlTextColor: rgba(18, 24, 34, 0.28);
   --selectedControlColor: rgba(0, 122, 255, 0.3);
   --selectedControlTextColor: rgba(0, 0, 0, 1);
   --alternateSelectedControlTextColor: rgba(255, 255, 255, 1);
@@ -215,6 +218,29 @@
   --tableCellBorderWidth: 1px;
   --tableCellBorderStyle: solid;
 
+  /* Card - Liquid Glass */
+  --cardBackground: rgba(255, 255, 255, 0.12);
+  --cardBackdropFilter: blur(2em) saturate(1.4);
+  --cardBorder: 0.5px solid rgba(255, 255, 255, 0.4);
+  --cardBorderRadius: 20px;
+  --cardPadding: 20px;
+  --cardBoxShadow: var(--cardBoxShadowAdvanced, 0 1px 2px rgba(0, 0, 0, 0.06));
+  --cardHoverBackground: rgba(255, 255, 255, 0.18);
+  --cardHoverBorder: 0.5px solid rgba(255, 255, 255, 0.6);
+  --cardHoverBoxShadow: 0 0 0 0.5px rgba(255, 255, 255, 0.8), 0 8px 24px rgba(0, 0, 0, 0.12);
+  --cardActiveBackground: rgba(255, 255, 255, 0.1);
+  --cardActiveBoxShadow: 0 0 0 0.5px rgba(255, 255, 255, 0.6), 0 4px 16px rgba(0, 0, 0, 0.1);
+  --cardFocusBorder: 1px solid rgba(255, 255, 255, 0.8);
+  --cardFocusBoxShadow: 0 0 0 1px rgba(255, 255, 255, 0.6), 0 12px 40px rgba(0, 0, 0, 0.18);
+  --cardDisabledBackground: rgba(255, 255, 255, 0.06);
+  --cardDisabledOpacity: 0.65;
+  --cardBackground--elevated: rgba(255, 255, 255, 0.2);
+  --cardBoxShadow--elevated: 0 0 0 0.5px rgba(255, 255, 255, 0.6), 0 16px 48px rgba(0, 0, 0, 0.18);
+  --cardBackground--outlined: rgba(255, 255, 255, 0.08);
+  --cardBorder--outlined: 1px solid rgba(255, 255, 255, 0.5);
+  --cardBackground--filled: rgba(255, 255, 255, 0.2);
+  --cardBoxShadow--filled: none;
+
   /* Dialog - Enhanced Liquid Glass */
   --dialogBackground: rgba(255, 255, 255, 0.1);
   --dialogBackdropFilter: blur(2.5em) saturate(1.8) contrast(1.1) brightness(1.1);
@@ -230,79 +256,76 @@
   /* Controls - Enhanced Glass Morphism */
   --controlBoxShadow: 
     0 0 0 0.5px rgba(255, 255, 255, 0.6),
-    0 1px 2px rgba(0, 0, 0, 0.02),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+    0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 12px 28px rgba(12, 28, 60, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
   --controlFocusBoxShadow: 
-    0 0 0 0.5px rgba(255, 255, 255, 0.8),
-    0 0 0 2px rgba(0, 122, 255, 0.4),
-    0 0 0 4px rgba(0, 122, 255, 0.1),
-    0 2px 8px rgba(0, 0, 0, 0.06),
-    0 8px 32px rgba(0, 122, 255, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  --controlTextFont: normal normal 400 var(--text-sm)/1.4 var(--themeControlFontFamily);
-  --controlBorderRadius: var(--radius-md);
+    0 0 0 0.5px rgba(255, 255, 255, 0.82),
+    0 0 0 2px rgba(0, 122, 255, 0.28),
+    0 0 0 4px rgba(0, 122, 255, 0.08),
+    0 12px 32px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  --controlTextFont: normal normal 600 0.95em/1.3 var(--themeControlFontFamily);
+  --controlBorderRadius: calc(var(--space-lg) * 2.6);
   --controlPadding: var(--space-sm) var(--space-md);
-  --controlTextLetterSpacing: -0.5px;
-  --controlBackground: color-mix(in srgb, var(--wallpaper-tint) 24%, rgba(255, 255, 255, 0.14) 76%);
-  --controlBackdropFilter: var(--liquidGlassBackdropSoft);
+  --controlTextLetterSpacing: -0.2px;
+  --controlBackground: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.08) 100%);
+  --controlBackdropFilter: var(--liquidGlassBackdropMedium);
   --controlFilter: var(--liquidGlassFilterRef);
   --controlSurfaceSheen: var(--liquidGlassSheen);
 
   /* Button Primary - Liquid Glass */
   --controlBoxShadow--primary: 
-    0 0 0 0.5px rgba(255, 255, 255, 0.8),
-    0 0 0 1px rgba(0, 122, 255, 0.6),
-    0 1px 3px rgba(0, 0, 0, 0.03),
-    0 4px 16px rgba(0, 122, 255, 0.15),
-    0 8px 32px rgba(0, 122, 255, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4),
-    inset 0 -1px 0 rgba(0, 122, 255, 0.3);
+    0 0 0 0.5px rgba(255, 255, 255, 0.75),
+    0 0 0 1px rgba(0, 122, 255, 0.42),
+    0 8px 28px rgba(0, 122, 255, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
   --controlBackground--primary: 
-    linear-gradient(135deg, 
-      rgba(0, 122, 255, 0.9) 0%, 
-      rgba(0, 122, 255, 0.7) 50%, 
-      rgba(0, 122, 255, 0.85) 100%);
-  --controlBackdropFilter--primary: blur(1.25em) saturate(1.8) contrast(1.2);
+    linear-gradient(180deg, 
+      rgba(0, 122, 255, 0.82) 0%, 
+      rgba(0, 122, 255, 0.68) 55%, 
+      rgba(0, 122, 255, 0.76) 100%);
+  --controlBackdropFilter--primary: var(--liquidGlassBackdropMedium);
   --controlTextColor--primary: rgba(255, 255, 255, 0.95);
   --controlHoverTextColor--primary: rgba(255, 255, 255, 1);
   --controlHoverBackground--primary: 
-    linear-gradient(135deg, 
-      rgba(0, 122, 255, 0.95) 0%, 
-      rgba(0, 122, 255, 0.8) 50%, 
-      rgba(0, 122, 255, 0.9) 100%);
+    linear-gradient(180deg, 
+      rgba(0, 122, 255, 0.88) 0%, 
+      rgba(0, 122, 255, 0.72) 55%, 
+      rgba(0, 122, 255, 0.84) 100%);
   --controlFocusBackground--primary: 
-    linear-gradient(135deg, 
-      rgba(0, 122, 255, 1) 0%, 
-      rgba(0, 122, 255, 0.9) 50%, 
-      rgba(0, 122, 255, 0.95) 100%);
+    linear-gradient(180deg, 
+      rgba(0, 122, 255, 0.94) 0%, 
+      rgba(0, 122, 255, 0.78) 55%, 
+      rgba(0, 122, 255, 0.88) 100%);
   --controlFocusTextColor--primary: rgba(255, 255, 255, 1);
 
   /* Button Secondary - Refined Glass */
   --controlBoxShadow--secondary: 
-    0 0 0 0.5px rgba(255, 255, 255, 0.7),
+    0 0 0 0.5px rgba(255, 255, 255, 0.62),
     0 1px 2px rgba(0, 0, 0, 0.02),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    0 8px 32px rgba(0, 0, 0, 0.06),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.2);
-  --controlBackground--secondary: rgba(255, 255, 255, 0.3);
-  --controlBackdropFilter--secondary: blur(1.5625em) saturate(1.4) brightness(1.15);
+    0 10px 28px rgba(0, 0, 0, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  --controlBackground--secondary: rgba(255, 255, 255, 0.36);
+  --controlBackdropFilter--secondary: var(--liquidGlassBackdropMedium);
   --controlTextColor--secondary: rgba(0, 0, 0, 0.9);
 
   /* Input - Glass Field */
   --inputPadding: var(--space-sm) var(--space-md);
   --inputBoxShadow: 
-    0 0 0 0.5px rgba(255, 255, 255, 0.5),
-    0 1px 2px rgba(0, 0, 0, 0.02),
-    0 2px 8px rgba(0, 0, 0, 0.04),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    inset 0 -1px 0 rgba(0, 0, 0, 0.02);
-  --inputBorder: 0.5px solid rgba(255, 255, 255, 0.3);
-  --inputFont: normal normal 400 var(--text-sm)/1.4 var(--themeControlFontFamily);
-  --inputBackground: rgba(255, 255, 255, 0.2);
-  --inputBackdropFilter: blur(1.25em) saturate(1.5) brightness(1.1);
+    0 0 0 0.5px rgba(255, 255, 255, 0.55),
+    0 10px 28px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  --inputBorder: 0.5px solid rgba(255, 255, 255, 0.38);
+  --inputFont: normal normal 500 var(--text-base)/1.4 var(--themeControlFontFamily);
+  --inputBackground: linear-gradient(180deg, rgba(255, 255, 255, 0.24) 0%, rgba(255, 255, 255, 0.1) 100%);
+  --inputBackdropFilter: var(--liquidGlassBackdropMedium);
+  --inputBorderRadius: calc(var(--space-lg) * 2.4);
+  --inputFilter: var(--liquidGlassFilterRef);
+  --inputSurfaceSheen: var(--liquidGlassSheen);
+  --inputLabelColor: var(--secondaryLabelColor);
+  --inputHelperTextColor: rgba(18, 24, 34, 0.48);
+  --inputPlaceholderColor: var(--placeholderTextColor);
 
   --selectBoxSplitButtonWidth: 1.25em;
   --selectBoxSplitButtonBorderColor: rgba(0, 0, 0, 0.2);
@@ -317,17 +340,19 @@
   --barItemsLabelTextColor: rgba(0, 0, 0, 0.7);
   --barItemsDisabledLabelTextColor: rgba(0, 0, 0, 0.35);
   --barItemsDisabledLabelBackgroundColor: rgba(0, 0, 0, 0.03);
-  --barItemsBorderRadius: var(--radius-lg);
-  --barItemsControlMarkerBorderRadius: var(--radius-md);
+  --barItemsBorderRadius: calc(var(--space-lg) * 1.8);
+  --barItemsControlMarkerBorderRadius: calc(var(--space-lg) * 1.6);
   --barItemsControlPlaceholderTextColor: rgba(0, 0, 0, 0.55);
   --barItemsControlMarkerBackgroundColor: rgba(255, 255, 255, 0.4);
-  --barItemsControlsBorder: 0.5px solid color-mix(in srgb, rgba(255, 255, 255, 0.38) 70%, var(--accentColor) 30%);
-  --barItemsSegmentControlBackground: color-mix(in srgb, rgba(255, 255, 255, 0.14) 70%, var(--wallpaper-tint) 30%);
-  --barItemsHoverSegmentControlBackground: color-mix(in srgb, rgba(255, 255, 255, 0.24) 70%, var(--wallpaper-tint) 30%);
-  --barItemsActiveSegmentControlBackground: color-mix(in srgb, rgba(255, 255, 255, 0.32) 70%, var(--wallpaper-tint) 30%);
-  --segmentControlBackgroundColor: color-mix(in srgb, rgba(255, 255, 255, 0.68) 80%, var(--accentColor) 20%);
+  --barItemsControlsBorder: 0.5px solid color-mix(in srgb, rgba(255, 255, 255, 0.42) 88%, var(--accentColor) 12%);
+  --barItemsSegmentControlBackground: rgba(255, 255, 255, 0.2);
+  --barItemsHoverSegmentControlBackground: rgba(255, 255, 255, 0.28);
+  --barItemsActiveSegmentControlBackground: rgba(255, 255, 255, 0.36);
+  --segmentControlBackgroundColor: rgba(255, 255, 255, 0.68);
   --barItemsBackdropFilter: var(--liquidGlassBackdropMedium);
   --barItemsFilter: var(--liquidGlassFilterRef);
+  --barItemsSurfaceSheen: var(--liquidGlassSheen);
+  --barItemsShadow: var(--liquidGlassShadowSoft);
   --sidebarListItemFont: normal normal 400 var(--text-sm)/1.4 var(--themeDefaultFontFamily);
   --sidebarListItemBorderRadius: var(--radius-md);
   --selectedSidebarListItemBackground: rgba(0, 0, 0, 0.1);
@@ -355,31 +380,36 @@
     0 16px 64px rgba(0, 0, 0, 0.1);
 
   /* Tab item - Floating Glass */
-  --tabBarBackground: color-mix(in srgb, rgba(255, 255, 255, 0.08) 60%, var(--wallpaper-tint) 40%);
+  --tabBarBackground: linear-gradient(180deg, rgba(255, 255, 255, 0.16) 0%, rgba(73, 164, 255, 0.16) 100%);
   --tabBarBackdropFilter: var(--liquidGlassBackdropStrong);
   --tabBarFilter: var(--liquidGlassFilterRef);
   --tabBarBoxShadow: 
-    0 0 0 0.5px color-mix(in srgb, rgba(255, 255, 255, 0.55) 60%, var(--accentColor) 40%),
-    0 6px 24px rgba(0, 0, 0, 0.08),
-    0 24px 72px rgba(0, 0, 0, 0.12);
-  --tabItemHeight: 2.875em;
-  --tabItemTextColor: rgba(0, 0, 0, 0.65);
-  --tabItemBoxShadow: none;
+    0 0 0 0.5px rgba(255, 255, 255, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.18),
+    0 14px 40px rgba(12, 28, 60, 0.16);
+  --tabBarBorderRadius: calc(var(--space-lg) * 3.1);
+  --tabBarPadding: 0.35em 0.65em;
+  --tabBarGap: 0.4em;
+  --tabItemHeight: 3.1em;
+  --tabItemMinWidth: 4.5em;
+  --tabItemTextColor: rgba(18, 24, 34, 0.46);
+  --tabItemIconColor: rgba(18, 24, 34, 0.54);
   --tabItemIconSize: 1.2em;
-  --tabItemFont: normal normal var(--text-xs)/1.35 var(--themeLabelFontFamily);
+  --tabItemLabelFont: normal normal 500 0.8125em/1.2 var(--themeLabelFontFamily);
+  --tabItemBoxShadow: none;
   --tabBarLayout: center;
-  --tabItemBackground-selected: linear-gradient(145deg, color-mix(in srgb, rgba(255, 255, 255, 0.68) 70%, var(--accentColor) 30%) 0%, rgba(255, 255, 255, 0.48) 100%);
+  --tabItemBackground-selected: linear-gradient(180deg, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.58) 100%);
   --tabItemBackdropFilter-selected: var(--liquidGlassBackdropSoft);
   --tabItemFilter-selected: var(--liquidGlassFilterRef);
   --tabItemBoxShadow-selected: 
-    0 0 0 0.5px color-mix(in srgb, rgba(255, 255, 255, 0.62) 65%, var(--accentColor) 35%),
-    0 1px 4px rgba(0, 0, 0, 0.05),
-    0 10px 36px rgba(0, 0, 0, 0.1),
+    0 0 0 0.5px color-mix(in srgb, rgba(255, 255, 255, 0.64) 88%, var(--accentColor) 12%),
+    0 10px 32px rgba(0, 0, 0, 0.1),
     inset 0 1px 0 var(--liquidGlassSheen);
-  --tabItemTextColor-selected: color-mix(in srgb, var(--accentColor) 75%, rgba(0, 0, 0, 0.85) 25%);
-  --tabItemFont-selected: var(--tabItemFont);
+  --tabItemTextColor-selected: color-mix(in srgb, var(--accentColor) 48%, rgba(12, 18, 27, 0.9) 52%);
+  --tabItemIconColor-selected: color-mix(in srgb, rgba(0, 122, 255, 0.85) 70%, rgba(12, 18, 27, 0.4) 30%);
   --tabItemLabelUppercase: none;
-  --tabItemBadgeBackground: color-mix(in srgb, var(--accentColor) 65%, rgba(255, 255, 255, 0.45) 35%);
+  --tabItemIndicatorGlow: 0 12px 24px rgba(0, 122, 255, 0.18);
+  --tabItemBadgeBackground: var(--accent-glow);
 
   --scrolledAppMainToolbarBoxShadow: 
     0 0 0 0.5px color-mix(in srgb, rgba(255, 255, 255, 0.55) 60%, var(--accentColor) 40%),
@@ -399,25 +429,29 @@
   --segmentControlPadding: var(--space-xs);
   --segmentControlSegmentPadding: var(--space-sm) calc(var(--space-lg) * 1.1);
   --segmentControlBoxShadow: 
-    0 0 0 0.5px color-mix(in srgb, rgba(255, 255, 255, 0.58) 70%, var(--accentColor) 30%),
+    0 0 0 0.5px color-mix(in srgb, rgba(255, 255, 255, 0.58) 88%, var(--accentColor) 12%),
     0 1px 3px rgba(0, 0, 0, 0.03),
     0 6px 24px rgba(0, 0, 0, 0.07),
     inset 0 1px 0 rgba(255, 255, 255, 0.28),
     inset 0 -1px 0 rgba(255, 255, 255, 0.08);
-  --segmentControlBackground: color-mix(in srgb, rgba(255, 255, 255, 0.1) 70%, var(--wallpaper-tint) 30%);
+  --segmentControlBackground: linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.06) 100%);
   --segmentControlBackdropFilter: var(--liquidGlassBackdropMedium);
   --segmentControlFilter: var(--liquidGlassFilterRef);
-  --segmentControlBorderRadius: var(--radius-lg);
+  --segmentControlBorderRadius: calc(var(--space-lg) * 2.1);
+  --segmentControlIndicatorBorderRadius: calc(var(--space-lg) * 1.9);
   --segmentControlIndicatorBoxShadow: 
-    0 0 0 0.5px color-mix(in srgb, rgba(255, 255, 255, 0.7) 65%, var(--accentColor) 35%),
+    0 0 0 0.5px color-mix(in srgb, rgba(255, 255, 255, 0.7) 82%, var(--accentColor) 18%),
     0 1px 3px rgba(0, 0, 0, 0.05),
     0 10px 36px rgba(0, 0, 0, 0.12),
     inset 0 1px 0 var(--liquidGlassSheen);
-  --segmentControlIndicatorBackground: linear-gradient(145deg, color-mix(in srgb, rgba(255, 255, 255, 0.82) 70%, var(--accentColor) 30%) 0%, rgba(255, 255, 255, 0.55) 100%);
+  --segmentControlIndicatorBackground: linear-gradient(180deg, rgba(107, 206, 255, 0.46) 0%, rgba(65, 160, 255, 0.28) 100%);
   --segmentControlIndicatorBackdropFilter: var(--liquidGlassBackdropSoft);
   --segmentControlIndicatorFilter: var(--liquidGlassFilterRef);
-  --segmentControlLabelColor: rgba(0, 0, 0, 0.65);
-  --segmentControlLabelActiveColor: color-mix(in srgb, var(--accentColor) 70%, rgba(0, 0, 0, 0.85) 30%);
+  --segmentControlIndicatorOverlay: var(--liquidGlassOverlay);
+  --segmentControlIndicatorShadow: var(--liquidGlassShadowSoft);
+  --segmentControlLabelColor: rgba(18, 24, 34, 0.52);
+  --segmentControlLabelActiveColor: color-mix(in srgb, rgba(0, 122, 255, 0.85) 62%, rgba(12, 18, 27, 0.9) 38%);
+  --segmentControlLabelFont: normal normal 600 0.95em/1.25 var(--themeControlFontFamily);
 
   /* Enhanced Elevations with Advanced Shadows */
   --windowLevelElevation: 128;
@@ -509,6 +543,7 @@ body ::-webkit-scrollbar-thumb:hover {
 .liquid-glass-element {
   backdrop-filter: var(--windowBackdropFilter);
   -webkit-backdrop-filter: var(--windowBackdropFilter);
+  filter: var(--windowFilter);
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
 }
@@ -633,4 +668,216 @@ body ::-webkit-scrollbar-thumb:hover {
   transform: translateY(0.5px) scale(0.995);
   transition: all 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   filter: brightness(0.95);
+}
+
+/* Glass control utility hooks */
+
+button.liquid-glass-control,
+input[type="button"].liquid-glass-control,
+input[type="submit"].liquid-glass-control,
+.liquid-glass-control button,
+.liquid-glass-control .button,
+.liquid-glass-control .tanuki-button {
+  background: var(--controlBackground);
+  color: var(--controlTextColor);
+  border-radius: var(--controlBorderRadius);
+  padding: var(--controlPadding);
+  box-shadow: var(--controlBoxShadow);
+  backdrop-filter: var(--controlBackdropFilter);
+  -webkit-backdrop-filter: var(--controlBackdropFilter);
+  filter: var(--controlFilter);
+  font: var(--controlTextFont);
+  letter-spacing: var(--controlTextLetterSpacing);
+  position: relative;
+  overflow: hidden;
+}
+
+button.liquid-glass-control:focus-visible,
+.liquid-glass-control button:focus-visible {
+  box-shadow: var(--controlFocusBoxShadow);
+}
+
+button.liquid-glass-control.primary,
+.liquid-glass-control .button--primary {
+  background: var(--controlBackground--primary);
+  color: var(--controlTextColor--primary);
+  box-shadow: var(--controlBoxShadow--primary);
+  backdrop-filter: var(--controlBackdropFilter--primary);
+}
+
+button.liquid-glass-control::after,
+input[type="button"].liquid-glass-control::after,
+input[type="submit"].liquid-glass-control::after,
+.liquid-glass-control button::after,
+.liquid-glass-control .button::after,
+.liquid-glass-control .tanuki-button::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--liquidGlassOverlay);
+  pointer-events: none;
+}
+
+button.liquid-glass-control.secondary,
+.liquid-glass-control .button--secondary {
+  background: var(--controlBackground--secondary);
+  color: var(--controlTextColor--secondary);
+  box-shadow: var(--controlBoxShadow--secondary);
+  backdrop-filter: var(--controlBackdropFilter--secondary);
+}
+
+.liquid-glass-field input,
+.liquid-glass-field textarea,
+.liquid-glass-field select,
+input.liquid-glass-field,
+textarea.liquid-glass-field,
+select.liquid-glass-field {
+  background: var(--inputBackground);
+  background-image: var(--liquidGlassOverlay);
+  background-blend-mode: lighten;
+  color: var(--controlTextColor);
+  border-radius: var(--inputBorderRadius);
+  box-shadow: var(--inputBoxShadow);
+  border: var(--inputBorder);
+  padding: var(--inputPadding);
+  font: var(--inputFont);
+  backdrop-filter: var(--inputBackdropFilter);
+  -webkit-backdrop-filter: var(--inputBackdropFilter);
+  filter: var(--inputFilter);
+}
+
+.liquid-glass-field input::placeholder,
+.liquid-glass-field textarea::placeholder,
+input.liquid-glass-field::placeholder,
+textarea.liquid-glass-field::placeholder {
+  color: var(--inputPlaceholderColor);
+}
+
+.liquid-glass-field label,
+.liquid-glass-field .field-label {
+  color: var(--inputLabelColor);
+}
+
+.liquid-glass-field .field-helper,
+.liquid-glass-field .field-description {
+  color: var(--inputHelperTextColor);
+}
+
+.liquid-glass-toolbar,
+.liquid-glass-toolbar .toolbar,
+.liquid-glass-toolbar nav {
+  background: var(--barItemsSegmentControlBackground);
+  padding: 0.5em 0.75em;
+  border-radius: var(--barItemsBorderRadius);
+  box-shadow: var(--barItemsShadow);
+  backdrop-filter: var(--barItemsBackdropFilter);
+  -webkit-backdrop-filter: var(--barItemsBackdropFilter);
+  filter: var(--barItemsFilter);
+}
+
+.liquid-glass-toolbar .toolbar-segmented,
+.liquid-glass-toolbar .segmented-control,
+.liquid-glass-segmented {
+  display: inline-flex;
+  gap: var(--tabBarGap, 0.25em);
+  padding: var(--segmentControlPadding);
+  border-radius: var(--segmentControlBorderRadius);
+  background: var(--segmentControlBackground);
+  box-shadow: var(--segmentControlBoxShadow);
+  backdrop-filter: var(--segmentControlBackdropFilter);
+  -webkit-backdrop-filter: var(--segmentControlBackdropFilter);
+  filter: var(--segmentControlFilter);
+}
+
+.liquid-glass-segmented .segment,
+.liquid-glass-toolbar .segmented-control .segment {
+  font: var(--segmentControlLabelFont, var(--controlTextFont));
+  color: var(--segmentControlLabelColor);
+  border-radius: var(--segmentControlIndicatorBorderRadius);
+  position: relative;
+  padding: var(--segmentControlSegmentPadding);
+}
+
+.liquid-glass-segmented .segment.is-active,
+.liquid-glass-toolbar .segmented-control .segment.is-active {
+  color: var(--segmentControlLabelActiveColor);
+  background: var(--segmentControlIndicatorBackground);
+  box-shadow: var(--segmentControlIndicatorShadow);
+  backdrop-filter: var(--segmentControlIndicatorBackdropFilter);
+  -webkit-backdrop-filter: var(--segmentControlIndicatorBackdropFilter);
+  filter: var(--segmentControlIndicatorFilter);
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-glass-segmented .segment.is-active::after,
+.liquid-glass-toolbar .segmented-control .segment.is-active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--segmentControlIndicatorOverlay);
+  pointer-events: none;
+}
+
+.liquid-glass-tabbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--tabBarGap);
+  padding: var(--tabBarPadding);
+  border-radius: var(--tabBarBorderRadius);
+  background: var(--tabBarBackground);
+  box-shadow: var(--tabBarBoxShadow);
+  backdrop-filter: var(--tabBarBackdropFilter);
+  -webkit-backdrop-filter: var(--tabBarBackdropFilter);
+  filter: var(--tabBarFilter);
+}
+
+.liquid-glass-tabbar .tab-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tabItemMinWidth);
+  height: var(--tabItemHeight);
+  padding: 0.35em 0.65em;
+  border-radius: calc(var(--tabBarBorderRadius) - 0.75em);
+  color: var(--tabItemTextColor);
+  font: var(--tabItemLabelFont);
+  gap: 0.25em;
+  transition: color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.liquid-glass-tabbar .tab-item .icon {
+  font-size: var(--tabItemIconSize);
+  color: var(--tabItemIconColor);
+}
+
+.liquid-glass-tabbar .tab-item.is-active {
+  background: var(--tabItemBackground-selected);
+  color: var(--tabItemTextColor-selected);
+  box-shadow: var(--tabItemBoxShadow-selected);
+  backdrop-filter: var(--tabItemBackdropFilter-selected);
+  -webkit-backdrop-filter: var(--tabItemBackdropFilter-selected);
+  filter: var(--tabItemFilter-selected);
+  position: relative;
+  overflow: hidden;
+}
+
+.liquid-glass-tabbar .tab-item.is-active::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--liquidGlassOverlay);
+  pointer-events: none;
+}
+
+.liquid-glass-tabbar .tab-item.is-active .icon {
+  color: var(--tabItemIconColor-selected);
+  text-shadow: var(--tabItemIndicatorGlow);
+}
+
+.liquid-glass-tabbar .tab-item .badge {
+  background: var(--tabItemBadgeBackground);
+  color: var(--controlTextColor--primary, white);
 }

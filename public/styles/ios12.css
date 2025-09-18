@@ -402,6 +402,21 @@
   --cardBorder: none;
   --cardBoxShadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   --cardPadding: 16px;
+  --cardHoverBackground: var(--secondarySystemGroupedBackgroundColor);
+  --cardHoverBorder: none;
+  --cardHoverBoxShadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --cardActiveBackground: var(--secondarySystemGroupedBackgroundColor);
+  --cardActiveBoxShadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --cardFocusBorder: 1px solid rgba(0, 0, 0, 0.05);
+  --cardFocusBoxShadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+  --cardDisabledBackground: rgba(242, 242, 247, 0.6);
+  --cardDisabledOpacity: 0.6;
+  --cardBackground--elevated: var(--systemBackgroundColor);
+  --cardBoxShadow--elevated: 0 12px 40px rgba(0, 0, 0, 0.12);
+  --cardBackground--outlined: var(--secondarySystemGroupedBackgroundColor);
+  --cardBorder--outlined: 1px solid rgba(0, 0, 0, 0.08);
+  --cardBackground--filled: rgba(242, 242, 247, 1);
+  --cardBoxShadow--filled: none;
   --cardHeaderFont: var(--headlineFont);
   --cardBodyFont: var(--bodyFont);
   --cardHoverTransform: scale(0.98);
@@ -564,7 +579,23 @@
     
     /* Dark Mode Cards */
     --cardBackground: rgba(28, 28, 30, 1);
+    --cardBorder: none;
     --cardBoxShadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --cardHoverBackground: rgba(36, 36, 38, 1);
+    --cardHoverBorder: none;
+    --cardHoverBoxShadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --cardActiveBackground: rgba(44, 44, 46, 1);
+    --cardActiveBoxShadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    --cardFocusBorder: 1px solid rgba(255, 255, 255, 0.12);
+    --cardFocusBoxShadow: 0 0 0 3px rgba(255, 255, 255, 0.1);
+    --cardDisabledBackground: rgba(36, 36, 38, 0.7);
+    --cardDisabledOpacity: 0.6;
+    --cardBackground--elevated: rgba(36, 36, 38, 1);
+    --cardBoxShadow--elevated: 0 12px 40px rgba(0, 0, 0, 0.45);
+    --cardBackground--outlined: rgba(28, 28, 30, 1);
+    --cardBorder--outlined: 1px solid rgba(255, 255, 255, 0.12);
+    --cardBackground--filled: rgba(44, 44, 46, 1);
+    --cardBoxShadow--filled: none;
     
     /* Dark Mode Navigation */
     --navBarBackground: rgba(28, 28, 30, 0.94);

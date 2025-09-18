@@ -245,11 +245,26 @@
 
   /* Card - Switch game card style */
   --cardBackground: var(--switchWhite);
+  --cardBorder: 1px solid var(--switchLightGray);
   --cardBorderRadius: 16px;
   --cardBoxShadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   --cardPadding: 20px;
+  --cardHoverBackground: var(--switchCardGray);
   --cardHoverTransform: translateY(-4px);
+  --cardHoverBorder: 1px solid var(--switchLightGray);
   --cardHoverBoxShadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  --cardActiveBackground: var(--switchLightGray);
+  --cardActiveBoxShadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --cardFocusBorder: 2px solid var(--switchTeal);
+  --cardFocusBoxShadow: 0 0 0 4px rgba(0, 209, 209, 0.2);
+  --cardDisabledBackground: rgba(255, 255, 255, 0.6);
+  --cardDisabledOpacity: 0.6;
+  --cardBackground--elevated: var(--switchWhite);
+  --cardBoxShadow--elevated: 0 12px 32px rgba(0, 0, 0, 0.18);
+  --cardBackground--outlined: transparent;
+  --cardBorder--outlined: 2px solid var(--switchLightGray);
+  --cardBackground--filled: var(--switchCardGray);
+  --cardBoxShadow--filled: none;
 
   /* Window - Switch UI window */
   --windowBoxShadow: 0 8px 32px rgba(0, 0, 0, 0.2);
@@ -294,6 +309,21 @@
     --inputBorder: 2px solid var(--switchMediumGray);
     --tableBackgroundColor: var(--switchDarkGray);
     --cardBackground: var(--switchDarkGray);
+    --cardBorder: 1px solid var(--switchMediumGray);
+    --cardHoverBackground: #3a3a3a;
+    --cardHoverBorder: 1px solid var(--switchMediumGray);
+    --cardHoverBoxShadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    --cardActiveBackground: #262626;
+    --cardActiveBoxShadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    --cardFocusBorder: 2px solid var(--switchTeal);
+    --cardFocusBoxShadow: 0 0 0 4px rgba(0, 209, 209, 0.25);
+    --cardDisabledBackground: rgba(45, 45, 45, 0.7);
+    --cardBackground--elevated: var(--switchDarkGray);
+    --cardBoxShadow--elevated: 0 12px 32px rgba(0, 0, 0, 0.35);
+    --cardBackground--outlined: transparent;
+    --cardBorder--outlined: 2px solid var(--switchMediumGray);
+    --cardBackground--filled: #2d2d2d;
+    --cardBoxShadow--filled: none;
     --dialogBackground: var(--switchDarkGray);
     --tabBarBackground: var(--switchDarkGray);
     --segmentControlBackground: var(--switchBlack);

@@ -191,6 +191,28 @@
   --tableCellBorderWidth: 1px;
   --tableCellBorderStyle: solid;
 
+  /* Card */
+  --cardBackground: var(--windowBackgroundColor);
+  --cardBorder: 1px solid var(--separatorColor);
+  --cardBorderRadius: var(--controlBorderRadiusLarge, 12px);
+  --cardBoxShadow: var(--boxShadowSmall);
+  --cardPadding: 20px;
+  --cardHoverBackground: var(--backgroundSecondary);
+  --cardHoverBorder: 1px solid var(--separatorColor);
+  --cardHoverBoxShadow: var(--boxShadowMedium);
+  --cardActiveBackground: var(--backgroundActive);
+  --cardActiveBoxShadow: var(--boxShadowLarge);
+  --cardFocusBorder: 1px solid var(--accentColor);
+  --cardFocusBoxShadow: 0 0 0 3px rgba(59, 130, 246, 0.24);
+  --cardDisabledBackground: var(--backgroundSecondary);
+  --cardDisabledOpacity: 0.6;
+  --cardBackground--elevated: var(--windowBackgroundColor);
+  --cardBoxShadow--elevated: var(--boxShadowLarge);
+  --cardBackground--outlined: transparent;
+  --cardBorder--outlined: 1px solid var(--separatorColor);
+  --cardBackground--filled: var(--backgroundSecondary);
+  --cardBoxShadow--filled: none;
+
   /* Dialog */
   --dialogBackground: var(--windowBackgroundColor);
   --dialogBoxShadow: var(--boxShadowLarge);
@@ -272,6 +294,23 @@
     /* Input - Dark */
     --inputBackground: var(--vercelGray800);
     --inputBorder: 1px solid var(--vercelGray600);
+    --cardBackground: var(--windowBackgroundColor);
+    --cardBorder: 1px solid var(--separatorColor);
+    --cardHoverBackground: var(--backgroundSecondary);
+    --cardHoverBorder: 1px solid var(--separatorColor);
+    --cardHoverBoxShadow: var(--boxShadowMedium);
+    --cardActiveBackground: var(--backgroundSecondary);
+    --cardActiveBoxShadow: var(--boxShadowLarge);
+    --cardFocusBorder: 1px solid var(--accentColor);
+    --cardFocusBoxShadow: 0 0 0 3px rgba(59, 130, 246, 0.24);
+    --cardDisabledBackground: var(--backgroundSecondary);
+    --cardDisabledOpacity: 0.6;
+    --cardBackground--elevated: var(--windowBackgroundColor);
+    --cardBoxShadow--elevated: var(--boxShadowLarge);
+    --cardBackground--outlined: transparent;
+    --cardBorder--outlined: 1px solid var(--separatorColor);
+    --cardBackground--filled: var(--backgroundSecondary);
+    --cardBoxShadow--filled: none;
 
     /* Table - Dark */
     --tableHeaderDivider: 1px solid var(--separatorColor);

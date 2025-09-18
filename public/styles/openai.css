@@ -291,6 +291,21 @@
   --cardBorderRadius: 8px;
   --cardBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   --cardPadding: 16px;
+  --cardHoverBackground: var(--openaiGray50);
+  --cardHoverBorder: 1px solid var(--openaiGray300);
+  --cardHoverBoxShadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --cardActiveBackground: var(--openaiGray100);
+  --cardActiveBoxShadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  --cardFocusBorder: 1px solid var(--accentColor);
+  --cardFocusBoxShadow: 0 0 0 3px rgba(16, 163, 127, 0.2);
+  --cardDisabledBackground: var(--backgroundSecondary);
+  --cardDisabledOpacity: 0.6;
+  --cardBackground--elevated: var(--windowBackgroundColor);
+  --cardBoxShadow--elevated: 0 16px 48px rgba(0, 0, 0, 0.15);
+  --cardBackground--outlined: var(--windowBackgroundColor);
+  --cardBorder--outlined: 1px solid var(--openaiGray300);
+  --cardBackground--filled: var(--openaiGray50);
+  --cardBoxShadow--filled: none;
 
   /* Popover */
   --popoverBackground: var(--windowBackgroundColor);
@@ -402,6 +417,21 @@
     /* Card Dark */
     --cardBackground: var(--openaiGray800);
     --cardBorder: 1px solid var(--openaiGray700);
+    --cardHoverBackground: var(--openaiGray750, rgba(32, 33, 35, 1));
+    --cardHoverBorder: 1px solid var(--openaiGray600);
+    --cardHoverBoxShadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+    --cardActiveBackground: var(--openaiGray850, rgba(26, 27, 28, 1));
+    --cardActiveBoxShadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    --cardFocusBorder: 1px solid var(--accentColor);
+    --cardFocusBoxShadow: 0 0 0 3px rgba(16, 163, 127, 0.25);
+    --cardDisabledBackground: rgba(32, 33, 35, 0.7);
+    --cardDisabledOpacity: 0.6;
+    --cardBackground--elevated: var(--openaiGray750, rgba(32, 33, 35, 1));
+    --cardBoxShadow--elevated: 0 20px 56px rgba(0, 0, 0, 0.45);
+    --cardBackground--outlined: transparent;
+    --cardBorder--outlined: 1px solid var(--openaiGray600);
+    --cardBackground--filled: var(--openaiGray800);
+    --cardBoxShadow--filled: none;
 
     /* Popover Dark */
     --popoverBackground: var(--openaiGray800);

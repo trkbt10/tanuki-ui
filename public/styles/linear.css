@@ -319,6 +319,21 @@
   --cardBorderRadius: 12px;
   --cardBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   --cardPadding: 20px;
+  --cardHoverBackground: var(--backgroundHover, rgba(0, 0, 0, 0.02));
+  --cardHoverBorder: 1px solid var(--linearBorderHover);
+  --cardHoverBoxShadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --cardActiveBackground: var(--backgroundActive, rgba(0, 0, 0, 0.04));
+  --cardActiveBoxShadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  --cardFocusBorder: 1px solid var(--linearAccent);
+  --cardFocusBoxShadow: 0 0 0 3px rgba(94, 106, 210, 0.2);
+  --cardDisabledBackground: var(--backgroundSecondary);
+  --cardDisabledOpacity: 0.6;
+  --cardBackground--elevated: var(--windowBackgroundColor);
+  --cardBoxShadow--elevated: 0 16px 48px rgba(0, 0, 0, 0.15);
+  --cardBackground--outlined: transparent;
+  --cardBorder--outlined: 1px solid var(--linearBorder);
+  --cardBackground--filled: var(--linearBgSubtle);
+  --cardBoxShadow--filled: none;
 
   /* Popover */
   --popoverBackground: var(--windowBackgroundColor);
@@ -404,7 +419,22 @@
     
     /* Card dark */
     --cardBackground: var(--linearBgSubtle);
-    
+    --cardBorder: 1px solid var(--linearBorderSubtle);
+    --cardHoverBackground: var(--linearBgSubtlest);
+    --cardHoverBorder: 1px solid var(--linearBorder);
+    --cardHoverBoxShadow: 0 16px 48px rgba(0, 0, 0, 0.35);
+    --cardActiveBackground: #202020;
+    --cardActiveBoxShadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    --cardFocusBorder: 1px solid var(--linearAccent);
+    --cardFocusBoxShadow: 0 0 0 3px rgba(110, 124, 224, 0.35);
+    --cardDisabledBackground: rgba(20, 20, 20, 0.7);
+    --cardBackground--elevated: var(--linearBgSubtlest);
+    --cardBoxShadow--elevated: 0 20px 56px rgba(0, 0, 0, 0.45);
+    --cardBackground--outlined: transparent;
+    --cardBorder--outlined: 1px solid var(--linearBorder);
+    --cardBackground--filled: var(--linearBgSubtle);
+    --cardBoxShadow--filled: none;
+
     /* Popover dark */
     --popoverBackground: var(--linearBgSubtle);
     

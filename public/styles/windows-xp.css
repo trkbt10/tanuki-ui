@@ -775,12 +775,35 @@
     inset 2px 2px 0 #404040;
   --cardPadding: 8px;
   --cardMargin: 4px;
+  --cardHoverBackground: #f5f5ed;
+  --cardHoverBorder: none;
   --cardHoverBoxShadow: 
     0 0 0 1px #5d8cc9,
     inset -1px -1px 0 #ffffff,
     inset 1px 1px 0 #5d8cc9,
     inset -2px -2px 0 #d4d0c8,
     inset 2px 2px 0 #003c74;
+  --cardActiveBackground: #e1dfc8;
+  --cardActiveBoxShadow: 
+    0 0 0 1px #285bac,
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #285bac,
+    inset -2px -2px 0 #d4d0c8,
+    inset 2px 2px 0 #001f54;
+  --cardFocusBorder: 1px dotted #003c74;
+  --cardFocusBoxShadow: 
+    0 0 0 1px #5d8cc9,
+    inset -1px -1px 0 #ffffff,
+    inset 1px 1px 0 #5d8cc9;
+  --cardDisabledBackground: #ece9d8;
+  --cardDisabledOpacity: 0.75;
+  --cardBackground--elevated: linear-gradient(to bottom, #ffffff 0%, #f3f1e6 100%);
+  --cardBoxShadow--elevated: 
+    0 0 0 1px #285bac,
+    0 4px 8px rgba(0, 0, 0, 0.2);
+  --cardBackground--outlined: #ffffff;
+  --cardBorder--outlined: 1px solid #285bac;
+  --cardBackground--filled: linear-gradient(to bottom, #ffffff 0%, #f0f0e9 100%);
   --cardHeaderBackground: linear-gradient(to bottom,
     #fefefc 0%,
     #f3f1e6 20%,

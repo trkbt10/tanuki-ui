@@ -323,6 +323,21 @@
   --cardBorderRadius: 6px;
   --cardBoxShadow: none;
   --cardPadding: 16px;
+  --cardHoverBackground: var(--hoverBackground, rgba(177, 186, 196, 0.12));
+  --cardHoverBorder: 1px solid var(--githubBorderDefault);
+  --cardHoverBoxShadow: 0 8px 24px rgba(1, 4, 9, 0.45);
+  --cardActiveBackground: var(--activeBackground, rgba(177, 186, 196, 0.2));
+  --cardActiveBoxShadow: 0 4px 12px rgba(1, 4, 9, 0.4);
+  --cardFocusBorder: 1px solid var(--githubAccentFg);
+  --cardFocusBoxShadow: 0 0 0 3px var(--githubAccentMuted);
+  --cardDisabledBackground: rgba(13, 17, 23, 0.6);
+  --cardDisabledOpacity: 0.55;
+  --cardBackground--elevated: var(--githubCanvasDefault);
+  --cardBoxShadow--elevated: 0 12px 32px rgba(1, 4, 9, 0.5);
+  --cardBackground--outlined: transparent;
+  --cardBorder--outlined: 1px solid var(--githubBorderDefault);
+  --cardBackground--filled: var(--githubCanvasDefault);
+  --cardBoxShadow--filled: none;
 
   /* Popover */
   --popoverBackground: var(--githubCanvasOverlay);
@@ -406,6 +421,25 @@
     --activeScrollBarThumbColor: rgba(110, 118, 129, 0.7);
     --backgroundHover: rgba(208, 215, 222, 0.32);
     --backgroundActive: rgba(208, 215, 222, 0.48);
+
+    /* Card */
+    --cardBackground: var(--githubCanvasDefault);
+    --cardBorder: 1px solid var(--githubBorderDefault);
+    --cardHoverBackground: rgba(234, 238, 242, 0.8);
+    --cardHoverBorder: 1px solid var(--githubBorderMuted);
+    --cardHoverBoxShadow: 0 8px 24px rgba(140, 149, 159, 0.25);
+    --cardActiveBackground: rgba(208, 215, 222, 0.48);
+    --cardActiveBoxShadow: 0 4px 12px rgba(140, 149, 159, 0.3);
+    --cardFocusBorder: 1px solid var(--githubAccentFg);
+    --cardFocusBoxShadow: 0 0 0 3px var(--githubAccentMuted);
+    --cardDisabledBackground: rgba(234, 238, 242, 0.6);
+    --cardDisabledOpacity: 0.6;
+    --cardBackground--elevated: #ffffff;
+    --cardBoxShadow--elevated: 0 12px 32px rgba(140, 149, 159, 0.35);
+    --cardBackground--outlined: #ffffff;
+    --cardBorder--outlined: 1px solid var(--githubBorderDefault);
+    --cardBackground--filled: var(--githubCanvasSubtle);
+    --cardBoxShadow--filled: none;
 
     /* Input adjustments */
     --inputBackground: var(--githubCanvasDefault);

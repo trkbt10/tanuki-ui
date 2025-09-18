@@ -360,7 +360,21 @@
   --cardBorderRadius: 12px;
   --cardBoxShadow: var(--elevation1);
   --cardPadding: 16px;
+  --cardHoverBackground: var(--mdSurface);
+  --cardHoverBorder: none;
   --cardHoverBoxShadow: var(--elevation2);
+  --cardActiveBackground: var(--mdSurface);
+  --cardActiveBoxShadow: var(--elevation3);
+  --cardFocusBorder: 2px solid var(--mdPrimary);
+  --cardFocusBoxShadow: 0 0 0 4px rgba(103, 80, 164, 0.24);
+  --cardDisabledBackground: rgba(28, 27, 31, 0.06);
+  --cardDisabledOpacity: 0.6;
+  --cardBackground--elevated: var(--mdSurface);
+  --cardBoxShadow--elevated: var(--elevation3);
+  --cardBackground--outlined: var(--mdSurface);
+  --cardBorder--outlined: 1px solid var(--mdOutlineVariant);
+  --cardBackground--filled: var(--mdSurfaceVariant);
+  --cardBoxShadow--filled: none;
 
   /* Popover */
   --popoverBackground: var(--mdSurface);
@@ -457,7 +471,24 @@
     /* Input dark */
     --inputBackground: var(--mdSurface);
     --inputBorder: 1px solid var(--mdOutline);
-    
+    --cardBackground: var(--mdSurface);
+    --cardBorder: none;
+    --cardHoverBackground: var(--mdSurfaceVariant);
+    --cardHoverBorder: none;
+    --cardHoverBoxShadow: var(--elevation3);
+    --cardActiveBackground: var(--mdSurfaceVariant);
+    --cardActiveBoxShadow: var(--elevation4);
+    --cardFocusBorder: 2px solid var(--mdPrimary);
+    --cardFocusBoxShadow: 0 0 0 4px rgba(208, 188, 255, 0.24);
+    --cardDisabledBackground: rgba(28, 27, 31, 0.3);
+    --cardDisabledOpacity: 0.6;
+    --cardBackground--elevated: var(--mdSurface);
+    --cardBoxShadow--elevated: var(--elevation4);
+    --cardBackground--outlined: var(--mdSurface);
+    --cardBorder--outlined: 1px solid var(--mdOutlineVariant);
+    --cardBackground--filled: var(--mdSurfaceVariant);
+    --cardBoxShadow--filled: none;
+
     /* Table dark */
     --tableHeaderDivider: 1px solid var(--mdOutlineVariant);
     --tableCellBorder: 1px solid var(--mdOutlineVariant);

@@ -114,6 +114,29 @@
   --tableCellBorderWidth: 1px;
   --tableCellBorderStyle: solid;
 
+  /* Card */
+  --cardFont: var(--textFont);
+  --cardBackground: rgba(255, 255, 255, 1);
+  --cardBorder: 1px solid rgba(0, 0, 0, 0.25);
+  --cardBorderRadius: 4px;
+  --cardBoxShadow: 0 3px 12px rgba(0, 0, 0, 0.18);
+  --cardPadding: 16px;
+  --cardHoverBackground: rgba(249, 249, 249, 1);
+  --cardHoverBorder: 1px solid rgba(0, 0, 0, 0.3);
+  --cardHoverBoxShadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+  --cardActiveBackground: rgba(240, 240, 240, 1);
+  --cardActiveBoxShadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  --cardFocusBorder: 2px solid var(--accentColor);
+  --cardFocusBoxShadow: 0 0 0 4px rgba(0, 99, 225, 0.3);
+  --cardDisabledBackground: rgba(230, 230, 230, 0.6);
+  --cardDisabledOpacity: 0.6;
+  --cardBackground--elevated: rgba(255, 255, 255, 1);
+  --cardBoxShadow--elevated: 0 16px 48px rgba(0, 0, 0, 0.25);
+  --cardBackground--outlined: transparent;
+  --cardBorder--outlined: 1.5px solid rgba(0, 0, 0, 0.4);
+  --cardBackground--filled: rgba(244, 244, 244, 1);
+  --cardBoxShadow--filled: none;
+
   /* Dialog */
   --dialogBackground: var(--windowBackgroundColor);
   --dialogBoxShadow: 0 1.8px 5px 0 rgba(0, 0, 0, 0.4), 0 0 1px 0 rgba(0, 0, 0, 0.55);

@@ -255,9 +255,22 @@
   --cardBorder: none;
   --cardBoxShadow: var(--youtube-shadow-1);
   --cardPadding: 0;
+  --cardHoverBackground: var(--youtube-hover);
   --cardHoverTransform: none;
   --cardHoverBorder: none;
   --cardHoverBoxShadow: var(--youtube-shadow-2);
+  --cardActiveBackground: var(--youtube-hover);
+  --cardActiveBoxShadow: var(--youtube-shadow-3);
+  --cardFocusBorder: 2px solid var(--youtube-red);
+  --cardFocusBoxShadow: 0 0 0 4px rgba(255, 0, 0, 0.2);
+  --cardDisabledBackground: rgba(245, 245, 245, 0.8);
+  --cardDisabledOpacity: 0.6;
+  --cardBackground--elevated: var(--youtube-white);
+  --cardBoxShadow--elevated: var(--youtube-shadow-4);
+  --cardBackground--outlined: transparent;
+  --cardBorder--outlined: 1px solid var(--youtube-border);
+  --cardBackground--filled: var(--youtube-hover);
+  --cardBoxShadow--filled: none;
   
   /* YouTube Toolbar */
   --toolbarBackground: var(--youtube-white);
@@ -383,6 +396,22 @@
     --tableHeaderBackgroundColor: var(--youtube-medium-gray);
     --tableRowAlternateBackgroundColor: var(--youtube-medium-gray);
     --cardBackground: var(--youtube-dark-gray);
+    --cardBorder: none;
+    --cardHoverBackground: var(--youtube-hover);
+    --cardHoverBorder: none;
+    --cardHoverBoxShadow: var(--youtube-shadow-3);
+    --cardActiveBackground: #1f1f1f;
+    --cardActiveBoxShadow: var(--youtube-shadow-4);
+    --cardFocusBorder: 2px solid var(--youtube-red);
+    --cardFocusBoxShadow: 0 0 0 4px rgba(255, 0, 0, 0.25);
+    --cardDisabledBackground: rgba(39, 39, 39, 0.8);
+    --cardDisabledOpacity: 0.6;
+    --cardBackground--elevated: var(--youtube-dark-gray);
+    --cardBoxShadow--elevated: var(--youtube-shadow-4);
+    --cardBackground--outlined: transparent;
+    --cardBorder--outlined: 1px solid var(--youtube-border);
+    --cardBackground--filled: var(--youtube-hover);
+    --cardBoxShadow--filled: none;
     --tabBarBackground: var(--youtube-black);
     --sidebarBackground: var(--youtube-black);
     --toolbarBackground: var(--youtube-black);

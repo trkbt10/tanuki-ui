@@ -137,6 +137,7 @@
   --cardBorderRadius: 8px;
   --cardBorderWidth: 0.5px;
   --cardBorderColor: rgba(0, 0, 0, 0.08);
+  --cardBorder: var(--cardBorderWidth, 0.5px) solid var(--cardBorderColor, rgba(0, 0, 0, 0.08));
   --cardBoxShadow: 0 0.5px 2px 0 rgba(0, 0, 0, 0.08), 0 1px 4px 0 rgba(0, 0, 0, 0.05);
   --cardPadding: 16px;
   --cardMargin: 8px;
@@ -149,14 +150,18 @@
   --cardHoverBackground: rgba(255, 255, 255, 1);
   --cardHoverBoxShadow: 0 0.5px 3px 0 rgba(0, 0, 0, 0.1), 0 2px 6px 0 rgba(0, 0, 0, 0.08);
   --cardHoverBorderColor: rgba(0, 0, 0, 0.1);
+  --cardHoverBorder: var(--cardHoverBorderColor, rgba(0, 0, 0, 0.1)) solid 0.5px;
   --cardActiveBackground: rgba(250, 250, 250, 0.98);
   --cardActiveBoxShadow: 0 0.5px 1px 0 rgba(0, 0, 0, 0.12);
   --cardActiveBorderColor: rgba(0, 0, 0, 0.12);
+  --cardActiveBorder: var(--cardActiveBorderColor, rgba(0, 0, 0, 0.12)) solid 0.5px;
   --cardFocusBorderColor: var(--keyboardFocusIndicatorColor);
+  --cardFocusBorder: 1px solid var(--cardFocusBorderColor);
   --cardFocusBoxShadow: 0 0 0 3px var(--keyboardFocusIndicatorColor);
   --cardDisabledBackground: rgba(244, 244, 244, 0.6);
   --cardDisabledTextColor: var(--disabledControlTextColor);
   --cardDisabledBorderColor: rgba(0, 0, 0, 0.05);
+  --cardDisabledBorder: var(--cardDisabledBorderColor, rgba(0, 0, 0, 0.05)) solid 0.5px;
   --cardDisabledBoxShadow: none;
 
   /* Card Variants */
@@ -171,6 +176,7 @@
   --cardOutlinedBoxShadow: none;
   --cardOutlinedBorderWidth: 1px;
   --cardOutlinedBorderColor: rgba(0, 0, 0, 0.12);
+  --cardBorder--outlined: var(--cardOutlinedBorderWidth, 1px) solid var(--cardOutlinedBorderColor, rgba(0, 0, 0, 0.12));
   --cardOutlinedHoverBorderColor: rgba(0, 0, 0, 0.2);
   --cardOutlinedHoverBackground: rgba(255, 255, 255, 0.95);
 
@@ -398,6 +404,7 @@
     /* Base Card Properties */
     --cardBackground: rgba(40, 40, 40, 0.98);
     --cardBorderColor: rgba(255, 255, 255, 0.08);
+    --cardBorder: 0.5px solid var(--cardBorderColor);
     --cardBoxShadow: 0 0.5px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 4px 0 rgba(0, 0, 0, 0.2);
     --cardTextColor: var(--textColor);
     --cardHeaderTextColor: var(--labelColor);
@@ -407,14 +414,18 @@
     --cardHoverBackground: rgba(45, 45, 45, 1);
     --cardHoverBoxShadow: 0 0.5px 3px 0 rgba(0, 0, 0, 0.35), 0 2px 6px 0 rgba(0, 0, 0, 0.25);
     --cardHoverBorderColor: rgba(255, 255, 255, 0.12);
+    --cardHoverBorder: 0.5px solid var(--cardHoverBorderColor);
     --cardActiveBackground: rgba(35, 35, 35, 0.98);
     --cardActiveBoxShadow: 0 0.5px 1px 0 rgba(0, 0, 0, 0.4);
     --cardActiveBorderColor: rgba(255, 255, 255, 0.15);
+    --cardActiveBorder: 0.5px solid var(--cardActiveBorderColor);
     --cardFocusBorderColor: var(--keyboardFocusIndicatorColor);
+    --cardFocusBorder: 1px solid var(--cardFocusBorderColor);
     --cardFocusBoxShadow: 0 0 0 3px var(--keyboardFocusIndicatorColor);
     --cardDisabledBackground: rgba(30, 30, 30, 0.6);
     --cardDisabledTextColor: var(--disabledControlTextColor);
     --cardDisabledBorderColor: rgba(255, 255, 255, 0.05);
+    --cardDisabledBorder: 0.5px solid var(--cardDisabledBorderColor);
     --cardDisabledBoxShadow: none;
 
     /* Card Variants */
@@ -426,6 +437,7 @@
     /* Outlined Card */
     --cardOutlinedBackground: rgba(38, 38, 38, 0.9);
     --cardOutlinedBorderColor: rgba(255, 255, 255, 0.12);
+    --cardBorder--outlined: 1px solid var(--cardOutlinedBorderColor);
     --cardOutlinedHoverBorderColor: rgba(255, 255, 255, 0.2);
     --cardOutlinedHoverBackground: rgba(42, 42, 42, 0.95);
 

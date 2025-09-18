@@ -426,6 +426,10 @@
   --cardBoxShadow: none;
   --cardTextColor: var(--textColor);
   --cardSecondaryTextColor: var(--secondaryLabelColor);
+  --cardHoverBorder: none;
+  --cardActiveBorder: none;
+  --cardFocusBorder: 2px solid rgba(103, 80, 164, 0.4);
+  --cardFocusBoxShadow: 0px 0px 0px 4px rgba(103, 80, 164, 0.12);
   
   /* Card States - Ripple-like effects */
   --cardHoverBackground: var(--surfaceColor-1);
@@ -622,6 +626,10 @@
     --cardBackground: var(--surfaceColor);
     --cardTextColor: var(--textColor);
     --cardSecondaryTextColor: var(--secondaryLabelColor);
+    --cardHoverBorder: none;
+    --cardActiveBorder: none;
+    --cardFocusBorder: 2px solid rgba(208, 193, 238, 0.4);
+    --cardFocusBoxShadow: 0px 0px 0px 4px rgba(208, 193, 238, 0.12);
     --cardDisabledBackground: rgba(230, 225, 229, 0.04);
     --cardDisabledTextColor: rgba(230, 225, 229, 0.38);
     

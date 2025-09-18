@@ -254,9 +254,22 @@
   --cardBorder: var(--pixel-raised-border);
   --cardBoxShadow: var(--pixel-raised-shadow), var(--pixel-flat-shadow);
   --cardPadding: 16px;
+  --cardHoverBackground: var(--pixel-light-gray);
   --cardHoverTransform: none;
   --cardHoverBorder: var(--pixel-raised-border);
   --cardHoverBoxShadow: var(--pixel-raised-shadow), 3px 3px 0 var(--pixel-shadow);
+  --cardActiveBackground: var(--pixel-medium-gray);
+  --cardActiveBoxShadow: var(--pixel-lowered-shadow);
+  --cardFocusBorder: var(--pixel-lowered-border);
+  --cardFocusBoxShadow: var(--pixel-lowered-shadow), 0 0 0 2px var(--pixel-black);
+  --cardDisabledBackground: var(--pixel-light-gray);
+  --cardDisabledOpacity: 0.7;
+  --cardBackground--elevated: var(--pixel-white);
+  --cardBoxShadow--elevated: var(--pixel-raised-shadow), 4px 4px 0 var(--pixel-shadow);
+  --cardBackground--outlined: var(--pixel-screen);
+  --cardBorder--outlined: var(--pixel-lowered-border);
+  --cardBackground--filled: var(--pixel-light-gray);
+  --cardBoxShadow--filled: none;
   
   /* 8-bit Toolbar */
   --toolbarBackground: var(--pixel-light-gray);
