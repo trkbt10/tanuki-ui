@@ -1,10 +1,11 @@
 import * as React from "react";
 import { Node, NodeId, Port } from "../../types/core";
-import { NodeView } from "./NodeView";
 import { NodeDragHandler } from "./NodeDragHandler";
 import { classNames } from "../elements";
 import { createMemoizedComponent, areNodesEqual } from "../../utils/memoization";
 import styles from "./NodeRenderer.module.css";
+import { NodeView } from "./NodeView";
+import { useOptionalRenderers } from "../../contexts/RendererContext";
 
 export interface CustomNodeRendererProps {
   node: Node;
@@ -42,6 +43,8 @@ const NodeRendererComponent: React.FC<NodeRendererProps> = ({
   onNodeContextMenu,
   externalDataMap,
 }) => {
+  const renderers = useOptionalRenderers();
+  const NodeComponent = renderers?.node ?? NodeView;
   // Calculate actual position including drag offset
   const actualPosition = React.useMemo(() => ({
     x: node.position.x + dragOffset.x,
@@ -77,7 +80,7 @@ const NodeRendererComponent: React.FC<NodeRendererProps> = ({
           }}
           data-node-id={node.id}
         >
-          <NodeView
+          <NodeComponent
             node={node}
             isSelected={isSelected}
             isDragging={isCurrentlyDragging}

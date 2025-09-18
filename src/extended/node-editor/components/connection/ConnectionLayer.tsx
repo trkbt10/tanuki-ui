@@ -2,12 +2,12 @@ import * as React from "react";
 import { useNodeEditor } from "../../contexts/node-editor";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
-import { ConnectionView } from "./ConnectionView";
 import { calculateBezierPath, getOppositePortPosition } from "./utils/connectionUtils";
 import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
 import type { Connection, Node as EditorNode, Port as CorePort } from "../../types/core";
 import { classNames } from "../elements";
 import styles from "./ConnectionLayer.module.css";
+import { useRenderers } from "../../contexts/RendererContext";
 
 export interface ConnectionLayerProps {
   className?: string;
@@ -125,6 +125,7 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
   const { state: nodeEditorState, portLookupMap } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState, utils } = useNodeCanvas();
+  const { connection: ConnectionComponent } = useRenderers();
   
   // Runtime type guard for CorePort
   const isCorePort = (p: unknown): p is CorePort => {
@@ -287,7 +288,7 @@ const ConnectionRenderer = ({ connection }: { connection: Connection }) => {
   const fromNodeData = getNodePreviewData(fromNode, connection.fromNodeId);
   const toNodeData = getNodePreviewData(toNode, connection.toNodeId);
   return (
-    <ConnectionView
+    <ConnectionComponent
       key={connection.id}
       connection={connection}
       fromNode={fromNode}

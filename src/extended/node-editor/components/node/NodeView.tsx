@@ -8,13 +8,14 @@ import { useExternalData } from "../../hooks/useExternalData";
 import { DefaultNodeRenderer } from "./renderers/DefaultRenderers";
 import { classNames } from "../elements";
 import styles from "./NodeView.module.css";
-import { PortView } from "../connection/ports/PortView";
 import { isPortConnectable } from "../../utils/nodeLayerHelpers";
 import type { ConnectablePortsResult } from "../../utils/connectablePortPlanner";
 import { ResizeHandle } from "../parts/ResizeHandle";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeResize } from "../../hooks/useNodeResize";
 import { useGroupManagement } from "../../hooks/useGroupManagement";
+import { PortView } from "../connection/ports/PortView";
+import { useOptionalRenderers } from "../../contexts/RendererContext";
 
 export interface CustomNodeRendererProps {
   node: Node;
@@ -77,6 +78,8 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
   const nodeDefinition = useNodeDefinition(node.type);
   const externalDataRef = useExternalDataRef(node.id);
   const externalDataState = useExternalData(node, externalDataRef);
+  const renderers = useOptionalRenderers();
+  const PortComponent = renderers?.port ?? PortView;
 
   // Reference to the DOM element for direct transform updates
   const nodeRef = React.useRef<HTMLDivElement>(null);
@@ -366,7 +369,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
             {ports.map((port: Port) => {
               const connectable = isPortConnectable(port, connectablePorts);
               return (
-                <PortView
+                <PortComponent
                   key={port.id}
                   port={port}
                   onPointerDown={onPortPointerDown}

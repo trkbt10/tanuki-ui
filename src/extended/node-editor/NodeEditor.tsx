@@ -17,8 +17,14 @@ import { NodeEditorProvider, useNodeEditor, nodeEditorReducer, type NodeEditorDa
 import { NodeDefinitionProvider, useNodeDefinitions, useNodeDefinitionList } from "./contexts/NodeDefinitionContext";
 import { ExternalDataProvider } from "./contexts/ExternalDataContext";
 import { PortPositionProvider } from "./contexts/PortPositionContext";
-import { computeAllPortPositions, updatePortPositions } from "./utils/computePortPositions";
-import type { EditorPortPositions } from "./types/portPosition";
+import { computeAllPortPositions, computeNodePortPositions } from "./utils/computePortPositions";
+import {
+  DEFAULT_PORT_POSITION_CONFIG,
+  type EditorPortPositions,
+  type PortPositionBehavior,
+  type PortPositionConfig,
+  type PortPositionNode,
+} from "./types/portPosition";
 import { useEditorActionState } from "./contexts/EditorActionStateContext";
 import { useNodeCanvas } from "./contexts/NodeCanvasContext";
 import type { NodeDefinition, ExternalDataReference } from "./types/NodeDefinition";
@@ -30,6 +36,11 @@ import styles from "./NodeEditor.module.css";
 import { I18nProvider, type Locale, type I18nMessages } from "./i18n";
 import { countNodesByType, getDisabledNodeTypes, canAddNodeType } from "./utils/nodeTypeLimits";
 import { canConnectPorts } from "./utils/connectionValidation";
+import { RendererProvider } from "./contexts/RendererContext";
+import type { NodeEditorRendererOverrides } from "./types/renderers";
+import { NodeView as DefaultNodeView } from "./components/node/NodeView";
+import { PortView as DefaultPortView } from "./components/connection/ports/PortView";
+import { ConnectionView as DefaultConnectionView } from "./components/connection/ConnectionView";
 
 export interface NodeEditorProps<TNodeDataTypeMap = {}> {
   /** Initial data for uncontrolled mode (like defaultValue) */
@@ -86,6 +97,10 @@ export interface NodeEditorProps<TNodeDataTypeMap = {}> {
   autoSaveInterval?: number;
   /** Maximum number of history entries to keep */
   historyMaxEntries?: number;
+  /** Renderer overrides for core editor visuals */
+  renderers?: NodeEditorRendererOverrides;
+  /** Customizes how node ports are positioned and rendered */
+  portPositionBehavior?: PortPositionBehavior;
 }
 
 /**
@@ -123,54 +138,68 @@ export const NodeEditor = <TNodeDataTypeMap = {},>({
   autoSaveEnabled,
   autoSaveInterval,
   historyMaxEntries = 40,
+  renderers,
+  portPositionBehavior,
 }: NodeEditorProps<TNodeDataTypeMap>) => {
+  const mergedRenderers = React.useMemo(
+    () => ({
+      node: renderers?.node ?? DefaultNodeView,
+      port: renderers?.port ?? DefaultPortView,
+      connection: renderers?.connection ?? DefaultConnectionView,
+    }),
+    [renderers]
+  );
+
   return (
     <I18nProvider initialLocale={locale} fallbackLocale={fallbackLocale} messagesOverride={messagesOverride}>
-    <NodeDefinitionProvider<TNodeDataTypeMap> nodeDefinitions={nodeDefinitions} includeDefaults={includeDefaultDefinitions}>
-      <ExternalDataProvider refs={externalDataRefs}>
-        <NodeEditorProvider
-          initialState={initialData}
-          controlledData={data}
-          onDataChange={onDataChange}
-          onSave={onSave}
-          onLoad={onLoad}
-          settingsManager={settingsManager}
-          autoSaveEnabled={autoSaveEnabled}
-          autoSaveInterval={autoSaveInterval}
-        >
-          <EditorActionStateProvider>
-            <NodeCanvasProvider>
-              <HistoryProvider maxEntries={historyMaxEntries}>
-                <InlineEditingProvider>
-                  <KeyboardShortcutProvider>
-                    <NodeEditorContent
-                      className={className}
-                      overlayLayers={overlayLayers}
-                      backgroundLayers={backgroundLayers}
-                      uiOverlayLayers={uiOverlayLayers}
-                      settingsManager={settingsManager}
-                      toolbar={toolbar}
-                      autoSaveEnabled={autoSaveEnabled}
-                      autoSaveInterval={autoSaveInterval}
-                      leftSidebar={leftSidebar}
-                      rightSidebar={rightSidebar}
-                      leftSidebarInitialWidth={leftSidebarInitialWidth}
-                      rightSidebarInitialWidth={rightSidebarInitialWidth}
-                      leftSidebarMinWidth={leftSidebarMinWidth}
-                      rightSidebarMinWidth={rightSidebarMinWidth}
-                      leftSidebarMaxWidth={leftSidebarMaxWidth}
-                      rightSidebarMaxWidth={rightSidebarMaxWidth}
-                      onLeftSidebarWidthChange={onLeftSidebarWidthChange}
-                      onRightSidebarWidthChange={onRightSidebarWidthChange}
-                    />
-                  </KeyboardShortcutProvider>
-                </InlineEditingProvider>
-              </HistoryProvider>
-            </NodeCanvasProvider>
-          </EditorActionStateProvider>
-        </NodeEditorProvider>
-      </ExternalDataProvider>
-    </NodeDefinitionProvider>
+      <RendererProvider renderers={mergedRenderers}>
+        <NodeDefinitionProvider<TNodeDataTypeMap> nodeDefinitions={nodeDefinitions} includeDefaults={includeDefaultDefinitions}>
+          <ExternalDataProvider refs={externalDataRefs}>
+            <NodeEditorProvider
+              initialState={initialData}
+              controlledData={data}
+              onDataChange={onDataChange}
+              onSave={onSave}
+              onLoad={onLoad}
+              settingsManager={settingsManager}
+              autoSaveEnabled={autoSaveEnabled}
+              autoSaveInterval={autoSaveInterval}
+            >
+              <EditorActionStateProvider>
+                <NodeCanvasProvider>
+                  <HistoryProvider maxEntries={historyMaxEntries}>
+                    <InlineEditingProvider>
+                      <KeyboardShortcutProvider>
+                        <NodeEditorContent
+                          className={className}
+                          overlayLayers={overlayLayers}
+                          backgroundLayers={backgroundLayers}
+                          uiOverlayLayers={uiOverlayLayers}
+                          settingsManager={settingsManager}
+                          toolbar={toolbar}
+                          autoSaveEnabled={autoSaveEnabled}
+                          autoSaveInterval={autoSaveInterval}
+                          leftSidebar={leftSidebar}
+                          rightSidebar={rightSidebar}
+                          leftSidebarInitialWidth={leftSidebarInitialWidth}
+                          rightSidebarInitialWidth={rightSidebarInitialWidth}
+                          leftSidebarMinWidth={leftSidebarMinWidth}
+                          rightSidebarMinWidth={rightSidebarMinWidth}
+                          leftSidebarMaxWidth={leftSidebarMaxWidth}
+                          rightSidebarMaxWidth={rightSidebarMaxWidth}
+                          onLeftSidebarWidthChange={onLeftSidebarWidthChange}
+                          onRightSidebarWidthChange={onRightSidebarWidthChange}
+                          portPositionBehavior={portPositionBehavior}
+                        />
+                      </KeyboardShortcutProvider>
+                    </InlineEditingProvider>
+                  </HistoryProvider>
+                </NodeCanvasProvider>
+              </EditorActionStateProvider>
+            </NodeEditorProvider>
+          </ExternalDataProvider>
+        </NodeDefinitionProvider>
+      </RendererProvider>
     </I18nProvider>
   );
 };
@@ -194,6 +223,7 @@ const NodeEditorContent: React.FC<{
   rightSidebarMaxWidth?: number;
   onLeftSidebarWidthChange?: (width: number) => void;
   onRightSidebarWidthChange?: (width: number) => void;
+  portPositionBehavior?: PortPositionBehavior;
 }> = ({
   className,
   overlayLayers,
@@ -213,10 +243,54 @@ const NodeEditorContent: React.FC<{
   rightSidebarMaxWidth,
   onLeftSidebarWidthChange,
   onRightSidebarWidthChange,
+  portPositionBehavior,
 }) => {
   const { state: editorState, handleSave, dispatch, actions, isLoading, isSaving, getNodePorts } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { utils } = useNodeCanvas();
+
+  const portPositionConfig = React.useMemo<PortPositionConfig>(
+    () => ({ ...DEFAULT_PORT_POSITION_CONFIG, ...portPositionBehavior?.config }),
+    [portPositionBehavior?.config]
+  );
+
+  const computePositionsForNodes = React.useCallback(
+    (nodes: PortPositionNode[], previousPositions: EditorPortPositions): EditorPortPositions => {
+      const defaultComputeAll = (nodesArg: PortPositionNode[], configArg: PortPositionConfig) =>
+        computeAllPortPositions(nodesArg, configArg);
+
+      if (portPositionBehavior?.computeAll) {
+        return portPositionBehavior.computeAll({
+          nodes,
+          previous: previousPositions,
+          config: portPositionConfig,
+          defaultCompute: defaultComputeAll,
+        });
+      }
+
+      if (portPositionBehavior?.computeNode) {
+        const defaultComputeNode = (nodeArg: PortPositionNode, configArg: PortPositionConfig) =>
+          computeNodePortPositions(nodeArg, configArg);
+
+        const result: EditorPortPositions = new Map();
+        nodes.forEach((node) => {
+          const positions = portPositionBehavior.computeNode!({
+            node,
+            config: portPositionConfig,
+            defaultCompute: defaultComputeNode,
+          });
+
+          if (positions.size > 0) {
+            result.set(node.id, positions);
+          }
+        });
+        return result;
+      }
+
+      return defaultComputeAll(nodes, portPositionConfig);
+    },
+    [portPositionBehavior, portPositionConfig]
+  );
 
   const nodeDefinitions = useNodeDefinitionList();
 
@@ -231,18 +305,18 @@ const NodeEditorContent: React.FC<{
 
   // Track previous nodes state for change detection
   const prevNodesRef = React.useRef<typeof editorState.nodes>(editorState.nodes);
+  const prevBehaviorRef = React.useRef<PortPositionBehavior | undefined>(portPositionBehavior);
+  const prevConfigRef = React.useRef<PortPositionConfig>(portPositionConfig);
 
   React.useEffect(() => {
     if (!editorState.nodes) return;
 
-    // Check if nodes have actually changed
     const prevNodes = prevNodesRef.current;
-    let hasChanged = false;
+    let shouldRecompute = false;
 
     if (!prevNodes || Object.keys(prevNodes).length !== Object.keys(editorState.nodes).length) {
-      hasChanged = true;
+      shouldRecompute = true;
     } else {
-      // Check each node for changes
       for (const nodeId in editorState.nodes) {
         const node = editorState.nodes[nodeId];
         const prevNode = prevNodes[nodeId];
@@ -254,25 +328,44 @@ const NodeEditorContent: React.FC<{
           node.size?.width !== prevNode.size?.width ||
           node.size?.height !== prevNode.size?.height
         ) {
-          hasChanged = true;
+          shouldRecompute = true;
           break;
         }
       }
     }
 
-    if (hasChanged) {
-      // Compute port positions for all nodes
+    if (!shouldRecompute) {
+      if (prevBehaviorRef.current !== portPositionBehavior) {
+        shouldRecompute = true;
+      } else if (prevConfigRef.current !== portPositionConfig) {
+        shouldRecompute = true;
+      }
+    }
+
+    if (shouldRecompute) {
       const nodes = Object.values(editorState.nodes).map((node) => ({
         ...node,
         ports: getNodePorts(node.id),
-      }));
-      const newPortPositions = computeAllPortPositions(nodes);
+      })) as PortPositionNode[];
+
+      const newPortPositions = computePositionsForNodes(nodes, portPositions);
       setPortPositions(newPortPositions);
 
-      // Update ref
       prevNodesRef.current = editorState.nodes;
+      prevBehaviorRef.current = portPositionBehavior;
+      prevConfigRef.current = portPositionConfig;
+    } else {
+      prevBehaviorRef.current = portPositionBehavior;
+      prevConfigRef.current = portPositionConfig;
     }
-  }, [editorState.nodes, getNodePorts]);
+  }, [
+    editorState.nodes,
+    getNodePorts,
+    portPositionBehavior,
+    portPositionConfig,
+    computePositionsForNodes,
+    portPositions,
+  ]);
 
   // Use settings hook for clean state management
   const settings = useSettings(settingsManager);
@@ -432,7 +525,11 @@ const NodeEditorContent: React.FC<{
           >
             <div className={styles.editorMain}>
               <CanvasBase showGrid={showGrid}>
-                <PortPositionProvider portPositions={portPositions}>
+                <PortPositionProvider
+                  portPositions={portPositions}
+                  behavior={portPositionBehavior}
+                  config={portPositionConfig}
+                >
                   {/* Background layers render behind everything */}
                   {backgroundLayers?.map((layer, index) => (
                     <React.Fragment key={`background-layer-${index}`}>{layer}</React.Fragment>

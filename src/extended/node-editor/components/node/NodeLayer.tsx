@@ -9,12 +9,12 @@ import { useNodeResize } from "../../hooks/useNodeResize";
 import { useVisibleNodes } from "../../hooks/useVisibleNodes";
 import { usePointerInteraction } from "../../hooks/usePointerInteraction";
 import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
-import { computeNodePortPositions } from "../../utils/computePortPositions";
 import { PORT_INTERACTION_THRESHOLD } from "../../constants/interaction";
 import styles from "./NodeLayer.module.css";
 import type { Port } from "../../types/core";
 import { snapMultipleToGrid } from "../../utils/gridSnap";
-import { NodeView } from "./NodeView";
+import { useRenderers } from "../../contexts/RendererContext";
+import { usePortPositions } from "../../contexts/PortPositionContext";
 import {
   getPortConnections,
   getNodesToDrag,
@@ -43,6 +43,8 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
   const { state: nodeEditorState, dispatch: nodeEditorDispatch, actions: nodeEditorActions, getNodePorts } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState, utils } = useNodeCanvas();
+  const { node: NodeComponent } = useRenderers();
+  const { calculateNodePortPositions } = usePortPositions();
 
   // Helper to get node definition
   const getNodeDef = useNodeDefinitions();
@@ -176,7 +178,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         ...node,
         ports: getNodePorts(port.nodeId),
       };
-      const positions = computeNodePortPositions(nodeWithPorts);
+      const positions = calculateNodePortPositions(nodeWithPorts);
       const portPositionData = positions.get(port.id);
       const portPosition = portPositionData?.connectionPoint || { x: node.position.x, y: node.position.y };
 
@@ -544,7 +546,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
   return (
     <div className={classNames(styles.nodeLayer, className)} data-node-layer>
       {sortedNodes.map((node) => (
-        <NodeView
+        <NodeComponent
           key={node.id}
           node={node}
           isSelected={actionState.selectedNodeIds.includes(node.id)}

@@ -5,6 +5,7 @@ import "./global.css";
 // Main component
 export { NodeEditor } from "./NodeEditor";
 export type { NodeEditorProps } from "./NodeEditor";
+export type { NodeEditorRenderers, NodeEditorRendererOverrides } from "./types/renderers";
 
 // Core types
 export type {
@@ -107,6 +108,8 @@ export type {
   NodePortPositions,
   EditorPortPositions,
   PortPositionConfig,
+  PortPositionBehavior,
+  PortPositionNode,
 } from "./types/portPosition";
 
 export { DEFAULT_PORT_POSITION_CONFIG } from "./types/portPosition";

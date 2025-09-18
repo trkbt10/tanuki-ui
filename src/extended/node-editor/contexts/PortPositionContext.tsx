@@ -1,5 +1,15 @@
 import * as React from "react";
-import type { EditorPortPositions, NodePortPositions, PortPosition } from "../types/portPosition";
+import type { Port } from "../types/core";
+import { computeNodePortPositions } from "../utils/computePortPositions";
+import {
+  DEFAULT_PORT_POSITION_CONFIG,
+  type EditorPortPositions,
+  type NodePortPositions,
+  type PortPosition,
+  type PortPositionBehavior,
+  type PortPositionConfig,
+  type PortPositionNode,
+} from "../types/portPosition";
 
 /**
  * Context value for port positions
@@ -7,12 +17,18 @@ import type { EditorPortPositions, NodePortPositions, PortPosition } from "../ty
 export interface PortPositionContextValue {
   /** All computed port positions */
   portPositions: EditorPortPositions;
+  /** Effective configuration used for position calculations */
+  config: PortPositionConfig;
+  /** Optional behavior overrides supplied via props */
+  behavior?: PortPositionBehavior;
   /** Get port position for a specific port */
   getPortPosition: (nodeId: string, portId: string) => PortPosition | undefined;
   /** Get all port positions for a node */
   getNodePortPositions: (nodeId: string) => NodePortPositions | undefined;
   /** Compute port position dynamically */
-  computePortPosition: (node: any, port: any) => PortPosition;
+  computePortPosition: (node: PortPositionNode, port: Port) => PortPosition;
+  /** Calculate port positions for a node on demand */
+  calculateNodePortPositions: (node: PortPositionNode) => NodePortPositions;
 }
 
 /**
@@ -25,35 +41,59 @@ export const PortPositionContext = React.createContext<PortPositionContextValue 
  */
 export interface PortPositionProviderProps {
   portPositions: EditorPortPositions;
+  behavior?: PortPositionBehavior;
+  config?: PortPositionConfig;
   children: React.ReactNode;
 }
 
 export const PortPositionProvider: React.FC<PortPositionProviderProps> = ({
   portPositions,
+  behavior,
+  config,
   children,
 }) => {
-  const value = React.useMemo<PortPositionContextValue>(() => ({
-    portPositions,
-    getPortPosition: (nodeId: string, portId: string) => {
-      return portPositions.get(nodeId)?.get(portId);
-    },
-    getNodePortPositions: (nodeId: string) => {
-      return portPositions.get(nodeId);
-    },
-    computePortPosition: (node: any, port: any) => {
-      // This will be implemented to compute positions on-the-fly
-      // For now, fallback to stored positions
-      const stored = portPositions.get(node.id)?.get(port.id);
-      if (stored) return stored;
-      
-      // Simple fallback
-      return {
-        portId: port.id,
-        renderPosition: { x: 0, y: 0 },
-        connectionPoint: { x: node.position.x, y: node.position.y },
-      };
-    },
-  }), [portPositions]);
+  const effectiveConfig = config ?? DEFAULT_PORT_POSITION_CONFIG;
+
+  const value = React.useMemo<PortPositionContextValue>(() => {
+    const calculateNodePortPositions = (node: PortPositionNode): NodePortPositions => {
+      if (behavior?.computeNode) {
+        return behavior.computeNode({
+          node,
+          config: effectiveConfig,
+          defaultCompute: computeNodePortPositions,
+        });
+      }
+
+      return computeNodePortPositions(node, effectiveConfig);
+    };
+
+    return {
+      portPositions,
+      config: effectiveConfig,
+      behavior,
+      getPortPosition: (nodeId: string, portId: string) => {
+        return portPositions.get(nodeId)?.get(portId);
+      },
+      getNodePortPositions: (nodeId: string) => {
+        return portPositions.get(nodeId);
+      },
+      computePortPosition: (node: PortPositionNode, port: Port) => {
+        const stored = portPositions.get(node.id)?.get(port.id);
+        if (stored) return stored;
+
+        const calculated = calculateNodePortPositions(node).get(port.id);
+        if (calculated) return calculated;
+
+        // Simple fallback aligned to node position
+        return {
+          portId: port.id,
+          renderPosition: { x: 0, y: 0 },
+          connectionPoint: { x: node.position.x, y: node.position.y },
+        };
+      },
+      calculateNodePortPositions,
+    };
+  }, [portPositions, behavior, effectiveConfig]);
 
   return (
     <PortPositionContext.Provider value={value}>

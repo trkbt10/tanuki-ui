@@ -1,14 +1,14 @@
 import * as React from "react";
-import type { Node, Port } from "../types/core";
 import type { PortPosition } from "../types/portPosition";
-import { computeNodePortPositions } from "../utils/computePortPositions";
 import { useNodeEditor } from "../contexts/node-editor";
+import { usePortPositions } from "../contexts/PortPositionContext";
 
 /**
  * Hook to get dynamic port position that updates with node position
  */
 export function useDynamicPortPosition(nodeId: string, portId: string): PortPosition | undefined {
   const { state, getNodePorts } = useNodeEditor();
+  const { calculateNodePortPositions } = usePortPositions();
   
   return React.useMemo(() => {
     const node = state.nodes[nodeId];
@@ -20,7 +20,7 @@ export function useDynamicPortPosition(nodeId: string, portId: string): PortPosi
       ports: getNodePorts(nodeId),
     };
     
-    const positions = computeNodePortPositions(nodeWithPorts);
+    const positions = calculateNodePortPositions(nodeWithPorts);
     return positions.get(portId);
   }, [
     state.nodes[nodeId]?.position.x,
@@ -30,6 +30,7 @@ export function useDynamicPortPosition(nodeId: string, portId: string): PortPosi
     nodeId,
     portId,
     getNodePorts,
+    calculateNodePortPositions,
   ]);
 }
 
