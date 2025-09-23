@@ -9,10 +9,14 @@ import style from "./SidebarList.module.css";
  * その他、<details>要素の属性を継承
  */
 const Container = React.memo(
-  React.forwardRef<HTMLDetailsElement, React.PropsWithChildren<React.AllHTMLAttributes<HTMLDetailsElement>>>((props, ref) => {
+  React.forwardRef<
+    HTMLDetailsElement,
+    React.PropsWithChildren<React.AllHTMLAttributes<HTMLDetailsElement>>
+  >(({ children, className, ...rest }, ref) => {
+    const classNames = className ? `${style.details} ${className}` : style.details;
     return (
-      <details className={style.details} {...props} ref={ref}>
-        {props.children}
+      <details className={classNames} {...rest} ref={ref}>
+        {children}
       </details>
     );
   }),
@@ -24,28 +28,33 @@ Container.displayName = "Container";
  * @param {string} title - タイトル文字列
  * @param {React.ReactNode} [children] - タイトル右側に配置する要素（例: ボタン）
  */
-const SectionTitle: React.FC<React.PropsWithChildren<{ title: React.ReactNode }>> = React.memo(({ title, children }) => {
-  return (
-    <Summary>
-      <div className={style.sectionTitle}>
-        <span>{title}</span>
-        {children}
-        <i className={style.marker}>
-          <ChevronMark />
-        </i>
-      </div>
-    </Summary>
-  );
-});
+const SectionTitle: React.FC<React.PropsWithChildren<{ title: React.ReactNode }>> = React.memo(
+  ({ title, children }) => {
+    return (
+      <Summary>
+        <div className={style.sectionTitle}>
+          <span>{title}</span>
+          {children}
+          <i className={style.marker}>
+            <ChevronMark />
+          </i>
+        </div>
+      </Summary>
+    );
+  },
+);
 SectionTitle.displayName = "SectionTitle";
 
 /**
  * セクションタイトル内などで使うボタン。
  * @param {React.ButtonHTMLAttributes<HTMLButtonElement>} props - ボタン属性
  */
-const Button = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>((props, ref) => {
-  return <button {...props} ref={ref} className={style.button}></button>;
-});
+const Button = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
+  ({ className, ...rest }, ref) => {
+    const classNames = className ? `${style.button} ${className}` : style.button;
+    return <button {...rest} ref={ref} className={classNames}></button>;
+  },
+);
 Button.displayName = "Button";
 
 export const ListItem: React.FC<
@@ -58,7 +67,7 @@ export const ListItem: React.FC<
       onClick?: React.MouseEventHandler<HTMLElement>;
     } & React.HTMLAttributes<HTMLLIElement>
   >
-> = memo(({ label, onClick, icon, selected, children, open, ...attrs }) => {
+> = memo(({ label, onClick, icon, selected, children, open, className, ...attrs }) => {
   const LabelAs = onClick ? "button" : "div";
   const labelArea = (
     <LabelAs className={style.listItemLabelArea} onClick={onClick}>
@@ -67,7 +76,7 @@ export const ListItem: React.FC<
     </LabelAs>
   );
   return (
-    <li className={style.listItem} data-selected={selected} {...attrs}>
+    <li className={className ? `${style.listItem} ${className}` : style.listItem} data-selected={selected} {...attrs}>
       {children ? (
         <details open={open} className={style.details}>
           <summary className={style.summary}>
