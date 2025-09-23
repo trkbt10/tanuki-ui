@@ -2,7 +2,15 @@ import * as React from "react";
 import { classNames, calculateContextMenuPosition, getViewportInfo } from "./elements";
 import { EditIcon, DeleteIcon, DuplicateIcon, CopyIcon, CutIcon, PasteIcon, PlusIcon } from "./elements/icons";
 import styles from "./ContextActionMenu.module.css";
-import type { Position } from "../types/core";
+import alignmentStyles from "./node/renderers/AlignmentControls.module.css";
+import {
+  ALIGNMENT_ACTIONS,
+  ALIGNMENT_GROUPS,
+  type AlignmentActionConfig,
+  type AlignmentActionGroup,
+  type AlignmentActionType,
+} from "./shared/alignmentActions";
+import type { Position, Node } from "../types/core";
 import { useNodeEditorActions } from "../hooks/useNodeEditorActions";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useI18n } from "../i18n";
@@ -10,6 +18,7 @@ import { useNodeEditor } from "../contexts/node-editor";
 import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
 import { canAddNodeType, countNodesByType } from "../utils/nodeTypeLimits";
 import { getClipboard, setClipboard } from "../utils/clipboard";
+import { calculateAlignmentPositions } from "../utils/alignmentUtils";
 
 export type ContextTarget =
   | { type: "node"; id: string }
@@ -31,6 +40,27 @@ export const ContextActionMenu: React.FC<ContextActionMenuProps> = ({ position, 
   const nodeDefinitions = useNodeDefinitionList();
   const [menuPosition, setMenuPosition] = React.useState({ x: position.x, y: position.y });
   const menuRef = React.useRef<HTMLDivElement>(null);
+  const selectedNodeIds = actionState.selectedNodeIds;
+  const isTargetSelected = target.type === "node" && selectedNodeIds.includes(target.id);
+  const isMultiSelect = isTargetSelected && selectedNodeIds.length > 1;
+  const selectedNodes = React.useMemo<Node[]>(() => {
+    if (!isMultiSelect) {
+      return [];
+    }
+    return selectedNodeIds
+      .map((id) => editorState.nodes[id])
+      .filter((node): node is Node => Boolean(node));
+  }, [isMultiSelect, selectedNodeIds, editorState.nodes]);
+  const showAlignmentControls = isMultiSelect && selectedNodes.length > 1;
+  const groupedAlignmentActions = React.useMemo(() => {
+    return ALIGNMENT_GROUPS.reduce<Record<AlignmentActionGroup, AlignmentActionConfig[]>>(
+      (acc, group) => {
+        acc[group] = ALIGNMENT_ACTIONS.filter((action) => action.group === group);
+        return acc;
+      },
+      { horizontal: [], vertical: [] }
+    );
+  }, []);
 
   React.useEffect(() => {
     if (visible) {
@@ -62,6 +92,20 @@ export const ContextActionMenu: React.FC<ContextActionMenuProps> = ({ position, 
   const isMac = typeof navigator !== 'undefined' && /Mac|iPod|iPhone|iPad/.test(navigator.platform);
   const shortcut = (mac: string, win: string) => (
     <span className={styles.shortcutHint}>{isMac ? mac : win}</span>
+  );
+
+  const handleAlignFromMenu = React.useCallback(
+    (alignmentType: AlignmentActionType) => {
+      if (!showAlignmentControls) return;
+      const positionUpdates = calculateAlignmentPositions(selectedNodes, alignmentType);
+      if (Object.keys(positionUpdates).length === 0) {
+        onClose();
+        return;
+      }
+      editorActions.moveNodes(positionUpdates);
+      onClose();
+    },
+    [editorActions, onClose, selectedNodes, showAlignmentControls]
   );
 
   const handleDeleteNode = () => {
@@ -176,6 +220,34 @@ export const ContextActionMenu: React.FC<ContextActionMenuProps> = ({ position, 
       style={{ left: menuPosition.x, top: menuPosition.y }}
     >
       <ul className={styles.menuList}>
+        {showAlignmentControls && (
+          <li className={styles.alignmentControlsItem}>
+            <div className={alignmentStyles.alignmentLabel}>
+              Alignment ({selectedNodes.length} nodes)
+            </div>
+            <div className={alignmentStyles.alignmentGrid}>
+              {ALIGNMENT_GROUPS.map((group) => (
+                <div key={group} className={alignmentStyles.alignmentRow}>
+                {groupedAlignmentActions[group]?.map((action) => {
+                  const IconComponent = action.icon;
+                  return (
+                    <button
+                      key={action.type}
+                      type="button"
+                      onClick={() => handleAlignFromMenu(action.type)}
+                      className={alignmentStyles.alignmentButton}
+                      title={action.title}
+                      aria-label={action.title}
+                    >
+                      <IconComponent size={14} />
+                    </button>
+                  );
+                })}
+                </div>
+              ))}
+            </div>
+          </li>
+        )}
         {target.type === "node" && (
           <>
             <li className={styles.menuSectionTitle}>{t("inspectorNodeProperties")}</li>

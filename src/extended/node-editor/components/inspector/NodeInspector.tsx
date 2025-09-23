@@ -8,6 +8,7 @@ import { useExternalData } from "../../hooks/useExternalData";
 import { DefaultInspectorRenderer } from "../node/renderers/DefaultRenderers";
 import styles from "./NodeInspector.module.css";
 import { calculateAlignmentPositions } from "../../utils/alignmentUtils";
+import type { AlignmentActionType } from "../shared/alignmentActions";
 
 export interface NodeInspectorProps {
   node: Node;
@@ -48,7 +49,7 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
 
     // Handle alignment operations
     const handleAlignNodes = React.useCallback(
-      (alignmentType: string, nodes: Node[]) => {
+      (alignmentType: AlignmentActionType, nodes: Node[]) => {
         const positionUpdates = calculateAlignmentPositions(nodes, alignmentType);
         if (Object.keys(positionUpdates).length > 0) {
           nodeEditorDispatch(nodeEditorActions.moveNodes(positionUpdates));

@@ -1,25 +1,19 @@
 import * as React from "react";
 import type { NodeRenderProps, InspectorRenderProps } from "../../../types/NodeDefinition";
 import type { Node } from "../../../types/core";
-import {
-  AlignLeftIcon,
-  AlignCenterIcon,
-  AlignRightIcon,
-  AlignTopIcon,
-  AlignMiddleIcon,
-  AlignBottomIcon,
-  DistributeHorizontalIcon,
-  DistributeVerticalIcon,
-  Button,
-  Input,
-  Label,
-  Textarea
-} from "../../elements";
+import { Button, Input, Label, Textarea } from "../../elements";
 import editorStyles from "../../../NodeEditor.module.css";
 import { PropertySection } from "../../parts";
 import { useI18n } from "../../../i18n";
 import alignmentStyles from "./AlignmentControls.module.css";
 import defaultStyles from "./DefaultRenderers.module.css";
+import {
+  ALIGNMENT_ACTIONS,
+  ALIGNMENT_GROUPS,
+  type AlignmentActionConfig,
+  type AlignmentActionGroup,
+  type AlignmentActionType,
+} from "../../shared/alignmentActions";
 
 /**
  * Default node renderer
@@ -124,20 +118,18 @@ InspectorCheckbox.displayName = "InspectorCheckbox";
 // Alignment component for selected nodes
 const AlignmentControls = React.memo<{
   selectedNodes: Node[];
-  onAlign: (type: string) => void;
+  onAlign: (type: AlignmentActionType) => void;
 }>(({ selectedNodes, onAlign }) => {
   const isDisabled = selectedNodes.length < 2;
-
-  const alignmentButtons = [
-    { type: "align-left", icon: AlignLeftIcon, title: "Align Left" },
-    { type: "align-center-horizontal", icon: AlignCenterIcon, title: "Align Center Horizontal" },
-    { type: "align-right", icon: AlignRightIcon, title: "Align Right" },
-    { type: "align-top", icon: AlignTopIcon, title: "Align Top" },
-    { type: "align-center-vertical", icon: AlignMiddleIcon, title: "Align Center Vertical" },
-    { type: "align-bottom", icon: AlignBottomIcon, title: "Align Bottom" },
-    { type: "distribute-horizontal", icon: DistributeHorizontalIcon, title: "Distribute Horizontally" },
-    { type: "distribute-vertical", icon: DistributeVerticalIcon, title: "Distribute Vertically" },
-  ];
+  const groupedActions = React.useMemo(() => {
+    return ALIGNMENT_GROUPS.reduce<Record<AlignmentActionGroup, AlignmentActionConfig[]>>(
+      (acc, group) => {
+        acc[group] = ALIGNMENT_ACTIONS.filter((action) => action.group === group);
+        return acc;
+      },
+      { horizontal: [], vertical: [] }
+    );
+  }, []);
 
   return (
     <div className={alignmentStyles.alignmentControls}>
@@ -145,20 +137,26 @@ const AlignmentControls = React.memo<{
         Alignment {selectedNodes.length > 1 ? `(${selectedNodes.length} nodes)` : "(select 2+ nodes)"}:
       </Label>
       <div className={alignmentStyles.alignmentGrid}>
-        {alignmentButtons.map((button) => {
-          const IconComponent = button.icon;
-          return (
-            <Button
-              key={button.type}
-              onClick={() => !isDisabled && onAlign(button.type)}
-              className={alignmentStyles.alignmentButton}
-              title={isDisabled ? "Select 2 or more nodes to enable alignment" : button.title}
-              disabled={isDisabled}
-            >
-              <IconComponent size={14} />
-            </Button>
-          );
-        })}
+        {ALIGNMENT_GROUPS.map((group) => (
+          <div key={group} className={alignmentStyles.alignmentRow}>
+            {groupedActions[group]?.map((button) => {
+              const IconComponent = button.icon;
+              return (
+                <button
+                  key={button.type}
+                  type="button"
+                  onClick={() => !isDisabled && onAlign(button.type)}
+                  className={alignmentStyles.alignmentButton}
+                  title={isDisabled ? "Select 2 or more nodes to enable alignment" : button.title}
+                  aria-label={button.title}
+                  disabled={isDisabled}
+                >
+                  <IconComponent size={14} />
+                </button>
+              );
+            })}
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -168,7 +166,7 @@ AlignmentControls.displayName = "AlignmentControls";
 // Extended props for supporting multiple selection alignment
 interface ExtendedInspectorRenderProps extends InspectorRenderProps {
   selectedNodes?: Node[];
-  onAlignNodes?: (alignmentType: string, nodes: Node[]) => void;
+  onAlignNodes?: (alignmentType: AlignmentActionType, nodes: Node[]) => void;
 }
 
 /**
@@ -247,7 +245,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
     );
 
     const handleAlignment = React.useCallback(
-      (alignmentType: string) => {
+      (alignmentType: AlignmentActionType) => {
         if (!onAlignNodes || selectedNodes.length < 2) return;
         onAlignNodes(alignmentType, selectedNodes);
       },
