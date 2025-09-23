@@ -197,7 +197,7 @@
   opacity: 0.5;
 }
 
-/* Inspector styles moved to components/InspectorPanel.module.css */
+/* Inspector styles moved to components/inspector/InspectorPanel.module.css */
 
 .inspectorRow {
   display: flex;

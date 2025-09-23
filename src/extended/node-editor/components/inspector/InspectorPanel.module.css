@@ -35,10 +35,6 @@
   margin-bottom: var(--node-editor-inspector-section-gap);
 }
 
-.customInspectorBlock {
-  margin-bottom: var(--node-editor-inspector-section-gap);
-}
-
 .settingsSectionBody {
   gap: var(--node-editor-inspector-space-sm);
   padding-top: var(--node-editor-inspector-space-sm);
@@ -64,7 +60,8 @@
   align-items: baseline;
   column-gap: var(--node-editor-inspector-header-gap);
   row-gap: var(--node-editor-inspector-space-xs);
-  padding: var(--node-editor-inspector-header-padding-top) 0 var(--node-editor-inspector-header-padding-bottom);
+  padding: var(--node-editor-inspector-header-padding-top) var(--node-editor-inspector-space-sm)
+    var(--node-editor-inspector-header-padding-bottom);
   margin-bottom: var(--node-editor-inspector-space-xs);
   border-bottom: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
 }

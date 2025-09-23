@@ -1,6 +1,6 @@
 import * as React from "react";
 import { H4 } from "../elements";
-import inspectorStyles from "../InspectorPanel.module.css";
+import inspectorStyles from "../inspector/InspectorPanel.module.css";
 
 export interface PropertySectionProps {
   title: string;
@@ -17,7 +17,7 @@ export interface PropertySectionProps {
  */
 export const PropertySection: React.FC<PropertySectionProps> = ({ title, className, bodyClassName, headerRight, children }) => {
   return (
-    <section className={[inspectorStyles.inspectorSection, className].filter(Boolean).join(" ")}> 
+    <section className={[inspectorStyles.inspectorSection, className].filter(Boolean).join(" ")}>
       <div className={inspectorStyles.sectionHeader}>
         <H4 size="compact" weight="semibold" className={inspectorStyles.inspectorSectionTitle}>
           {title}

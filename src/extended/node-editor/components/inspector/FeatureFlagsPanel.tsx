@@ -1,10 +1,6 @@
 import * as React from "react";
-import { 
-  useFeatureFlags, 
-  setFeatureFlags, 
-  type NodeEditorFeatureFlags 
-} from "../config/featureFlags";
-import { SwitchInput, Button } from "./elements";
+import { useFeatureFlags, setFeatureFlags, type NodeEditorFeatureFlags } from "../../config/featureFlags";
+import { SwitchInput, Button } from "../elements";
 import styles from "./FeatureFlagsPanel.module.css";
 
 export interface FeatureFlagsPanelProps {
@@ -15,10 +11,7 @@ export interface FeatureFlagsPanelProps {
 /**
  * Developer panel for managing node editor feature flags
  */
-export const FeatureFlagsPanel: React.FC<FeatureFlagsPanelProps> = ({ 
-  className, 
-  onClose 
-}) => {
+export const FeatureFlagsPanel: React.FC<FeatureFlagsPanelProps> = ({ className, onClose }) => {
   const currentFlags = useFeatureFlags();
   const [localFlags, setLocalFlags] = React.useState<NodeEditorFeatureFlags>(currentFlags);
   const [hasChanges, setHasChanges] = React.useState(false);
@@ -26,13 +19,13 @@ export const FeatureFlagsPanel: React.FC<FeatureFlagsPanelProps> = ({
   // Check for changes
   React.useEffect(() => {
     const changed = Object.keys(localFlags).some(
-      key => localFlags[key as keyof NodeEditorFeatureFlags] !== currentFlags[key as keyof NodeEditorFeatureFlags]
+      (key) => localFlags[key as keyof NodeEditorFeatureFlags] !== currentFlags[key as keyof NodeEditorFeatureFlags]
     );
     setHasChanges(changed);
   }, [localFlags, currentFlags]);
 
   const handleToggle = (flag: keyof NodeEditorFeatureFlags) => {
-    setLocalFlags(prev => ({
+    setLocalFlags((prev) => ({
       ...prev,
       [flag]: !prev[flag]
     }));
@@ -41,7 +34,7 @@ export const FeatureFlagsPanel: React.FC<FeatureFlagsPanelProps> = ({
   const handleApply = () => {
     setFeatureFlags(localFlags);
     setHasChanges(false);
-    
+
     // Show reload message if needed
     if (localFlags.useInferredPortsOnly !== currentFlags.useInferredPortsOnly) {
       if (window.confirm("Changing port inference mode requires a page reload. Reload now?")) {
@@ -68,7 +61,7 @@ export const FeatureFlagsPanel: React.FC<FeatureFlagsPanelProps> = ({
 
       <div className={styles.content}>
         <div className={styles.description}>
-          Configure feature flags for the node editor migration. 
+          Configure feature flags for the node editor migration.
           These settings are stored in localStorage for development.
         </div>
 
@@ -85,7 +78,7 @@ export const FeatureFlagsPanel: React.FC<FeatureFlagsPanelProps> = ({
               />
             </div>
             <p className={styles.flagDescription}>
-              When enabled, ports are exclusively inferred from NodeDefinitions. 
+              When enabled, ports are exclusively inferred from NodeDefinitions.
               Legacy embedded ports are ignored. <strong>Requires reload.</strong>
             </p>
           </div>

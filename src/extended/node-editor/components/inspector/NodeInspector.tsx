@@ -1,13 +1,13 @@
 import * as React from "react";
-import type { Node } from "../types/core";
-import { useNodeEditor } from "../contexts/node-editor";
-import { useEditorActionState } from "../contexts/EditorActionStateContext";
-import { useNodeDefinition } from "../contexts/NodeDefinitionContext";
-import { useExternalDataRef } from "../contexts/ExternalDataContext";
-import { useExternalData } from "../hooks/useExternalData";
-import { DefaultInspectorRenderer } from "../components/node/renderers/DefaultRenderers";
-import inspectorStyles from "./InspectorPanel.module.css";
-import { calculateAlignmentPositions } from "../utils/alignmentUtils";
+import type { Node } from "../../types/core";
+import { useNodeEditor } from "../../contexts/node-editor";
+import { useEditorActionState } from "../../contexts/EditorActionStateContext";
+import { useNodeDefinition } from "../../contexts/NodeDefinitionContext";
+import { useExternalDataRef } from "../../contexts/ExternalDataContext";
+import { useExternalData } from "../../hooks/useExternalData";
+import { DefaultInspectorRenderer } from "../node/renderers/DefaultRenderers";
+import styles from "./NodeInspector.module.css";
+import { calculateAlignmentPositions } from "../../utils/alignmentUtils";
 
 export interface NodeInspectorProps {
   node: Node;
@@ -87,7 +87,7 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
       <>
         {/* Custom inspector first */}
         {nodeDefinition?.renderInspector && (
-          <div className={inspectorStyles.customInspectorBlock}>
+          <div className={styles.customInspectorBlock}>
             {nodeDefinition.renderInspector(inspectorProps)}
           </div>
         )}

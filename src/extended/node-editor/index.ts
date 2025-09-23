@@ -73,13 +73,19 @@ export type { MinimapProps, DebugOverlayProps, GridToolboxProps } from "./compon
 export { NodeEditorToolbar } from "./components/elements/NodeEditorToolbar";
 export { FloatingContainer } from "./components/parts/FloatingContainer";
 export { ColumnLayout } from "./components/ColumnLayout";
-export { InspectorPanel } from "./components/InspectorPanel";
-export { NodeInspector } from "./components/NodeInspector";
+export {
+  InspectorPanel,
+  InspectorLayersTab,
+  InspectorPropertiesTab,
+  InspectorHistoryTab,
+  InspectorSettingsTab,
+} from "./components/inspector/InspectorPanel";
+export { NodeInspector } from "./components/inspector/NodeInspector";
 export type { NodeEditorToolbarProps } from "./components/elements/NodeEditorToolbar";
 export type { FloatingContainerProps } from "./components/parts/FloatingContainer";
 export type { ColumnLayoutProps } from "./components/ColumnLayout";
-export type { InspectorPanelProps } from "./components/InspectorPanel";
-export type { NodeInspectorProps } from "./components/NodeInspector";
+export type { InspectorPanelProps, InspectorPanelTabConfig } from "./components/inspector/InspectorPanel";
+export type { NodeInspectorProps } from "./components/inspector/NodeInspector";
 
 // Utilities for custom components
 export {

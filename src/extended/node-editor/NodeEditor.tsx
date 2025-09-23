@@ -1,6 +1,6 @@
 import * as React from "react";
 import { NodeEditorBase } from "./components/NodeEditorBase";
-import { InspectorPanel } from "./components/InspectorPanel";
+import { InspectorPanel } from "./components/inspector/InspectorPanel";
 import { ColumnLayout } from "./components/ColumnLayout";
 import { CanvasBase } from "./components/CanvasBase";
 import { NodeLayer } from "./components/node/NodeLayer";
