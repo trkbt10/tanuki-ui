@@ -2,6 +2,7 @@ import React from 'react';
 import * as TanukiUI from 'tanuki-ui';
 import { ComponentDemo } from '../types';
 import { specialGuides } from '../specialGuides';
+import NodeEditorCatalog from '../../components/NodeEditorCatalog';
 
 // Interactive Dialog Components
 const InteractiveDialog: React.FC<{ title: string; content: string }> = ({ title, content }) => {
@@ -72,6 +73,58 @@ const InteractiveDrawer: React.FC = () => {
   );
 };
 
+const AlertDemo: React.FC = () => {
+  const [open, setOpen] = React.useState(false);
+
+  return (
+    <TanukiUI.Div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+      <TanukiUI.Button onClick={() => setOpen(true)}>Alert を表示</TanukiUI.Button>
+      <TanukiUI.Alert
+        open={open}
+        title="Alert"
+        description="即時フィードバックを示す軽量なダイアログです。"
+        onClose={() => setOpen(false)}
+        onSelect={() => setOpen(false)}
+        actions={[{ key: 'dismiss', value: '閉じる' }]}
+      >
+        <TanukiUI.P style={{ margin: 0 }}>Alert 内の説明コンテンツをここに配置します。</TanukiUI.P>
+      </TanukiUI.Alert>
+    </TanukiUI.Div>
+  );
+};
+
+const SortableListDemo: React.FC = () => {
+  const [items, setItems] = React.useState(() => [
+    { id: 'item-1', label: 'アイテム 1' },
+    { id: 'item-2', label: 'アイテム 2' },
+    { id: 'item-3', label: 'アイテム 3' },
+  ]);
+
+  return (
+    <TanukiUI.Div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+      <TanukiUI.P style={{ margin: 0 }}>ドラッグ&ドロップで並び替えできます。</TanukiUI.P>
+      <TanukiUI.SortableList
+        items={items}
+        setItems={setItems}
+        element={(item) => (
+          <TanukiUI.Div
+            style={{
+              padding: '0.75rem 1rem',
+              border: '1px solid var(--borderColor)',
+              borderRadius: '0.5rem',
+              background: 'var(--surfaceColor)',
+              width: '100%',
+              boxSizing: 'border-box',
+            }}
+          >
+            {item.label}
+          </TanukiUI.Div>
+        )}
+      />
+    </TanukiUI.Div>
+  );
+};
+
 // Dialog Elements
 export const dialogElements: ComponentDemo[] = [
   {
@@ -115,18 +168,7 @@ export const dialogElements: ComponentDemo[] = [
       guide: specialGuides.Alert,
     },
     examples: {
-      basic: (
-        <>
-          <TanukiUI.Button 
-            onClick={() => alert('これはネイティブのアラートです。Tanuki UI Alertコンポーネントとは異なります。')}
-          >
-            アラートを表示
-          </TanukiUI.Button>
-          <TanukiUI.Alert>
-            <TanukiUI.P>これはAlertコンポーネントです</TanukiUI.P>
-          </TanukiUI.Alert>
-        </>
-      )
+      basic: <AlertDemo />
     }
   }
 ];
@@ -229,7 +271,14 @@ export const barElements: ComponentDemo[] = [
 ];
 
 // Extended Components
-export const extendedElements: ComponentDemo[] = [];
+export const extendedElements: ComponentDemo[] = [
+  {
+    name: 'NodeEditor',
+    description: 'ビジュアルノードエディタ',
+    category: 'extended',
+    component: NodeEditorCatalog,
+  },
+];
 
 // Other Elements
 export const otherElements: ComponentDemo[] = [
@@ -297,6 +346,15 @@ export const blockElements: ComponentDemo[] = [
 
 // Control Elements
 export const controlElements: ComponentDemo[] = [
+  {
+    name: 'SortableList',
+    description: 'ドラッグ&ドロップで並び替え可能なリスト',
+    category: 'controls',
+    component: SortableListDemo,
+    examples: {
+      basic: <SortableListDemo />,
+    },
+  },
   {
     name: 'SegmentedControl',
     description: 'セグメント化コントロール',

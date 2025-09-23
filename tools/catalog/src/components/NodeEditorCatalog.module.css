@@ -6,23 +6,6 @@
   gap: 32px;
 }
 
-.header {
-  display: grid;
-  gap: 12px;
-}
-
-.lead {
-  margin: 0;
-  max-width: 720px;
-  color: var(--secondaryLabelColor, #4b5563);
-}
-
-.helperText {
-  margin: 0;
-  color: var(--tertiaryLabelColor, #6b7280);
-  font: var(--captionFont, 400 0.85rem/1.5 var(--themeLabelFontFamily, system-ui, sans-serif));
-}
-
 .main {
   display: grid;
   gap: 40px;
@@ -39,20 +22,50 @@
   max-width: 720px;
 }
 
-.layoutRow {
+.exampleGrid {
   display: grid;
   gap: 24px;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 }
 
-.controlPanel {
+.exampleCard {
+  composes: exampleCard from "./ExampleCardLayout.module.css";
+}
+
+.exampleHeader {
+  composes: exampleHeader from "./ExampleCardLayout.module.css";
+}
+
+.exampleTitle {
+  composes: exampleTitle from "./ExampleCardLayout.module.css";
+}
+
+.exampleDescription {
+  composes: exampleDescription from "./ExampleCardLayout.module.css";
+}
+
+.exampleContent {
+  composes: exampleContent from "./ExampleCardLayout.module.css";
+}
+
+.singleColumnContent {
+  composes: exampleContent from "./ExampleCardLayout.module.css";
+}
+
+@media (min-width: 960px) {
+  .singleColumnContent {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.scenarioPreview {
+  composes: examplePreview from "./ExampleCardLayout.module.css";
+  gap: var(--examplePreviewGap, 20px);
+}
+
+.scenarioControls {
   display: grid;
   gap: 16px;
-  padding: 20px;
-  border-radius: var(--cardBorderRadius, 12px);
-  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
-  background: var(--cardBackground, var(--secondaryBackgroundColor, #ffffff));
-  box-shadow: var(--cardBoxShadow, 0 1px 3px rgba(15, 23, 42, 0.08));
 }
 
 .inlineControls {
@@ -80,18 +93,14 @@
   height: 100%;
 }
 
+.dataPreview {
+  composes: examplePreview from "./ExampleCardLayout.module.css";
+  gap: var(--examplePreviewGap, 16px);
+}
+
 .datasetSummary {
   margin: 0;
   color: var(--secondaryLabelColor, #4b5563);
-}
-
-.dataPanel {
-  border-radius: var(--cardBorderRadius, 12px);
-  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
-  background: var(--secondaryBackgroundColor, rgba(0, 0, 0, 0.04));
-  padding: 16px;
-  display: grid;
-  gap: 12px;
 }
 
 .dataDump {
@@ -108,29 +117,26 @@
 
 .testGrid {
   display: grid;
-  gap: 16px;
+  gap: 24px;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .testCard {
-  border-radius: var(--cardBorderRadius, 12px);
-  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
-  background: var(--cardBackground, var(--secondaryBackgroundColor, #ffffff));
-  padding: 16px;
-  display: grid;
-  gap: 12px;
+  composes: exampleCard from "./ExampleCardLayout.module.css";
+}
+
+.testCardHeader {
+  composes: exampleHeader from "./ExampleCardLayout.module.css";
 }
 
 .testCardTitle {
-  margin: 0;
-  font-size: 1rem;
-  color: var(--labelColor, #111827);
+  composes: exampleTitle from "./ExampleCardLayout.module.css";
 }
 
 .testCardBody {
   margin: 0;
   color: var(--secondaryLabelColor, #4b5563);
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
 

@@ -1,10 +1,8 @@
 import React, { useMemo, useState } from "react";
 import {
   Article,
-  Header,
   Main,
   Section,
-  H1,
   H2,
   H3,
   P,
@@ -21,6 +19,7 @@ import {
 } from "../test-scenarios";
 import type { FeaturesNodeDataTypeMap } from "../test-scenarios/features/types";
 import styles from "./NodeEditorCatalog.module.css";
+import CatalogPageHeader from "./CatalogPageHeader";
 
 type ScenarioKey = keyof typeof testDataSets;
 
@@ -59,19 +58,28 @@ const NodeEditorCatalog: React.FC = () => {
     setEditorData({ nodes: {}, connections: {} });
   };
 
-  const renderEditor = () => {
+  const mathContextValue = React.useMemo(() => {
     if (selectedScenario === "mathFlow") {
-      const mathContextValue = {
-        getNodeValue: (nodeId: string) => editorData.nodes[nodeId]?.data?.value || 0,
+      return {
+        getNodeValue: (nodeId: string) => editorData.nodes[nodeId]?.data?.value ?? 0,
         triggerEvaluation: () => {
           // placeholder for math evaluation
           console.log("Math evaluation triggered");
         },
       };
+    }
 
+    return {
+      getNodeValue: () => undefined,
+      triggerEvaluation: () => {},
+    };
+  }, [editorData, selectedScenario]);
+
+  const renderEditor = () => {
+    if (selectedScenario === "features") {
       return (
         <MathEvaluatorContext.Provider value={mathContextValue}>
-          <NodeEditor
+          <NodeEditor<FeaturesNodeDataTypeMap>
             data={editorData}
             onDataChange={setEditorData}
             nodeDefinitions={nodeDefinitions}
@@ -80,37 +88,25 @@ const NodeEditorCatalog: React.FC = () => {
       );
     }
 
-    if (selectedScenario === "features") {
-      return (
-        <NodeEditor<FeaturesNodeDataTypeMap>
+    return (
+      <MathEvaluatorContext.Provider value={mathContextValue}>
+        <NodeEditor
           data={editorData}
           onDataChange={setEditorData}
           nodeDefinitions={nodeDefinitions}
         />
-      );
-    }
-
-    return (
-      <NodeEditor
-        data={editorData}
-        onDataChange={setEditorData}
-        nodeDefinitions={nodeDefinitions}
-      />
+      </MathEvaluatorContext.Provider>
     );
   };
 
   return (
     <Article className={styles.page}>
-      <Header className={styles.header}>
-        <H1>NodeEditor Catalog</H1>
-        <P className={styles.lead}>
-          NodeEditor はノードベースのビジュアルプログラミング環境を構築するための拡張コンポーネントです。シナリオ別に操作性や
-          API を確認できるよう、代表的なテストデータを用意しています。
-        </P>
-        <Small className={styles.helperText}>
-          シナリオを切り替えると初期データとノード定義が更新されます。必要に応じて初期値へのリセットやキャンバスクリアも可能です。
-        </Small>
-      </Header>
+      <CatalogPageHeader
+        title="NodeEditor Catalog"
+        lead="NodeEditor はノードベースのビジュアルプログラミング環境を構築するための拡張コンポーネントです。シナリオ別に操作性や API を確認できるよう、代表的なテストデータを用意しています。"
+        helperText="シナリオを切り替えると初期データとノード定義が更新されます。必要に応じて初期値へのリセットやキャンバスクリアも可能です。"
+        align="start"
+      />
 
       <Main className={styles.main}>
         <Section className={styles.section}>
@@ -122,33 +118,44 @@ const NodeEditorCatalog: React.FC = () => {
             </P>
           </div>
 
-          <div className={styles.layoutRow}>
-            <div className={styles.controlPanel}>
-              <div className={styles.inlineControls}>
-                <Select
-                  value={selectedScenario}
-                  onChange={(event) => handleScenarioChange(event.target.value as ScenarioKey)}
-                  style={{ minWidth: "220px" }}
-                >
-                  {Object.entries(scenarioNames).map(([key, label]) => (
-                    <option value={key} key={key}>
-                      {label}
-                    </option>
-                  ))}
-                </Select>
-                <Button variant="secondary" onClick={handleReset}>
-                  初期状態に戻す
-                </Button>
-                <Button variant="secondary" onClick={handleClear}>
-                  キャンバスをクリア
-                </Button>
+          <div className={styles.exampleGrid}>
+            <div className={styles.exampleCard}>
+              <div className={styles.exampleHeader}>
+                <H3 className={styles.exampleTitle}>テストデータをダイナミックに入れ替える</H3>
+                <P className={styles.exampleDescription}>
+                  シナリオを切り替えるとノード定義と初期データが同時に更新され、異なるユースケースを素早く検証できます。
+                </P>
               </div>
-              <Small className={styles.indicator}>{scenarioDescriptions[selectedScenario]}</Small>
+              <div className={styles.singleColumnContent}>
+                <div className={styles.scenarioPreview}>
+                  <div className={styles.scenarioControls}>
+                    <div className={styles.inlineControls}>
+                      <Select
+                        value={selectedScenario}
+                        onChange={(event) => handleScenarioChange(event.target.value as ScenarioKey)}
+                        style={{ minWidth: "220px" }}
+                      >
+                        {Object.entries(scenarioNames).map(([key, label]) => (
+                          <option value={key} key={key}>
+                            {label}
+                          </option>
+                        ))}
+                      </Select>
+                      <Button variant="secondary" onClick={handleReset}>
+                        初期状態に戻す
+                      </Button>
+                      <Button variant="secondary" onClick={handleClear}>
+                        キャンバスをクリア
+                      </Button>
+                    </div>
+                    <Small className={styles.indicator}>{scenarioDescriptions[selectedScenario]}</Small>
+                  </div>
+                  <div className={styles.editorSurface}>
+                    <div className={styles.editorSurfaceInner}>{renderEditor()}</div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div className={styles.editorSurface}>
-            <div className={styles.editorSurfaceInner}>{renderEditor()}</div>
           </div>
         </Section>
 
@@ -160,11 +167,23 @@ const NodeEditorCatalog: React.FC = () => {
             </P>
           </div>
 
-          <div className={styles.dataPanel}>
-            <Small className={styles.datasetSummary}>
-              ノード数: {Object.keys(editorData.nodes).length} / 接続数: {Object.keys(editorData.connections).length}
-            </Small>
-            <pre className={styles.dataDump}>{JSON.stringify(editorData, null, 2)}</pre>
+          <div className={styles.exampleGrid}>
+            <div className={styles.exampleCard}>
+              <div className={styles.exampleHeader}>
+                <H3 className={styles.exampleTitle}>NodeEditorData のスナップショット</H3>
+                <P className={styles.exampleDescription}>
+                  現在のノードと接続を確認しながら、シナリオの差分や API 連携をテストできます。
+                </P>
+              </div>
+              <div className={styles.singleColumnContent}>
+                <div className={styles.dataPreview}>
+                  <Small className={styles.datasetSummary}>
+                    ノード数: {Object.keys(editorData.nodes).length} / 接続数: {Object.keys(editorData.connections).length}
+                  </Small>
+                  <pre className={styles.dataDump}>{JSON.stringify(editorData, null, 2)}</pre>
+                </div>
+              </div>
+            </div>
           </div>
         </Section>
 
@@ -176,19 +195,25 @@ const NodeEditorCatalog: React.FC = () => {
 
           <div className={styles.testGrid}>
             <div className={styles.testCard}>
-              <H3 className={styles.testCardTitle}>UI と操作性</H3>
+              <div className={styles.testCardHeader}>
+                <H3 className={styles.testCardTitle}>UI と操作性</H3>
+              </div>
               <P className={styles.testCardBody}>
                 ノードのドラッグ＆ドロップ、ポート接続、ホバー時のハイライト、キャンバスのパンやズームなど、操作ごとのフィードバックを確認します。
               </P>
             </div>
             <div className={styles.testCard}>
-              <H3 className={styles.testCardTitle}>パフォーマンス</H3>
+              <div className={styles.testCardHeader}>
+                <H3 className={styles.testCardTitle}>パフォーマンス</H3>
+              </div>
               <P className={styles.testCardBody}>
                 大量ノードでの描画、ズーム・パン操作の滑らかさ、ドラッグ中のフレームレートなど、描画負荷を監視します。
               </P>
             </div>
             <div className={styles.testCard}>
-              <H3 className={styles.testCardTitle}>拡張機能と API</H3>
+              <div className={styles.testCardHeader}>
+                <H3 className={styles.testCardTitle}>拡張機能と API</H3>
+              </div>
               <P className={styles.testCardBody}>
                 Math Flow のような文脈付き評価や、Features シナリオのカスタムコンポーネント、データ入出力 API の動作を確認します。
               </P>

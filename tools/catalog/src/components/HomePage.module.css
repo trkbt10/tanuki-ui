@@ -92,34 +92,16 @@
   padding: var(--cardPadding, 24px);
   background: var(--cardBackground, var(--secondaryBackgroundColor, #ffffff));
   box-shadow: var(--cardBoxShadow, 0 1px 3px rgba(15, 23, 42, 0.08));
-  transition: var(
-    --cardTransition,
-    border-color var(--cardTransitionDuration, 0.18s) var(--cardTransitionEasing, ease-out),
-    box-shadow var(--cardTransitionDuration, 0.18s) var(--cardTransitionEasing, ease-out),
-    background var(--cardTransitionDuration, 0.18s) var(--cardTransitionEasing, ease-out)
-  );
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: var(--cardGap, 16px);
-}
-
-.card:hover {
-  background: var(--cardHoverBackground, var(--cardBackground));
-  border: var(--cardHoverBorder, var(--cardBorder, 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08))));
-  box-shadow: var(--cardHoverBoxShadow, var(--cardBoxShadow));
-  transform: var(--cardHoverTransform, none);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .card {
-    transition: border-color 0.12s ease-out, box-shadow 0.12s ease-out, background 0.12s ease-out;
-  }
-
-  .card:hover {
-    transform: none;
-  }
+  --cardHoverBackground: var(--cardBackground);
+  --cardHoverBorder: var(--cardBorder, 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08)));
+  --cardHoverBoxShadow: var(--cardBoxShadow);
+  --cardHoverTransform: none;
+  --cardTransition: none;
 }
 
 .cardHeader {

@@ -1,10 +1,8 @@
 import React from "react";
 import {
   Article,
-  Header,
   Main,
   Section,
-  H1,
   H2,
   H3,
   P,
@@ -15,6 +13,7 @@ import {
   Button,
 } from "tanuki-ui";
 import styles from "./SegmentedControlCatalog.module.css";
+import CatalogPageHeader from "./CatalogPageHeader";
 
 const basicCode = `<SegmentedControl
   items={["バックログ", "進行中", "完了"]}
@@ -56,16 +55,11 @@ const SegmentedControlCatalog: React.FC = () => {
 
   return (
     <Article className={styles.page}>
-      <Header className={styles.header}>
-        <H1>Segmented Control Catalog</H1>
-        <P className={styles.lead}>
-          複数のビューやフィルターをスムーズに切り替えるための SegmentedControl コンポーネントを、
-          状況に応じたパターンと合わせて紹介します。
-        </P>
-        <Small className={styles.helperText}>
-          SegmentedControl は選択状態やドラッグ操作を制御できる柔軟なトグル UI です。
-        </Small>
-      </Header>
+      <CatalogPageHeader
+        title="Segmented Control Catalog"
+        lead="複数のビューやフィルターをスムーズに切り替えるための SegmentedControl コンポーネントを、状況に応じたパターンと合わせて紹介します。"
+        helperText="SegmentedControl は選択状態やドラッグ操作を制御できる柔軟なトグル UI です。"
+      />
 
       <Main className={styles.main}>
         <Section className={styles.section}>
@@ -79,33 +73,45 @@ const SegmentedControlCatalog: React.FC = () => {
 
           <div className={styles.exampleGrid}>
             <div className={styles.exampleCard}>
-              <H3>ステータス切り替え</H3>
-              <P>バックログ &gt; 進行中 &gt; 完了の 3状態を切り替える基本形です。</P>
-              <div className={styles.surface}>
-                <SegmentedControl
-                  items={["バックログ", "進行中", "完了"]}
-                  selectedIndex={basicIndex}
-                  onSelect={setBasicIndex}
-                />
-                <Small className={styles.snapshot}>現在の状態: {basicIndex === 0 ? "バックログ" : basicIndex === 1 ? "進行中" : "完了"}</Small>
+              <div className={styles.exampleHeader}>
+                <H3 className={styles.exampleTitle}>ステータス切り替え</H3>
+                <P className={styles.exampleDescription}>バックログ &gt; 進行中 &gt; 完了の 3状態を切り替える基本形です。</P>
               </div>
-              <Pre className={styles.codeBlock}>
-                <Code>{basicCode}</Code>
-              </Pre>
+              <div className={styles.exampleContent}>
+                <div className={styles.surface}>
+                  <SegmentedControl
+                    items={["バックログ", "進行中", "完了"]}
+                    selectedIndex={basicIndex}
+                    onSelect={setBasicIndex}
+                  />
+                  <Small className={styles.snapshot}>
+                    現在の状態: {basicIndex === 0 ? "バックログ" : basicIndex === 1 ? "進行中" : "完了"}
+                  </Small>
+                </div>
+                <Pre className={styles.codeBlock}>
+                  <Code>{basicCode}</Code>
+                </Pre>
+              </div>
             </div>
 
             <div className={styles.exampleCard}>
-              <H3>複合ラベルのセグメント</H3>
-              <P>`items` には ReactNode を渡せるので、スタイル付きテキストでの切り替えも可能です。</P>
-              <div className={styles.surface}>
-                <SegmentedControl items={iconSegments} selectedIndex={iconIndex} onSelect={setIconIndex} />
-                <Small className={styles.snapshot}>
-                  表示モード: {iconIndex === 0 ? "リスト表示" : iconIndex === 1 ? "ボード表示" : "カレンダー表示"}
-                </Small>
+              <div className={styles.exampleHeader}>
+                <H3 className={styles.exampleTitle}>複合ラベルのセグメント</H3>
+                <P className={styles.exampleDescription}>
+                  `items` には ReactNode を渡せるので、スタイル付きテキストでの切り替えも可能です。
+                </P>
               </div>
-              <Pre className={styles.codeBlock}>
-                <Code>{iconCode}</Code>
-              </Pre>
+              <div className={styles.exampleContent}>
+                <div className={styles.surface}>
+                  <SegmentedControl items={iconSegments} selectedIndex={iconIndex} onSelect={setIconIndex} />
+                  <Small className={styles.snapshot}>
+                    表示モード: {iconIndex === 0 ? "リスト表示" : iconIndex === 1 ? "ボード表示" : "カレンダー表示"}
+                  </Small>
+                </div>
+                <Pre className={styles.codeBlock}>
+                  <Code>{iconCode}</Code>
+                </Pre>
+              </div>
             </div>
           </div>
         </Section>
@@ -120,31 +126,35 @@ const SegmentedControlCatalog: React.FC = () => {
           </div>
 
           <div className={styles.exampleCard}>
-            <H3>フィルターと連携</H3>
-            <P>外部のアクションから選択状態を更新できる制御モードの例です。</P>
-            <div className={styles.surface}>
-              <SegmentedControl
-                items={filters}
-                controlled
-                selectedIndex={controlledIndex}
-                onSelect={setControlledIndex}
-              />
-              <div className={styles.inlineControls}>
-                {filters.map((label, index) => (
-                  <Button
-                    key={label}
-                    variant={index === controlledIndex ? "primary" : "secondary"}
-                    onClick={() => setControlledIndex(index)}
-                  >
-                    {label}
-                  </Button>
-                ))}
-              </div>
-              <Small className={styles.snapshot}>選択中: {filters[controlledIndex]}</Small>
+            <div className={styles.exampleHeader}>
+              <H3 className={styles.exampleTitle}>フィルターと連携</H3>
+              <P className={styles.exampleDescription}>外部のアクションから選択状態を更新できる制御モードの例です。</P>
             </div>
-            <Pre className={styles.codeBlock}>
-              <Code>{controlledCode}</Code>
-            </Pre>
+            <div className={styles.exampleContent}>
+              <div className={styles.surface}>
+                <SegmentedControl
+                  items={filters}
+                  controlled
+                  selectedIndex={controlledIndex}
+                  onSelect={setControlledIndex}
+                />
+                <div className={styles.inlineControls}>
+                  {filters.map((label, index) => (
+                    <Button
+                      key={label}
+                      variant={index === controlledIndex ? "primary" : "secondary"}
+                      onClick={() => setControlledIndex(index)}
+                    >
+                      {label}
+                    </Button>
+                  ))}
+                </div>
+                <Small className={styles.snapshot}>選択中: {filters[controlledIndex]}</Small>
+              </div>
+              <Pre className={styles.codeBlock}>
+                <Code>{controlledCode}</Code>
+              </Pre>
+            </div>
           </div>
         </Section>
       </Main>

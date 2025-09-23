@@ -1,10 +1,8 @@
 import React from "react";
 import {
   Article,
-  Header,
   Main,
   Section,
-  H1,
   H2,
   H3,
   P,
@@ -15,6 +13,7 @@ import {
   Button,
 } from "tanuki-ui";
 import styles from "./TabBarCatalog.module.css";
+import CatalogPageHeader from "./CatalogPageHeader";
 
 const deviceCode = `<TabBar
   items={[
@@ -62,14 +61,11 @@ const TabBarCatalog: React.FC = () => {
 
   return (
     <Article className={styles.page}>
-      <Header className={styles.header}>
-        <H1>TabBar Catalog</H1>
-        <P className={styles.lead}>
-          TabBar はモバイル UI での主要なナビゲーション手段です。画面下部の固定バーや補助的なセカンダリバーなど、
-          よく使うパターンを整理しました。
-        </P>
-        <Small className={styles.helperText}>items の順序と onSelect の組み合わせで、シンプルな切り替えを実現します。</Small>
-      </Header>
+      <CatalogPageHeader
+        title="TabBar Catalog"
+        lead="TabBar はモバイル UI での主要なナビゲーション手段です。画面下部の固定バーや補助的なセカンダリバーなど、よく使うパターンを整理しました。"
+        helperText="items の順序と onSelect の組み合わせで、シンプルな切り替えを実現します。"
+      />
 
       <Main className={styles.main}>
         <Section className={styles.section}>
@@ -83,29 +79,35 @@ const TabBarCatalog: React.FC = () => {
 
           <div className={styles.exampleGrid}>
             <div className={styles.exampleCard}>
-              <H3>アプリケーションのホームタブ</H3>
-              <P>デバイスフレーム風のモックで、下部に TabBar を固定した状態を再現します。</P>
-              <div className={styles.deviceFrame}>
-                <div className={styles.viewport}>
-                  <H3>タスク一覧</H3>
-                  <P>
-                    選択中のタブに応じて表示内容を切り替えます。現在は
-                    <strong> {activeNav.toUpperCase()} </strong>
-                    タブを開いています。
-                  </P>
-                  <Small className={styles.activeSummary}>
-                    アクティブタブ: {navItems.find((item) => item.key === activeNav)?.value}
-                  </Small>
-                </div>
-                <TabBar
-                  items={navItems}
-                  defaultSelected={0}
-                  onSelect={(item) => setActiveNav(item.key)}
-                />
+              <div className={styles.exampleHeader}>
+                <H3 className={styles.exampleTitle}>アプリケーションのホームタブ</H3>
+                <P className={styles.exampleDescription}>
+                  デバイスフレーム風のモックで、下部に TabBar を固定した状態を再現します。
+                </P>
               </div>
-              <Pre className={styles.codeBlock}>
-                <Code>{deviceCode}</Code>
-              </Pre>
+              <div className={styles.exampleContent}>
+                <div className={styles.deviceFrame}>
+                  <div className={styles.viewport}>
+                    <H3>タスク一覧</H3>
+                    <P>
+                      選択中のタブに応じて表示内容を切り替えます。現在は
+                      <strong> {activeNav.toUpperCase()} </strong>
+                      タブを開いています。
+                    </P>
+                    <Small className={styles.activeSummary}>
+                      アクティブタブ: {navItems.find((item) => item.key === activeNav)?.value}
+                    </Small>
+                  </div>
+                  <TabBar
+                    items={navItems}
+                    defaultSelected={0}
+                    onSelect={(item) => setActiveNav(item.key)}
+                  />
+                </div>
+                <Pre className={styles.codeBlock}>
+                  <Code>{deviceCode}</Code>
+                </Pre>
+              </div>
             </div>
           </div>
         </Section>
@@ -120,32 +122,39 @@ const TabBarCatalog: React.FC = () => {
           </div>
 
           <div className={styles.exampleCard}>
-            <H3>プロジェクト詳細の切り替え</H3>
-            <div className={styles.compactBar}>
-              <TabBar
-                key={barSeed}
-                items={compactItems}
-                defaultSelected={compactIndex}
-                onSelect={(_, index) => updateCompactIndex(index)}
-              />
-              <div className={styles.inlineControls}>
-                {compactItems.map((item, index) => (
-                  <Button
-                    key={item.key}
-                    variant={index === compactIndex ? "primary" : "secondary"}
-                    onClick={() => updateCompactIndex(index)}
-                  >
-                    {item.value}
-                  </Button>
-                ))}
-              </div>
-              <Small className={styles.helperText}>
-                選択中: {compactItems[compactIndex].value} / キー: {compactItems[compactIndex].key}
-              </Small>
+            <div className={styles.exampleHeader}>
+              <H3 className={styles.exampleTitle}>プロジェクト詳細の切り替え</H3>
+              <P className={styles.exampleDescription}>
+                ボタン操作と連携して選択タブを同期するコンパクトなタブバーの使い方です。
+              </P>
             </div>
-            <Pre className={styles.codeBlock}>
-              <Code>{compactCode}</Code>
-            </Pre>
+            <div className={styles.exampleContent}>
+              <div className={styles.compactBar}>
+                <TabBar
+                  key={barSeed}
+                  items={compactItems}
+                  defaultSelected={compactIndex}
+                  onSelect={(_, index) => updateCompactIndex(index)}
+                />
+                <div className={styles.inlineControls}>
+                  {compactItems.map((item, index) => (
+                    <Button
+                      key={item.key}
+                      variant={index === compactIndex ? "primary" : "secondary"}
+                      onClick={() => updateCompactIndex(index)}
+                    >
+                      {item.value}
+                    </Button>
+                  ))}
+                </div>
+                <Small className={styles.helperText}>
+                  選択中: {compactItems[compactIndex].value} / キー: {compactItems[compactIndex].key}
+                </Small>
+              </div>
+              <Pre className={styles.codeBlock}>
+                <Code>{compactCode}</Code>
+              </Pre>
+            </div>
           </div>
         </Section>
       </Main>

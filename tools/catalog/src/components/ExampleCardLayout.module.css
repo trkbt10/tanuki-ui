@@ -1,0 +1,130 @@
+.exampleCard {
+  position: relative;
+  display: grid;
+  gap: var(--exampleCardSectionGap, calc(var(--cardPadding, 16px) + 4px));
+  padding: var(--exampleCardPadding, calc(var(--cardPadding, 16px) + 8px));
+  border-radius: var(--exampleCardRadius, var(--cardBorderRadius, var(--controlBorderRadius, 8px)));
+  border: var(--exampleCardBorder, 1px solid var(--borderColor, var(--separatorColor, rgba(0, 0, 0, 0.08))));
+  background: var(
+    --exampleCardBackground,
+    linear-gradient(
+      180deg,
+      var(--backgroundSecondary, var(--secondaryBackgroundColor, var(--controlBackground, var(--windowBackgroundColor)))) 0%,
+      var(--windowBackgroundColor, #ffffff) 100%
+    )
+  );
+  box-shadow: var(--exampleCardShadow, var(--cardBoxShadow, var(--boxShadowSmall, none)));
+  transition: var(--exampleCardTransition, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease);
+  overflow: hidden;
+  min-height: 0;
+}
+
+.exampleCard::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: var(--exampleCardAccentHeight, 3px);
+  background: var(--exampleCardAccent, var(--accentColor, var(--controlAccentColor, #2563eb)));
+  opacity: var(--exampleCardAccentOpacity, 0.35);
+  border-radius: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.exampleCard > * {
+  position: relative;
+  z-index: 1;
+}
+
+.exampleHeader {
+  display: grid;
+  gap: var(--exampleCardHeaderGap, calc(var(--cardPadding, 16px) * 0.4));
+}
+
+.exampleTitle {
+  margin: 0;
+  color: var(--labelColor, #111827);
+  font: var(--exampleCardTitleFont, var(--cardTitleFont, var(--titleFont, var(--textFont, inherit))));
+  letter-spacing: var(--exampleCardTitleLetterSpacing, var(--labelLetterSpacing, normal));
+}
+
+.exampleDescription {
+  margin: 0;
+  color: var(--secondaryLabelColor, #4b5563);
+  font: var(
+    --exampleCardDescriptionFont,
+    var(--textFontSmall, var(--captionFont, 400 0.95rem/1.6 var(--themeDefaultFontFamily, system-ui, sans-serif)))
+  );
+}
+
+.exampleContent {
+  display: grid;
+  gap: var(--exampleCardContentGap, calc(var(--cardPadding, 16px) + 8px));
+  align-items: flex-start;
+}
+
+@media (min-width: 960px) {
+  .exampleContent {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    gap: var(--exampleCardContentGapWide, calc(var(--cardPadding, 16px) + 12px));
+  }
+}
+
+.examplePreview {
+  display: grid;
+  gap: var(--examplePreviewGap, calc(var(--cardPadding, 16px) * 0.5));
+  padding: var(--examplePreviewPadding, calc(var(--cardPadding, 16px) + 4px));
+  border-radius: var(--examplePreviewRadius, calc(var(--exampleCardRadius, 12px) - 4px));
+  background: var(--examplePreviewBackground, var(--controlBackground, var(--windowBackgroundColor, #ffffff)));
+  border: var(--examplePreviewBorder, 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08)));
+  box-shadow: var(--examplePreviewShadow, var(--controlBoxShadow, none));
+  min-height: 0;
+}
+
+.examplePreview--flush {
+  padding: 0;
+}
+
+.exampleCode {
+  margin: 0;
+  border-radius: var(--exampleCodeRadius, calc(var(--exampleCardRadius, 12px) - 6px));
+  border: var(--exampleCodeBorder, 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08)));
+  background: var(--exampleCodeBackground, var(--secondaryBackgroundColor, rgba(0, 0, 0, 0.04)));
+  padding: var(--exampleCodePadding, calc(var(--cardPadding, 16px) + 4px));
+  font-family: var(--themeMonospaceFontFamily, 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace);
+  font-size: var(--exampleCodeFontSize, 0.85rem);
+  line-height: 1.6;
+  color: var(--codeTextColor, var(--secondaryLabelColor, #4b5563));
+  overflow-x: auto;
+  box-shadow: var(--exampleCodeShadow, none);
+}
+
+.exampleMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--exampleMetaGap, 8px);
+  align-items: center;
+}
+
+.exampleTokenBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--exampleTokenBadgeGap, 6px);
+  padding: var(--exampleTokenBadgePadding, 4px 10px);
+  border-radius: var(--exampleTokenBadgeRadius, 999px);
+  background: var(--tertiarySystemFillColor, rgba(0, 0, 0, 0.05));
+  color: var(--linkColor, #2563eb);
+  font: var(--captionFont, 500 0.75rem/1.4 var(--themeLabelFontFamily, system-ui, sans-serif));
+}
+
+.exampleAside {
+  display: grid;
+  gap: var(--exampleAsideGap, calc(var(--cardPadding, 16px) * 0.5));
+}
+
+.exampleHint {
+  margin: 0;
+  color: var(--tertiaryLabelColor, #6b7280);
+  font: var(--captionFont, 400 0.85rem/1.5 var(--themeLabelFontFamily, system-ui, sans-serif));
+}

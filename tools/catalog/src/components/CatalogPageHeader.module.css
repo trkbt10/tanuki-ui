@@ -1,0 +1,43 @@
+.root {
+  display: grid;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  color: var(--labelColor, #111827);
+}
+
+.lead {
+  margin: 0;
+  max-width: min(720px, 90vw);
+  color: var(--secondaryLabelColor, #4b5563);
+}
+
+.helperText {
+  margin: 0;
+  color: var(--tertiaryLabelColor, #6b7280);
+  font: var(--captionFont, 400 0.85rem/1.5 var(--themeLabelFontFamily, system-ui, sans-serif));
+}
+
+.root[data-align="center"] {
+  text-align: center;
+  justify-items: center;
+}
+
+.root[data-align="center"] .lead,
+.root[data-align="center"] .helperText {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.root[data-align="start"] {
+  text-align: start;
+  justify-items: start;
+}
+
+@media (max-width: 720px) {
+  .lead {
+    max-width: 100%;
+  }
+}

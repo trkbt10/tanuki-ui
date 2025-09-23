@@ -6,17 +6,7 @@
   gap: 32px;
 }
 
-.header {
-  display: grid;
-  gap: 12px;
-  text-align: center;
-}
 
-.lead {
-  margin: 0 auto;
-  max-width: 720px;
-  color: var(--secondaryLabelColor, #4b5563);
-}
 
 .main {
   display: grid;
@@ -41,20 +31,36 @@
 }
 
 .exampleCard {
-  display: grid;
-  gap: 16px;
-  padding: var(--cardPadding, 20px);
-  border-radius: var(--cardBorderRadius, 12px);
-  border: var(--cardBorder, 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08)));
-  background: var(--cardBackground, var(--secondaryBackgroundColor, #ffffff));
-  box-shadow: var(--cardBoxShadow, 0 1px 3px rgba(15, 23, 42, 0.08));
+  composes: exampleCard from "./ExampleCardLayout.module.css";
+}
+
+.exampleHeader {
+  composes: exampleHeader from "./ExampleCardLayout.module.css";
+}
+
+.exampleTitle {
+  composes: exampleTitle from "./ExampleCardLayout.module.css";
+}
+
+.exampleDescription {
+  composes: exampleDescription from "./ExampleCardLayout.module.css";
+}
+
+.exampleContent {
+  composes: exampleContent from "./ExampleCardLayout.module.css";
+}
+
+.exampleAside {
+  composes: exampleAside from "./ExampleCardLayout.module.css";
+}
+
+.exampleHint {
+  composes: exampleHint from "./ExampleCardLayout.module.css";
 }
 
 .tableContainer {
-  border-radius: calc(var(--cardBorderRadius, 12px) - 4px);
-  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
+  composes: examplePreview from "./ExampleCardLayout.module.css";
   overflow: auto;
-  background: var(--windowBackgroundColor, #ffffff);
 }
 
 .tableContainer table {
@@ -62,11 +68,9 @@
 }
 
 .denseTable {
+  composes: examplePreview from "./ExampleCardLayout.module.css";
   max-height: 320px;
   overflow: auto;
-  border-radius: calc(var(--cardBorderRadius, 12px) - 4px);
-  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
-  background: var(--windowBackgroundColor, #ffffff);
 }
 
 .helperText {
@@ -76,36 +80,15 @@
 }
 
 .codeBlock {
-  margin: 0;
-  border-radius: var(--controlBorderRadius, 8px);
-  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
-  background: var(--secondaryBackgroundColor, rgba(0, 0, 0, 0.04));
-  padding: 16px;
-  overflow-x: auto;
-}
-
-.exampleTitle {
-  margin: 0;
-  color: var(--labelColor, #111827);
-}
-
-.exampleDescription {
-  margin: 0;
-  color: var(--secondaryLabelColor, #4b5563);
+  composes: exampleCode from "./ExampleCardLayout.module.css";
 }
 
 .badgeRow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  composes: exampleMeta from "./ExampleCardLayout.module.css";
 }
 
 .tokenBadge {
-  padding: 4px 8px;
-  border-radius: 999px;
-  background: var(--tertiarySystemFillColor, rgba(0, 0, 0, 0.05));
-  color: var(--linkColor, #2563eb);
-  font: var(--captionFont, 500 0.75rem/1.4 var(--themeLabelFontFamily, system-ui, sans-serif));
+  composes: exampleTokenBadge from "./ExampleCardLayout.module.css";
 }
 
 @media (max-width: 720px) {
