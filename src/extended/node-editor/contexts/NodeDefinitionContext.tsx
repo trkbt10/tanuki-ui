@@ -6,17 +6,16 @@ import {
   StandardNodeDefinition,
   GroupNodeDefinition,
   LabelNodeDefinition,
+  type NodeDataTypeMap,
 } from "../types/NodeDefinition";
-import type { BuiltinNodeDataMap } from "../types/builtin";
+import { toUntypedDefinition } from "../types/NodeDefinition";
 import { isDefinitionForCombinedMap } from "../types/typeGuards";
 
 /**
  * Context value for node definitions
  * @template TNodeDataTypeMap - The node data type map
  */
-export interface NodeDefinitionContextValue {
-  registry: NodeDefinitionRegistry<any>;
-}
+export interface NodeDefinitionContextValue { registry: NodeDefinitionRegistry<NodeDataTypeMap>; }
 
 /**
  * Node definition context
@@ -42,28 +41,19 @@ export const NodeDefinitionProvider = <TNodeDataTypeMap = {}>({
   nodeDefinitions = [],
   includeDefaults = true,
 }: NodeDefinitionProviderProps<TNodeDataTypeMap>) => {
-  type CombinedMap = TNodeDataTypeMap & BuiltinNodeDataMap;
   const registry = React.useMemo(() => {
-    const reg = createNodeDefinitionRegistry<any>();
+    const reg = createNodeDefinitionRegistry<NodeDataTypeMap>();
 
     // Register default definitions if requested
     if (includeDefaults) {
-      if (isDefinitionForCombinedMap<TNodeDataTypeMap>(StandardNodeDefinition)) {
-        reg.register(StandardNodeDefinition);
-      }
-      if (isDefinitionForCombinedMap<TNodeDataTypeMap>(GroupNodeDefinition)) {
-        reg.register(GroupNodeDefinition);
-      }
-      if (isDefinitionForCombinedMap<TNodeDataTypeMap>(LabelNodeDefinition)) {
-        reg.register(LabelNodeDefinition);
-      }
+      if (isDefinitionForCombinedMap<TNodeDataTypeMap>(StandardNodeDefinition)) reg.register(toUntypedDefinition(StandardNodeDefinition));
+      if (isDefinitionForCombinedMap<TNodeDataTypeMap>(GroupNodeDefinition)) reg.register(toUntypedDefinition(GroupNodeDefinition));
+      if (isDefinitionForCombinedMap<TNodeDataTypeMap>(LabelNodeDefinition)) reg.register(toUntypedDefinition(LabelNodeDefinition));
     }
 
     // Register custom definitions
     nodeDefinitions.forEach((def) => {
-      if (isDefinitionForCombinedMap<TNodeDataTypeMap>(def)) {
-        reg.register(def);
-      }
+      if (isDefinitionForCombinedMap<TNodeDataTypeMap>(def)) reg.register(toUntypedDefinition(def));
     });
 
     return reg;
@@ -94,7 +84,7 @@ export const useNodeDefinitions = <TNodeDataTypeMap = {}>(): NodeDefinitionConte
  * Hook to get a specific node definition
  * @template TNodeDataTypeMap - The node data type map
  */
-export const useNodeDefinition = <TNodeDataTypeMap = {}>(type: string): NodeDefinition<string, any> | undefined => {
+export const useNodeDefinition = <TNodeDataTypeMap = {}>(type: string): NodeDefinition<string, NodeDataTypeMap> | undefined => {
   const { registry } = useNodeDefinitions<TNodeDataTypeMap>();
   return registry.get(type);
 };
@@ -103,7 +93,7 @@ export const useNodeDefinition = <TNodeDataTypeMap = {}>(type: string): NodeDefi
  * Hook to get all node definitions as an array
  * @template TNodeDataTypeMap - The node data type map
  */
-export const useNodeDefinitionList = <TNodeDataTypeMap = {}>(): NodeDefinition<string, any>[] => {
+export const useNodeDefinitionList = <TNodeDataTypeMap = {}>(): NodeDefinition<string, NodeDataTypeMap>[] => {
   const { registry } = useNodeDefinitions<TNodeDataTypeMap>();
   return registry.getAll();
 };

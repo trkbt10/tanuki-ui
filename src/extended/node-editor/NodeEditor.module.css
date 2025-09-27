@@ -38,15 +38,8 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.node.locked {
-  opacity: 0.7;
-  cursor: not-allowed;
-  border-color: var(--cautionColor, #ff3b30);
-}
-
-.node.locked:hover {
-  box-shadow: 0 2px .5em rgba(255, 59, 48, 0.2);
-}
+/* Locked nodes: no extra visual highlight beyond the icon */
+.node.locked {}
 
 .node.selected {
   border-color: var(--accentColor, #0066cc);

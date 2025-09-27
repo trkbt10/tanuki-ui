@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { NodeRenderProps, InspectorRenderProps } from "../../../types/NodeDefinition";
 import type { Node } from "../../../types/core";
-import { Button, Input, Label, Textarea } from "../../elements";
+import { Input, Label, Textarea } from "../../elements";
 import editorStyles from "../../../NodeEditor.module.css";
 import { PropertySection } from "../../parts";
 import { useI18n } from "../../../i18n";
@@ -14,6 +14,8 @@ import {
   type AlignmentActionGroup,
   type AlignmentActionType,
 } from "../../shared/alignmentActions";
+import { NodeActionsList } from "../../shared/NodeActionsList";
+import { InspectorLabel } from "../../parts/InspectorLabel";
 
 /**
  * Default node renderer
@@ -134,9 +136,9 @@ const AlignmentControls = React.memo<{
 
   return (
     <div className={alignmentStyles.alignmentControls}>
-      <Label className={alignmentStyles.alignmentLabel}>
-        Alignment {selectedNodes.length > 1 ? `(${selectedNodes.length} nodes)` : "(select 2+ nodes)"}:
-      </Label>
+      <InspectorLabel>
+        Alignment {selectedNodes.length > 1 ? `(${selectedNodes.length} nodes)` : "(select 2+ nodes)"}
+      </InspectorLabel>
       <div className={alignmentStyles.alignmentGrid}>
         {ALIGNMENT_GROUPS.map((group) => (
           <div key={group} className={alignmentStyles.alignmentRow}>
@@ -286,7 +288,9 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         <AlignmentControls selectedNodes={selectedNodes} onAlign={handleAlignment} />
 
         <div>
-          <Label>{t("inspectorPosition")} & {t("inspectorSize")}:</Label>
+          <InspectorLabel>
+            {t("inspectorPosition")} & {t("inspectorSize")}
+          </InspectorLabel>
           <div className={editorStyles.inspectorPositionInputs}>
             <InspectorNumberInput
               label="X"
@@ -337,11 +341,10 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
           </div>
         )}
 
-        <div>
-          <Button onClick={onDeleteNode} variant="danger" size="small">
-            {t("deleteNode")}
-          </Button>
-        </div>
+        <InspectorLabel>
+          {t("inspectorActions") || "Actions"}
+        </InspectorLabel>
+        <NodeActionsList targetNodeId={node.id} includePaste={false} />
       </PropertySection>
     );
   }

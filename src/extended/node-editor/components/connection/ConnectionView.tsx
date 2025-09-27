@@ -238,13 +238,14 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
         <marker
           id={`arrow-${connection.id}`}
           viewBox="0 0 10 10"
-          refX="9"
+          refX="10"  
           refY="5"
-          markerWidth="6"
-          markerHeight="6"
+          markerWidth="10"
+          markerHeight="10"
+          markerUnits="userSpaceOnUse"
           orient="auto"
         >
-          <path d="M 0 0 L 10 5 L 0 10 z" fill={strokeColor} style={{ transition: "fill 0.2s" }} vectorEffect="non-scaling-stroke" />
+          <path d="M 0 0 L 10 5 L 0 10 z" fill={strokeColor} style={{ transition: "fill 0.2s" }} />
         </marker>
       </defs>
 

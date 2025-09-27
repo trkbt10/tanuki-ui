@@ -120,7 +120,13 @@ export const CopyIcon = createIcon(
 );
 
 export const CutIcon = createIcon(
-  'M9.9 14.32L6 18.22M14.1 9.68L18 5.78M14.85 14.85A3 3 0 1 0 10.64 10.64M19 19L5 5',
+  <>
+    <circle cx="6" cy="6" r="2" />
+    <circle cx="14" cy="6" r="2" />
+    <line x1="20" y1="4" x2="4" y2="16" />
+    <line x1="12" y1="12" x2="4" y2="4" />
+  </>,
+  '0 0 24 24'
 );
 
 export const PasteIcon = createIcon(

@@ -102,6 +102,7 @@ export interface I18nMessages {
   inspectorTabProperties?: string;
   inspectorTabHistory?: string;
   inspectorTabSettings?: string;
+  inspectorActions?: string;
 
   // History Panel
   historyUndo?: string;

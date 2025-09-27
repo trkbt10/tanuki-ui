@@ -41,11 +41,6 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className, tabs:
         render: () => <InspectorPropertiesTab />,
       },
       {
-        id: "history",
-        label: t("inspectorTabHistory") || "History",
-        render: () => <InspectorHistoryTab />,
-      },
-      {
         id: "settings",
         label: t("inspectorTabSettings") || "Settings",
         render: () => <InspectorSettingsTab />,

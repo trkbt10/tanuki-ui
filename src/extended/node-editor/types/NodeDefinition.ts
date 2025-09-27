@@ -1,4 +1,5 @@
-import type { ReactNode, ReactElement } from "react";
+import React, { type ReactNode, type ReactElement } from "react";
+import { isLabelNodeRenderProps, createTypeGuard, isLabelInspectorProps, createInspectorTypeGuard } from "./typeGuards";
 import type { Node, NodeId, Port, Connection, NodeEditorData, NodeData } from "./core";
 
 /**
@@ -333,8 +334,8 @@ export const LabelNodeDefinition: NodeDefinition<"label", LabelNodeDataMap> = {
   defaultSize: { width: 220, height: 72 },
   // No ports for a pure label
   ports: [],
-  renderNode: asOriginalNodeRender(LabelNodeRenderer),
-  renderInspector: asOriginalInspectorRender(LabelNodeInspector),
+  renderNode: LabelNodeRenderer,
+  renderInspector: LabelNodeInspector,
 };
 
 /**
@@ -431,4 +432,58 @@ export function asOriginalInspectorRender<TNodeType extends string>(
   render: (props: InspectorRenderProps<TNodeType>) => ReactElement
 ): (props: InspectorRenderProps) => ReactElement {
   return (props: InspectorRenderProps) => render(props as InspectorRenderProps<TNodeType>);
+}
+
+/**
+ * Create a widened, untyped node definition suitable for heterogeneous registries.
+ * It wraps typed render functions to accept generic props while delegating to the typed implementation.
+ */
+export function toUntypedDefinition<TNodeType extends string, TMap = NodeDataTypeMap>(
+  def: NodeDefinition<TNodeType, TMap>
+): NodeDefinition<string, NodeDataTypeMap> {
+  const type = def.type as string;
+  const typedRenderNode = def.renderNode as unknown as
+    | ((props: NodeRenderProps<TNodeType, NodeDataTypeMap>) => ReactElement)
+    | undefined;
+  const typedLabelRenderNode = def.renderNode as unknown as
+    | ((props: NodeRenderProps<"label", LabelNodeDataMap>) => ReactElement)
+    | undefined;
+  const typedRenderInspector = def.renderInspector as unknown as
+    | ((props: InspectorRenderProps<TNodeType, NodeDataTypeMap>) => ReactElement)
+    | undefined;
+  const typedLabelRenderInspector = def.renderInspector as unknown as
+    | ((props: InspectorRenderProps<"label", LabelNodeDataMap>) => ReactElement)
+    | undefined;
+
+  const wrapRenderNode = typedRenderNode
+    ? ((props: NodeRenderProps<string, NodeDataTypeMap>) => {
+        if (type === "label") {
+          if (isLabelNodeRenderProps(props) && typedLabelRenderNode) return typedLabelRenderNode(props);
+        } else {
+          const guard = createTypeGuard<TNodeType>(def.type);
+          if (guard(props) && typedRenderNode) return typedRenderNode(props);
+        }
+        return React.createElement(React.Fragment, null);
+      })
+    : undefined;
+
+  const wrapRenderInspector = typedRenderInspector
+    ? ((props: InspectorRenderProps<string, NodeDataTypeMap>) => {
+        if (type === "label") {
+          if (isLabelInspectorProps(props) && typedLabelRenderInspector) return typedLabelRenderInspector(props);
+        } else {
+          const guard = createInspectorTypeGuard<TNodeType>(def.type);
+          if (guard(props) && typedRenderInspector) return typedRenderInspector(props);
+        }
+        return React.createElement(React.Fragment, null);
+      })
+    : undefined;
+
+  const untyped: NodeDefinition<string, NodeDataTypeMap> = {
+    ...def,
+    type,
+    renderNode: wrapRenderNode,
+    renderInspector: wrapRenderInspector,
+  };
+  return untyped;
 }

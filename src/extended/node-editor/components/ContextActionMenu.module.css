@@ -33,7 +33,7 @@
 .menuList {
   list-style: none;
   margin: 0;
-  padding: var(--node-editor-space-xs, 4px) var(--node-editor-space-xs, 4px) var(--node-editor-space-sm, 8px);
+  padding: 0;
 }
 
 .alignmentControlsItem {

@@ -132,6 +132,16 @@
   letter-spacing: 0.08em;
 }
 
+/* Common small section label for inline groups (e.g., Actions, Alignment) */
+.inspectorLabel {
+  display: block;
+  margin: var(--node-editor-inspector-space-xs) 0 var(--node-editor-inspector-space-xs);
+  font-size: var(--node-editor-inspector-font-size-meta);
+  line-height: var(--node-editor-inspector-line-height-meta);
+  font-weight: 500;
+  color: var(--secondaryLabelColor, #666);
+}
+
 .inspectorReadOnlyField {
   display: block;
   padding: var(--node-editor-inspector-space-sm) var(--node-editor-inspector-space-sm);

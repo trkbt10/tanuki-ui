@@ -17,15 +17,8 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.nodeView.locked {
-  opacity: 0.7;
-  cursor: not-allowed;
-  border-color: var(--cautionColor, #ff3b30);
-}
-
-.nodeView.locked:hover {
-  box-shadow: 0 2px .5em rgba(255, 59, 48, 0.2);
-}
+/* Locked nodes should not be visually highlighted beyond the icon */
+.nodeView.locked {}
 
 .nodeView.selected {
   border-color: var(--accentColor, #0066cc);

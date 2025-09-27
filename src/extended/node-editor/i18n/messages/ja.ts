@@ -97,6 +97,7 @@ export const jaMessages: I18nMessages = {
   inspectorTabProperties: "プロパティ",
   inspectorTabHistory: "履歴",
   inspectorTabSettings: "設定",
+  inspectorActions: "操作",
 
   // History Panel
   historyUndo: "元に戻す",

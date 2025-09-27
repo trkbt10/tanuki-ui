@@ -1,6 +1,6 @@
 import * as React from "react";
 import { classNames, calculateContextMenuPosition, getViewportInfo } from "./elements";
-import { EditIcon, DeleteIcon, DuplicateIcon, CopyIcon, CutIcon, PasteIcon, PlusIcon } from "./elements/icons";
+import { EditIcon, PlusIcon, PasteIcon } from "./elements/icons";
 import styles from "./ContextActionMenu.module.css";
 import alignmentStyles from "./node/renderers/AlignmentControls.module.css";
 import {
@@ -19,6 +19,7 @@ import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
 import { canAddNodeType, countNodesByType } from "../utils/nodeTypeLimits";
 import { getClipboard, setClipboard } from "../utils/clipboard";
 import { calculateAlignmentPositions } from "../utils/alignmentUtils";
+import { NodeActionsList } from "./shared/NodeActionsList";
 
 export type ContextTarget =
   | { type: "node"; id: string }
@@ -263,21 +264,7 @@ export const ContextActionMenu: React.FC<ContextActionMenuProps> = ({ position, 
             >
               <EditIcon size={14} /> {t("contextMenuEditNode")}
             </li>
-            <li className={styles.menuItem} onClick={handleDuplicateNode}>
-              <DuplicateIcon size={14} /> {t("contextMenuDuplicateNode")} {shortcut('⌘D', 'Ctrl+D')}
-            </li>
-            <li className={styles.menuItem} onClick={handleCopySelected}>
-              <CopyIcon size={14} /> {t('copy')} {shortcut('⌘C', 'Ctrl+C')}
-            </li>
-            <li className={styles.menuItem} onClick={handleCutSelected}>
-              <CutIcon size={14} /> {t('cut') || 'Cut'} {shortcut('⌘X', 'Ctrl+X')}
-            </li>
-            <li className={styles.menuItem} onClick={handlePasteFromClipboard}>
-              <PasteIcon size={14} /> {t('paste')} {shortcut('⌘V', 'Ctrl+V')}
-            </li>
-            <li className={classNames(styles.menuItem, styles.menuItemDanger)} onClick={handleDeleteNode}>
-              <DeleteIcon size={14} /> {t("contextMenuDeleteNode")}
-            </li>
+            <NodeActionsList targetNodeId={target.type === 'node' ? target.id : ''} onAction={onClose} />
           </>
         )}
         {target.type === "connection" && (

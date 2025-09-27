@@ -97,6 +97,7 @@ export const enMessages: I18nMessages = {
   inspectorTabProperties: "Properties",
   inspectorTabHistory: "History",
   inspectorTabSettings: "Settings",
+  inspectorActions: "Actions",
 
   // History Panel
   historyUndo: "Undo",
