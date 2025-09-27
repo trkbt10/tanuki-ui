@@ -88,6 +88,13 @@ export const themes: ThemeMetadata[] = [
     "category": "Apple"
   },
   {
+    "value": "naver-line",
+    "label": "Naver LINE",
+    "file": "/tanuki-ui/styles/naver-line.css",
+    "description": "LINE's friendly brand styling with bright greens, rounded controls, and conversational surfaces",
+    "category": "Communication"
+  },
+  {
     "value": "material-design",
     "label": "Material Design",
     "file": "/tanuki-ui/styles/material-design.css",

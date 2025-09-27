@@ -24,7 +24,7 @@ function getThemes(): ThemeMetadata[] {
 function getFallbackThemes(): ThemeMetadata[] {
   const fallbackThemeNames = [
     'monotone', 'material-design', 'apple-liquid-glass', 'aws', 'figma',
-    'github-dark', 'handheld-console', 'ios12', 'linear', 'macOS12',
+    'github-dark', 'handheld-console', 'ios12', 'linear', 'macOS12', 'naver-line',
     'openai', 'vercel', 'windows-xp', 'windows11', 'windows98',
     'android12', '8bit-gameconsole-rpg', 'youtube'
   ];
@@ -72,7 +72,7 @@ export function getAllThemeValues(): string[] {
 // Synchronous fallback for cases where async is not possible
 export const ALL_THEMES = [
   'monotone', 'material-design', 'apple-liquid-glass', 'aws', 'figma',
-  'github-dark', 'handheld-console', 'ios12', 'linear', 'macOS12',
+  'github-dark', 'handheld-console', 'ios12', 'linear', 'macOS12', 'naver-line',
   'openai', 'vercel', 'windows-xp', 'windows11', 'windows98',
   'android12', '8bit-gameconsole-rpg', 'youtube'
 ];
