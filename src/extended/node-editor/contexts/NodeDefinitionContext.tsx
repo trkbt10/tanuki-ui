@@ -5,6 +5,7 @@ import {
   createNodeDefinitionRegistry,
   StandardNodeDefinition,
   GroupNodeDefinition,
+  LabelNodeDefinition,
 } from "../types/NodeDefinition";
 
 /**
@@ -46,6 +47,7 @@ export const NodeDefinitionProvider = <TNodeDataTypeMap = {}>({
     if (includeDefaults) {
       reg.register(StandardNodeDefinition as any);
       reg.register(GroupNodeDefinition as any);
+      reg.register(LabelNodeDefinition as any);
     }
 
     // Register custom definitions

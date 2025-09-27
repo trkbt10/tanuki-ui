@@ -95,6 +95,8 @@ export interface NodeEditorProps<TNodeDataTypeMap = {}> {
   autoSaveEnabled?: boolean;
   /** Override: auto-save interval in seconds */
   autoSaveInterval?: number;
+  /** Override: show/hide status bar regardless of settings */
+  showStatusBar?: boolean;
   /** Maximum number of history entries to keep */
   historyMaxEntries?: number;
   /** Renderer overrides for core editor visuals */
@@ -137,6 +139,7 @@ export const NodeEditor = <TNodeDataTypeMap = {},>({
   messagesOverride,
   autoSaveEnabled,
   autoSaveInterval,
+  showStatusBar,
   historyMaxEntries = 40,
   renderers,
   portPositionBehavior,
@@ -178,11 +181,12 @@ export const NodeEditor = <TNodeDataTypeMap = {},>({
                           settingsManager={settingsManager}
                           toolbar={toolbar}
                           autoSaveEnabled={autoSaveEnabled}
-                          autoSaveInterval={autoSaveInterval}
-                          leftSidebar={leftSidebar}
-                          rightSidebar={rightSidebar}
-                          leftSidebarInitialWidth={leftSidebarInitialWidth}
-                          rightSidebarInitialWidth={rightSidebarInitialWidth}
+                        autoSaveInterval={autoSaveInterval}
+                        showStatusBarOverride={showStatusBar}
+                        leftSidebar={leftSidebar}
+                        rightSidebar={rightSidebar}
+                        leftSidebarInitialWidth={leftSidebarInitialWidth}
+                        rightSidebarInitialWidth={rightSidebarInitialWidth}
                           leftSidebarMinWidth={leftSidebarMinWidth}
                           rightSidebarMinWidth={rightSidebarMinWidth}
                           leftSidebarMaxWidth={leftSidebarMaxWidth}
@@ -213,6 +217,7 @@ const NodeEditorContent: React.FC<{
   toolbar?: React.ReactNode;
   autoSaveEnabled?: boolean;
   autoSaveInterval?: number;
+  showStatusBarOverride?: boolean;
   leftSidebar?: React.ReactNode;
   rightSidebar?: React.ReactNode;
   leftSidebarInitialWidth?: number;
@@ -233,6 +238,7 @@ const NodeEditorContent: React.FC<{
   toolbar,
   autoSaveEnabled,
   autoSaveInterval,
+  showStatusBarOverride,
   leftSidebar,
   rightSidebar,
   leftSidebarInitialWidth,
@@ -385,6 +391,7 @@ const NodeEditorContent: React.FC<{
   const settingsAutoSaveInterval = settings.autoSaveInterval;
   const effectiveAutoSave = autoSaveEnabled ?? settingsAutoSave;
   const effectiveAutoSaveInterval = (autoSaveInterval ?? settingsAutoSaveInterval) ?? 30;
+  const effectiveShowStatusBar = (showStatusBarOverride ?? showStatusBar);
   // Apply settings-based CSS custom properties
   const editorStyles = React.useMemo(
     () =>
@@ -436,7 +443,11 @@ const NodeEditorContent: React.FC<{
         type: nodeType,
         position: centeredPosition,
         size: nodeSize,
-        data: nodeDefinition.defaultData || { title: nodeDefinition.displayName },
+        // Use definition defaults but force empty title per requirements
+        data: (() => {
+          const base = nodeDefinition.defaultData ? { ...nodeDefinition.defaultData } : {} as any;
+          return { ...base, title: "" };
+        })(),
         // Ports are no longer assigned here - they will be inferred from NodeDefinition
       };
 
@@ -545,7 +556,9 @@ const NodeEditorContent: React.FC<{
                 </PortPositionProvider>
               </CanvasBase>
 
-              {showStatusBar && <StatusBar autoSave={effectiveAutoSave} isSaving={isSaving} settingsManager={settingsManager} />}
+              {effectiveShowStatusBar && (
+                <StatusBar autoSave={effectiveAutoSave} isSaving={isSaving} settingsManager={settingsManager} />
+              )}
             </div>
           </ColumnLayout>
         </div>

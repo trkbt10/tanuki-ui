@@ -189,3 +189,20 @@
 
 /* Placeholder class to keep API parity */
 .resizing {}
+
+/* Decoration-less node appearance for label-like nodes */
+.plainNode {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+  min-width: unset;
+  min-height: unset;
+}
+
+.plainNode.selected,
+.plainNode:hover,
+.plainNode.locked,
+.plainNode.dragging {
+  box-shadow: none;
+  border: none;
+}

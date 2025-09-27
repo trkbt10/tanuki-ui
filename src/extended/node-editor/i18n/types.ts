@@ -19,6 +19,8 @@ export interface I18nMessages {
   cut?: string;
   paste: string;
   addConnection?: string;
+  // Generic labels
+  untitled: string;
 
   // Node Editor UI
   addNode: string;

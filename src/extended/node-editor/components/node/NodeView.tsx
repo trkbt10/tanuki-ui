@@ -16,6 +16,7 @@ import { useNodeResize } from "../../hooks/useNodeResize";
 import { useGroupManagement } from "../../hooks/useGroupManagement";
 import { PortView } from "../connection/ports/PortView";
 import { useOptionalRenderers } from "../../contexts/RendererContext";
+import { useI18n } from "../../i18n";
 
 export interface CustomNodeRendererProps {
   node: Node;
@@ -80,6 +81,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
   const externalDataState = useExternalData(node, externalDataRef);
   const renderers = useOptionalRenderers();
   const PortComponent = renderers?.port ?? PortView;
+  const { t } = useI18n();
 
   // Reference to the DOM element for direct transform updates
   const nodeRef = React.useRef<HTMLDivElement>(null);
@@ -166,7 +168,8 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
     (e: React.MouseEvent) => {
       e.stopPropagation();
       if (!node.locked) {
-        const currentTitle = node.data.title || `Node ${node.id.slice(0, 6)}`;
+        // Start editing with raw current title (blank if unset)
+        const currentTitle = node.data.title || "";
         startEditing(node.id, "title", currentTitle);
       }
     },
@@ -291,6 +294,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
       ref={nodeRef}
       className={classNames(
         styles.nodeView,
+        node.type === "label" && styles.plainNode,
         node.type === "group" && styles.groupNode,
         node.type === "group" && hasChildren && styles.groupHasChildren,
         isSelected && styles.selected,
@@ -336,7 +340,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
               />
             ) : (
               <span className={styles.nodeTitle} onDoubleClick={handleTitleDoubleClick}>
-                {node.data.title || `Node ${node.id.slice(0, 6)}`}
+                {node.data.title && node.data.title.trim().length > 0 ? node.data.title : t("untitled")}
               </span>
             )}
           </div>

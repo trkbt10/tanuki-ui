@@ -42,6 +42,7 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
   onNodeDrop,
   onDragStateChange
 }) => {
+  const { t } = useI18n();
   const nodeDefinitions = useNodeDefinitionList();
   const hasChildren = node.type === "group" && childNodes.length > 0;
   const isExpanded = node.type === "group" && node.expanded !== false;
@@ -185,7 +186,7 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
         <span className={styles.nodeIcon}>{getNodeIcon(node.type, nodeDefinitions)}</span>
         
         <span className={styles.nodeName}>
-          {node.data?.title || node.type}
+          {node.data?.title && node.data.title.trim().length > 0 ? node.data.title : t("untitled")}
         </span>
         
         <button
@@ -324,11 +325,11 @@ export const NodeTreeList: React.FC<NodeTreeListProps> = ({ className }) => {
       if (a.type !== "group" && b.type === "group") return 1;
       
       // Then by title
-      const titleA = a.data?.title || a.type;
-      const titleB = b.data?.title || b.type;
+      const titleA = (a.data?.title && a.data.title.trim().length > 0) ? a.data.title : t("untitled");
+      const titleB = (b.data?.title && b.data.title.trim().length > 0) ? b.data.title : t("untitled");
       return titleA.localeCompare(titleB);
     });
-  }, [rootNodes]);
+  }, [rootNodes, t]);
   
   const handleDeselectAll = React.useCallback(() => {
     actionDispatch(actionActions.clearSelection());

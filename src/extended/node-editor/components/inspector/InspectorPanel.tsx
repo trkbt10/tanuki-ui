@@ -129,15 +129,19 @@ export const InspectorPropertiesTab: React.FC = () => {
           <div className={styles.inspectorField}>
             <label>From:</label>
             <span className={styles.inspectorReadOnlyField}>
-              {nodeEditorState.nodes[selectedConnection.fromNodeId]?.data.title || selectedConnection.fromNodeId}.
-              {selectedConnection.fromPortId}
+              {(nodeEditorState.nodes[selectedConnection.fromNodeId]?.data.title?.trim()?.length ?? 0) > 0
+                ? nodeEditorState.nodes[selectedConnection.fromNodeId]?.data.title
+                : t("untitled")}
+              .{selectedConnection.fromPortId}
             </span>
           </div>
           <div className={styles.inspectorField}>
             <label>To:</label>
             <span className={styles.inspectorReadOnlyField}>
-              {nodeEditorState.nodes[selectedConnection.toNodeId]?.data.title || selectedConnection.toNodeId}.
-              {selectedConnection.toPortId}
+              {(nodeEditorState.nodes[selectedConnection.toNodeId]?.data.title?.trim()?.length ?? 0) > 0
+                ? nodeEditorState.nodes[selectedConnection.toNodeId]?.data.title
+                : t("untitled")}
+              .{selectedConnection.toPortId}
             </span>
           </div>
         </div>

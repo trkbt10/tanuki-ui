@@ -55,7 +55,11 @@ export const NodeEditorToolbar: React.FC<NodeEditorToolbarProps> = ({
         type: nodeType,
         position: { x: centerX, y: centerY },
         size: nodeDefinition.defaultSize || { width: 150, height: 50 },
-        data: nodeDefinition.defaultData || { title: nodeDefinition.displayName },
+        // Use definition defaults but force empty title per requirements
+        data: (() => {
+          const base = nodeDefinition.defaultData ? { ...nodeDefinition.defaultData } : {} as any;
+          return { ...base, title: "" };
+        })(),
       };
 
       dispatch(actions.addNode(newNode));

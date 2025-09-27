@@ -101,7 +101,7 @@ export const useNodeEditorShortcuts = () => {
         title: "New Node",
         type: "default" as const,
         position: { x: 100, y: 100 },
-        data: { title: "New Node" },
+        data: { title: "" },
         ports: [
           {
             id: `port-input-${Date.now()}`,

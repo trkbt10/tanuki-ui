@@ -19,6 +19,7 @@ import {
  * Default node renderer
  */
 export const DefaultNodeRenderer: React.FC<NodeRenderProps> = ({ node, isSelected, isDragging, isEditing, onStartEdit }) => {
+  const { t } = useI18n();
   return (
     <div
       className={[
@@ -28,7 +29,7 @@ export const DefaultNodeRenderer: React.FC<NodeRenderProps> = ({ node, isSelecte
       ].filter(Boolean).join(" ")}
       onDoubleClick={onStartEdit}
     >
-      <h3 className={defaultStyles.nodeTitle}>{node.data.title || `Node ${node.id}`}</h3>
+      <h3 className={defaultStyles.nodeTitle}>{node.data.title && node.data.title.trim().length > 0 ? node.data.title : t("untitled")}</h3>
       {node.data.content && <p className={defaultStyles.nodeContent}>{String(node.data.content)}</p>}
     </div>
   );

@@ -15,6 +15,7 @@ export const jaMessages: I18nMessages = {
   cut: "切り取り",
   paste: "貼り付け",
   addConnection: "接続の追加…",
+  untitled: "名称未設定",
 
   // Node Editor UI
   addNode: "ノード追加",

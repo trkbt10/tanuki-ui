@@ -314,6 +314,30 @@ export const GroupNodeDefinition: NodeDefinition = {
 };
 
 /**
+ * Label node definition (decoration-less, no connections)
+ */
+import { LabelNodeRenderer, LabelNodeInspector } from "../components/node/renderers/LabelNode";
+import type { LabelNodeDataMap } from "./nodes/label";
+
+export const LabelNodeDefinition: NodeDefinition<"label", LabelNodeDataMap> = {
+  type: "label",
+  displayName: "Label",
+  description: "A decoration-less text label with optional subtitle and caption",
+  category: "Basic",
+  defaultData: {
+    title: "",
+    subtitle: "",
+    caption: "",
+  },
+  // Provide a compact default size; content may exceed if long
+  defaultSize: { width: 220, height: 72 },
+  // No ports for a pure label
+  ports: [],
+  renderNode: LabelNodeRenderer,
+  renderInspector: LabelNodeInspector,
+};
+
+/**
  * Multi-input node definition for testing multiple input ports
  */
 export const MultiInputNodeDefinition: NodeDefinition = {

@@ -15,6 +15,7 @@ export const enMessages: I18nMessages = {
   cut: "Cut",
   paste: "Paste",
   addConnection: "Add Connection…",
+  untitled: "Untitled",
 
   // Node Editor UI
   addNode: "Add Node",
