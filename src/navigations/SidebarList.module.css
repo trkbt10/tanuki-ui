@@ -118,6 +118,7 @@
   background: var(--selectedSidebarListItemBackground);
 }
 
+.listItem:active .listItemLabel,
 .listItem[data-selected="true"] .listItemLabel {
   color: var(--selectedSidebarListItemTextColor, var(--sidebarListItemTextColor));
 }

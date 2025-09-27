@@ -252,8 +252,8 @@
   --sidebarBackground: var(--windowBackgroundColor);
   --sidebarListItemFont: normal normal 500 14px/1.6 var(--themeDefaultFontFamily);
   --sidebarListItemBorderRadius: 12px;
-  --selectedSidebarListItemBackground: var(--lineGreenMuted);
-  --selectedSidebarListItemTextColor: var(--textColor);
+  --selectedSidebarListItemBackground: var(--lineGreen);
+  --selectedSidebarListItemTextColor: var(--alternateSelectedControlTextColor);
   --selectedSidebarListItemMarker: 3px solid var(--accentColor);
   --sidebarListItemDetailsBackground: var(--lineNeutral100);
   --sidebarListItemTextColor: var(--textColor);
