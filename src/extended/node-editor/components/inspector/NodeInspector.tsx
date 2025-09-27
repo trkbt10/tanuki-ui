@@ -86,13 +86,13 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
 
     return (
       <>
-        {/* Custom inspector first */}
+        {/* Custom inspector first (outside Node Properties section) */}
         {nodeDefinition?.renderInspector && (
           <div className={styles.customInspectorBlock}>
             {nodeDefinition.renderInspector(inspectorProps)}
           </div>
         )}
-        {/* Always show default Node Properties */}
+        {/* Default Node Properties */}
         <DefaultInspectorRenderer {...inspectorProps} />
       </>
     );

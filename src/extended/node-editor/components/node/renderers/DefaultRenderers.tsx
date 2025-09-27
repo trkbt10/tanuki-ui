@@ -1,9 +1,9 @@
 import * as React from "react";
 import type { NodeRenderProps, InspectorRenderProps } from "../../../types/NodeDefinition";
 import type { Node } from "../../../types/core";
-import { Input, Label, Textarea } from "../../elements";
+import { Input, Textarea } from "../../elements";
 import editorStyles from "../../../NodeEditor.module.css";
-import { PropertySection } from "../../parts";
+import { PropertySection, InspectorLabel } from "../../parts";
 import { useI18n } from "../../../i18n";
 import alignmentStyles from "./AlignmentControls.module.css";
 import defaultStyles from "./DefaultRenderers.module.css";
@@ -15,7 +15,6 @@ import {
   type AlignmentActionType,
 } from "../../shared/alignmentActions";
 import { NodeActionsList } from "../../shared/NodeActionsList";
-import { InspectorLabel } from "../../parts/InspectorLabel";
 
 /**
  * Default node renderer
@@ -232,20 +231,20 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
       },
       [node.size, onUpdateNode]
     );
-
     const handleLockedChange = React.useCallback(
       (locked: boolean) => {
         onUpdateNode({ locked });
       },
       [onUpdateNode]
     );
-
     const handleVisibleChange = React.useCallback(
       (visible: boolean) => {
         onUpdateNode({ visible });
       },
       [onUpdateNode]
     );
+
+    // no-op placeholders removed (group-specific controls are handled by custom inspector outside)
 
     const handleAlignment = React.useCallback(
       (alignmentType: AlignmentActionType) => {
@@ -257,10 +256,11 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
 
     return (
       <PropertySection title={t("inspectorNodeProperties")}> 
+
         <div>
-          <Label htmlFor={`node-${node.id}-title`}>
-            {t("fieldTitle") || "Title"}:
-          </Label>
+          <InspectorLabel>
+            {t("fieldTitle") || "Title"}
+          </InspectorLabel>
           <InspectorInput
             id={`node-${node.id}-title`}
             name="nodeTitle"
@@ -272,9 +272,9 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
 
         {node.data.content !== undefined && (
           <div>
-            <Label htmlFor={`node-${node.id}-content`}>
-              {t("fieldContent") || "Content"}:
-            </Label>
+            <InspectorLabel>
+              {t("fieldContent") || "Content"}
+            </InspectorLabel>
             <InspectorTextarea
               id={`node-${node.id}-content`}
               name="nodeContent"
@@ -328,18 +328,23 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         </div>
 
         <div>
-          <Label>Type:</Label>
+          <InspectorLabel>
+            {t("inspectorLocked")} / {t("inspectorVisible")}
+          </InspectorLabel>
+          <div className={defaultStyles.groupInspectorOptions}>
+            <InspectorCheckbox checked={node.locked || false} onChange={handleLockedChange} label={t("inspectorLocked")} />
+            <InspectorCheckbox checked={node.visible !== false} onChange={handleVisibleChange} label={t("inspectorVisible")} />
+          </div>
+        </div>
+
+        <div>
+          <InspectorLabel>Type</InspectorLabel>
           <div className={editorStyles.inspectorReadOnlyField}>
             {node.type}
           </div>
         </div>
 
-        {node.type === "group" && (
-          <div className={defaultStyles.groupInspectorOptions}>
-            <InspectorCheckbox checked={node.locked || false} onChange={handleLockedChange} label={t("inspectorLocked")} />
-            <InspectorCheckbox checked={node.visible !== false} onChange={handleVisibleChange} label={t("inspectorVisible")} />
-          </div>
-        )}
+        {/* Group-specific inspector UI is rendered outside this section by NodeInspector */}
 
         <InspectorLabel>
           {t("inspectorActions") || "Actions"}

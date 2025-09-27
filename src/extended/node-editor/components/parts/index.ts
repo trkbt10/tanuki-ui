@@ -23,3 +23,7 @@ export type { PortViewProps } from "../connection/ports/PortView";
 
 export { ConstraintViolationDisplay } from "./ConstraintViolationDisplay";
 export type { ConstraintViolationDisplayProps } from "./ConstraintViolationDisplay";
+export { InspectorLabel } from "./InspectorLabel";
+export type { InspectorLabelProps } from "./InspectorLabel";
+export { InspectorButton } from "./InspectorButton";
+export type { InspectorButtonProps } from "./InspectorButton";

@@ -303,6 +303,7 @@ export const ExampleNodeDefinition: NodeDefinition<"standard"> = {
 /**
  * Group node definition
  */
+import { GroupInspector } from "../components/node/renderers/GroupInspector";
 export const GroupNodeDefinition: NodeDefinition<"group"> = {
   type: "group",
   displayName: "Group",
@@ -314,6 +315,7 @@ export const GroupNodeDefinition: NodeDefinition<"group"> = {
   defaultSize: { width: 300, height: 200 },
   supportsChildren: true,
   visualState: "info",
+  renderInspector: GroupInspector,
 };
 
 /**

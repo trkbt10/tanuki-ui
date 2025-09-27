@@ -290,14 +290,52 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
     [nodeDefinition?.interactive, node.id, isSelected, onPointerDown]
   );
 
+  // Dynamic styling for group nodes (minimize explicit branching)
+  const isGroup = node.type === "group";
+  const groupBackground = isGroup && typeof (node.data as Record<string, unknown>).groupBackground === "string"
+    ? String((node.data as Record<string, unknown>).groupBackground)
+    : undefined;
+
+  function parseColorToRGB(input: string): { r: number; g: number; b: number } | null {
+    const hex = input.trim();
+    const hexMatch = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.exec(hex);
+    if (hexMatch) {
+      let v = hexMatch[1];
+      if (v.length === 3) v = v.split("").map((c) => c + c).join("");
+      const num = parseInt(v, 16);
+      return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
+    }
+    const rgbMatch = /^rgba?\(([^)]+)\)$/.exec(input);
+    if (rgbMatch) {
+      const parts = rgbMatch[1].split(",").map((p) => p.trim());
+      const r = Number(parts[0]);
+      const g = Number(parts[1]);
+      const b = Number(parts[2]);
+      if ([r, g, b].every((n) => Number.isFinite(n))) return { r, g, b };
+    }
+    return null;
+  }
+
+  function getReadableTextColor(bg: string | undefined): string | undefined {
+    if (!bg) return undefined;
+    const rgb = parseColorToRGB(bg);
+    if (!rgb) return undefined;
+    // Relative luminance
+    const srgb = [rgb.r, rgb.g, rgb.b].map((v) => v / 255).map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
+    const L = 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
+    return L > 0.5 ? "#111111" : "#ffffff";
+  }
+
+  const groupTextColor = isGroup ? getReadableTextColor(groupBackground) : undefined;
+
   return (
     <div
       ref={nodeRef}
       className={classNames(
         styles.nodeView,
         node.type === "label" && styles.plainNode,
-        node.type === "group" && styles.groupNode,
-        node.type === "group" && hasChildren && styles.groupHasChildren,
+        isGroup && styles.groupNode,
+        isGroup && hasChildren && styles.groupHasChildren,
         isSelected && styles.selected,
         (isDragging || isChildDragging) && styles.dragging,
         isResizing && styles.resizing,
@@ -307,7 +345,9 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
       style={{
         width: size.width,
         height: size.height,
-        zIndex: isDragging || isResizing ? 1000 : node.type === "group" ? 1 : 2,
+        zIndex: isDragging || isResizing ? 1000 : isGroup ? 1 : 2,
+        backgroundColor: groupBackground,
+        color: groupTextColor,
       }}
       onPointerDown={handleNodePointerDown}
       onContextMenu={(e) => onContextMenu(e, node.id)}
@@ -344,14 +384,14 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
                 aria-label="Node title"
               />
             ) : (
-              <span className={styles.nodeTitle} onDoubleClick={handleTitleDoubleClick}>
+              <span className={styles.nodeTitle} onDoubleClick={handleTitleDoubleClick} style={groupTextColor ? { color: groupTextColor } : undefined}>
                 {node.data.title && node.data.title.trim().length > 0 ? node.data.title : t("untitled")}
               </span>
             )}
           </div>
 
           <div className={styles.nodeContent}>
-            {node.type === "group" ? (
+            {isGroup ? (
               <GroupContent node={node} childCount={groupChildren.length} />
             ) : (
               node.data.content || "Empty node"
