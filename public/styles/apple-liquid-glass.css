@@ -314,7 +314,7 @@
   --controlTextColor--secondary: rgba(0, 0, 0, 0.9);
 
   /* Input - Glass Field */
-  --inputPadding: var(--space-sm) var(--space-md);
+  --inputPadding: var(--controlPadding);
   --inputBoxShadow:
     0 10px 26px rgba(12, 26, 48, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);

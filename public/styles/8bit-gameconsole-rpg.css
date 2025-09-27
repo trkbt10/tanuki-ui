@@ -19,18 +19,18 @@
   --pixel-screen: #f8f8f8;
   --pixel-border: #404040;
   --pixel-shadow: #202020;
-  
+
   /* Base System Colors */
   --textColor: var(--pixel-black);
   --accentColor: var(--pixel-dark-gray);
   --cautionColor: var(--pixel-medium-gray);
   --windowBackgroundColor: var(--pixel-screen);
-  
+
   /* 8-bit Typography System */
   --themeDefaultFontFamily: "Press Start 2P", "Courier New", "Monaco", "Menlo", monospace;
   --themeControlFontFamily: "Press Start 2P", "Courier New", monospace;
   --themeLabelFontFamily: "Press Start 2P", "Courier New", monospace;
-  
+
   /* Pixel-perfect font rendering */
   -webkit-font-smoothing: none;
   -moz-osx-font-smoothing: unset;
@@ -38,28 +38,28 @@
   text-rendering: optimizeSpeed;
   font-feature-settings: "kern" 0, "liga" 0;
   font-kerning: none;
-  
+
   /* 8-bit Text Hierarchy - Pixel-aligned sizes */
   --textFont: normal normal 400 8px/1.25 var(--themeDefaultFontFamily);
   --labelFont: normal normal 400 8px/1.25 var(--themeLabelFontFamily);
   --titleFont: normal normal 400 16px/1.25 var(--themeDefaultFontFamily);
   --subtitleFont: normal normal 400 12px/1.25 var(--themeDefaultFontFamily);
   --captionFont: normal normal 400 8px/1.25 var(--themeDefaultFontFamily);
-  
+
   /* 8-bit Text Color Hierarchy */
   --labelColor: var(--pixel-black);
   --secondaryLabelColor: var(--pixel-dark-gray);
   --tertiaryLabelColor: var(--pixel-medium-gray);
   --quaternaryLabelColor: var(--pixel-light-gray);
   --placeholderTextColor: var(--pixel-medium-gray);
-  
+
   /* 8-bit Selection Colors */
   --selectedTextColor: var(--pixel-white);
   --selectedTextBackgroundColor: var(--pixel-black);
   --textBackgroundColor: var(--pixel-screen);
   --unemphasizedSelectedTextColor: var(--pixel-black);
   --unemphasizedSelectedTextBackgroundColor: var(--pixel-light-gray);
-  
+
   /* 8-bit System Colors */
   --systemBlueColor: var(--pixel-dark-gray);
   --systemGreenColor: var(--pixel-dark-gray);
@@ -72,21 +72,21 @@
   --systemIndigoColor: var(--pixel-dark-gray);
   --systemBrownColor: var(--pixel-medium-gray);
   --systemGrayColor: var(--pixel-medium-gray);
-  
+
   /* 8-bit Chunky Borders */
   --pixel-raised-border: 3px outset var(--pixel-light-gray);
   --pixel-lowered-border: 3px inset var(--pixel-light-gray);
   --pixel-double-border: 4px double var(--pixel-border);
-  
+
   /* 8-bit Box Shadow Effects */
-  --pixel-raised-shadow: 
+  --pixel-raised-shadow:
     inset 2px 2px 0 var(--pixel-white),
     inset -2px -2px 0 var(--pixel-dark-gray);
   --pixel-lowered-shadow:
     inset -2px -2px 0 var(--pixel-white),
     inset 2px 2px 0 var(--pixel-dark-gray);
   --pixel-flat-shadow: 2px 2px 0 var(--pixel-shadow);
-  
+
   /* 8-bit Control Properties */
   --controlAccentColor: var(--pixel-dark-gray);
   --controlBackground: var(--pixel-light-gray);
@@ -96,7 +96,7 @@
   --controlFocusBackground: var(--pixel-light-gray);
   --controlDisabledBackground: var(--pixel-screen);
   --disabledControlTextColor: var(--pixel-medium-gray);
-  
+
   /* 8-bit Control Styling */
   --controlBorder: var(--pixel-raised-border);
   --controlBoxShadow: var(--pixel-raised-shadow);
@@ -107,7 +107,7 @@
   --controlPadding: 8px 12px;
   --controlTextFont: normal normal 400 8px/1.25 var(--themeControlFontFamily);
   --controlTextLetterSpacing: 1px;
-  
+
   /* 8-bit Primary Controls */
   --controlBackground--primary: var(--pixel-black);
   --controlTextColor--primary: var(--pixel-white);
@@ -115,7 +115,7 @@
   --controlActiveBackground--primary: var(--pixel-black);
   --controlBorder--primary: var(--pixel-raised-border);
   --controlBoxShadow--primary: var(--pixel-raised-shadow);
-  
+
   /* 8-bit Secondary Controls */
   --controlBackground--secondary: var(--pixel-medium-gray);
   --controlTextColor--secondary: var(--pixel-black);
@@ -123,9 +123,9 @@
   --controlActiveBackground--secondary: var(--pixel-dark-gray);
   --controlBorder--secondary: var(--pixel-raised-border);
   --controlBoxShadow--secondary: var(--pixel-raised-shadow);
-  
+
   /* 8-bit Input Elements */
-  --inputPadding: 6px 8px;
+  --inputPadding: var(--controlPadding);
   --inputFont: var(--textFont);
   --inputBorder: var(--pixel-lowered-border);
   --inputBorderRadius: 0;
@@ -133,7 +133,7 @@
   --inputBoxShadow: var(--pixel-lowered-shadow);
   --inputFocusBorder: var(--pixel-lowered-border);
   --inputFocusBoxShadow: var(--pixel-lowered-shadow), 0 0 0 2px var(--pixel-black);
-  
+
   /* 8-bit Dialog & Windows */
   --dialogBackground: var(--pixel-light-gray);
   --dialogBorderRadius: 0;
@@ -146,7 +146,7 @@
   --windowBorderRadius: 0;
   --windowPadding: 12px;
   --windowBackdropFilter: none;
-  
+
   /* 8-bit Table Styles */
   --tableFont: var(--textFont, normal normal 400 13px/1.230769 var(--themeLabelFontFamily));
   --tableLetterSpacing: var(--textLetterSpacing, 0);
@@ -188,7 +188,7 @@
   --tableHoverBackground: var(--pixel-light-gray);
   --tableHoverTextColor: var(--pixel-black);
   --tableCellPadding: 6px 8px;
-  
+
   /* 8-bit Table Border Styles */
   --tableBorder: var(--pixel-double-border);
   --tableBorderStyle: double;
@@ -202,7 +202,7 @@
   --tableRowBorder: 1px solid var(--pixel-light-gray);
   --tableRowBorderStyle: solid;
   --tableRowBorderWidth: 1px;
-  
+
   /* 8-bit Tab System */
   --tabBarBackground: var(--pixel-light-gray);
   --tabBarBorder: var(--pixel-raised-border);
@@ -224,7 +224,7 @@
   --tabItemFont-selected: normal normal 400 8px/1.25 var(--themeDefaultFontFamily);
   --tabItemBorder-selected: var(--pixel-lowered-border);
   --tabItemBoxShadow-selected: var(--pixel-lowered-shadow);
-  
+
   /* 8-bit Sidebar */
   --sidebarBackground: var(--pixel-light-gray);
   --sidebarWidth: 200px;
@@ -247,7 +247,7 @@
   --sidebarSectionTitleBackground: transparent;
   --sidebarSectionTitleBorderRadius: 0;
   --sidebarSectionTitleTextTransform: uppercase;
-  
+
   /* 8-bit Cards */
   --cardBackground: var(--pixel-white);
   --cardBorderRadius: 0;
@@ -270,14 +270,14 @@
   --cardBorder--outlined: var(--pixel-lowered-border);
   --cardBackground--filled: var(--pixel-light-gray);
   --cardBoxShadow--filled: none;
-  
+
   /* 8-bit Toolbar */
   --toolbarBackground: var(--pixel-light-gray);
   --toolbarHeight: 32px;
   --toolbarPadding: 6px 12px;
   --toolbarBorder: var(--pixel-raised-border);
   --toolbarBoxShadow: var(--pixel-raised-shadow);
-  
+
   /* 8-bit Bar Items */
   --barItemsFontFamily: var(--themeDefaultFontFamily);
   --barItemsTextColor: var(--pixel-black);
@@ -293,7 +293,7 @@
   --barItemsHoverSegmentControlBackground: var(--pixel-light-gray);
   --barItemsActiveSegmentControlBackground: var(--pixel-black);
   --barItemsAccentColor: var(--pixel-dark-gray);
-  
+
   /* 8-bit Segment Controls */
   --segmentControlBackgroundColor: var(--pixel-medium-gray);
   --segmentControlPadding: 4px;
@@ -303,7 +303,7 @@
   --segmentControlBorderRadius: 0;
   --segmentControlIndicatorBoxShadow: var(--pixel-raised-shadow);
   --segmentControlIndicatorBackground: var(--pixel-light-gray);
-  
+
   /* 8-bit Contextual Menu */
   --contextualMenuBackground: var(--pixel-light-gray);
   --contextualMenuBorder: var(--pixel-raised-border);
@@ -316,14 +316,14 @@
   --contextualMenuItemHoverColor: var(--pixel-white);
   --contextualMenuSeparatorColor: var(--pixel-border);
   --contextualMenuSeparatorHeight: 2px;
-  
+
   /* 8-bit Progress & Health Bars */
   --progressBackground: var(--pixel-white);
   --progressForeground: var(--pixel-black);
   --progressBorderRadius: 0;
   --progressHeight: 16px;
   --progressBoxShadow: var(--pixel-lowered-shadow);
-  
+
   /* 8-bit Scrollbars */
   --scrollBarBackgroundColor: var(--pixel-medium-gray);
   --scrollBarThumbColor: var(--pixel-dark-gray);
@@ -332,7 +332,7 @@
   --scrollbarThumbBoxShadow: var(--pixel-raised-shadow);
   --scrollbarButtonBackground: var(--pixel-light-gray);
   --scrollbarButtonBoxShadow: var(--pixel-raised-shadow);
-  
+
   /* 8-bit Form Elements */
   --checkboxSize: 16px;
   --checkboxBackground: var(--pixel-white);
@@ -345,7 +345,7 @@
   --selectBoxSplitButtonBorderColor: var(--pixel-border);
   --selectBoxSplitButtonBorderWidth: 3px;
   --selectBoxSplitButtonBackground: var(--pixel-light-gray);
-  
+
   /* 8-bit Focus & Links */
   --keyboardFocusIndicatorColor: var(--pixel-black);
   --focusRingWidth: 2px;
@@ -365,7 +365,7 @@
   --findHighlightColor: var(--pixel-light-gray);
   --highlightColor: var(--pixel-black);
   --shadowColor: var(--pixel-shadow);
-  
+
   /* 8-bit Animation */
   --animationDuration: 0ms;
   --animationEasing: steps(1);
@@ -382,7 +382,7 @@
     --pixel-screen: #202020;
     --pixel-border: #c0c0c0;
     --pixel-shadow: #ffffff;
-    
+
     --textColor: var(--pixel-black);
     --windowBackgroundColor: var(--pixel-screen);
     --labelColor: var(--pixel-black);
@@ -450,10 +450,15 @@ body ::-webkit-scrollbar-button:hover {
   cursor: default;
 }
 
-button, input[type="button"], input[type="submit"], [role="button"] {
+button,
+input[type="button"],
+input[type="submit"],
+[role="button"] {
   cursor: pointer;
 }
 
-input[type="text"], input[type="password"], textarea {
+input[type="text"],
+input[type="password"],
+textarea {
   cursor: text;
 }

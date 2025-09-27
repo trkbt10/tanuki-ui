@@ -12,12 +12,15 @@
   -moz-osx-font-smoothing: unset;
   font-smooth: never;
   text-rendering: optimizeSpeed;
-  
+
   /* Base Colors - Classic Windows 98 */
   --textColor: rgba(0, 0, 0, 1);
-  --accentColor: rgba(0, 0, 128, 1); /* Classic Windows Blue */
-  --cautionColor: rgba(255, 0, 0, 1); /* Classic Windows Red */
-  --windowBackgroundColor: rgba(192, 192, 192, 1); /* Classic Windows Gray */
+  --accentColor: rgba(0, 0, 128, 1);
+  /* Classic Windows Blue */
+  --cautionColor: rgba(255, 0, 0, 1);
+  /* Classic Windows Red */
+  --windowBackgroundColor: rgba(192, 192, 192, 1);
+  /* Classic Windows Gray */
   --dividerColor: rgba(128, 128, 128, 1);
 
   /* Typography System - Classic Windows Fonts */
@@ -52,14 +55,18 @@
   --systemGrayColor: rgba(128, 128, 128, 1);
 
   /* Background Colors */
-  --backgroundColor: rgba(192, 192, 192, 1); /* Control background */
-  --secondaryBackgroundColor: rgba(212, 208, 200, 1); /* Dialog background */
-  --tertiaryBackgroundColor: rgba(255, 255, 255, 1); /* Text input background */
+  --backgroundColor: rgba(192, 192, 192, 1);
+  /* Control background */
+  --secondaryBackgroundColor: rgba(212, 208, 200, 1);
+  /* Dialog background */
+  --tertiaryBackgroundColor: rgba(255, 255, 255, 1);
+  /* Text input background */
 
   /* Border and Separator Colors */
   --separatorColor: rgba(128, 128, 128, 1);
   --opaqueSeparatorColor: rgba(128, 128, 128, 1);
-  --linkColor: rgba(0, 0, 255, 1); /* Classic hyperlink blue */
+  --linkColor: rgba(0, 0, 255, 1);
+  /* Classic hyperlink blue */
   --placeholderTextColor: rgba(128, 128, 128, 1);
 
   /* Window Properties */
@@ -78,7 +85,7 @@
   --controlFocusBackground: rgba(192, 192, 192, 1);
   --controlDisabledBackground: rgba(192, 192, 192, 1);
   --disabledControlTextColor: rgba(128, 128, 128, 1);
-  
+
   /* Control Box Shadow (Classic 3D effect) */
   --controlBoxShadow: inset -1px -1px 0 rgba(0, 0, 0, 1), inset 1px 1px 0 rgba(223, 223, 223, 1),
     inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1);
@@ -86,7 +93,7 @@
   --controlActiveBoxShadow: inset 1px 1px 0 rgba(0, 0, 0, 1), inset -1px -1px 0 rgba(223, 223, 223, 1),
     inset 2px 2px 0 rgba(128, 128, 128, 1), inset -2px -2px 0 rgba(255, 255, 255, 1);
   --controlFocusBoxShadow: var(--controlBoxShadow);
-  
+
   /* Control Properties */
   --controlBorderRadius: 0;
   --controlPadding: 1px 6px;
@@ -106,7 +113,7 @@
   --controlBoxShadow--secondary: var(--controlBoxShadow);
 
   /* Input Elements */
-  --inputPadding: 2px 4px;
+  --inputPadding: var(--controlPadding);
   --inputFont: var(--textFont);
   --inputBorder: none;
   --inputBorderRadius: 0;
@@ -223,7 +230,7 @@
   --tabBarBackground: rgba(192, 192, 192, 1);
   --tabBarBoxShadow: none;
   --tabBarLayout: horizontal;
-  
+
   /* Tab Item Styles */
   --tabItemBackground: rgba(192, 192, 192, 1);
   --tabItemTextColor: rgba(0, 0, 0, 1);
@@ -231,12 +238,12 @@
   --tabItemPadding: 2px 8px;
   --tabItemBorderRadius: 0;
   --tabItemBoxShadow: inset -1px -1px 0 rgba(128, 128, 128, 1), inset 1px 1px 0 rgba(255, 255, 255, 1);
-  
+
   /* Tab Item States */
   --tabItemBackground-hover: rgba(192, 192, 192, 1);
   --tabItemTextColor-hover: rgba(0, 0, 0, 1);
   --tabItemBoxShadow-hover: var(--tabItemBoxShadow);
-  
+
   --tabItemBackground-selected: rgba(192, 192, 192, 1);
   --tabItemTextColor-selected: rgba(0, 0, 0, 1);
   --tabItemFont-selected: var(--textFont);
@@ -247,7 +254,7 @@
   --sidebarBackground: rgba(192, 192, 192, 1);
   --sidebarWidth: 150px;
   --sidebarBorder: 1px solid rgba(128, 128, 128, 1);
-  
+
   /* Sidebar List Item */
   --sidebarListItemPadding: 2px 4px;
   --sidebarListItemHeight: 16px;
@@ -258,7 +265,7 @@
   --selectedSidebarListItemBackground: rgba(0, 0, 128, 1);
   --selectedSidebarListItemTextColor: rgba(255, 255, 255, 1);
   --selectedSidebarListItemMarker: rgba(255, 255, 255, 1);
-  
+
   /* Sidebar Section Title */
   --sidebarSectionTitleFont: var(--labelFont);
   --sidebarSectionTitleLetterSpacing: 0;
@@ -422,7 +429,8 @@
     inset -2px -2px 0 rgba(128, 128, 128, 1), inset 2px 2px 0 rgba(255, 255, 255, 1);
 
   /* Desktop Wallpaper Style Background */
-  --desktopBackground: rgba(0, 128, 128, 1); /* Classic teal desktop */
+  --desktopBackground: rgba(0, 128, 128, 1);
+  /* Classic teal desktop */
 
   /* Animation Timing - Minimal animations for authenticity */
   --animationDuration: 0ms;

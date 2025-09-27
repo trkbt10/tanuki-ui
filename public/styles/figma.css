@@ -12,8 +12,10 @@
 :root {
   /* Base Colors */
   --textColor: rgba(0, 0, 0, 1);
-  --accentColor: rgba(24, 160, 251, 1); /* Figma Blue */
-  --cautionColor: rgba(255, 95, 87, 1); /* Figma Red */
+  --accentColor: rgba(24, 160, 251, 1);
+  /* Figma Blue */
+  --cautionColor: rgba(255, 95, 87, 1);
+  /* Figma Red */
   --windowBackgroundColor: rgba(255, 255, 255, 1);
   --dividerColor: rgba(0, 0, 0, 0.1);
 
@@ -80,7 +82,7 @@
   --controlBoxShadow--secondary: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.08);
 
   /* Input Elements */
-  --inputPadding: 8px 12px;
+  --inputPadding: var(--controlPadding);
   --inputFont: var(--textFont);
   --inputBorder: 1px solid rgba(0, 0, 0, 0.1);
   --inputBorderRadius: 6px;
@@ -168,7 +170,7 @@
   --sidebarListItemTextColor: rgba(0, 0, 0, 0.8);
   --selectedSidebarListItemBackground: rgba(24, 160, 251, 0.1);
   --selectedSidebarListItemTextColor: rgba(24, 160, 251, 1);
-  
+
   /* Sidebar Section Title */
   --sidebarSectionTitleFont: var(--labelFont);
   --sidebarSectionTitleLetterSpacing: 0.04em;
@@ -234,7 +236,7 @@
   --cardPadding: 16px;
   --cardBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.08);
   --cardBackdropFilter: none;
-  
+
   /* Card States */
   --cardHoverBackground: rgba(255, 255, 255, 1);
   --cardHoverBorder: 1px solid rgba(0, 0, 0, 0.1);
@@ -247,25 +249,25 @@
   --cardDisabledBackground: rgba(248, 249, 250, 0.6);
   --cardDisabledBorder: 1px solid rgba(0, 0, 0, 0.04);
   --cardDisabledBoxShadow: none;
-  
+
   /* Card Variants */
   --cardElevatedBackground: rgba(255, 255, 255, 1);
   --cardElevatedBorder: none;
   --cardElevatedBoxShadow: 0 4px 16px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.04);
   --cardElevatedHoverBoxShadow: 0 8px 24px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
-  
+
   --cardGhostBackground: transparent;
   --cardGhostBorder: 1px dashed rgba(0, 0, 0, 0.2);
   --cardGhostBoxShadow: none;
   --cardGhostHoverBackground: rgba(0, 0, 0, 0.02);
   --cardGhostHoverBorder: 1px dashed rgba(0, 0, 0, 0.3);
-  
+
   --cardOutlinedBackground: transparent;
   --cardOutlinedBorder: 1px solid rgba(0, 0, 0, 0.15);
   --cardOutlinedBoxShadow: none;
   --cardOutlinedHoverBackground: rgba(0, 0, 0, 0.02);
   --cardOutlinedHoverBorder: 1px solid rgba(0, 0, 0, 0.25);
-  
+
   /* Card Header/Footer */
   --cardHeaderPadding: 16px;
   --cardHeaderBorder: 1px solid rgba(0, 0, 0, 0.08);
@@ -371,7 +373,7 @@
     --cardBackground: rgba(36, 36, 38, 1);
     --cardBorder: 1px solid rgba(255, 255, 255, 0.08);
     --cardBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.3);
-    
+
     /* Card States - Dark */
     --cardHoverBackground: rgba(36, 36, 38, 1);
     --cardHoverBorder: 1px solid rgba(255, 255, 255, 0.1);
@@ -383,20 +385,20 @@
     --cardFocusBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 3px rgba(24, 160, 251, 0.2);
     --cardDisabledBackground: rgba(28, 28, 30, 0.6);
     --cardDisabledBorder: 1px solid rgba(255, 255, 255, 0.04);
-    
+
     /* Card Variants - Dark */
     --cardElevatedBackground: rgba(36, 36, 38, 1);
     --cardElevatedBoxShadow: 0 4px 16px rgba(0, 0, 0, 0.3), 0 2px 8px rgba(0, 0, 0, 0.2);
     --cardElevatedHoverBoxShadow: 0 8px 24px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.25);
-    
+
     --cardGhostBorder: 1px dashed rgba(255, 255, 255, 0.2);
     --cardGhostHoverBackground: rgba(255, 255, 255, 0.02);
     --cardGhostHoverBorder: 1px dashed rgba(255, 255, 255, 0.3);
-    
+
     --cardOutlinedBorder: 1px solid rgba(255, 255, 255, 0.15);
     --cardOutlinedHoverBackground: rgba(255, 255, 255, 0.02);
     --cardOutlinedHoverBorder: 1px solid rgba(255, 255, 255, 0.25);
-    
+
     /* Card Header/Footer - Dark */
     --cardHeaderBorder: 1px solid rgba(255, 255, 255, 0.08);
     --cardFooterBorder: 1px solid rgba(255, 255, 255, 0.08);

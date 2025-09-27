@@ -213,7 +213,7 @@
   --controlHoverTextColor--secondary: var(--textColor);
 
   /* Input */
-  --inputPadding: 12px 16px;
+  --inputPadding: var(--controlPadding);
   --inputBoxShadow: none;
   --inputBorder: 1px solid var(--lineNeutral200);
   --inputBorderRadius: 12px;

@@ -231,7 +231,7 @@
   --controlHoverBackground--danger: #bd2c2c;
 
   /* Input */
-  --inputPadding: 5px 12px;
+  --inputPadding: var(--controlPadding);
   --inputBoxShadow: inset 0 1px 0 rgba(1, 4, 9, 0.2);
   --inputBorder: 1px solid var(--githubBorderDefault);
   --inputBorderRadius: 6px;
@@ -265,7 +265,7 @@
   --barItemsHoverSegmentControlBackground: var(--githubCanvasSubtle);
   --barItemsActiveSegmentControlBackground: var(--githubCanvasInset);
   --segmentControlBackgroundColor: var(--githubCanvasDefault);
-  
+
   /* Sidebar */
   --sidebarBackground: var(--githubCanvasSubtle);
   --sidebarListItemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
@@ -281,7 +281,7 @@
   --sidebarSectionTitleColor: var(--githubFgMuted);
   --sidebarSectionTitlePadding: 16px 16px 8px 16px;
   --sidebarListItemPadding: 6px 16px;
-  
+
   /* Sidebar Section Title - GitHub Style */
   --sidebarSectionTitleFont: var(--labelFont);
   --sidebarSectionTitleLetterSpacing: 0.04em;

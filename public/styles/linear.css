@@ -23,26 +23,26 @@
   --linearBgSubtlest: #f7f7f7;
   --linearBgOverlay: rgba(255, 255, 255, 0.9);
   --linearBgBackdrop: rgba(0, 0, 0, 0.5);
-  
+
   /* Text colors */
   --linearText: #0e0e0e;
   --linearTextSubtle: #5e5e5e;
   --linearTextSubtlest: #8f8f8f;
   --linearTextInverse: #ffffff;
   --linearTextPlaceholder: #a8a8a8;
-  
+
   /* Border colors */
   --linearBorder: #e1e1e1;
   --linearBorderSubtle: #ebebeb;
   --linearBorderStrong: #d4d4d4;
   --linearBorderHover: #c7c7c7;
-  
+
   /* Brand colors */
   --linearAccent: #5e6ad2;
   --linearAccentHover: #4e5ac2;
   --linearAccentSubtle: #e8e9ff;
   --linearAccentText: #5e6ad2;
-  
+
   /* Semantic colors */
   --linearSuccess: #26b082;
   --linearSuccessSubtle: #e6f7f1;
@@ -52,7 +52,7 @@
   --linearDangerSubtle: #ffe6e6;
   --linearInfo: #3e90f7;
   --linearInfoSubtle: #e6f2ff;
-  
+
   /* Special Linear colors */
   --linearPurple: #8c7ae6;
   --linearPurpleSubtle: #f0edff;
@@ -72,7 +72,7 @@
   --accentColor: var(--linearAccent);
   --cautionColor: var(--linearDanger);
   accent-color: var(--accentColor);
-  
+
   /* Background Colors */
   --windowBackgroundColor: var(--linearBg);
   --backgroundSecondary: var(--linearBgSubtle);
@@ -83,7 +83,7 @@
   /* Linear's signature backdrop filters */
   --backgroundBackdropFilter: saturate(180%) blur(20px);
   --windowBackdropFilter: saturate(180%) blur(40px);
-  
+
   /* Window Shadow - Linear's subtle depth */
   --windowBoxShadow: 0 0 0 1px var(--linearBorderSubtle), 0 4px 12px rgba(0, 0, 0, 0.08);
 
@@ -193,7 +193,7 @@
   --dialogBackground: var(--windowBackgroundColor);
   --dialogBoxShadow: 0 0 0 1px var(--linearBorderSubtle), 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
   --dialogBackdropFilter: var(--windowBackdropFilter);
-  
+
   /* Control - Linear's minimal style */
   --controlBoxShadow: 0 0 0 1px var(--linearBorder);
   --controlFocusBoxShadow: 0 0 0 2px var(--keyboardFocusIndicatorColor);
@@ -229,7 +229,7 @@
   --controlHoverTextColor--secondary: var(--linearText);
 
   /* Input - Linear's clean input style */
-  --inputPadding: 8px 12px;
+  --inputPadding: var(--controlPadding);
   --inputBoxShadow: none;
   --inputBorder: 1px solid var(--linearBorder);
   --inputBorderRadius: 8px;
@@ -263,7 +263,7 @@
   --barItemsHoverSegmentControlBackground: var(--linearBgSubtlest);
   --barItemsActiveSegmentControlBackground: var(--linearAccentSubtle);
   --segmentControlBackgroundColor: var(--windowBackgroundColor);
-  
+
   /* Sidebar */
   --sidebarBackground: var(--windowBackgroundColor);
   --sidebarListItemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
@@ -279,7 +279,7 @@
   --sidebarSectionTitleColor: var(--linearTextSubtle);
   --sidebarSectionTitlePadding: 20px 16px 8px 16px;
   --sidebarListItemPadding: 8px 16px;
-  
+
   /* Sidebar Section Title - Linear Style */
   --sidebarSectionTitleFont: var(--labelFont);
   --sidebarSectionTitleLetterSpacing: 0.02em;
@@ -360,26 +360,26 @@
     --linearBgSubtle: #141414;
     --linearBgSubtlest: #1a1a1a;
     --linearBgOverlay: rgba(12, 12, 12, 0.9);
-    
+
     /* Text colors dark */
     --linearText: #f0f0f0;
     --linearTextSubtle: #a1a1a1;
     --linearTextSubtlest: #6e6e6e;
     --linearTextInverse: #0c0c0c;
     --linearTextPlaceholder: #575757;
-    
+
     /* Border colors dark */
     --linearBorder: #2b2b2b;
     --linearBorderSubtle: #1f1f1f;
     --linearBorderStrong: #3a3a3a;
     --linearBorderHover: #404040;
-    
+
     /* Brand colors dark */
     --linearAccent: #6e7ce0;
     --linearAccentHover: #5e6ad2;
     --linearAccentSubtle: #1a1d3a;
     --linearAccentText: #8b96ff;
-    
+
     /* Semantic colors dark */
     --linearSuccess: #30c48d;
     --linearSuccessSubtle: #0f2e21;
@@ -389,7 +389,7 @@
     --linearDangerSubtle: #2e0f0f;
     --linearInfo: #4a9eff;
     --linearInfoSubtle: #0f1f2e;
-    
+
     /* Special colors dark */
     --linearPurple: #9c88ff;
     --linearPurpleSubtle: #1f1a2e;
@@ -410,19 +410,19 @@
     --activeScrollBarThumbColor: rgba(255, 255, 255, 0.2);
     --backgroundHover: rgba(255, 255, 255, 0.02);
     --backgroundActive: rgba(255, 255, 255, 0.04);
-    
+
     /* Input dark */
     --inputBackground: var(--linearBgSubtle);
-    
+
     /* Control dark */
     --controlBackground: var(--linearBgSubtle);
     --controlHoverBackground: var(--linearBgSubtlest);
     --controlActiveBackground: #202020;
-    
+
     /* Dialog dark */
     --dialogBackground: var(--linearBgSubtle);
     --dialogBoxShadow: 0 0 0 1px var(--linearBorderSubtle), 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
-    
+
     /* Card dark */
     --cardBackground: var(--linearBgSubtle);
     --cardBorder: 1px solid var(--linearBorderSubtle);
@@ -443,23 +443,23 @@
 
     /* Popover dark */
     --popoverBackground: var(--linearBgSubtle);
-    
+
     /* Segment Control dark */
     --segmentControlBackground: var(--linearBgSubtlest);
     --segmentControlIndicatorBackground: var(--linearBgSubtle);
-    
+
     /* Tab dark */
     --tabBarBackground: var(--linearBg);
-    
+
     /* Toolbar dark */
     --appMainToolbarFloatingBackground: rgba(12, 12, 12, 0.8);
-    
+
     /* Primary button dark */
     --controlTextColor--primary: var(--linearTextInverse);
-    
+
     /* Secondary button dark */
     --controlBackground--secondary: var(--linearBgSubtle);
-    
+
     /* Sidebar dark */
     --sidebarListItemDetailsBackground: var(--linearBgSubtlest);
     --sidebarListItemHoverBackground: var(--linearBgSubtlest);

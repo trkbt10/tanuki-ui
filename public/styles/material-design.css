@@ -22,25 +22,25 @@
   --mdOnPrimary: #ffffff;
   --mdPrimaryContainer: #eaddff;
   --mdOnPrimaryContainer: #21005d;
-  
+
   /* Secondary Colors */
   --mdSecondary: #625b71;
   --mdOnSecondary: #ffffff;
   --mdSecondaryContainer: #e8def8;
   --mdOnSecondaryContainer: #1d192b;
-  
+
   /* Tertiary Colors */
   --mdTertiary: #7d5260;
   --mdOnTertiary: #ffffff;
   --mdTertiaryContainer: #ffd8e4;
   --mdOnTertiaryContainer: #31111d;
-  
+
   /* Error Colors */
   --mdError: #ba1a1a;
   --mdOnError: #ffffff;
   --mdErrorContainer: #ffdad6;
   --mdOnErrorContainer: #410002;
-  
+
   /* Background Colors */
   --mdBackground: #fffbfe;
   --mdOnBackground: #1c1b1f;
@@ -48,20 +48,20 @@
   --mdOnSurface: #1c1b1f;
   --mdSurfaceVariant: #e7e0ec;
   --mdOnSurfaceVariant: #49454f;
-  
+
   /* Outline Colors */
   --mdOutline: #79747e;
   --mdOutlineVariant: #cac4d0;
-  
+
   /* Inverse Colors */
   --mdInverseSurface: #313033;
   --mdInverseOnSurface: #f4eff4;
   --mdInversePrimary: #d0bcff;
-  
+
   /* Shadow */
   --mdShadow: #000000;
   --mdSurfaceTint: var(--mdPrimary);
-  
+
   /* Scrim */
   --mdScrim: #000000;
 
@@ -70,7 +70,7 @@
   --accentColor: var(--mdPrimary);
   --cautionColor: var(--mdError);
   accent-color: var(--accentColor);
-  
+
   /* Background Colors */
   --windowBackgroundColor: var(--mdBackground);
   --backgroundSecondary: var(--mdSurface);
@@ -81,7 +81,7 @@
   /* No backdrop filters for Material Design */
   --backgroundBackdropFilter: none;
   --windowBackdropFilter: none;
-  
+
   /* Elevation System - Material Design 3 */
   --elevation0: none;
   --elevation1: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
@@ -89,7 +89,7 @@
   --elevation3: 0 4px 8px 3px rgba(0, 0, 0, 0.15), 0 1px 3px 0 rgba(0, 0, 0, 0.3);
   --elevation4: 0 6px 10px 4px rgba(0, 0, 0, 0.15), 0 2px 3px 0 rgba(0, 0, 0, 0.3);
   --elevation5: 0 8px 12px 6px rgba(0, 0, 0, 0.15), 0 4px 4px 0 rgba(0, 0, 0, 0.3);
-  
+
   /* Window Shadow */
   --windowBoxShadow: var(--elevation3);
 
@@ -197,7 +197,7 @@
   --dialogBackground: var(--mdSurface);
   --dialogBoxShadow: var(--elevation5);
   --dialogBorderRadius: 28px;
-  
+
   /* Control - Material Design style */
   --controlBoxShadow: none;
   --controlFocusBoxShadow: none;
@@ -242,7 +242,7 @@
   --controlPadding--tertiary: 10px 12px;
 
   /* Input - Material Design style */
-  --inputPadding: 16px;
+  --inputPadding: var(--controlPadding);
   --inputBoxShadow: none;
   --inputBorder: 1px solid var(--mdOutline);
   --inputBorderRadius: 4px;
@@ -300,7 +300,7 @@
   --barItemsHoverSegmentControlBackground: rgba(103, 80, 164, 0.08);
   --barItemsActiveSegmentControlBackground: var(--mdSecondaryContainer);
   --segmentControlBackgroundColor: var(--mdSurface);
-  
+
   /* Sidebar - Material Navigation Rail/Drawer */
   --sidebarBackground: var(--mdSurface);
   --sidebarListItemFont: normal normal 500 14px/20px var(--themeDefaultFontFamily);
@@ -318,7 +318,7 @@
   --sidebarSectionTitleColor: var(--mdOnSurfaceVariant);
   --sidebarSectionTitlePadding: 16px 24px 8px 24px;
   --sidebarListItemPadding: 12px 24px;
-  
+
   /* Sidebar Section Title - Material Design Style */
   --sidebarSectionTitleFont: var(--labelFont);
   --sidebarSectionTitleLetterSpacing: 0.01em;
@@ -423,55 +423,55 @@
     --mdOnPrimary: #381e72;
     --mdPrimaryContainer: #4f378b;
     --mdOnPrimaryContainer: #eaddff;
-    
+
     --mdSecondary: #ccc2dc;
     --mdOnSecondary: #332d41;
     --mdSecondaryContainer: #4a4458;
     --mdOnSecondaryContainer: #e8def8;
-    
+
     --mdTertiary: #efb8c8;
     --mdOnTertiary: #492532;
     --mdTertiaryContainer: #633b48;
     --mdOnTertiaryContainer: #ffd8e4;
-    
+
     --mdError: #f2b8b5;
     --mdOnError: #601410;
     --mdErrorContainer: #8c1d18;
     --mdOnErrorContainer: #f9dedc;
-    
+
     --mdBackground: #1c1b1f;
     --mdOnBackground: #e6e1e5;
     --mdSurface: #1c1b1f;
     --mdOnSurface: #e6e1e5;
     --mdSurfaceVariant: #49454f;
     --mdOnSurfaceVariant: #cac4d0;
-    
+
     --mdOutline: #938f99;
     --mdOutlineVariant: #49454f;
-    
+
     --mdInverseSurface: #e6e1e5;
     --mdInverseOnSurface: #313033;
     --mdInversePrimary: #6750a4;
-    
+
     /* Update dependent colors */
     --windowBackgroundColor: var(--mdBackground);
     --scrollBarThumbColor: rgba(255, 255, 255, 0.2);
     --activeScrollBarThumbColor: rgba(255, 255, 255, 0.4);
     --backgroundHover: rgba(208, 188, 255, 0.08);
     --backgroundActive: rgba(208, 188, 255, 0.12);
-    
+
     /* Update elevation shadows for dark theme */
     --elevation1: 0 1px 3px 1px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
     --elevation2: 0 2px 6px 2px rgba(0, 0, 0, 0.15), 0 1px 2px 0 rgba(0, 0, 0, 0.3);
     --elevation3: 0 1px 3px 0 rgba(0, 0, 0, 0.3), 0 4px 8px 3px rgba(0, 0, 0, 0.15);
     --elevation4: 0 2px 3px 0 rgba(0, 0, 0, 0.3), 0 6px 10px 4px rgba(0, 0, 0, 0.15);
     --elevation5: 0 4px 4px 0 rgba(0, 0, 0, 0.3), 0 8px 12px 6px rgba(0, 0, 0, 0.15);
-    
+
     /* Control adjustments for dark */
     --controlBorder: 1px solid var(--mdOutline);
     --controlHoverStateLayer: rgba(208, 188, 255, 0.08);
     --controlActiveStateLayer: rgba(208, 188, 255, 0.12);
-    
+
     /* Input dark */
     --inputBackground: var(--mdSurface);
     --inputBorder: 1px solid var(--mdOutline);
@@ -503,7 +503,7 @@
     --tableBorderStyle: solid;
     --tableHeaderBorderWidth: 1px;
     --tableHeaderBorderStyle: solid;
-    
+
     /* Sidebar dark */
     --sidebarListItemDetailsBackground: var(--mdSurface);
     --sidebarListItemHoverBackground: rgba(208, 188, 255, 0.08);

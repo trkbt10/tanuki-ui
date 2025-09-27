@@ -225,7 +225,7 @@
   --controlTextColor--secondary: inherit;
 
   /* Input */
-  --inputPadding: 2px 7.5px 2.4px;
+  --inputPadding: var(--controlPadding);
   --inputBoxShadow: 0 0 0 0 rgba(0, 0, 0, 0.06), 0 1px 0 0 rgba(0, 0, 0, 0.12);
   --inputBorder: 0.5px solid rgba(0, 0, 0, 0.08);
   --inputFont: normal normal 400 13px/1.230769 var(--themeControlFontFamily);
@@ -258,7 +258,7 @@
   --selectedSidebarListItemTextColor: rgba(0, 0, 0, 0.847059);
   --sidebarListItemTextColor: rgba(0, 0, 0, 0.847059);
   --selectedSidebarListItemMarker: none;
-  
+
   /* Sidebar Section Title */
   --sidebarSectionTitleFont: var(--labelFont);
   --sidebarSectionTitleLetterSpacing: 0.02em;
@@ -477,7 +477,7 @@ body ::-webkit-scrollbar-track {
   transition: background 0.2s ease;
 }
 
-body *:hover > ::-webkit-scrollbar-thumb {
+body *:hover> ::-webkit-scrollbar-thumb {
   background: var(--tertiaryLabelColor);
   transition: background 0.2s ease;
 }

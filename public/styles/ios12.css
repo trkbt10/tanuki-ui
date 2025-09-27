@@ -13,7 +13,7 @@
   --themeLabelFontFamily: var(--themeDefaultFontFamily);
   --themeMonospacedFont: "SF Mono", "Monaco", "Menlo", "Courier New", monospace;
   --themeSystemFont: var(--themeDefaultFontFamily);
-  
+
   /* iOS Font Weights */
   --fontWeightUltraLight: 100;
   --fontWeightThin: 200;
@@ -24,7 +24,7 @@
   --fontWeightBold: 700;
   --fontWeightHeavy: 800;
   --fontWeightBlack: 900;
-  
+
   /* iOS Dynamic Type Scale */
   --textFont: normal normal var(--fontWeightRegular) 17px/1.294118 var(--themeDefaultFontFamily);
   --titleFont: normal normal var(--fontWeightSemibold) 28px/1.285714 var(--themeDefaultFontFamily);
@@ -39,7 +39,7 @@
   --caption2Font: normal normal var(--fontWeightRegular) 11px/1.363636 var(--themeDefaultFontFamily);
   --labelFont: var(--bodyFont);
   --controlTextFont: var(--bodyFont);
-  
+
   /* iOS System Colors - Light Mode */
   --textColor: rgba(0, 0, 0, 1);
   --labelColor: rgba(0, 0, 0, 1);
@@ -50,9 +50,10 @@
   --linkColor: rgba(0, 122, 255, 1);
   --separatorColor: rgba(60, 60, 67, 0.29);
   --opaqueSeparatorColor: rgba(198, 198, 200, 1);
-  
+
   /* iOS Accent Colors */
-  --accentColor: rgba(0, 122, 255, 1); /* iOS Blue */
+  --accentColor: rgba(0, 122, 255, 1);
+  /* iOS Blue */
   --systemBlueColor: rgba(0, 122, 255, 1);
   --systemGreenColor: rgba(52, 199, 89, 1);
   --systemIndigoColor: rgba(88, 86, 214, 1);
@@ -65,7 +66,7 @@
   --systemBrownColor: rgba(162, 132, 94, 1);
   --systemMintColor: rgba(0, 199, 190, 1);
   --systemCyanColor: rgba(50, 173, 230, 1);
-  
+
   /* iOS Gray Scale */
   --systemGrayColor: rgba(142, 142, 147, 1);
   --systemGray2Color: rgba(174, 174, 178, 1);
@@ -73,7 +74,7 @@
   --systemGray4Color: rgba(209, 209, 214, 1);
   --systemGray5Color: rgba(229, 229, 234, 1);
   --systemGray6Color: rgba(242, 242, 247, 1);
-  
+
   /* iOS Background Colors */
   --windowBackgroundColor: rgba(255, 255, 255, 1);
   --systemBackgroundColor: rgba(255, 255, 255, 1);
@@ -82,13 +83,13 @@
   --systemGroupedBackgroundColor: rgba(242, 242, 247, 1);
   --secondarySystemGroupedBackgroundColor: rgba(255, 255, 255, 1);
   --tertiarySystemGroupedBackgroundColor: rgba(242, 242, 247, 1);
-  
+
   /* iOS Fill Colors */
   --systemFillColor: rgba(120, 120, 128, 0.2);
   --secondarySystemFillColor: rgba(120, 120, 128, 0.16);
   --tertiarySystemFillColor: rgba(118, 118, 128, 0.12);
   --quaternarySystemFillColor: rgba(116, 116, 128, 0.08);
-  
+
   /* Selection Colors */
   --selectedTextColor: rgba(255, 255, 255, 1);
   --selectedTextBackgroundColor: var(--accentColor);
@@ -96,13 +97,13 @@
   --unemphasizedSelectedTextColor: rgba(0, 0, 0, 1);
   --unemphasizedSelectedTextBackgroundColor: rgba(0, 0, 0, 0.15);
   --selectedMenuItemTextColor: rgba(255, 255, 255, 1);
-  
+
   /* Focus Indicators */
   --keyboardFocusIndicatorColor: var(--accentColor);
   --focusRingWidth: 3px;
   --focusRingOffset: 2px;
   --focusRingOpacity: 0.5;
-  
+
   /* iOS Material Effects */
   --materialThick: blur(30px) saturate(180%);
   --materialRegular: blur(20px) saturate(180%);
@@ -110,7 +111,7 @@
   --materialUltraThin: blur(6px) saturate(180%);
   --backgroundBackdropFilter: none;
   --windowBackdropFilter: none;
-  
+
   /* iOS Elevation System */
   --windowLevelElevation: 24;
   --dialogLevelElevation: 24;
@@ -119,24 +120,24 @@
   --cardLevelElevation: 2;
   --controlsLevelElevation: 1;
   --layerLevelElevation: 0;
-  
+
   /* iOS Shadows */
   --shadowOpacity: 0.15;
   --shadowRadius: 10;
   --shadowOffset: 0 3px;
-  
+
   /* Semantic Aliases */
   --cautionColor: var(--systemRedColor);
   --dangerColor: var(--systemRedColor);
   --warningColor: var(--systemOrangeColor);
   --successColor: var(--systemGreenColor);
   --infoColor: var(--systemBlueColor);
-  
+
   /* Animation Properties */
   --animationDuration: 250ms;
   --animationEasing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --springAnimation: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  
+
   /* Layout Metrics */
   --statusBarHeight: 44px;
   --navigationBarHeight: 44px;
@@ -151,7 +152,7 @@
   --cornerRadius: 10px;
   --cornerRadiusLarge: 13px;
   --cornerRadiusSmall: 6px;
-  
+
   /* Safe Area Support */
   --safeAreaInsetTop: env(safe-area-inset-top, 0);
   --safeAreaInsetRight: env(safe-area-inset-right, 0);
@@ -175,7 +176,7 @@
   --controlPaddingCompact: 0 12px;
   --controlTextLetterSpacing: -0.01em;
   --controlTransition: all var(--animationDuration) var(--animationEasing);
-  
+
   /* Default Control (Secondary Style) */
   --controlBackground: var(--systemGray5Color);
   --controlTextColor: var(--labelColor);
@@ -186,7 +187,7 @@
   --controlDisabledBackground: var(--quaternarySystemFillColor);
   --disabledControlTextColor: var(--tertiaryLabelColor);
   --controlFocusBoxShadow: 0 0 0 var(--focusRingWidth) rgba(0, 122, 255, var(--focusRingOpacity));
-  
+
   /* Primary Control (Filled Blue) */
   --controlBackground--primary: var(--accentColor);
   --controlTextColor--primary: rgba(255, 255, 255, 1);
@@ -196,7 +197,7 @@
   --controlActiveBackground--primary: rgba(0, 100, 210, 1);
   --controlFocusBackground--primary: var(--controlHoverBackground--primary);
   --controlDisabledBackground--primary: var(--quaternarySystemFillColor);
-  
+
   /* Secondary Control (Tinted) */
   --controlBackground--secondary: rgba(0, 122, 255, 0.15);
   --controlTextColor--secondary: var(--accentColor);
@@ -205,7 +206,7 @@
   --controlHoverBackground--secondary: rgba(0, 122, 255, 0.20);
   --controlActiveBackground--secondary: rgba(0, 122, 255, 0.25);
   --controlFocusBackground--secondary: var(--controlHoverBackground--secondary);
-  
+
   /* CTA Control (Prominent) */
   --controlBackground--cta: var(--accentColor);
   --controlTextColor--cta: rgba(255, 255, 255, 1);
@@ -213,13 +214,13 @@
   --controlBoxShadow--cta: 0 2px 8px rgba(0, 122, 255, 0.3);
   --controlHoverBackground--cta: rgba(0, 112, 233, 1);
   --controlActiveBackground--cta: rgba(0, 100, 210, 1);
-  
+
   /* Destructive Control */
   --controlBackground--destructive: var(--systemRedColor);
   --controlTextColor--destructive: rgba(255, 255, 255, 1);
   --controlHoverBackground--destructive: rgba(235, 45, 39, 1);
   --controlActiveBackground--destructive: rgba(215, 35, 33, 1);
-  
+
   /* Plain Control (Borderless) */
   --controlBackground--plain: transparent;
   --controlTextColor--plain: var(--accentColor);
@@ -231,7 +232,7 @@
 /* iOS Input Fields */
 :root {
   --inputHeight: 44px;
-  --inputPadding: 11px 16px;
+  --inputPadding: var(--controlPadding);
   --inputFont: var(--textFont);
   --inputBorder: 0.5px solid var(--separatorColor);
   --inputBorderRadius: var(--cornerRadius);
@@ -243,7 +244,7 @@
   --inputHoverBorder: 0.5px solid var(--systemGray3Color);
   --inputDisabledBackground: var(--quaternarySystemFillColor);
   --inputDisabledBorder: 0.5px solid var(--quaternarySystemFillColor);
-  
+
   /* Search Input */
   --searchInputHeight: var(--searchBarHeight);
   --searchInputPadding: 7px 8px 7px 30px;
@@ -262,7 +263,7 @@
   --checkboxCheckedBackground: var(--accentColor);
   --checkboxCheckedBorder: 1.5px solid var(--accentColor);
   --checkboxCheckmark: url("data:image/svg+xml,%3Csvg width='14' height='11' viewBox='0 0 14 11' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 5L5 9L13 1' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  
+
   /* Radio */
   --radioSize: 22px;
   --radioBorder: 1.5px solid var(--systemGray3Color);
@@ -270,7 +271,7 @@
   --radioCheckedBackground: var(--accentColor);
   --radioCheckedBorder: 1.5px solid var(--accentColor);
   --radioDotSize: 8px;
-  
+
   /* Switch */
   --switchWidth: 51px;
   --switchHeight: 31px;
@@ -280,7 +281,7 @@
   --switchThumbSize: 27px;
   --switchThumbBackground: rgba(255, 255, 255, 1);
   --switchThumbShadow: 0 3px 8px rgba(0, 0, 0, 0.15), 0 3px 1px rgba(0, 0, 0, 0.06);
-  
+
   /* Slider */
   --sliderTrackHeight: 4px;
   --sliderTrackBackground: var(--systemGray5Color);
@@ -288,7 +289,7 @@
   --sliderThumbSize: 28px;
   --sliderThumbBackground: rgba(255, 255, 255, 1);
   --sliderThumbShadow: 0 3px 7px rgba(0, 0, 0, 0.15), 0 0.5px 0.5px rgba(0, 0, 0, 0.12);
-  
+
   /* Select/Dropdown */
   --selectBoxHeight: var(--inputHeight);
   --selectBoxPadding: 11px 36px 11px 16px;
@@ -312,7 +313,7 @@
   --navBarTitleFont: var(--headlineFont);
   --navBarButtonFont: var(--bodyFont);
   --navBarButtonColor: var(--accentColor);
-  
+
   /* Tab Bar */
   --tabBarBackground: rgba(249, 249, 249, 0.94);
   --tabBarBackdropFilter: var(--materialRegular);
@@ -327,14 +328,14 @@
   --tabItemActiveBackground: transparent;
   --tabItemTextColor-selected: var(--accentColor);
   --tabItemBackground-selected: transparent;
-  
+
   /* Toolbar */
   --toolbarBackground: rgba(249, 249, 249, 0.94);
   --toolbarBackdropFilter: var(--materialRegular);
   --toolbarBorder: 0.5px solid var(--separatorColor);
   --toolbarItemColor: var(--accentColor);
   --toolbarItemFont: var(--bodyFont);
-  
+
   /* Segmented Control */
   --segmentControlHeight: 32px;
   --segmentControlPadding: 2px;
@@ -401,7 +402,7 @@
   --tableFooterTextColor: var(--secondaryLabelColor);
   --tableFooterPadding: 6px 16px;
   --tableAccessoryColor: var(--tertiaryLabelColor);
-  
+
   /* Card Styles */
   --cardBackground: var(--secondarySystemGroupedBackgroundColor);
   --cardBorderRadius: var(--cornerRadius);
@@ -443,7 +444,7 @@
   --dialogBackdrop: rgba(0, 0, 0, 0.4);
   --dialogMaxWidth: 270px;
   --dialogButtonSeparator: 0.5px solid var(--separatorColor);
-  
+
   /* Action Sheet */
   --actionSheetBackground: rgba(255, 255, 255, 0.95);
   --actionSheetBackdropFilter: var(--materialThick);
@@ -453,7 +454,7 @@
   --actionSheetItemColor: var(--accentColor);
   --actionSheetDestructiveColor: var(--systemRedColor);
   --actionSheetCancelFont: var(--fontWeightSemibold) 20px/1.25 var(--themeDefaultFontFamily);
-  
+
   /* Popover */
   --popoverBackground: rgba(255, 255, 255, 0.95);
   --popoverBackdropFilter: var(--materialRegular);
@@ -461,7 +462,7 @@
   --popoverBoxShadow: 0 10px 40px rgba(0, 0, 0, 0.19), 0 2px 12px rgba(0, 0, 0, 0.12);
   --popoverArrowSize: 13px;
   --popoverMinWidth: 200px;
-  
+
   /* Context Menu */
   --contextualMenuBackground: rgba(255, 255, 255, 0.95);
   --contextualMenuBackdropFilter: var(--materialRegular);
@@ -484,11 +485,11 @@
   --progressBorderRadius: 2px;
   --progressBackground: var(--quaternarySystemFillColor);
   --progressForeground: var(--accentColor);
-  
+
   /* Activity Indicator */
   --activityIndicatorSize: 20px;
   --activityIndicatorColor: var(--secondaryLabelColor);
-  
+
   /* Page Control */
   --pageControlDotSize: 7px;
   --pageControlDotSpacing: 9px;
@@ -513,7 +514,7 @@
   --sidebarSectionHeaderFont: var(--footnoteFont);
   --sidebarSectionHeaderColor: var(--secondaryLabelColor);
   --sidebarSectionHeaderPadding: 8px 16px 4px;
-  
+
   /* Sidebar Section Title - iOS Style */
   --sidebarSectionTitleFont: var(--footnoteFont);
   --sidebarSectionTitleLetterSpacing: 0;
@@ -558,7 +559,7 @@
     --placeholderTextColor: rgba(235, 235, 245, 0.3);
     --separatorColor: rgba(84, 84, 88, 0.6);
     --opaqueSeparatorColor: rgba(56, 56, 58, 1);
-    
+
     /* Dark Mode Backgrounds */
     --windowBackgroundColor: rgba(0, 0, 0, 1);
     --systemBackgroundColor: rgba(0, 0, 0, 1);
@@ -567,22 +568,22 @@
     --systemGroupedBackgroundColor: rgba(0, 0, 0, 1);
     --secondarySystemGroupedBackgroundColor: rgba(28, 28, 30, 1);
     --tertiarySystemGroupedBackgroundColor: rgba(44, 44, 46, 1);
-    
+
     /* Dark Mode Fills */
     --systemFillColor: rgba(120, 120, 128, 0.36);
     --secondarySystemFillColor: rgba(120, 120, 128, 0.32);
     --tertiarySystemFillColor: rgba(118, 118, 128, 0.24);
     --quaternarySystemFillColor: rgba(118, 118, 128, 0.18);
-    
+
     /* Dark Mode Controls */
     --controlBackground: rgba(72, 72, 74, 1);
     --controlHoverBackground: rgba(84, 84, 86, 1);
     --controlActiveBackground: rgba(99, 99, 102, 1);
-    
+
     /* Dark Mode Inputs */
     --inputBackground: rgba(44, 44, 46, 1);
     --inputBorder: 0.5px solid rgba(84, 84, 88, 0.6);
-    
+
     /* Dark Mode Cards */
     --cardBackground: rgba(28, 28, 30, 1);
     --cardBorder: none;
@@ -602,19 +603,19 @@
     --cardBorder--outlined: 1px solid rgba(255, 255, 255, 0.12);
     --cardBackground--filled: rgba(44, 44, 46, 1);
     --cardBoxShadow--filled: none;
-    
+
     /* Dark Mode Navigation */
     --navBarBackground: rgba(28, 28, 30, 0.94);
     --tabBarBackground: rgba(28, 28, 30, 0.94);
     --toolbarBackground: rgba(28, 28, 30, 0.94);
-    
+
     /* Dark Mode Dialogs */
     --dialogBackground: rgba(44, 44, 46, 0.95);
     --dialogBackdrop: rgba(0, 0, 0, 0.6);
     --actionSheetBackground: rgba(44, 44, 46, 0.95);
     --popoverBackground: rgba(44, 44, 46, 0.95);
     --contextualMenuBackground: rgba(44, 44, 46, 0.95);
-    
+
     /* Dark Mode Tables */
     --tableBackgroundColor: var(--systemBackgroundColor);
     --tableCellBackground: rgba(28, 28, 30, 1);
@@ -625,10 +626,10 @@
     --tableHeaderBorderStyle: solid;
     --tableCellBorderWidth: 0.5px;
     --tableCellBorderStyle: solid;
-    
+
     /* Dark Mode Sidebar */
     --sidebarBackground: rgba(28, 28, 30, 1);
-    
+
     /* Dark Mode Misc */
     --searchInputBackground: rgba(118, 118, 128, 0.24);
     --segmentControlBackground: rgba(118, 118, 128, 0.24);

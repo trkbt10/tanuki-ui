@@ -175,7 +175,7 @@
   --controlTextColor--secondary: inherit;
 
   /* Input */
-  --inputPadding: 2px 7.5px 2.4px;
+  --inputPadding: var(--controlPadding);
   /*  --inputBoxShadow: 0 0 0 0 rgba(0, 0, 0, 0.06), 0 1px 0 0 rgba(0, 0, 0, 0.12);*/
   --inputBoxShadow: 0 0 0 0 rgba(0, 0, 0, 0.06);
   --inputBorder: 1px solid rgba(0, 0, 0, 0.08);
@@ -208,7 +208,7 @@
   --selectedSidebarListItemTextColor: rgba(0, 0, 0, 0.847059);
   --sidebarListItemTextColor: rgba(0, 0, 0, 0.847059);
   --selectedSidebarListItemMarker: none;
-  
+
   /* Sidebar Section Title */
   --sidebarSectionTitleFont: var(--labelFont);
   --sidebarSectionTitleLetterSpacing: 0;

@@ -18,7 +18,7 @@
   --switchTealDark: #00a1a1;
   --switchNeonRed: #ff6b7a;
   --switchNeonBlue: #00c3ff;
-  
+
   /* UI Colors */
   --switchWhite: #ffffff;
   --switchLightGray: #f5f5f5;
@@ -27,12 +27,12 @@
   --switchBlack: #1a1a1a;
   --switchBackgroundGray: #ebebeb;
   --switchCardGray: #f8f8f8;
-  
+
   /* Nintendo Brand Colors */
   --nintendoRed: #e60012;
   --nintendoGray: #484848;
   --nintendoLightGray: #9b9b9b;
-  
+
   /* System Colors */
   --textColor: var(--switchDarkGray);
   --accentColor: var(--switchTeal);
@@ -124,7 +124,7 @@
   --controlHoverBorder--secondary: 2px solid var(--switchDarkGray);
 
   /* Input - Nintendo Switch style */
-  --inputPadding: 12px 16px;
+  --inputPadding: var(--controlPadding);
   --inputFont: normal normal 400 16px/1.5 var(--themeDefaultFontFamily);
   --inputBoxShadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
   --inputBorder: 2px solid var(--switchMediumGray);
@@ -142,7 +142,7 @@
   /* Check box - Switch style */
   --checkboxSize: 24px;
   --checkboxBorderRadius: 6px;
-  
+
   /* Toolbar */
   --barItemsFontFamily: var(--themeDefaultFontFamily);
   --barItemsTextColor: var(--switchDarkGray);
@@ -158,7 +158,7 @@
   --barItemsHoverSegmentControlBackground: var(--switchLightGray);
   --barItemsActiveSegmentControlBackground: var(--switchTeal);
   --segmentControlBackgroundColor: var(--switchCardGray);
-  
+
   /* Sidebar - Nintendo Switch menu style */
   --sidebarBackground: var(--switchCardGray);
   --sidebarListItemFont: normal normal 400 16px/1.5 var(--themeDefaultFontFamily);
@@ -176,7 +176,7 @@
   --sidebarSectionTitleColor: var(--nintendoGray);
   --sidebarSectionTitlePadding: 20px 20px 8px 20px;
   --sidebarListItemPadding: 12px 20px;
-  
+
   /* Sidebar Section Title - Nintendo Style */
   --sidebarSectionTitleFont: var(--labelFont);
   --sidebarSectionTitleLetterSpacing: 0.02em;

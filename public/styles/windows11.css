@@ -100,7 +100,7 @@
   --controlBoxShadow--secondary: var(--controlBoxShadow);
 
   /* Input Elements */
-  --inputPadding: 6.5px 12px 5px;
+  --inputPadding: var(--controlPadding);
   --inputFont: normal normal 14px/1.428571 var(--themeDefaultFontFamily);
   --inputBorder: 0 solid rgba(0, 0, 0, 0);
   --inputBorderRadius: 4px;
@@ -130,15 +130,15 @@
   --cardHoverBackground: rgba(255, 255, 255, 0.8);
   --cardHoverBoxShadow: 0 4px 8px 0 rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.0578);
   --cardHoverTransform: translateY(-2px);
-  
+
   --cardActiveBackground: rgba(255, 255, 255, 0.9);
   --cardActiveBoxShadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.0578);
   --cardActiveTransform: translateY(0);
-  
+
   --cardFocusBorder: 2px solid var(--accentColor);
   --cardFocusOutline: none;
   --cardFocusBoxShadow: 0 0 0 2px rgba(0, 95, 184, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.08);
-  
+
   --cardDisabledBackground: rgba(249, 249, 249, 0.6);
   --cardDisabledTextColor: var(--disabledControlTextColor);
   --cardDisabledBoxShadow: 0 0 0 1px rgba(0, 0, 0, 0.0378);
@@ -149,14 +149,14 @@
   --cardElevatedBackground: rgba(255, 255, 255, 0.9);
   --cardElevatedBoxShadow: 0 8px 16px 0 rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.0578);
   --cardElevatedHoverBoxShadow: 0 12px 24px 0 rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.0578);
-  
+
   /* Outlined Card - Minimal style with border emphasis */
   --cardOutlinedBackground: transparent;
   --cardOutlinedBorder: 1px solid rgba(0, 0, 0, 0.1);
   --cardOutlinedBoxShadow: none;
   --cardOutlinedHoverBackground: rgba(0, 0, 0, 0.02);
   --cardOutlinedHoverBorder: 1px solid rgba(0, 0, 0, 0.2);
-  
+
   /* Filled Card - Solid background without transparency */
   --cardFilledBackground: var(--secondaryBackgroundColor);
   --cardFilledBackdropFilter: none;
@@ -269,7 +269,7 @@
   --selectedSidebarListItemBackground: rgba(0, 0, 0, 0.0373);
   --selectedSidebarListItemTextColor: rgba(0, 0, 0, 0.847059);
   --selectedSidebarListItemMarker: var(--accentColor);
-  
+
   /* Sidebar Section Title */
   --sidebarSectionTitleFont: var(--labelFont);
   --sidebarSectionTitleLetterSpacing: 0.03em;
@@ -489,13 +489,13 @@
     /* Card States */
     --cardHoverBackground: rgba(48, 48, 48, 0.8);
     --cardHoverBoxShadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.0578);
-    
+
     --cardActiveBackground: rgba(48, 48, 48, 0.9);
     --cardActiveBoxShadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.0578);
-    
+
     --cardFocusBorder: 2px solid var(--accentColor);
     --cardFocusBoxShadow: 0 0 0 2px rgba(96, 165, 250, 0.3), 0 4px 8px 0 rgba(0, 0, 0, 0.3);
-    
+
     --cardDisabledBackground: rgba(40, 40, 40, 0.6);
     --cardDisabledTextColor: var(--disabledControlTextColor);
     --cardDisabledBoxShadow: 0 0 0 1px rgba(255, 255, 255, 0.0378);
@@ -505,13 +505,13 @@
     --cardElevatedBackground: rgba(48, 48, 48, 0.9);
     --cardElevatedBoxShadow: 0 8px 16px 0 rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.0578);
     --cardElevatedHoverBoxShadow: 0 12px 24px 0 rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.0578);
-    
+
     /* Outlined Card - Minimal style with border emphasis */
     --cardOutlinedBackground: transparent;
     --cardOutlinedBorder: 1px solid rgba(255, 255, 255, 0.1);
     --cardOutlinedHoverBackground: rgba(255, 255, 255, 0.02);
     --cardOutlinedHoverBorder: 1px solid rgba(255, 255, 255, 0.2);
-    
+
     /* Filled Card - Solid background without transparency */
     --cardFilledBackground: var(--secondaryBackgroundColor);
     --cardFilledHoverBackground: var(--backgroundColor);

@@ -8,7 +8,7 @@
 
 :root {
   font-feature-settings: "rclt" off;
-  
+
   /* Material You Elevation System */
   --windowLevelElevation: 128;
   --dialogLevelElevation: 24;
@@ -22,7 +22,8 @@
 
   /* Base Colors - Material You Dynamic Color */
   --textColor: rgba(28, 27, 31, 1);
-  --accentColor: rgb(102, 80, 164); /* Material You Purple */
+  --accentColor: rgb(102, 80, 164);
+  /* Material You Purple */
   --cautionColor: rgb(179, 38, 30);
   --windowBackgroundColor: rgba(255, 251, 254, 1);
   --dividerColor: rgba(121, 116, 126, 0.12);
@@ -79,7 +80,7 @@
 
   /* Window Properties */
   --windowBackdropFilter: none;
-  --windowBoxShadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 
+  --windowBoxShadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15),
     0px 1px 3px rgba(0, 0, 0, 0.3);
   --windowBorderRadius: 28px;
   --windowPadding: 24px;
@@ -93,15 +94,15 @@
   --controlFocusBackground: var(--controlHoverBackground);
   --controlDisabledBackground: rgba(28, 27, 31, 0.12);
   --disabledControlTextColor: rgba(28, 27, 31, 0.38);
-  
+
   /* Control Properties - Material You */
   --controlBorderRadius: 20px;
   --controlPadding: 10px 24px;
   --controlBoxShadow: none;
-  --controlHoverBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+  --controlHoverBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3),
     0px 1px 3px 1px rgba(0, 0, 0, 0.15);
   --controlActiveBoxShadow: none;
-  --controlFocusBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+  --controlFocusBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3),
     0px 2px 6px 2px rgba(0, 0, 0, 0.15);
 
   /* Primary Controls - Material You Filled Button */
@@ -109,7 +110,7 @@
   --controlTextColor--primary: rgba(255, 255, 255, 1);
   --controlHoverBackground--primary: rgba(120, 98, 182, 1);
   --controlFocusBackground--primary: var(--controlHoverBackground--primary);
-  --controlBoxShadow--primary: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+  --controlBoxShadow--primary: 0px 1px 2px rgba(0, 0, 0, 0.3),
     0px 1px 3px 1px rgba(0, 0, 0, 0.15);
 
   /* Secondary Controls - Material You Outlined Button */
@@ -120,7 +121,7 @@
   --controlBoxShadow--secondary: inset 0 0 0 1px rgba(121, 116, 126, 1);
 
   /* Input Elements - Material You Text Fields */
-  --inputPadding: 16px 16px 8px;
+  --inputPadding: var(--controlPadding);
   --inputFont: 400 16px/24px var(--themeDefaultFontFamily);
   --inputBorder: 0 solid transparent;
   --inputBorderRadius: 4px 4px 0 0;
@@ -132,7 +133,7 @@
   /* Dialog Styles */
   --dialogBackground: rgba(255, 251, 254, 1);
   --dialogBorderRadius: 28px;
-  --dialogBoxShadow: 0px 6px 10px 4px rgba(0, 0, 0, 0.15), 
+  --dialogBoxShadow: 0px 6px 10px 4px rgba(0, 0, 0, 0.15),
     0px 2px 3px rgba(0, 0, 0, 0.3);
   --dialogBackdrop: rgba(0, 0, 0, 0.32);
   --dialogPadding: 24px;
@@ -208,7 +209,7 @@
   --tabBarBackground: rgba(255, 251, 254, 1);
   --tabBarBoxShadow: 0px 2px 4px rgba(0, 0, 0, 0.14);
   --tabBarLayout: horizontal;
-  
+
   /* Tab Item Styles */
   --tabItemBackground: transparent;
   --tabItemTextColor: rgba(73, 69, 79, 1);
@@ -216,12 +217,12 @@
   --tabItemPadding: 12px 16px;
   --tabItemBorderRadius: 16px;
   --tabItemBoxShadow: none;
-  
+
   /* Tab Item States */
   --tabItemBackground-hover: rgba(102, 80, 164, 0.08);
   --tabItemTextColor-hover: rgba(28, 27, 31, 1);
   --tabItemBoxShadow-hover: none;
-  
+
   --tabItemBackground-selected: rgba(232, 222, 248, 1);
   --tabItemTextColor-selected: rgba(33, 24, 66, 1);
   --tabItemFont-selected: 500 14px/20px var(--themeLabelFontFamily);
@@ -231,7 +232,7 @@
   --sidebarBackground: rgba(255, 251, 254, 1);
   --sidebarWidth: 360px;
   --sidebarBorder: none;
-  
+
   /* Sidebar List Item */
   --sidebarListItemPadding: 16px 24px;
   --sidebarListItemHeight: 56px;
@@ -242,7 +243,7 @@
   --selectedSidebarListItemBackground: rgba(232, 222, 248, 1);
   --selectedSidebarListItemTextColor: rgba(33, 24, 66, 1);
   --selectedSidebarListItemMarker: rgba(102, 80, 164, 1);
-  
+
   /* Sidebar Section Title */
   --sidebarSectionTitleFont: var(--labelFont);
   --sidebarSectionTitleLetterSpacing: 0.01em;
@@ -266,7 +267,7 @@
   --contextualMenuBackground: rgba(236, 230, 240, 1);
   --contextualMenuBorder: none;
   --contextualMenuBorderRadius: 12px;
-  --contextualMenuBoxShadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15), 
+  --contextualMenuBoxShadow: 0px 2px 6px 2px rgba(0, 0, 0, 0.15),
     0px 1px 2px rgba(0, 0, 0, 0.3);
   --contextualMenuPadding: 8px 0;
   --contextualMenuItemPadding: 12px 16px;
@@ -365,7 +366,7 @@
   --fabSize: 56px;
   --fabBackground: rgba(236, 230, 240, 1);
   --fabTextColor: rgba(28, 27, 31, 1);
-  --fabBoxShadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15), 
+  --fabBoxShadow: 0px 4px 8px 3px rgba(0, 0, 0, 0.15),
     0px 1px 3px rgba(0, 0, 0, 0.3);
   --fabHoverBackground: rgba(230, 223, 235, 1);
   --fabActiveBackground: rgba(223, 217, 230, 1);
@@ -434,29 +435,29 @@
   --cardActiveBorder: none;
   --cardFocusBorder: 2px solid rgba(103, 80, 164, 0.4);
   --cardFocusBoxShadow: 0px 0px 0px 4px rgba(103, 80, 164, 0.12);
-  
+
   /* Card States - Ripple-like effects */
   --cardHoverBackground: var(--surfaceColor-1);
-  --cardHoverBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+  --cardHoverBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3),
     0px 1px 3px 1px rgba(0, 0, 0, 0.15);
   --cardActiveBackground: var(--surfaceColor-2);
   --cardActiveBoxShadow: none;
   --cardFocusBackground: var(--surfaceColor-1);
-  --cardFocusBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+  --cardFocusBoxShadow: 0px 1px 2px rgba(0, 0, 0, 0.3),
     0px 2px 6px 2px rgba(0, 0, 0, 0.15);
   --cardDisabledBackground: rgba(28, 27, 31, 0.04);
   --cardDisabledTextColor: rgba(28, 27, 31, 0.38);
-  
+
   /* Card Variants */
   /* Elevated Card - Uses surface tints for elevation */
   --cardBackground--elevated: var(--surfaceColor-1);
   --cardBorderRadius--elevated: 12px;
-  --cardBoxShadow--elevated: 0px 1px 2px rgba(0, 0, 0, 0.3), 
+  --cardBoxShadow--elevated: 0px 1px 2px rgba(0, 0, 0, 0.3),
     0px 1px 3px 1px rgba(0, 0, 0, 0.15);
   --cardHoverBackground--elevated: var(--surfaceColor-2);
-  --cardHoverBoxShadow--elevated: 0px 2px 4px rgba(0, 0, 0, 0.3), 
+  --cardHoverBoxShadow--elevated: 0px 2px 4px rgba(0, 0, 0, 0.3),
     0px 4px 8px 3px rgba(0, 0, 0, 0.15);
-  
+
   /* Outlined Card */
   --cardBackground--outlined: var(--surfaceColor);
   --cardBorderRadius--outlined: 12px;
@@ -464,26 +465,26 @@
   --cardBoxShadow--outlined: none;
   --cardHoverBackground--outlined: var(--surfaceColor-1);
   --cardHoverBorder--outlined: 1px solid rgba(121, 116, 126, 0.2);
-  
+
   /* Filled Card - Higher emphasis */
   --cardBackground--filled: var(--surfaceColor-2);
   --cardBorderRadius--filled: 12px;
   --cardBoxShadow--filled: none;
   --cardHoverBackground--filled: var(--surfaceColor-3);
-  
+
   /* Large Rounded Card - Material You style */
   --cardBorderRadius--large: 16px;
   --cardPadding--large: 20px;
-  
+
   /* Card Header Properties */
   --cardHeaderPadding: 16px 16px 8px;
   --cardHeaderFont: var(--subtitleFont);
   --cardHeaderTextColor: var(--labelColor);
-  
+
   /* Card Content Properties */
   --cardContentPadding: 0 16px 16px;
   --cardContentFont: var(--textFont);
-  
+
   /* Card Actions Properties */
   --cardActionsPadding: 8px;
   --cardActionsJustify: flex-end;
@@ -492,7 +493,7 @@
   /* Bottom Sheet - Android Specific */
   --bottomSheetBackground: rgba(255, 251, 254, 1);
   --bottomSheetBorderRadius: 28px 28px 0 0;
-  --bottomSheetBoxShadow: 0px -2px 6px 2px rgba(0, 0, 0, 0.15), 
+  --bottomSheetBoxShadow: 0px -2px 6px 2px rgba(0, 0, 0, 0.15),
     0px -1px 2px rgba(0, 0, 0, 0.3);
   --bottomSheetHandleWidth: 32px;
   --bottomSheetHandleHeight: 4px;
@@ -504,8 +505,8 @@
   --snackbarActionColor: rgba(208, 193, 238, 1);
   --snackbarBorderRadius: 4px;
   --snackbarPadding: 14px 16px;
-  --snackbarBoxShadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 
-    0px 6px 10px rgba(0, 0, 0, 0.14), 
+  --snackbarBoxShadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2),
+    0px 6px 10px rgba(0, 0, 0, 0.14),
     0px 1px 18px rgba(0, 0, 0, 0.12);
 
   /* Animation Timing - Material Motion */
@@ -607,26 +608,26 @@
     --checkboxBorder: 2px solid rgba(202, 196, 208, 1);
     --checkboxCheckedBackground: rgba(208, 193, 238, 1);
     --checkboxCheckmarkColor: rgba(36, 24, 66, 1);
-    
+
     /* Switch Control - Dark */
     --switchTrackBackground: rgba(49, 45, 56, 1);
     --switchTrackCheckedBackground: rgba(103, 89, 134, 1);
     --switchThumbBackground: rgba(147, 143, 153, 1);
     --switchThumbCheckedBackground: rgba(208, 193, 238, 1);
-    
+
     /* FAB - Dark */
     --fabBackground: rgba(49, 45, 56, 1);
     --fabTextColor: rgba(230, 225, 229, 1);
     --fabHoverBackground: rgba(56, 52, 63, 1);
     --fabActiveBackground: rgba(64, 60, 71, 1);
-    
+
     /* Chip - Dark */
     --chipBackground: rgba(49, 45, 56, 1);
     --chipTextColor: rgba(230, 225, 229, 1);
     --chipHoverBackground: rgba(56, 52, 63, 1);
     --chipSelectedBackground: rgba(73, 69, 91, 1);
     --chipSelectedTextColor: rgba(232, 222, 248, 1);
-    
+
     /* Card Component - Dark Mode */
     /* Base Card Properties */
     --cardBackground: var(--surfaceColor);
@@ -638,30 +639,30 @@
     --cardFocusBoxShadow: 0px 0px 0px 4px rgba(208, 193, 238, 0.12);
     --cardDisabledBackground: rgba(230, 225, 229, 0.04);
     --cardDisabledTextColor: rgba(230, 225, 229, 0.38);
-    
+
     /* Card States - Dark */
     --cardHoverBackground: var(--surfaceColor-1);
     --cardActiveBackground: var(--surfaceColor-2);
     --cardFocusBackground: var(--surfaceColor-1);
-    
+
     /* Card Variants - Dark */
     /* Elevated Card */
     --cardBackground--elevated: var(--surfaceColor-1);
     --cardHoverBackground--elevated: var(--surfaceColor-2);
-    
+
     /* Outlined Card */
     --cardBackground--outlined: var(--surfaceColor);
     --cardBorder--outlined: 1px solid var(--dividerColor);
     --cardHoverBackground--outlined: var(--surfaceColor-1);
     --cardHoverBorder--outlined: 1px solid rgba(202, 196, 208, 0.2);
-    
+
     /* Filled Card */
     --cardBackground--filled: var(--surfaceColor-2);
     --cardHoverBackground--filled: var(--surfaceColor-3);
-    
+
     /* Card Header - Dark */
     --cardHeaderTextColor: var(--labelColor);
-    
+
     /* Bottom Sheet - Dark */
     --bottomSheetBackground: rgba(36, 34, 40, 1);
     --bottomSheetHandleBackground: rgba(147, 143, 153, 0.4);
