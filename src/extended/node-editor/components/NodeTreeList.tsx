@@ -2,6 +2,7 @@ import * as React from "react";
 import { useNodeEditor } from "../contexts/node-editor";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
+import { hasGroupBehavior } from "../types/behaviors";
 import { Node, NodeId } from "../types/core";
 import { getNodeIcon } from "../utils/nodeUtils";
 import { CloseIcon, classNames, LockIcon, UnlockIcon } from "./elements";
@@ -46,9 +47,10 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
 }) => {
   const { t } = useI18n();
   const nodeDefinitions = useNodeDefinitionList();
-  const hasChildren = node.type === "group" && childNodes.length > 0;
-  const isExpanded = node.type === "group" && node.expanded !== false;
-  const isGroup = node.type === "group";
+  const def = React.useMemo(() => nodeDefinitions.find((d) => d.type === node.type), [nodeDefinitions, node.type]);
+  const isGroup = hasGroupBehavior(def);
+  const hasChildren = isGroup && childNodes.length > 0;
+  const isExpanded = isGroup && node.expanded !== false;
   
   const isDragging = dragState.draggingNodeId === node.id;
   const isDragOver = dragState.dragOverNodeId === node.id;
@@ -269,6 +271,7 @@ const ConnectedNodeTreeItem: React.FC<ConnectedNodeTreeItemProps> = ({
 }) => {
   const { state: editorState, dispatch, actions } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
+  const nodeDefinitions = useNodeDefinitionList();
   
   const node = editorState.nodes[nodeId];
   if (!node) return null;
@@ -306,11 +309,13 @@ const ConnectedNodeTreeItem: React.FC<ConnectedNodeTreeItemProps> = ({
   }, [editorState.nodes, dispatch, actions]);
   
   const handleToggleExpand = React.useCallback((nodeId: NodeId) => {
-    const node = editorState.nodes[nodeId];
-    if (node && node.type === "group") {
-      dispatch(actions.updateNode(nodeId, { expanded: !node.expanded }));
+    const n = editorState.nodes[nodeId];
+    if (!n) return;
+    const d = nodeDefinitions.find((defn) => defn.type === n.type);
+    if (hasGroupBehavior(d)) {
+      dispatch(actions.updateNode(nodeId, { expanded: !n.expanded }));
     }
-  }, [editorState.nodes, dispatch, actions]);
+  }, [editorState.nodes, dispatch, actions, nodeDefinitions]);
   
   const handleDeleteNode = React.useCallback((nodeId: NodeId) => {
     dispatch(actions.deleteNode(nodeId));

@@ -18,6 +18,7 @@ import { PortView } from "../connection/ports/PortView";
 import { useOptionalRenderers } from "../../contexts/RendererContext";
 import { LockIcon } from "../elements";
 import { useI18n } from "../../i18n";
+import { hasAppearanceBehavior, hasGroupBehavior } from "../../types/behaviors";
 
 export interface CustomNodeRendererProps {
   node: Node;
@@ -91,8 +92,10 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
   const isResizing = nodeResize.isResizing(node.id);
   const currentResizeHandle = nodeResize.getResizeHandle(node.id);
 
-  // Group-related state
-  const groupChildren = node.type === "group" ? groupManager.getGroupChildren(node.id) : [];
+  // Group-related state (behavior-driven)
+  const isGroupBehavior = hasGroupBehavior(nodeDefinition);
+  const isAppearanceBehavior = hasAppearanceBehavior(nodeDefinition);
+  const groupChildren = isGroupBehavior ? groupManager.getGroupChildren(node.id) : [];
   const hasChildren = groupChildren.length > 0;
 
   // Base position (without drag offset)
@@ -291,7 +294,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
   );
 
   // Dynamic styling for group nodes (minimize explicit branching)
-  const isGroup = node.type === "group";
+  const isGroup = isGroupBehavior;
   const groupBackground = isGroup && typeof (node.data as Record<string, unknown>).groupBackground === "string"
     ? String((node.data as Record<string, unknown>).groupBackground)
     : undefined;
@@ -345,7 +348,7 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
       ref={nodeRef}
       className={classNames(
         styles.nodeView,
-        node.type === "label" && styles.plainNode,
+        isAppearanceBehavior && styles.plainNode,
         isGroup && styles.groupNode,
         isGroup && hasChildren && styles.groupHasChildren,
         isSelected && styles.selected,

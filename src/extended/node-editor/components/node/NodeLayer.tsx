@@ -14,6 +14,7 @@ import styles from "./NodeLayer.module.css";
 import type { Port } from "../../types/core";
 import { snapMultipleToGrid } from "../../utils/gridSnap";
 import { useRenderers } from "../../contexts/RendererContext";
+import { hasGroupBehavior } from "../../types/behaviors";
 import { usePortPositions } from "../../contexts/PortPositionContext";
 import {
   getPortConnections,
@@ -66,14 +67,19 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
   const visibleNodes = useVisibleNodes(nodeEditorState.nodes);
 
   // Memoize sorted visible nodes
+  const defs = useNodeDefinitions();
   const sortedNodes = React.useMemo(() => {
-    // Groups render first (lower z-index)
+    // Nodes with group behavior render first (lower z-index)
     return visibleNodes.sort((a, b) => {
-      if (a.type === "group" && b.type !== "group") return -1;
-      if (a.type !== "group" && b.type === "group") return 1;
+      const aDef = defs.registry.get(a.type);
+      const bDef = defs.registry.get(b.type);
+      const aGroup = hasGroupBehavior(aDef);
+      const bGroup = hasGroupBehavior(bDef);
+      if (aGroup && !bGroup) return -1;
+      if (!aGroup && bGroup) return 1;
       return 0;
     });
-  }, [visibleNodes]);
+  }, [visibleNodes, defs.registry]);
 
   // Calculate connected ports once
   const connectedPorts = React.useMemo(() => {

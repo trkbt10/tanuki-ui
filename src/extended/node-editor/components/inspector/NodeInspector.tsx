@@ -6,6 +6,7 @@ import { useNodeDefinition } from "../../contexts/NodeDefinitionContext";
 import { useExternalDataRef } from "../../contexts/ExternalDataContext";
 import { useExternalData } from "../../hooks/useExternalData";
 import { DefaultInspectorRenderer } from "../node/renderers/DefaultRenderers";
+import { GroupInspector as GroupBehaviorInspector } from "../node/renderers/GroupInspector";
 import styles from "./NodeInspector.module.css";
 import { calculateAlignmentPositions } from "../../utils/alignmentUtils";
 import type { AlignmentActionType } from "../shared/alignmentActions";
@@ -86,7 +87,13 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
 
     return (
       <>
-        {/* Custom inspector first (outside Node Properties section) */}
+        {/* Group behavior settings when supported by definition */}
+        {nodeDefinition?.supportsChildren && (
+          <div className={styles.customInspectorBlock}>
+            <GroupBehaviorInspector {...inspectorProps} />
+          </div>
+        )}
+        {/* Custom inspector (node-specific) */}
         {nodeDefinition?.renderInspector && (
           <div className={styles.customInspectorBlock}>
             {nodeDefinition.renderInspector(inspectorProps)}
