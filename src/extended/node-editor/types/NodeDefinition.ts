@@ -271,7 +271,7 @@ export function createNodeDefinitionRegistry<TNodeDataTypeMap = NodeDataTypeMap>
 /**
  * Standard node definition
  */
-export const StandardNodeDefinition: NodeDefinition = {
+export const StandardNodeDefinition: NodeDefinition<"standard"> = {
   type: "standard",
   displayName: "Standard Node",
   description: "A basic node with customizable properties",
@@ -300,7 +300,7 @@ export const StandardNodeDefinition: NodeDefinition = {
 /**
  * Group node definition
  */
-export const GroupNodeDefinition: NodeDefinition = {
+export const GroupNodeDefinition: NodeDefinition<"group"> = {
   type: "group",
   displayName: "Group",
   description: "A container node that can hold other nodes",
@@ -333,8 +333,8 @@ export const LabelNodeDefinition: NodeDefinition<"label", LabelNodeDataMap> = {
   defaultSize: { width: 220, height: 72 },
   // No ports for a pure label
   ports: [],
-  renderNode: LabelNodeRenderer,
-  renderInspector: LabelNodeInspector,
+  renderNode: asOriginalNodeRender(LabelNodeRenderer),
+  renderInspector: asOriginalInspectorRender(LabelNodeInspector),
 };
 
 /**
@@ -420,7 +420,7 @@ export function createNodeDataUpdater<TNodeType extends keyof TNodeDataTypeMap, 
 export function asOriginalNodeRender<TNodeType extends string>(
   render: (props: NodeRenderProps<TNodeType>) => ReactElement
 ): (props: NodeRenderProps) => ReactElement {
-  return render as any;
+  return (props: NodeRenderProps) => render(props as NodeRenderProps<TNodeType>);
 }
 
 /**
@@ -430,5 +430,5 @@ export function asOriginalNodeRender<TNodeType extends string>(
 export function asOriginalInspectorRender<TNodeType extends string>(
   render: (props: InspectorRenderProps<TNodeType>) => ReactElement
 ): (props: InspectorRenderProps) => ReactElement {
-  return render as any;
+  return (props: InspectorRenderProps) => render(props as InspectorRenderProps<TNodeType>);
 }

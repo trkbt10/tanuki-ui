@@ -6,7 +6,7 @@ export interface IconProps extends React.SVGAttributes<SVGElement> {
   color?: string;
 }
 
-const createIcon = (path: string, viewBox: string = '0 0 24 24') => {
+const createIcon = (path: React.ReactNode | string, viewBox: string = '0 0 24 24') => {
   return React.forwardRef<SVGSVGElement, IconProps>(({ 
     size = 16, 
     color = 'currentColor', 
@@ -129,4 +129,21 @@ export const PasteIcon = createIcon(
 
 export const DuplicateIcon = createIcon(
   'M8 8H20V20H8V8ZM4 4H16V8H4V4Z',
+);
+
+// Lock/Unlock Icons
+export const LockIcon = createIcon(
+  <>
+    <rect x="6" y="11" width="12" height="9" rx="2" ry="2" />
+    <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+  </>,
+  '0 0 24 24'
+);
+
+export const UnlockIcon = createIcon(
+  <>
+    <rect x="6" y="11" width="12" height="9" rx="2" ry="2" />
+    <path d="M16 11V7a4 4 0 1 0-8 0" />
+  </>,
+  '0 0 24 24'
 );

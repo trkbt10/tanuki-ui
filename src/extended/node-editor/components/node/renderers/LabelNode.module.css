@@ -24,12 +24,14 @@
   margin: 0;
   font: var(--titleFont, 600 16px var(--themeDefaultFontFamily));
   line-height: 1.2;
+  font-size: 1.25em; /* bump up one size */
 }
 
 .labelSubtitle {
   margin-left: .5em;
   font: var(--subtitleFont, 500 12px var(--themeDefaultFontFamily));
   color: var(--secondaryLabelColor, #666);
+  font-size: 1.15em; /* slightly larger */
 }
 
 .labelCaption {

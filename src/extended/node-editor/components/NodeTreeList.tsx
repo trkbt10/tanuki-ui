@@ -4,7 +4,7 @@ import { useEditorActionState } from "../contexts/EditorActionStateContext";
 import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
 import { Node, NodeId } from "../types/core";
 import { getNodeIcon } from "../utils/nodeUtils";
-import { CloseIcon, classNames } from "./elements";
+import { CloseIcon, classNames, LockIcon, UnlockIcon } from "./elements";
 import { PropertySection } from "./parts";
 import styles from "./NodeTreeList.module.css";
 import { useI18n } from "../i18n";
@@ -21,6 +21,7 @@ interface NodeTreeItemProps {
   isSelected: boolean;
   onSelect: (nodeId: NodeId, multiSelect: boolean) => void;
   onToggleVisibility?: (nodeId: NodeId) => void;
+  onToggleLock?: (nodeId: NodeId) => void;
   onToggleExpand?: (nodeId: NodeId) => void;
   onDeleteNode?: (nodeId: NodeId) => void;
   childNodes: Node[];
@@ -35,6 +36,7 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
   isSelected,
   onSelect,
   onToggleVisibility,
+  onToggleLock,
   onToggleExpand,
   onDeleteNode,
   childNodes,
@@ -68,6 +70,13 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
     e.stopPropagation();
     if (onToggleVisibility) {
       onToggleVisibility(node.id);
+    }
+  };
+
+  const handleToggleLock = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (onToggleLock) {
+      onToggleLock(node.id);
     }
   };
   
@@ -188,7 +197,16 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
         <span className={styles.nodeName}>
           {node.data?.title && node.data.title.trim().length > 0 ? node.data.title : t("untitled")}
         </span>
-        
+
+        <button
+          className={styles.lockButton}
+          onClick={handleToggleLock}
+          aria-label={node.locked ? "Unlock" : "Lock"}
+          title={node.locked ? "Unlock" : "Lock"}
+        >
+          {node.locked ? <LockIcon size={16} /> : <UnlockIcon size={16} />}
+        </button>
+
         <button
           className={styles.visibilityButton}
           onClick={handleToggleVisibility}
@@ -268,6 +286,13 @@ const ConnectedNodeTreeItem: React.FC<ConnectedNodeTreeItemProps> = ({
       dispatch(actions.updateNode(nodeId, { visible: node.visible === false }));
     }
   }, [editorState.nodes, dispatch, actions]);
+
+  const handleToggleLock = React.useCallback((nodeId: NodeId) => {
+    const node = editorState.nodes[nodeId];
+    if (node) {
+      dispatch(actions.updateNode(nodeId, { locked: !node.locked }));
+    }
+  }, [editorState.nodes, dispatch, actions]);
   
   const handleToggleExpand = React.useCallback((nodeId: NodeId) => {
     const node = editorState.nodes[nodeId];
@@ -287,6 +312,7 @@ const ConnectedNodeTreeItem: React.FC<ConnectedNodeTreeItemProps> = ({
       isSelected={isSelected}
       onSelect={handleSelect}
       onToggleVisibility={handleToggleVisibility}
+      onToggleLock={handleToggleLock}
       onToggleExpand={handleToggleExpand}
       onDeleteNode={handleDeleteNode}
       childNodes={childNodes}

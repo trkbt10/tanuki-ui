@@ -1,11 +1,12 @@
 import * as React from "react";
 import type { NodeRenderProps, InspectorRenderProps } from "../../../types/NodeDefinition";
 import type { LabelNodeDataMap, LabelNodeData } from "../../../types/nodes/label";
+import type { NodeData } from "../../../types/core";
 import { Input, Label as FormLabel, Textarea } from "../../elements";
 import { PropertySection } from "../../parts";
 import styles from "./LabelNode.module.css";
 
-export const LabelNodeRenderer: React.FC<NodeRenderProps<"label", LabelNodeDataMap>> = ({ node, onStartEdit }) => {
+export function LabelNodeRenderer({ node, onStartEdit }: NodeRenderProps<"label", LabelNodeDataMap>): React.ReactElement {
   const data = node.data as LabelNodeData;
   const title = data?.title;
   const subtitle = data?.subtitle;
@@ -24,13 +25,13 @@ export const LabelNodeRenderer: React.FC<NodeRenderProps<"label", LabelNodeDataM
       </div>
     </div>
   );
-};
+}
 
-export const LabelNodeInspector: React.FC<InspectorRenderProps<"label", LabelNodeDataMap>> = ({ node, onUpdateNode }) => {
+export function LabelNodeInspector({ node, onUpdateNode }: InspectorRenderProps<"label", LabelNodeDataMap>): React.ReactElement {
   const data = (node.data as LabelNodeData) || {};
 
   const updateField = (key: "title" | "subtitle" | "caption") => (value: string) => {
-    onUpdateNode({ data: { ...data, [key]: value } as LabelNodeData });
+    onUpdateNode({ data: { ...data, [key]: value } as NodeData });
   };
 
   return (
@@ -53,4 +54,4 @@ export const LabelNodeInspector: React.FC<InspectorRenderProps<"label", LabelNod
       </PropertySection>
     </>
   );
-};
+}

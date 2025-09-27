@@ -57,7 +57,7 @@ export const NodeEditorToolbar: React.FC<NodeEditorToolbarProps> = ({
         size: nodeDefinition.defaultSize || { width: 150, height: 50 },
         // Use definition defaults but force empty title per requirements
         data: (() => {
-          const base = nodeDefinition.defaultData ? { ...nodeDefinition.defaultData } : {} as any;
+          const base: Record<string, unknown> = nodeDefinition.defaultData ? { ...(nodeDefinition.defaultData as Record<string, unknown>) } : {};
           return { ...base, title: "" };
         })(),
       };

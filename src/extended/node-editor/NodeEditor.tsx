@@ -445,7 +445,7 @@ const NodeEditorContent: React.FC<{
         size: nodeSize,
         // Use definition defaults but force empty title per requirements
         data: (() => {
-          const base = nodeDefinition.defaultData ? { ...nodeDefinition.defaultData } : {} as any;
+          const base: Record<string, unknown> = nodeDefinition.defaultData ? { ...(nodeDefinition.defaultData as Record<string, unknown>) } : {};
           return { ...base, title: "" };
         })(),
         // Ports are no longer assigned here - they will be inferred from NodeDefinition

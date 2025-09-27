@@ -140,6 +140,25 @@ export const useNodeEditorShortcuts = () => {
       }
     }, [nodeEditorDispatch, nodeEditorActions])
   );
+
+  // Lock selected nodes (Cmd+2 / Ctrl+2 on Windows if desired)
+  useRegisterShortcut(
+    { key: "2", meta: true },
+    React.useCallback(() => {
+      const selected = actionStateRef.current.selectedNodeIds;
+      if (selected.length === 0) return;
+      selected.forEach((nodeId) => nodeEditorDispatch(nodeEditorActions.updateNode(nodeId, { locked: true })));
+    }, [nodeEditorDispatch, nodeEditorActions])
+  );
+
+  // Unlock all nodes (Cmd+Shift+2)
+  useRegisterShortcut(
+    { key: "2", meta: true, shift: true },
+    React.useCallback(() => {
+      const allIds = Object.keys(nodeEditorStateRef.current.nodes);
+      allIds.forEach((nodeId) => nodeEditorDispatch(nodeEditorActions.updateNode(nodeId, { locked: false })));
+    }, [nodeEditorDispatch, nodeEditorActions])
+  );
   useRegisterShortcut(
     { key: "d", meta: true },
     React.useCallback(() => {

@@ -107,6 +107,7 @@
 }
 
 .visibilityButton,
+.lockButton,
 .deleteButton {
   display: flex;
   align-items: center;
@@ -129,6 +130,7 @@
 }
 
 .treeItem:hover .visibilityButton,
+.treeItem:hover .lockButton,
 .treeItem:hover .deleteButton {
   opacity: 1;
 }
@@ -144,11 +146,13 @@
 }
 
 .treeItem.selected .visibilityButton,
+.treeItem.selected .lockButton,
 .treeItem.selected .deleteButton {
   color: rgba(255, 255, 255, 0.8);
 }
 
-.treeItem.selected .visibilityButton:hover {
+.treeItem.selected .visibilityButton:hover,
+.treeItem.selected .lockButton:hover {
   color: white;
 }
 

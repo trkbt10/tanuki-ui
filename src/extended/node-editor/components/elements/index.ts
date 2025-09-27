@@ -51,6 +51,8 @@ export {
   PasteIcon,
   SearchIcon,
   SettingsIcon,
+  LockIcon,
+  UnlockIcon,
   type IconProps
 } from './icons';
 

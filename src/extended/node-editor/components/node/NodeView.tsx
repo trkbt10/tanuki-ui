@@ -16,6 +16,7 @@ import { useNodeResize } from "../../hooks/useNodeResize";
 import { useGroupManagement } from "../../hooks/useGroupManagement";
 import { PortView } from "../connection/ports/PortView";
 import { useOptionalRenderers } from "../../contexts/RendererContext";
+import { LockIcon } from "../elements";
 import { useI18n } from "../../i18n";
 
 export interface CustomNodeRendererProps {
@@ -323,7 +324,11 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
             )}
             data-drag-handle={nodeDefinition?.interactive ? "true" : "false"}
           >
-            {node.locked && <span className={styles.lockIcon}>🔒</span>}
+            {node.locked && (
+              <span className={styles.lockIcon}>
+                <LockIcon size={12} />
+              </span>
+            )}
             {isEditing(node.id, "title") ? (
               <input
                 id={`node-title-${node.id}`}
