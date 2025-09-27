@@ -205,7 +205,7 @@ import 'tanuki-ui/styles/ios12.css';
 // ... その他
 ```
 
-### 利用可能なテーマ (18 種類)
+### 利用可能なテーマ (19 種類)
 
 **Accessibility**
 - **Monotone (Default)** (`monotone.css`) - High contrast accessibility-focused design with clear visual hierarchy and enhanced readability
@@ -215,7 +215,7 @@ import 'tanuki-ui/styles/ios12.css';
 
 **Developer**
 - **GitHub Dark** (`github-dark.css`) - GitHub's dark theme with professional developer-focused aesthetics
-- **Vercel** (`vercel.css`) - Clean modern development-focused design with crisp typography and minimal visual elements
+- **Vercel** (`vercel.css`) - Geist-based palette with official neutral/brand tokens and typography updates
 
 **Apple**
 - **iOS 12** (`ios12.css`) - Implements Apple's Human Interface Guidelines with authentic iOS styling and dynamic color system
@@ -250,6 +250,9 @@ import 'tanuki-ui/styles/ios12.css';
 
 **Media**
 - **YouTube** (`youtube.css`) - Modern, clean design inspired by YouTube's interface with rounded corners, subtle shadows, and video-centric aesthetics
+
+**Communication**
+- **Naver LINE** (`naver-line.css`) - Inspired by LY Corporation's LINE brand with crisp white surfaces, bright green accents, and friendly messaging vibes
 
 
 ## バンドルサイズ
