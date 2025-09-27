@@ -16,7 +16,7 @@ export function isLabelNodeData(data: unknown): data is LabelNodeData {
  * Runtime guard to validate that a NodeDefinition is compatible with the CombinedMap = (UserMap & BuiltinNodeDataMap).
  * It validates built-in types that have stricter data contracts (currently: "label").
  */
-export function isDefinitionForCombinedMap(def: NodeDefinition<string, unknown>): boolean {
+export function isDefinitionForCombinedMap(def: { type: string; defaultData?: unknown }): boolean {
   if (def.type === "label") {
     return isLabelNodeData((def as any).defaultData);
   }
@@ -25,7 +25,7 @@ export function isDefinitionForCombinedMap(def: NodeDefinition<string, unknown>)
 
 // Type guard: render props is for label node with correct data shape
 export function isLabelNodeRenderProps(
-  props: NodeRenderProps<string, NodeDataTypeMap>
+  props: NodeRenderProps<string, NodeDataTypeMap & BuiltinNodeDataMap>
 ): props is NodeRenderProps<"label", LabelNodeDataMap> {
   return props.node.type === "label" && isLabelNodeData(props.node.data);
 }
@@ -33,18 +33,18 @@ export function isLabelNodeRenderProps(
 // Generic type-only guard based on node type (data shape is not validated)
 export function createTypeGuard<T extends string>(type: T) {
   return (
-    props: NodeRenderProps<string, NodeDataTypeMap>
-  ): props is NodeRenderProps<T, NodeDataTypeMap> => props.node.type === type;
+    props: NodeRenderProps<string, NodeDataTypeMap & BuiltinNodeDataMap>
+  ): props is NodeRenderProps<T, NodeDataTypeMap & BuiltinNodeDataMap> => props.node.type === type;
 }
 
 export function isLabelInspectorProps(
-  props: InspectorRenderProps<string, NodeDataTypeMap>
+  props: InspectorRenderProps<string, NodeDataTypeMap & BuiltinNodeDataMap>
 ): props is InspectorRenderProps<"label", LabelNodeDataMap> {
   return props.node.type === "label" && isLabelNodeData(props.node.data);
 }
 
 export function createInspectorTypeGuard<T extends string>(type: T) {
   return (
-    props: InspectorRenderProps<string, NodeDataTypeMap>
-  ): props is InspectorRenderProps<T, NodeDataTypeMap> => props.node.type === type;
+    props: InspectorRenderProps<string, NodeDataTypeMap & BuiltinNodeDataMap>
+  ): props is InspectorRenderProps<T, NodeDataTypeMap & BuiltinNodeDataMap> => props.node.type === type;
 }

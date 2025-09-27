@@ -1,6 +1,7 @@
 import React, { type ReactNode, type ReactElement } from "react";
 import { isLabelNodeRenderProps, createTypeGuard, isLabelInspectorProps, createInspectorTypeGuard } from "./typeGuards";
 import type { Node, NodeId, Port, Connection, NodeEditorData, NodeData } from "./core";
+import type { BuiltinNodeDataMap } from "./builtin";
 
 /**
  * Base node data type map interface
@@ -270,9 +271,10 @@ export function createNodeDefinitionRegistry<TNodeDataTypeMap = NodeDataTypeMap>
 }
 
 /**
- * Standard node definition
+ * Example node definition (for documentation and reference only).
+ * Not included in default registrations.
  */
-export const StandardNodeDefinition: NodeDefinition<"standard"> = {
+export const ExampleNodeDefinition: NodeDefinition<"standard"> = {
   type: "standard",
   displayName: "Standard Node",
   description: "A basic node with customizable properties",
@@ -443,20 +445,20 @@ export function toUntypedDefinition<TNodeType extends string, TMap = NodeDataTyp
 ): NodeDefinition<string, NodeDataTypeMap> {
   const type = def.type as string;
   const typedRenderNode = def.renderNode as unknown as
-    | ((props: NodeRenderProps<TNodeType, NodeDataTypeMap>) => ReactElement)
+    | ((props: NodeRenderProps<TNodeType, NodeDataTypeMap & BuiltinNodeDataMap>) => ReactElement)
     | undefined;
   const typedLabelRenderNode = def.renderNode as unknown as
     | ((props: NodeRenderProps<"label", LabelNodeDataMap>) => ReactElement)
     | undefined;
   const typedRenderInspector = def.renderInspector as unknown as
-    | ((props: InspectorRenderProps<TNodeType, NodeDataTypeMap>) => ReactElement)
+    | ((props: InspectorRenderProps<TNodeType, NodeDataTypeMap & BuiltinNodeDataMap>) => ReactElement)
     | undefined;
   const typedLabelRenderInspector = def.renderInspector as unknown as
     | ((props: InspectorRenderProps<"label", LabelNodeDataMap>) => ReactElement)
     | undefined;
 
   const wrapRenderNode = typedRenderNode
-    ? ((props: NodeRenderProps<string, NodeDataTypeMap>) => {
+    ? ((props: NodeRenderProps<string, NodeDataTypeMap & BuiltinNodeDataMap>) => {
         if (type === "label") {
           if (isLabelNodeRenderProps(props) && typedLabelRenderNode) return typedLabelRenderNode(props);
         } else {
@@ -468,7 +470,7 @@ export function toUntypedDefinition<TNodeType extends string, TMap = NodeDataTyp
     : undefined;
 
   const wrapRenderInspector = typedRenderInspector
-    ? ((props: InspectorRenderProps<string, NodeDataTypeMap>) => {
+    ? ((props: InspectorRenderProps<string, NodeDataTypeMap & BuiltinNodeDataMap>) => {
         if (type === "label") {
           if (isLabelInspectorProps(props) && typedLabelRenderInspector) return typedLabelRenderInspector(props);
         } else {
@@ -479,11 +481,11 @@ export function toUntypedDefinition<TNodeType extends string, TMap = NodeDataTyp
       })
     : undefined;
 
-  const untyped: NodeDefinition<string, NodeDataTypeMap> = {
+  const untyped = {
     ...def,
     type,
     renderNode: wrapRenderNode,
     renderInspector: wrapRenderInspector,
-  };
+  } as unknown as NodeDefinition<string, NodeDataTypeMap>;
   return untyped;
 }

@@ -1,4 +1,6 @@
-export interface LabelNodeData {
+import type { NodeData } from "../core";
+
+export interface LabelNodeData extends NodeData {
   title?: string;
   subtitle?: string;
   caption?: string;
@@ -7,4 +9,3 @@ export interface LabelNodeData {
 export type LabelNodeDataMap = {
   label: LabelNodeData;
 };
-

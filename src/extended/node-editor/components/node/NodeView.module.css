@@ -119,16 +119,38 @@
 }
 
 .groupNode {
-  background-color: var(--groupNodeBackground, rgba(240, 240, 240, 0.7));
+  /* Subdued, token-driven appearance */
+  background-color: var(
+    --groupNodeBackground,
+    color-mix(in srgb, var(--separatorColor, rgba(0, 0, 0, 0.12)) 6%, transparent)
+  );
   border-style: dashed;
-  border-width: 2px;
-  border-color: var(--groupNodeBorder, #ccc);
+  border-width: 1px;
+  border-color: var(--groupNodeBorder, var(--dividerColor, rgba(0, 0, 0, 0.12)));
+  box-shadow: none;
   z-index: 1;
 }
 
 .groupNode.groupHasChildren {
-  border-color: var(--groupNodeActiveColor, #0066cc);
-  background-color: var(--groupNodeActiveBackground, rgba(0, 102, 204, 0.05));
+  border-color: var(
+    --groupNodeActiveColor,
+    color-mix(in srgb, var(--accentColor, #0066cc) 45%, var(--dividerColor, rgba(0, 0, 0, 0.12)))
+  );
+  background-color: var(
+    --groupNodeActiveBackground,
+    color-mix(in srgb, var(--accentColor, #0066cc) 8%, transparent)
+  );
+}
+
+/* Tone down the header for group nodes */
+.groupNode .nodeHeader {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.groupNode .nodeTitle {
+  color: var(--secondaryLabelColor, #666);
+  font-weight: 500;
 }
 
 .groupCollapsed {
