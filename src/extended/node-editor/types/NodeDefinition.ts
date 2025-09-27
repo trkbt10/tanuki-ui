@@ -330,8 +330,8 @@ export const LabelNodeDefinition: NodeDefinition<"label", LabelNodeDataMap> = {
   description: "A decoration-less text label with optional subtitle and caption",
   category: "Basic",
   defaultData: {
-    title: "",
-    subtitle: "",
+    title: "Title",
+    subtitle: "Subtitle",
     caption: "",
   },
   // Provide a compact default size; content may exceed if long

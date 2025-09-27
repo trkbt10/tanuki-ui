@@ -33,8 +33,9 @@ export const useVisibleNodes = (
       bottom: (containerHeight - viewport.offset.y + buffer) / viewport.scale,
     };
     
-    // Filter nodes that intersect with viewport
+    // Filter nodes by visibility and intersection with viewport
     return Object.values(nodes).filter(node => {
+      if (node.visible === false) return false;
       const nodeWidth = node.size?.width || 150;
       const nodeHeight = node.size?.height || 50;
       

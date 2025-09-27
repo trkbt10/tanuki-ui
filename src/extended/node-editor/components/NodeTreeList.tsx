@@ -274,7 +274,18 @@ const ConnectedNodeTreeItem: React.FC<ConnectedNodeTreeItemProps> = ({
   if (!node) return null;
   
   const isSelected = actionState.selectedNodeIds.includes(nodeId);
-  const childNodes = Object.values(editorState.nodes).filter(n => n.parentId === nodeId);
+  const childNodes = React.useMemo(() => {
+    const list = Object.values(editorState.nodes).filter(n => n.parentId === nodeId);
+    return list.sort((a, b) => {
+      const ao = typeof a.order === 'number' ? a.order : Number.POSITIVE_INFINITY;
+      const bo = typeof b.order === 'number' ? b.order : Number.POSITIVE_INFINITY;
+      if (ao !== bo) return ao - bo;
+      // fallback: stable by title
+      const ta = a.data?.title || '';
+      const tb = b.data?.title || '';
+      return ta.localeCompare(tb);
+    });
+  }, [editorState.nodes, nodeId]);
   
   const handleSelect = React.useCallback((nodeId: NodeId, multiSelect: boolean) => {
     actionDispatch(actionActions.selectNode(nodeId, multiSelect));
@@ -343,14 +354,14 @@ export const NodeTreeList: React.FC<NodeTreeListProps> = ({ className }) => {
     return Object.values(editorState.nodes).filter(node => !node.parentId);
   }, [editorState.nodes]);
   
-  // Sort nodes by type and name
+  // Sort root nodes: groups first, then by explicit order, then title
   const sortedRootNodes = React.useMemo(() => {
     return [...rootNodes].sort((a, b) => {
-      // Groups first
       if (a.type === "group" && b.type !== "group") return -1;
       if (a.type !== "group" && b.type === "group") return 1;
-      
-      // Then by title
+      const ao = typeof a.order === 'number' ? a.order : Number.POSITIVE_INFINITY;
+      const bo = typeof b.order === 'number' ? b.order : Number.POSITIVE_INFINITY;
+      if (ao !== bo) return ao - bo;
       const titleA = (a.data?.title && a.data.title.trim().length > 0) ? a.data.title : t("untitled");
       const titleB = (b.data?.title && b.data.title.trim().length > 0) ? b.data.title : t("untitled");
       return titleA.localeCompare(titleB);
@@ -384,24 +395,39 @@ export const NodeTreeList: React.FC<NodeTreeListProps> = ({ className }) => {
       return;
     }
     
-    // Handle different drop positions
+    // Helper to renumber orders for a parent's children
+    const reorderSiblings = (parentId?: NodeId, insertAtIndex?: number) => {
+      const siblings = Object.values(editorState.nodes)
+        .filter(n => (n.parentId || undefined) === (parentId || undefined) && n.id !== draggedNodeId)
+        .sort((a, b) => {
+          const ao = typeof a.order === 'number' ? a.order : Number.POSITIVE_INFINITY;
+          const bo = typeof b.order === 'number' ? b.order : Number.POSITIVE_INFINITY;
+          if (ao !== bo) return ao - bo;
+          const ta = a.data?.title || '';
+          const tb = b.data?.title || '';
+          return ta.localeCompare(tb);
+        });
+      const list = [...siblings];
+      const targetIndex = (() => {
+        if (position === 'before') return siblings.findIndex(n => n.id === targetNodeId);
+        if (position === 'after') return siblings.findIndex(n => n.id === targetNodeId) + 1;
+        return typeof insertAtIndex === 'number' ? insertAtIndex : siblings.length;
+      })();
+      list.splice(Math.max(0, targetIndex), 0, { ...draggedNode, parentId });
+      list.forEach((n, idx) => {
+        editorDispatch(editorActions.updateNode(n.id, { order: idx * 10, parentId: n.id === draggedNodeId ? parentId : n.parentId }));
+      });
+    };
+
     if (position === "inside" && targetNode.type === "group") {
-      // Drop inside a group
-      editorDispatch(editorActions.updateNode(draggedNodeId, { parentId: targetNodeId }));
-      
-      // Expand the group if it's not already expanded
+      // Drop inside a group, append at end and expand group
+      reorderSiblings(targetNodeId);
       if (!targetNode.expanded) {
         editorDispatch(editorActions.updateNode(targetNodeId, { expanded: true }));
       }
     } else {
-      // Drop before or after a node
-      const targetParentId = targetNode.parentId || undefined;
-      
-      // Update the dragged node's parent
-      editorDispatch(editorActions.updateNode(draggedNodeId, { parentId: targetParentId }));
-      
-      // TODO: Implement sibling ordering if needed
-      // This would require adding an order/index property to nodes
+      // Drop before or after target among same parent
+      reorderSiblings(targetNode.parentId || undefined);
     }
   }, [editorState.nodes, editorDispatch, editorActions]);
   

@@ -184,6 +184,13 @@
   gap: var(--node-editor-inspector-inline-gap);
 }
 
+.inspectorActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--node-editor-inspector-inline-gap);
+}
+
 /* Ensure checkbox and label text align nicely */
 .checkboxContainer input[type="checkbox"] {
   margin: 0;

@@ -3,7 +3,7 @@ import type { NodeRenderProps, InspectorRenderProps } from "../../../types/NodeD
 import type { Node } from "../../../types/core";
 import { Input, Textarea } from "../../elements";
 import editorStyles from "../../../NodeEditor.module.css";
-import { PropertySection, InspectorLabel } from "../../parts";
+import { PropertySection, InspectorLabel, InspectorButton } from "../../parts";
 import { useI18n } from "../../../i18n";
 import alignmentStyles from "./AlignmentControls.module.css";
 import defaultStyles from "./DefaultRenderers.module.css";
@@ -14,7 +14,13 @@ import {
   type AlignmentActionGroup,
   type AlignmentActionType,
 } from "../../shared/alignmentActions";
-import { NodeActionsList } from "../../shared/NodeActionsList";
+import { useNodeEditorActions } from "../../../hooks/useNodeEditorActions";
+import { useEditorActionState } from "../../../contexts/EditorActionStateContext";
+import { useNodeEditor } from "../../../contexts/node-editor";
+import { useNodeDefinitionList } from "../../../contexts/NodeDefinitionContext";
+import { canAddNodeType, countNodesByType } from "../../../utils/nodeTypeLimits";
+import { getClipboard, setClipboard } from "../../../utils/clipboard";
+import { DuplicateIcon, CopyIcon, CutIcon, DeleteIcon } from "../../elements/icons";
 
 /**
  * Default node renderer
@@ -346,10 +352,84 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
 
         {/* Group-specific inspector UI is rendered outside this section by NodeInspector */}
 
-        <InspectorLabel>
-          {t("inspectorActions") || "Actions"}
-        </InspectorLabel>
-        <NodeActionsList targetNodeId={node.id} includePaste={false} />
+        <InspectorLabel>{t("inspectorActions") || "Actions"}</InspectorLabel>
+        <div className={defaultStyles.inspectorActions}>
+          {(() => {
+            const editorActions = useNodeEditorActions();
+            const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
+            const { state: editorState } = useNodeEditor();
+            const nodeDefinitions = useNodeDefinitionList();
+
+            const handleDuplicate = () => {
+              const n = editorState.nodes[node.id];
+              if (!n) return;
+              const counts = countNodesByType(editorState);
+              if (!canAddNodeType(n.type, nodeDefinitions, counts)) return;
+              editorActions.duplicateNodes([node.id]);
+            };
+
+            const handleCopy = () => {
+              const selected = actionState.selectedNodeIds.length > 0 && actionState.selectedNodeIds.includes(node.id)
+                ? actionState.selectedNodeIds
+                : [node.id];
+              const nodes = selected
+                .map((id) => editorState.nodes[id])
+                .filter(Boolean)
+                .map((n) => ({ id: n.id, type: n.type, position: n.position, size: n.size, data: n.data }));
+              const selSet = new Set(selected);
+              const connections = Object.values(editorState.connections)
+                .filter((c) => selSet.has(c.fromNodeId) && selSet.has(c.toNodeId))
+                .map((c) => ({ fromNodeId: c.fromNodeId, fromPortId: c.fromPortId, toNodeId: c.toNodeId, toPortId: c.toPortId }));
+              setClipboard({ nodes, connections });
+            };
+
+            const handleCut = () => {
+              const selected = actionState.selectedNodeIds.length > 0 && actionState.selectedNodeIds.includes(node.id)
+                ? actionState.selectedNodeIds
+                : [node.id];
+              const nodes = selected
+                .map((id) => editorState.nodes[id])
+                .filter(Boolean)
+                .map((n) => ({ id: n.id, type: n.type, position: n.position, size: n.size, data: n.data }));
+              const selSet = new Set(selected);
+              const connections = Object.values(editorState.connections)
+                .filter((c) => selSet.has(c.fromNodeId) && selSet.has(c.toNodeId))
+                .map((c) => ({ fromNodeId: c.fromNodeId, fromPortId: c.fromPortId, toNodeId: c.toNodeId, toPortId: c.toPortId }));
+              setClipboard({ nodes, connections });
+              selected.forEach((id) => editorActions.deleteNode(id));
+              actionDispatch(actionActions.clearSelection());
+            };
+
+            const handleDelete = () => {
+              editorActions.deleteNode(node.id);
+            };
+
+            const duplicateLabel = t("contextMenuDuplicateNode") || "Duplicate";
+            const copyLabel = t("copy") || "Copy";
+            const cutLabel = t("cut") || "Cut";
+            const deleteLabel = t("contextMenuDeleteNode") || "Delete";
+            return (
+              <>
+                <InspectorButton onClick={handleDuplicate} aria-label={duplicateLabel}>
+                  <DuplicateIcon size={14} />
+                  <span style={{ marginLeft: 6 }}>{duplicateLabel}</span>
+                </InspectorButton>
+                <InspectorButton onClick={handleCopy} aria-label={copyLabel}>
+                  <CopyIcon size={14} />
+                  <span style={{ marginLeft: 6 }}>{copyLabel}</span>
+                </InspectorButton>
+                <InspectorButton onClick={handleCut} aria-label={cutLabel}>
+                  <CutIcon size={14} />
+                  <span style={{ marginLeft: 6 }}>{cutLabel}</span>
+                </InspectorButton>
+                <InspectorButton variant="danger" onClick={handleDelete} aria-label={deleteLabel}>
+                  <DeleteIcon size={14} />
+                  <span style={{ marginLeft: 6 }}>{deleteLabel}</span>
+                </InspectorButton>
+              </>
+            );
+          })()}
+        </div>
       </PropertySection>
     );
   }

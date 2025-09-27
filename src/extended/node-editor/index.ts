@@ -65,9 +65,9 @@ export {
 export * from "./hooks";
 
 // Layer components
-export { Minimap, DebugOverlay, GridToolbox } from "./components/layers";
+export { Minimap, DebugOverlay, GridToolbox, NodeMapRenderer } from "./components/layers";
 
-export type { MinimapProps, DebugOverlayProps, GridToolboxProps } from "./components/layers";
+export type { MinimapProps, DebugOverlayProps, GridToolboxProps, NodeMapRendererProps } from "./components/layers";
 
 // UI components
 export { NodeEditorToolbar } from "./components/elements/NodeEditorToolbar";

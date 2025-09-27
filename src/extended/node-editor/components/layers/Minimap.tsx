@@ -2,6 +2,7 @@ import * as React from "react";
 import { useNodeEditor } from "../../contexts/node-editor";
 import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
 import styles from "./Minimap.module.css";
+import { NodeMapRenderer } from "./NodeMapRenderer";
 
 export interface MinimapProps {
   width?: number;
@@ -23,7 +24,7 @@ export const Minimap: React.FC<MinimapProps> = ({
   scale = 0.1
 }) => {
   const { state } = useNodeEditor();
-  const { state: canvasState, dispatch: canvasDispatch, actions: canvasActions } = useNodeCanvas();
+  const { state: canvasState, dispatch: canvasDispatch, actions: canvasActions, canvasRef: editorCanvasRef } = useNodeCanvas();
   const canvasRef = React.useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = React.useState(false);
   const [dragStart, setDragStart] = React.useState<{ x: number; y: number; viewportOffset: { x: number; y: number } } | null>(null);
@@ -31,7 +32,7 @@ export const Minimap: React.FC<MinimapProps> = ({
   
   // Calculate bounds of all nodes
   const nodeBounds = React.useMemo(() => {
-    const nodes = Object.values(state.nodes);
+    const nodes = Object.values(state.nodes).filter(n => n.visible !== false);
     if (nodes.length === 0) {
       return { minX: 0, minY: 0, maxX: 1000, maxY: 1000 };
     }
@@ -93,19 +94,22 @@ export const Minimap: React.FC<MinimapProps> = ({
   // Calculate viewport rectangle in minimap coordinates
   const viewportRect = React.useMemo(() => {
     const viewport = canvasState.viewport;
-    
-    // Calculate visible area in world coordinates
-    const visibleWidth = window.innerWidth / viewport.scale;
-    const visibleHeight = window.innerHeight / viewport.scale;
-    
+    const rect = editorCanvasRef.current?.getBoundingClientRect();
+    const containerWidth = rect?.width ?? window.innerWidth;
+    const containerHeight = rect?.height ?? window.innerHeight;
+
+    // Calculate visible area in world coordinates relative to the actual canvas container
+    const visibleWidth = containerWidth / viewport.scale;
+    const visibleHeight = containerHeight / viewport.scale;
+
     const worldTopLeft = {
       x: -viewport.offset.x / viewport.scale,
-      y: -viewport.offset.y / viewport.scale
+      y: -viewport.offset.y / viewport.scale,
     };
-    
+
     const worldBottomRight = {
       x: worldTopLeft.x + visibleWidth,
-      y: worldTopLeft.y + visibleHeight
+      y: worldTopLeft.y + visibleHeight,
     };
 
     const minimapTopLeft = worldToMinimap(worldTopLeft.x, worldTopLeft.y);
@@ -115,9 +119,9 @@ export const Minimap: React.FC<MinimapProps> = ({
       x: minimapTopLeft.x,
       y: minimapTopLeft.y,
       width: Math.max(1, minimapBottomRight.x - minimapTopLeft.x),
-      height: Math.max(1, minimapBottomRight.y - minimapTopLeft.y)
+      height: Math.max(1, minimapBottomRight.y - minimapTopLeft.y),
     };
-  }, [canvasState.viewport, worldToMinimap]);
+  }, [canvasState.viewport, worldToMinimap, canvasRef]);
 
   // Navigate to position based on minimap coordinates
   const navigateToPosition = React.useCallback((clientX: number, clientY: number) => {
@@ -135,8 +139,11 @@ export const Minimap: React.FC<MinimapProps> = ({
     
     // Calculate where this world position should appear on screen
     // We want the clicked world position to appear at the same screen position where we clicked on the minimap
-    const screenX = (clickX / width) * window.innerWidth;
-    const screenY = ((clickY - 30) / (height - 30)) * window.innerHeight; // Account for header
+    const rectCanvas = editorCanvasRef.current?.getBoundingClientRect();
+    const containerWidth = rectCanvas?.width ?? window.innerWidth;
+    const containerHeight = rectCanvas?.height ?? window.innerHeight;
+    const screenX = (clickX / width) * containerWidth + (rectCanvas?.left ?? 0);
+    const screenY = ((clickY - 30) / (height - 30)) * containerHeight + (rectCanvas?.top ?? 0); // Account for header
     
     // Calculate new viewport offset so that worldPos appears at screenX, screenY
     const newOffsetX = screenX - worldPos.x * viewport.scale;
@@ -256,59 +263,14 @@ export const Minimap: React.FC<MinimapProps> = ({
           cursor: isDragging ? "grabbing" : "grab"
         }}
       >
-        {/* Render connections as lines */}
-        <svg className={styles.minimapConnections} viewBox={`0 0 ${width} ${height - 30}`}>
-          {Object.values(state.connections || {}).map(connection => {
-            const fromNode = state.nodes[connection.fromNodeId];
-            const toNode = state.nodes[connection.toNodeId];
-            
-            if (!fromNode || !toNode) return null;
-
-            const fromPos = worldToMinimap(
-              fromNode.position.x + (fromNode.size?.width || 150) / 2,
-              fromNode.position.y + (fromNode.size?.height || 100) / 2
-            );
-            const toPos = worldToMinimap(
-              toNode.position.x + (toNode.size?.width || 150) / 2,
-              toNode.position.y + (toNode.size?.height || 100) / 2
-            );
-
-            return (
-              <line
-                key={connection.id}
-                x1={fromPos.x}
-                y1={fromPos.y - 30}
-                x2={toPos.x}
-                y2={toPos.y - 30}
-                className={styles.minimapConnection}
-              />
-            );
-          })}
-        </svg>
-
-        {/* Render nodes */}
-        {Object.values(state.nodes).map(node => {
-          const pos = worldToMinimap(node.position.x, node.position.y);
-          const size = {
-            width: (node.size?.width || 150) * minimapScale,
-            height: (node.size?.height || 100) * minimapScale
-          };
-          const isGroupNode = node.type === "group";
-
-          return (
-            <div
-              key={node.id}
-              className={`${styles.minimapNode} ${isGroupNode ? styles.minimapGroupNode : ""}`}
-              style={{
-                left: pos.x,
-                top: pos.y,
-                width: Math.max(2, size.width),
-                height: Math.max(2, size.height)
-              }}
-              data-node-type={node.type}
-            />
-          );
-        })}
+        <NodeMapRenderer
+          nodes={state.nodes}
+          connections={state.connections}
+          width={width}
+          height={height - 30}
+          padding={{ top: 10, left: 10, right: 10, bottom: 10 }}
+          filterHidden
+        />
 
         {/* Render viewport indicator */}
         <div

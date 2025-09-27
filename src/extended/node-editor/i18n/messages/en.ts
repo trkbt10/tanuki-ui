@@ -163,4 +163,11 @@ export const enMessages: I18nMessages = {
   formatSnapGrid: "snap",
   fieldTitle: "Title",
   fieldContent: "Content",
+  labelTitlePlaceholder: "Title",
+  labelSubtitlePlaceholder: "Subtitle",
+  labelCaptionPlaceholder: "Caption",
+  fieldBackground: "Background",
+  fieldOpacity: "Opacity",
+  fieldTextColor: "Text Color",
+  inspectorGroupAppearanceTitle: "Appearance",
 };

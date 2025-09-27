@@ -163,4 +163,11 @@ export const jaMessages: I18nMessages = {
   formatSnapGrid: "スナップ",
   fieldTitle: "タイトル",
   fieldContent: "内容",
+  labelTitlePlaceholder: "タイトル",
+  labelSubtitlePlaceholder: "サブタイトル",
+  labelCaptionPlaceholder: "キャプション",
+  fieldBackground: "背景色",
+  fieldOpacity: "透明度",
+  fieldTextColor: "文字色",
+  inspectorGroupAppearanceTitle: "外観",
 };

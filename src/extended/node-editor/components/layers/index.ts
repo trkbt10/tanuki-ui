@@ -9,7 +9,9 @@
 export { Minimap } from "./Minimap";
 export { DebugOverlay } from "./DebugOverlay";
 export { GridToolbox } from "./GridToolbox";
+export { NodeMapRenderer } from "./NodeMapRenderer";
 
 export type { MinimapProps } from "./Minimap";
 export type { DebugOverlayProps } from "./DebugOverlay";
 export type { GridToolboxProps } from "./GridToolbox";
+export type { NodeMapRendererProps } from "./NodeMapRenderer";

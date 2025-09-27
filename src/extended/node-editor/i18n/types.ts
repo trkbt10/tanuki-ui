@@ -169,6 +169,15 @@ export interface I18nMessages {
   // Generic field labels
   fieldTitle?: string;
   fieldContent?: string;
+
+  // Extended: Label/Group specific
+  labelTitlePlaceholder?: string;
+  labelSubtitlePlaceholder?: string;
+  labelCaptionPlaceholder?: string;
+  fieldBackground?: string;
+  fieldOpacity?: string;
+  fieldTextColor?: string;
+  inspectorGroupAppearanceTitle?: string;
 }
 
 export type I18nKey = keyof I18nMessages;

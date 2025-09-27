@@ -58,6 +58,8 @@ export interface Node {
   position: Position;
   size?: Size;
   data: NodeData;
+  /** Optional ordering index for sibling sorting in Layers */
+  order?: number;
   /**
    * @deprecated Ports are now inferred from NodeDefinitions. 
    * This field is only used for backward compatibility and will be removed in a future version.

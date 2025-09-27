@@ -16,6 +16,11 @@
   text-align: center;
 }
 
+/* Alignment helpers */
+.alignLeft { text-align: left; }
+.alignCenter { text-align: center; }
+.alignRight { text-align: right; }
+
 .labelGroup {
   margin: 0;
 }
@@ -26,6 +31,11 @@
   line-height: 1.2;
   font-size: 1.25em; /* bump up one size */
 }
+
+/* Wrapping and ellipsis utilities */
+.nowrap { white-space: nowrap; }
+.wrapBalance { text-wrap: balance; }
+.ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
 .labelSubtitle {
   margin-left: .5em;

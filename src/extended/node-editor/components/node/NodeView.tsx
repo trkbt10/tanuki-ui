@@ -295,6 +295,9 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
   const groupBackground = isGroup && typeof (node.data as Record<string, unknown>).groupBackground === "string"
     ? String((node.data as Record<string, unknown>).groupBackground)
     : undefined;
+  const groupOpacity = isGroup && typeof (node.data as Record<string, unknown>).groupOpacity === "number"
+    ? (node.data as Record<string, unknown>).groupOpacity as number
+    : undefined;
 
   function parseColorToRGB(input: string): { r: number; g: number; b: number } | null {
     const hex = input.trim();
@@ -327,6 +330,15 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
   }
 
   const groupTextColor = isGroup ? getReadableTextColor(groupBackground) : undefined;
+  const backgroundWithOpacity = React.useMemo(() => {
+    if (!isGroup) return undefined;
+    if (!groupBackground) return undefined;
+    if (typeof groupOpacity !== "number") return groupBackground;
+    const rgb = parseColorToRGB(groupBackground);
+    if (!rgb) return groupBackground;
+    const alpha = Math.min(1, Math.max(0, groupOpacity));
+    return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+  }, [isGroup, groupBackground, groupOpacity]);
 
   return (
     <div
@@ -345,8 +357,8 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
       style={{
         width: size.width,
         height: size.height,
-        zIndex: isDragging || isResizing ? 1000 : isGroup ? 1 : 2,
-        backgroundColor: groupBackground,
+        zIndex: isGroup ? 1 : (isDragging || isResizing ? 1000 : 2),
+        backgroundColor: backgroundWithOpacity ?? groupBackground,
         color: groupTextColor,
       }}
       onPointerDown={handleNodePointerDown}

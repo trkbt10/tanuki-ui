@@ -16,7 +16,37 @@ export const nodeEditorReducer = (state: NodeEditorData, action: NodeEditorActio
       const { nodeId, updates } = action.payload;
       const node = state.nodes[nodeId];
       if (!node) return state;
-      return { ...state, nodes: { ...state.nodes, [nodeId]: { ...node, ...updates } as Node } };
+      const nextNodes = { ...state.nodes, [nodeId]: { ...node, ...updates } as Node };
+
+      // If a group node toggles visibility or lock, propagate to descendants
+      const propagateVisibility = Object.prototype.hasOwnProperty.call(updates, 'visible');
+      const propagateLock = Object.prototype.hasOwnProperty.call(updates, 'locked');
+      if ((propagateVisibility || propagateLock) && node.type === 'group') {
+        const targetVisible = propagateVisibility ? (updates as any).visible as boolean | undefined : undefined;
+        const targetLocked = propagateLock ? (updates as any).locked as boolean | undefined : undefined;
+
+        if (typeof targetVisible !== 'undefined' || typeof targetLocked !== 'undefined') {
+          const isDescendant = (childId: NodeId, ancestorId: NodeId): boolean => {
+            const n = nextNodes[childId];
+            if (!n) return false;
+            if (n.parentId === ancestorId) return true;
+            if (n.parentId) return isDescendant(n.parentId, ancestorId);
+            return false;
+          };
+
+          Object.values(nextNodes).forEach((n) => {
+            if (n.id !== nodeId && isDescendant(n.id, nodeId)) {
+              nextNodes[n.id] = {
+                ...n,
+                ...(typeof targetVisible !== 'undefined' ? { visible: targetVisible } : {}),
+                ...(typeof targetLocked !== 'undefined' ? { locked: targetLocked } : {}),
+              };
+            }
+          });
+        }
+      }
+
+      return { ...state, nodes: nextNodes };
     }
     case "DELETE_NODE": {
       const { nodeId } = action.payload;

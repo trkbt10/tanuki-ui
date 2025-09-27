@@ -27,3 +27,7 @@ export { InspectorLabel } from "./InspectorLabel";
 export type { InspectorLabelProps } from "./InspectorLabel";
 export { InspectorButton } from "./InspectorButton";
 export type { InspectorButtonProps } from "./InspectorButton";
+export { InspectorInput } from "./InspectorInput";
+export type { InspectorInputProps } from "./InspectorInput";
+export { InspectorTextarea } from "./InspectorTextarea";
+export type { InspectorTextareaProps } from "./InspectorTextarea";
