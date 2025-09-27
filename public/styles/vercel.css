@@ -1,401 +1,526 @@
 /**
  * @theme Vercel
- * @description Clean modern development-focused design with crisp typography and minimal visual elements
+ * @description Geist-based palette with official neutral/brand tokens and typography updates
  * @author Tanuki UI
- * @version 1.0.0
+ * @version 1.1.0
  * @category Developer
  */
 
 :root {
-  /* Fonts - Vercel uses Inter font family */
-  --themeDefaultFontFamily: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell",
-    "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  /* Typography - Geist is Vercel's primary UI typeface */
+  --themeDefaultFontFamily: "Geist", "Geist Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Helvetica Neue", "Arial", sans-serif;
   --themeControlFontFamily: var(--themeDefaultFontFamily);
   --themeLabelFontFamily: var(--themeDefaultFontFamily);
   --themeSystemFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
+  --textFont: normal normal 400 14px/1.6 var(--themeDefaultFontFamily);
+  --labelFont: normal normal 500 12px/1.4 var(--themeDefaultFontFamily);
 
-  /* Vercel Color Palette - Light Mode */
-  --vercelGray50: #fafafa;
-  --vercelGray100: #f4f4f5;
-  --vercelGray200: #e4e4e7;
-  --vercelGray300: #d4d4d8;
-  --vercelGray400: #a1a1aa;
-  --vercelGray500: #71717a;
-  --vercelGray600: #52525b;
-  --vercelGray700: #3f3f46;
-  --vercelGray800: #27272a;
-  --vercelGray900: #18181b;
+  /* Geist neutral accents (accents_1 – accents_8) */
+  --geistAccent0: #ffffff;
+  --geistAccent1: #fafafa;
+  --geistAccent2: #eaeaea;
+  --geistAccent3: #999999;
+  --geistAccent4: #888888;
+  --geistAccent5: #666666;
+  --geistAccent6: #444444;
+  --geistAccent7: #333333;
+  --geistAccent8: #111111;
+  --geistForeground: #000000;
 
-  --vercelBlue50: #eff6ff;
-  --vercelBlue100: #dbeafe;
-  --vercelBlue500: #3b82f6;
-  --vercelBlue600: #2563eb;
-  --vercelBlue700: #1d4ed8;
+  /* Geist status scales */
+  --geistSuccessLighter: #d3e5ff;
+  --geistSuccessLight: #3291ff;
+  --geistSuccess: #0070f3;
+  --geistSuccessDark: #0761d1;
+  --geistErrorLighter: #f7d4d6;
+  --geistErrorLight: #ff1a1a;
+  --geistError: #e00000;
+  --geistErrorDark: #c50000;
+  --geistWarningLighter: #ffefcf;
+  --geistWarningLight: #f7b955;
+  --geistWarning: #f5a623;
+  --geistWarningDark: #ab570a;
+  --geistCyanLighter: #aaffec;
+  --geistCyanLight: #79ffe1;
+  --geistCyan: #50e3c2;
+  --geistCyanDark: #29bc9b;
+  --geistVioletLighter: #e3d7fc;
+  --geistVioletLight: #8a63d2;
+  --geistViolet: #7928ca;
+  --geistVioletDark: #4c2889;
+  --geistAlert: #ff0080;
+  --geistPurple: #f81ce5;
+  --geistMagenta: #eb367f;
 
-  --vercelRed50: #fef2f2;
-  --vercelRed100: #fee2e2;
-  --vercelRed500: #ef4444;
-  --vercelRed600: #dc2626;
-
-  --vercelGreen50: #f0fdf4;
-  --vercelGreen100: #dcfce7;
-  --vercelGreen500: #22c55e;
-  --vercelGreen600: #16a34a;
-
-  --vercelYellow50: #fefce8;
-  --vercelYellow100: #fef3c7;
-  --vercelYellow500: #eab308;
-  --vercelYellow600: #ca8a04;
-
-  /* Core Colors */
-  --textColor: var(--vercelGray900);
-  --secondaryTextColor: var(--vercelGray600);
-  --tertiaryTextColor: var(--vercelGray500);
-  --quaternaryTextColor: var(--vercelGray400);
-
-  --accentColor: var(--vercelBlue600);
-  --successColor: var(--vercelGreen500);
-  --warningColor: var(--vercelYellow500);
-  --errorColor: var(--vercelRed500);
-  --cautionColor: var(--errorColor);
-
-  /* Background Colors */
-  --windowBackgroundColor: #ffffff;
-  --backgroundSecondary: var(--vercelGray50);
-  --backgroundTertiary: var(--vercelGray100);
-
-  /* Text Colors */
+  /* Core semantic tokens */
+  --textColor: var(--geistForeground);
   --labelColor: var(--textColor);
-  --secondaryLabelColor: var(--secondaryTextColor);
-  --tertiaryLabelColor: var(--tertiaryTextColor);
-  --quaternaryLabelColor: var(--quaternaryTextColor);
-  --placeholderTextColor: var(--vercelGray400);
-  --selectedTextColor: var(--textColor);
+  --secondaryLabelColor: var(--geistAccent5);
+  --tertiaryLabelColor: var(--geistAccent4);
+  --quaternaryLabelColor: var(--geistAccent3);
+  --placeholderTextColor: var(--geistAccent3);
+  --headerTextColor: var(--geistForeground);
+  --accentColor: var(--geistSuccess);
+  --cautionColor: var(--geistError);
+  --successColor: var(--geistSuccess);
+  --warningColor: var(--geistWarning);
+  --infoColor: var(--geistCyan);
+  --linkColor: var(--geistSuccess);
+  --highlightColor: var(--geistAccent0);
+  --findHighlightColor: var(--geistCyanLight);
+  accent-color: var(--accentColor);
+
+  /* Surfaces & backgrounds */
+  --windowBackgroundColor: var(--geistAccent0);
+  --backgroundSecondary: var(--geistAccent1);
+  --backgroundTertiary: var(--geistAccent2);
+  --backgroundCode: color-mix(in srgb, var(--geistViolet) 12%, var(--geistAccent0));
+  --backgroundHover: color-mix(in srgb, var(--geistAccent2) 60%, transparent);
+  --backgroundActive: color-mix(in srgb, var(--geistAccent3) 30%, transparent);
+  --backgroundBackdropFilter: none;
+  --windowBackdropFilter: none;
+  --windowBoxShadow: 0 18px 48px color-mix(in srgb, var(--geistAccent8) 12%, transparent);
+
+  /* Window Buttons */
+  --themeUtilityWindowTitleFont: normal normal 600 13px/1.4 var(--themeDefaultFontFamily);
+  --windowButtonBoxShadow: none;
+  --windowCloseButtonBackground: #ff5f56;
+  --windowExpandButtonBackground: #ffbd2e;
+  --windowFullscreenButtonBackground: #27c93f;
+
+  /* Scrollbar */
+  --scrollBarBackgroundColor: transparent;
+  --scrollBarThumbColor: color-mix(in srgb, var(--geistAccent5) 20%, transparent);
+  --activeScrollBarThumbColor: color-mix(in srgb, var(--geistAccent5) 35%, transparent);
+
+  /* Selection */
   --textBackgroundColor: var(--windowBackgroundColor);
-  --selectedTextBackgroundColor: var(--vercelBlue100);
-  --linkColor: var(--accentColor);
+  --selectedTextColor: var(--geistAccent0);
+  --selectedTextBackgroundColor: var(--geistSuccess);
+  --selectedContentBackgroundColor: var(--geistSuccess);
+  --unemphasizedSelectedTextColor: var(--textColor);
+  --unemphasizedSelectedTextBackgroundColor: var(--geistAccent2);
+  --unemphasizedSelectedContentBackgroundColor: var(--geistAccent2);
+  --selectedMenuItemTextColor: var(--geistAccent0);
+  --keyboardFocusIndicatorColor: color-mix(in srgb, var(--geistSuccessLight) 35%, transparent);
+  --separatorColor: var(--geistAccent2);
+  --gridColor: var(--geistAccent2);
 
-  /* Border Colors */
-  --separatorColor: var(--vercelGray200);
-  --borderColor: var(--vercelGray300);
-  --focusBorderColor: var(--accentColor);
-
-  /* Control Colors */
+  /* Controls */
   --controlAccentColor: var(--accentColor);
   --controlColor: var(--windowBackgroundColor);
+  --controlBackgroundColor: var(--controlColor);
   --controlTextColor: var(--textColor);
-  --disabledControlTextColor: var(--vercelGray400);
-  --selectedControlColor: var(--vercelBlue100);
+  --controlActiveTextColor: var(--geistAccent0);
+  --disabledControlTextColor: var(--geistAccent3);
+  --selectedControlColor: color-mix(in srgb, var(--geistSuccessLighter) 50%, transparent);
   --selectedControlTextColor: var(--textColor);
-
-  /* Shadow */
-  --shadowColor: rgba(0, 0, 0, 0.1);
-  --boxShadowSmall: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --boxShadowMedium: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --boxShadowLarge: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-
-  /* Typography */
-  --textFont: normal normal 400 14px/1.5 var(--themeDefaultFontFamily);
-  --textFontSmall: normal normal 400 12px/1.4 var(--themeDefaultFontFamily);
-  --textFontLarge: normal normal 400 16px/1.5 var(--themeDefaultFontFamily);
-
-  /* Control Styling */
-  --controlBorderRadius: 6px;
-  --controlBorderRadiusSmall: 4px;
-  --controlBorderRadiusLarge: 8px;
-  --controlPadding: 8px 12px;
-  --controlPaddingSmall: 6px 10px;
-  --controlPaddingLarge: 12px 16px;
-
-  --controlBackground: var(--windowBackgroundColor);
-  --controlBorder: 1px solid var(--borderColor);
-  --controlBoxShadow: var(--boxShadowSmall);
-  --controlHoverBackground: var(--vercelGray50);
-  --controlFocusBoxShadow: 0 0 0 2px var(--vercelBlue100);
-  --controlTextFont: var(--textFont);
-
-  /* Button Primary */
-  --controlBackground--primary: var(--accentColor);
-  --controlTextColor--primary: #ffffff;
-  --controlBorder--primary: 1px solid var(--accentColor);
-  --controlHoverBackground--primary: var(--vercelBlue700);
-  --controlFocusBoxShadow--primary: 0 0 0 2px var(--vercelBlue100);
-
-  /* Button Secondary */
-  --controlBackground--secondary: var(--windowBackgroundColor);
-  --controlTextColor--secondary: var(--textColor);
-  --controlBorder--secondary: 1px solid var(--borderColor);
-  --controlHoverBackground--secondary: var(--vercelGray50);
-
-  /* Button Danger */
-  --controlBackground--danger: var(--errorColor);
-  --controlTextColor--danger: #ffffff;
-  --controlBorder--danger: 1px solid var(--errorColor);
-  --controlHoverBackground--danger: var(--vercelRed600);
-
-  /* Input */
-  --inputBackground: var(--windowBackgroundColor);
-  --inputBorder: 1px solid var(--borderColor);
-  --inputBorderRadius: var(--controlBorderRadius);
-  --inputPadding: var(--controlPadding);
-  --inputFont: var(--textFont);
-  --inputBoxShadow: var(--boxShadowSmall);
-  --inputFocusBorder: 1px solid var(--focusBorderColor);
-  --inputFocusBoxShadow: 0 0 0 2px var(--vercelBlue100);
-
-  /* Progress & Meter */
-  --progressBackground: var(--vercelGray200);
-  --progressForeground: var(--accentColor);
-  --meterBackground: var(--vercelGray200);
-  --meterOptimum: var(--successColor);
-  --meterSuboptimal: var(--warningColor);
-  --meterEvenLessGood: var(--errorColor);
+  --alternateSelectedControlTextColor: var(--geistAccent0);
+  --scrubberTexturedBackgroundColor: var(--windowBackgroundColor);
+  --windowFrameTextColor: var(--textColor);
+  --underPageBackgroundColor: var(--geistAccent1);
+  --shadowColor: rgba(0, 0, 0, 0.12);
 
   /* Table */
-  --tableFont: var(--textFont, normal normal 400 13px/1.230769 var(--themeLabelFontFamily));
-  --tableLetterSpacing: var(--textLetterSpacing, 0);
-  --tableBackground: var(--tableBackgroundColor, var(--windowBackgroundColor, transparent));
+  --tableFont: var(--textFont);
+  --tableLetterSpacing: normal;
+  --tableBackground: var(--windowBackgroundColor);
   --tableBorderSpacing: 0;
-  --tableBorderRadius: var(--cardBorderRadius, 0);
-  --tableBoxShadow: var(--cardBoxShadow, none);
-  --tableHeaderPadding: var(--tableCellPadding, 0 0.5em);
+  --tableBorderRadius: 8px;
+  --tableBoxShadow: none;
+  --tableHeaderPadding: 0 0.75em;
   --tableHeaderTextAlign: left;
-  --tableHeaderLetterSpacing: var(--labelLetterSpacing, 0);
-  --tableHeaderHeight: var(--tableHeaderMinHeight, var(--tableCellMinHeight, 24px));
-  --tableHeaderBackground: var(--tableHeaderGradient, var(--tableHeaderBackgroundColor, transparent));
+  --tableHeaderLetterSpacing: normal;
+  --tableHeaderHeight: 40px;
+  --tableHeaderBackground: var(--backgroundSecondary);
+  --tableHeaderBackgroundColor: var(--backgroundSecondary);
   --tableHeaderDivider: 1px solid var(--separatorColor);
   --tableHeaderDividerOffsetX: 0;
   --tableHeaderDividerOffsetY: 50%;
   --tableHeaderDividerHeight: 1em;
   --tableHeaderDividerOpacity: 1;
-  --tableHeaderStickyBackground: var(--tableHeaderBackground);
-  --tableHeaderBackdropFilter: var(--backgroundBackdropFilter, none);
-  --tableHeaderStickyShadow: var(--tableHeaderBoxShadow, var(--tableBoxShadow, none));
-  --tableRowBackground: var(--tableRowBackgroundColor, var(--tableBackground, transparent));
-  --tableRowAlternateBackground: var(--tableRowAlternateBackgroundColor, var(--tableRowBackground));
-  --tableRowHoverBackground: var(--tableHoverBackground, var(--tableRowAlternateBackground));
-  --tableRowHoverTextColor: var(--tableHoverTextColor, var(--tableRowTextColor, inherit));
-  --tableRowSelectedBackground: var(--tableRowSelectedBackgroundColor, var(--tableRowHoverBackground));
-  --tableRowSelectedTextColor: var(--tableHoverTextColor, var(--tableRowTextColor, inherit));
+  --tableHeaderStickyBackground: var(--backgroundSecondary);
+  --tableHeaderBackdropFilter: none;
+  --tableHeaderStickyShadow: inset 0 -1px 0 var(--separatorColor);
+  --tableRowBackground: var(--windowBackgroundColor);
+  --tableRowAlternateBackground: var(--backgroundSecondary);
+  --tableRowBackgroundColor: var(--tableRowBackground);
+  --tableRowAlternateBackgroundColor: var(--tableRowAlternateBackground);
+  --tableRowHoverBackground: color-mix(in srgb, var(--geistAccent2) 55%, transparent);
+  --tableRowHoverTextColor: var(--textColor);
+  --tableRowSelectedBackground: color-mix(in srgb, var(--geistSuccessLighter) 40%, transparent);
+  --tableRowSelectedTextColor: var(--textColor);
   --tableRowTransition: background-color 0.2s ease, color 0.2s ease;
-  --tableCellLetterSpacing: var(--tableLetterSpacing, 0);
+  --tableCellLetterSpacing: normal;
   --tableBackgroundColor: var(--windowBackgroundColor);
   --tableBorderColor: var(--separatorColor);
-  --tableHeaderTextColor: var(--secondaryTextColor);
-  --tableHeaderBackgroundColor: var(--backgroundSecondary);
-  --tableHeaderBorder: 1px solid var(--separatorColor);
+  --tableBorderWidth: 1px;
+  --tableBorderStyle: solid;
+  --tableHeaderTextColor: var(--secondaryLabelColor);
+  --tableHeaderBorderColor: var(--separatorColor);
+  --tableHeaderBorderWidth: 1px;
+  --tableHeaderBorderStyle: solid;
   --tableRowTextColor: var(--textColor);
-  --tableRowBackgroundColor: var(--windowBackgroundColor);
-  --tableRowAlternateBackgroundColor: var(--vercelGray50);
-  --tableCellBorder: 1px solid var(--separatorColor);
+  --tableRowBorderColor: var(--separatorColor);
+  --tableRowAlternateTextColor: var(--textColor);
+  --tableRowAlternateBorderColor: var(--separatorColor);
   --tableCellBorderWidth: 1px;
   --tableCellBorderStyle: solid;
-
-  /* Card */
-  --cardBackground: var(--windowBackgroundColor);
-  --cardBorder: 1px solid var(--separatorColor);
-  --cardBorderRadius: var(--controlBorderRadiusLarge, 12px);
-  --cardBoxShadow: var(--boxShadowSmall);
-  --cardPadding: 20px;
-  --cardHoverBackground: var(--backgroundSecondary);
-  --cardHoverBorder: 1px solid var(--separatorColor);
-  --cardHoverBoxShadow: var(--boxShadowMedium);
-  --cardActiveBackground: var(--backgroundActive);
-  --cardActiveBoxShadow: var(--boxShadowLarge);
-  --cardFocusBorder: 1px solid var(--accentColor);
-  --cardFocusBoxShadow: 0 0 0 3px rgba(59, 130, 246, 0.24);
-  --cardDisabledBackground: var(--backgroundSecondary);
-  --cardDisabledOpacity: 0.6;
-  --cardBackground--elevated: var(--windowBackgroundColor);
-  --cardBoxShadow--elevated: var(--boxShadowLarge);
-  --cardBackground--outlined: transparent;
-  --cardBorder--outlined: 1px solid var(--separatorColor);
-  --cardBackground--filled: var(--backgroundSecondary);
-  --cardBoxShadow--filled: none;
+  --tableCellBorder: 1px solid var(--separatorColor);
 
   /* Dialog */
   --dialogBackground: var(--windowBackgroundColor);
-  --dialogBoxShadow: var(--boxShadowLarge);
-  --dialogBorderRadius: var(--controlBorderRadiusLarge);
+  --dialogBoxShadow: 0 32px 64px color-mix(in srgb, var(--geistAccent8) 16%, transparent);
+  --dialogBorderRadius: 12px;
+
+  /* Controls (Buttons, Inputs) */
+  --controlBoxShadow: 0 1px 3px color-mix(in srgb, var(--geistAccent8) 10%, transparent);
+  --controlFocusBoxShadow: 0 0 0 3px color-mix(in srgb, var(--geistSuccessLight) 30%, transparent);
+  --controlTextFont: var(--textFont);
+  --controlBorderRadius: 10px;
+  --controlPadding: 10px 16px;
+  --controlTextLetterSpacing: 0;
+  --controlBackground: var(--windowBackgroundColor);
+  --controlBorder: 1px solid var(--separatorColor);
+  --controlHoverBackground: color-mix(in srgb, var(--geistAccent2) 60%, transparent);
+  --controlActiveBackground: color-mix(in srgb, var(--geistAccent3) 35%, transparent);
+
+  /* Button variants */
+  --controlBoxShadow--primary: 0 12px 24px color-mix(in srgb, var(--accentColor) 18%, transparent);
+  --controlBackground--primary: var(--accentColor);
+  --controlTextColor--primary: var(--geistAccent0);
+  --controlBorder--primary: 1px solid var(--accentColor);
+  --controlHoverBackground--primary: var(--geistSuccessLight);
+  --controlHoverTextColor--primary: var(--geistAccent0);
+  --controlFocusBackground--primary: color-mix(in srgb, var(--accentColor) 80%, var(--geistSuccessLight) 20%);
+  --controlFocusBoxShadow--primary: 0 0 0 3px color-mix(in srgb, var(--geistSuccessLighter) 55%, transparent);
+  --controlFocusTextColor--primary: var(--geistAccent0);
+
+  --controlBackground--secondary: var(--windowBackgroundColor);
+  --controlTextColor--secondary: var(--textColor);
+  --controlBorder--secondary: 1px solid var(--separatorColor);
+  --controlHoverBackground--secondary: color-mix(in srgb, var(--geistAccent2) 50%, transparent);
+  --controlBoxShadow--secondary: 0 6px 16px color-mix(in srgb, var(--geistAccent8) 12%, transparent);
+
+  --controlBackground--danger: var(--geistError);
+  --controlTextColor--danger: var(--geistAccent0);
+  --controlBorder--danger: 1px solid var(--geistError);
+  --controlHoverBackground--danger: var(--geistErrorLight);
+
+  /* Inputs */
+  --inputBackground: var(--windowBackgroundColor);
+  --inputBorder: 1px solid var(--separatorColor);
+  --inputBorderRadius: var(--controlBorderRadius);
+  --inputPadding: var(--controlPadding);
+  --inputFont: var(--textFont);
+  --inputBoxShadow: var(--controlBoxShadow);
+  --inputFocusBorder: 1px solid var(--accentColor);
+  --inputFocusBoxShadow: 0 0 0 3px color-mix(in srgb, var(--geistSuccessLighter) 45%, transparent);
+  --selectBoxSplitButtonWidth: 36px;
+  --selectBoxSplitButtonBorderColor: var(--separatorColor);
+  --selectBoxSplitButtonBorderWidth: 1px;
+  --checkboxSize: 16px;
+
+  /* Toolbar */
+  --appMainToolbarFloatingBackground: color-mix(in srgb, var(--windowBackgroundColor) 90%, rgba(0, 0, 0, 0.04));
+  --appMainToolbarHeight: 60px;
+  --scrolledAppMainToolbarBoxShadow: 0 8px 24px color-mix(in srgb, var(--geistAccent8) 12%, transparent);
+  --barItemsFontFamily: var(--themeLabelFontFamily);
+  --barItemsTextColor: var(--textColor);
+  --barItemsLabelTextColor: var(--secondaryLabelColor);
+  --barItemsDisabledLabelTextColor: var(--tertiaryLabelColor);
+  --barItemsDisabledLabelBackgroundColor: color-mix(in srgb, var(--geistAccent2) 45%, transparent);
+  --barItemsBorderRadius: 12px;
+  --barItemsControlMarkerBorderRadius: 8px;
+  --barItemsControlPlaceholderTextColor: var(--placeholderTextColor);
+  --barItemsControlMarkerBackgroundColor: color-mix(in srgb, var(--geistAccent2) 55%, transparent);
+  --barItemsControlsBorder: 1px solid var(--separatorColor);
+  --barItemsSegmentControlBackground: color-mix(in srgb, var(--geistAccent2) 65%, transparent);
+  --barItemsHoverSegmentControlBackground: color-mix(in srgb, var(--geistAccent2) 75%, transparent);
+  --barItemsActiveSegmentControlBackground: color-mix(in srgb, var(--accentColor) 12%, transparent);
+
+  /* Segment Control */
+  --segmentControlBackground: color-mix(in srgb, var(--geistAccent1) 85%, transparent);
+  --segmentControlBackgroundColor: var(--segmentControlBackground);
+  --segmentControlBorderRadius: 999px;
+  --segmentControlPadding: 4px;
+  --segmentControlSegmentPadding: 4px 12px;
+  --segmentControlBoxShadow: inset 0 0 0 1px color-mix(in srgb, var(--geistAccent2) 70%, transparent);
+  --segmentControlIndicatorBoxShadow: 0 6px 18px color-mix(in srgb, var(--accentColor) 24%, transparent);
 
   /* Navigation */
   --tabBarBackground: var(--windowBackgroundColor);
-  --tabItemTextColor: var(--secondaryTextColor);
+  --tabBarBoxShadow: inset 0 -1px 0 var(--separatorColor);
+  --tabItemHeight: 44px;
+  --tabItemTextColor: var(--secondaryLabelColor);
+  --tabItemBoxShadow: none;
+  --tabItemIconSize: 18px;
+  --tabItemFont: normal normal 500 14px/1.4 var(--themeDefaultFontFamily);
+  --tabBarLayout: start;
+  --tabItemBackground-selected: color-mix(in srgb, var(--geistSuccessLighter) 35%, transparent);
+  --tabItemBoxShadow-selected: inset 0 -2px 0 var(--accentColor);
   --tabItemTextColor-selected: var(--accentColor);
-  --tabItemBackground-selected: var(--vercelBlue50);
-  --tabItemBorderRadius: var(--controlBorderRadius);
+  --tabItemFont-selected: var(--tabItemFont);
 
   /* Sidebar */
   --sidebarBackground: var(--backgroundSecondary);
-  --sidebarItemTextColor: var(--textColor);
-  --sidebarItemHoverBackground: var(--vercelGray100);
-  --sidebarItemSelectedBackground: var(--vercelBlue100);
-  --sidebarItemSelectedTextColor: var(--accentColor);
-  --sidebarListItemTextColor: var(--textColor);
-  --selectedSidebarListItemBackground: var(--vercelBlue100);
+  --sidebarListItemFont: normal normal 500 14px/1.6 var(--themeDefaultFontFamily);
+  --sidebarListItemBorderRadius: 12px;
+  --selectedSidebarListItemBackground: color-mix(in srgb, var(--geistSuccessLighter) 50%, transparent);
   --selectedSidebarListItemTextColor: var(--accentColor);
-  
-  /* Sidebar Section Title */
-  --sidebarSectionTitleFont: var(--textFontSmall);
-  --sidebarSectionTitleLetterSpacing: 0.05em;
-  --sidebarSectionTitleMargin: 20px 0 8px 0;
-  --sidebarSectionTitlePadding: 0 12px;
-  --sidebarSectionTitleColor: var(--tertiaryTextColor);
+  --selectedSidebarListItemMarker: 3px solid var(--accentColor);
+  --sidebarListItemDetailsBackground: var(--backgroundSecondary);
+  --sidebarListItemTextColor: var(--textColor);
+  --sidebarListItemHoverBackground: color-mix(in srgb, var(--geistAccent2) 60%, transparent);
+  --sidebarListItemIconSize: 18px;
+  --sidebarListItemChildrenPadding: 0 0 0 24px;
+  --sidebarSectionTitleColor: var(--tertiaryLabelColor);
+  --sidebarSectionTitlePadding: 16px 16px 8px 16px;
+  --sidebarListItemPadding: 10px 16px;
+  --sidebarSectionTitleFont: var(--labelFont);
+  --sidebarSectionTitleLetterSpacing: 0.08em;
+  --sidebarSectionTitleMargin: 16px 0 8px 0;
   --sidebarSectionTitleBackground: transparent;
   --sidebarSectionTitleBorderRadius: 0;
   --sidebarSectionTitleTextTransform: uppercase;
 
-  /* Checkbox & Radio */
-  --checkboxSize: 16px;
-  --checkboxBackground: var(--windowBackgroundColor);
-  --checkboxBorder: var(--inputBorder);
-  --checkboxCheckedBackground: var(--accentColor);
-  --checkboxCheckedBorder: 1px solid var(--accentColor);
+  /* Cards */
+  --cardBackground: var(--windowBackgroundColor);
+  --cardBorder: 1px solid var(--separatorColor);
+  --cardBorderWidth: 1px;
+  --cardBorderColor: var(--separatorColor);
+  --cardBackdropFilter: none;
+  --cardBorderRadius: 16px;
+  --cardBoxShadow: 0 20px 40px color-mix(in srgb, var(--geistAccent8) 10%, transparent);
+  --cardPadding: 20px;
+  --cardMargin: 20px;
+  --cardTextColor: var(--textColor);
+  --cardHeaderTextColor: var(--secondaryLabelColor);
+  --cardSubtitleTextColor: var(--tertiaryLabelColor);
+  --cardHoverBackground: color-mix(in srgb, var(--geistAccent1) 75%, transparent);
+  --cardHoverBorderColor: color-mix(in srgb, var(--accentColor) 20%, var(--separatorColor));
+  --cardHoverBorder: 1px solid var(--cardHoverBorderColor);
+  --cardHoverBoxShadow: 0 28px 64px color-mix(in srgb, var(--geistAccent8) 16%, transparent);
+  --cardActiveBackground: color-mix(in srgb, var(--geistSuccessLighter) 30%, transparent);
+  --cardActiveBoxShadow: 0 24px 56px color-mix(in srgb, var(--accentColor) 18%, transparent);
+  --cardActiveBorderColor: color-mix(in srgb, var(--accentColor) 30%, var(--separatorColor));
+  --cardActiveBorder: 1px solid var(--cardActiveBorderColor);
+  --cardFocusBorder: 1px solid var(--accentColor);
+  --cardFocusBorderColor: var(--accentColor);
+  --cardFocusBoxShadow: 0 0 0 3px color-mix(in srgb, var(--geistSuccessLighter) 60%, transparent);
+  --cardDisabledBackground: var(--backgroundSecondary);
+  --cardDisabledBorderColor: color-mix(in srgb, var(--separatorColor) 65%, transparent);
+  --cardDisabledBorder: 1px solid var(--cardDisabledBorderColor);
+  --cardDisabledBoxShadow: none;
+  --cardDisabledTextColor: var(--tertiaryLabelColor);
+  --cardDisabledOpacity: 0.6;
+  --cardElevatedBackground: var(--windowBackgroundColor);
+  --cardElevatedBorderWidth: 1px;
+  --cardElevatedBoxShadow: 0 32px 80px color-mix(in srgb, var(--geistAccent8) 15%, transparent);
+  --cardElevatedHoverBoxShadow: 0 40px 96px color-mix(in srgb, var(--geistAccent8) 18%, transparent);
+  --cardBackground--elevated: var(--cardElevatedBackground);
+  --cardBoxShadow--elevated: var(--cardElevatedBoxShadow);
+  --cardBackground--outlined: transparent;
+  --cardOutlinedBackground: transparent;
+  --cardOutlinedBorderColor: var(--cardBorderColor);
+  --cardOutlinedBorderWidth: var(--cardBorderWidth);
+  --cardOutlinedBoxShadow: inset 0 0 0 1px color-mix(in srgb, var(--geistAccent2) 40%, transparent);
+  --cardOutlinedHoverBackground: color-mix(in srgb, var(--geistAccent1) 85%, transparent);
+  --cardOutlinedHoverBorderColor: var(--cardHoverBorderColor);
+  --cardBorder--outlined: 1px solid var(--cardOutlinedBorderColor);
+  --cardBackground--filled: var(--backgroundSecondary);
+  --cardFilledBackground: var(--backgroundSecondary);
+  --cardFilledBorderColor: transparent;
+  --cardFilledBorderWidth: 0;
+  --cardFilledBoxShadow: none;
+  --cardFilledHoverBackground: color-mix(in srgb, var(--backgroundSecondary) 85%, transparent);
+  --cardFilledActiveBackground: color-mix(in srgb, var(--accentColor) 12%, var(--backgroundSecondary));
+  --cardBoxShadow--filled: var(--cardFilledBoxShadow);
 
-  /* Elevation levels */
-  --elevation1: var(--boxShadowSmall);
-  --elevation2: var(--boxShadowMedium);
-  --elevation3: var(--boxShadowLarge);
+  /* Popover */
+  --popoverBackground: var(--windowBackgroundColor);
+  --popoverBorder: 1px solid var(--separatorColor);
+  --popoverBorderRadius: 12px;
+  --popoverBoxShadow: 0 24px 60px color-mix(in srgb, var(--geistAccent8) 16%, transparent);
+
+  /* System Colors */
+  --systemBlueColor: var(--accentColor);
+  --systemGreenColor: #17c964;
+  --systemOrangeColor: var(--geistWarning);
+  --systemYellowColor: var(--geistWarningLight);
+  --systemRedColor: var(--geistError);
+  --systemPinkColor: var(--geistAlert);
+  --systemPurpleColor: var(--geistViolet);
+  --systemTealColor: var(--geistCyan);
+  --systemIndigoColor: #5a31f4;
+  --systemGrayColor: var(--geistAccent4);
+  --systemBrownColor: #a2856e;
 }
 
-/* Dark Mode */
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Dark Mode Colors */
-    --textColor: var(--vercelGray100);
-    --secondaryTextColor: var(--vercelGray400);
-    --tertiaryTextColor: var(--vercelGray500);
-    --quaternaryTextColor: var(--vercelGray600);
+    --windowBackgroundColor: #000000;
+    --backgroundSecondary: #111111;
+    --backgroundTertiary: #111111;
+    --backgroundCode: color-mix(in srgb, var(--geistViolet) 35%, #000);
+    --backgroundHover: color-mix(in srgb, #222222 60%, transparent);
+    --backgroundActive: color-mix(in srgb, #333333 50%, transparent);
 
-    --windowBackgroundColor: var(--vercelGray900);
-    --backgroundSecondary: var(--vercelGray800);
-    --backgroundTertiary: var(--vercelGray700);
+    --textColor: #ffffff;
+    --secondaryLabelColor: color-mix(in srgb, #bbbbbb 90%, transparent);
+    --tertiaryLabelColor: color-mix(in srgb, #999999 85%, transparent);
+    --quaternaryLabelColor: color-mix(in srgb, #777777 80%, transparent);
+    --placeholderTextColor: color-mix(in srgb, #666666 75%, transparent);
+    --headerTextColor: #ffffff;
+    --linkColor: var(--geistSuccessLight);
+    --highlightColor: #111111;
+    --findHighlightColor: color-mix(in srgb, var(--geistCyanLight) 55%, transparent);
+    --textBackgroundColor: color-mix(in srgb, #0f0f0f 95%, transparent);
 
-    --labelColor: var(--textColor);
-    --secondaryLabelColor: var(--secondaryTextColor);
-    --tertiaryLabelColor: var(--tertiaryTextColor);
-    --quaternaryLabelColor: var(--quaternaryTextColor);
-    --placeholderTextColor: var(--vercelGray500);
-    --selectedTextColor: var(--textColor);
-    --textBackgroundColor: var(--windowBackgroundColor);
-    --selectedTextBackgroundColor: rgba(59, 130, 246, 0.3);
+    --scrollBarThumbColor: color-mix(in srgb, #444444 40%, transparent);
+    --activeScrollBarThumbColor: color-mix(in srgb, #555555 50%, transparent);
 
-    /* Border Colors - Dark */
-    --separatorColor: var(--vercelGray700);
-    --borderColor: var(--vercelGray600);
+    --separatorColor: color-mix(in srgb, #333333 90%, transparent);
+    --gridColor: color-mix(in srgb, #2a2a2a 80%, transparent);
 
-    /* Control Colors - Dark */
-    --controlColor: var(--vercelGray800);
+    --selectedTextColor: var(--geistAccent0);
+    --selectedTextBackgroundColor: var(--geistSuccessLight);
+    --selectedContentBackgroundColor: var(--geistSuccessLight);
+    --unemphasizedSelectedTextColor: var(--textColor);
+    --unemphasizedSelectedTextBackgroundColor: color-mix(in srgb, #1b1b1b 85%, transparent);
+    --unemphasizedSelectedContentBackgroundColor: color-mix(in srgb, #1b1b1b 85%, transparent);
+    --selectedMenuItemTextColor: var(--geistAccent0);
+    --keyboardFocusIndicatorColor: color-mix(in srgb, var(--geistSuccessLight) 45%, transparent);
+
     --controlTextColor: var(--textColor);
-    --disabledControlTextColor: var(--vercelGray500);
-    --controlBackground: var(--vercelGray800);
-    --controlHoverBackground: var(--vercelGray700);
+    --disabledControlTextColor: color-mix(in srgb, #666666 70%, transparent);
+    --selectedControlColor: color-mix(in srgb, var(--geistSuccessLight) 25%, transparent);
+    --selectedControlTextColor: var(--textColor);
+    --alternateSelectedControlTextColor: var(--geistAccent0);
 
-    /* Input - Dark */
-    --inputBackground: var(--vercelGray800);
-    --inputBorder: 1px solid var(--vercelGray600);
-    --cardBackground: var(--windowBackgroundColor);
-    --cardBorder: 1px solid var(--separatorColor);
-    --cardHoverBackground: var(--backgroundSecondary);
-    --cardHoverBorder: 1px solid var(--separatorColor);
-    --cardHoverBoxShadow: var(--boxShadowMedium);
-    --cardActiveBackground: var(--backgroundSecondary);
-    --cardActiveBoxShadow: var(--boxShadowLarge);
+    --controlBackground: color-mix(in srgb, #0f0f0f 90%, transparent);
+    --controlHoverBackground: color-mix(in srgb, #1c1c1c 80%, transparent);
+    --controlActiveBackground: color-mix(in srgb, #262626 75%, transparent);
+    --controlBorder: 1px solid color-mix(in srgb, #2b2b2b 85%, transparent);
+    --controlBoxShadow: 0 1px 3px color-mix(in srgb, #000 60%, transparent);
+    --controlFocusBoxShadow: 0 0 0 3px color-mix(in srgb, var(--geistSuccessLight) 30%, transparent);
+    --controlBackgroundColor: var(--controlBackground);
+    --controlActiveTextColor: var(--geistAccent0);
+    --controlBoxShadow--primary: 0 10px 24px color-mix(in srgb, var(--accentColor) 32%, transparent);
+    --controlBoxShadow--secondary: 0 6px 16px color-mix(in srgb, #000 45%, transparent);
+    --controlFocusBackground--primary: color-mix(in srgb, var(--accentColor) 60%, transparent);
+    --controlFocusTextColor--primary: var(--geistAccent0);
+    --controlHoverTextColor--primary: var(--geistAccent0);
+
+    --inputBackground: color-mix(in srgb, #0f0f0f 95%, transparent);
+    --inputBorder: 1px solid color-mix(in srgb, #2f2f2f 80%, transparent);
+    --inputHoverBorder: 1px solid color-mix(in srgb, #3c3c3c 75%, transparent);
+    --inputFocusBorder: 1px solid var(--accentColor);
+    --inputFocusBoxShadow: 0 0 0 3px color-mix(in srgb, var(--geistSuccessLight) 35%, transparent);
+    --selectBoxSplitButtonBorderColor: color-mix(in srgb, #2f2f2f 80%, transparent);
+
+    --tabBarBoxShadow: inset 0 -1px 0 color-mix(in srgb, #262626 80%, transparent);
+    --tabItemTextColor: color-mix(in srgb, #bbbbbb 90%, transparent);
+    --tabItemBackground-selected: color-mix(in srgb, var(--geistSuccessLight) 20%, transparent);
+    --tabItemTextColor-selected: var(--geistAccent0);
+
+    --appMainToolbarFloatingBackground: color-mix(in srgb, #0f0f0f 92%, transparent);
+    --scrolledAppMainToolbarBoxShadow: 0 10px 30px color-mix(in srgb, #000 55%, transparent);
+    --barItemsTextColor: var(--textColor);
+    --barItemsLabelTextColor: color-mix(in srgb, #b5b5b5 85%, transparent);
+    --barItemsDisabledLabelTextColor: color-mix(in srgb, #6a6a6a 80%, transparent);
+    --barItemsDisabledLabelBackgroundColor: color-mix(in srgb, #1d1d1d 85%, transparent);
+    --barItemsControlPlaceholderTextColor: color-mix(in srgb, #777777 75%, transparent);
+    --barItemsControlMarkerBackgroundColor: color-mix(in srgb, #1f1f1f 85%, transparent);
+    --barItemsControlsBorder: 1px solid color-mix(in srgb, #2d2d2d 85%, transparent);
+    --barItemsSegmentControlBackground: color-mix(in srgb, #1b1b1b 85%, transparent);
+    --barItemsHoverSegmentControlBackground: color-mix(in srgb, #232323 85%, transparent);
+    --barItemsActiveSegmentControlBackground: color-mix(in srgb, var(--accentColor) 22%, transparent);
+    --segmentControlBackground: color-mix(in srgb, #1a1a1a 90%, transparent);
+    --segmentControlBackgroundColor: var(--segmentControlBackground);
+    --segmentControlBoxShadow: inset 0 0 0 1px color-mix(in srgb, #2a2a2a 80%, transparent);
+    --segmentControlIndicatorBoxShadow: 0 10px 24px color-mix(in srgb, var(--accentColor) 28%, transparent);
+
+    --sidebarBackground: color-mix(in srgb, #0f0f0f 95%, transparent);
+    --sidebarListItemHoverBackground: color-mix(in srgb, #1f1f1f 80%, transparent);
+    --selectedSidebarListItemBackground: color-mix(in srgb, var(--geistSuccessLight) 22%, transparent);
+    --selectedSidebarListItemTextColor: var(--geistAccent0);
+    --sidebarSectionTitleColor: color-mix(in srgb, #999999 80%, transparent);
+
+    --cardBackground: color-mix(in srgb, #050505 92%, transparent);
+    --cardBorderColor: color-mix(in srgb, #202020 85%, transparent);
+    --cardBorderWidth: 1px;
+    --cardBorder: 1px solid var(--cardBorderColor);
+    --cardHoverBackground: color-mix(in srgb, #161616 85%, transparent);
+    --cardHoverBorderColor: color-mix(in srgb, var(--accentColor) 30%, #202020);
+    --cardHoverBorder: 1px solid var(--cardHoverBorderColor);
+    --cardHoverBoxShadow: 0 32px 72px color-mix(in srgb, #000 55%, transparent);
+    --cardActiveBackground: color-mix(in srgb, var(--geistSuccessLight) 20%, #101010);
+    --cardActiveBoxShadow: 0 28px 80px color-mix(in srgb, #000 50%, transparent);
+    --cardActiveBorderColor: color-mix(in srgb, var(--accentColor) 32%, #202020);
+    --cardActiveBorder: 1px solid var(--cardActiveBorderColor);
     --cardFocusBorder: 1px solid var(--accentColor);
-    --cardFocusBoxShadow: 0 0 0 3px rgba(59, 130, 246, 0.24);
-    --cardDisabledBackground: var(--backgroundSecondary);
-    --cardDisabledOpacity: 0.6;
-    --cardBackground--elevated: var(--windowBackgroundColor);
-    --cardBoxShadow--elevated: var(--boxShadowLarge);
-    --cardBackground--outlined: transparent;
-    --cardBorder--outlined: 1px solid var(--separatorColor);
-    --cardBackground--filled: var(--backgroundSecondary);
-    --cardBoxShadow--filled: none;
+    --cardFocusBorderColor: var(--accentColor);
+    --cardFocusBoxShadow: 0 0 0 3px color-mix(in srgb, var(--geistSuccessLight) 35%, transparent);
+    --cardDisabledBackground: color-mix(in srgb, #111111 80%, transparent);
+    --cardDisabledBorderColor: color-mix(in srgb, #2a2a2a 80%, transparent);
+    --cardDisabledBorder: 1px solid var(--cardDisabledBorderColor);
+    --cardDisabledBoxShadow: none;
+    --cardDisabledTextColor: color-mix(in srgb, #7a7a7a 70%, transparent);
+    --cardElevatedBackground: color-mix(in srgb, #080808 96%, transparent);
+    --cardElevatedBoxShadow: 0 36px 120px color-mix(in srgb, #000 58%, transparent);
+    --cardElevatedHoverBoxShadow: 0 44px 140px color-mix(in srgb, #000 62%, transparent);
+    --cardBackground--elevated: var(--cardElevatedBackground);
+    --cardBoxShadow--elevated: var(--cardElevatedBoxShadow);
+    --cardFilledBackground: color-mix(in srgb, #111111 90%, transparent);
+    --cardFilledHoverBackground: color-mix(in srgb, #161616 90%, transparent);
+    --cardFilledActiveBackground: color-mix(in srgb, var(--accentColor) 20%, #151515);
+    --cardFilledBorderColor: transparent;
+    --cardOutlinedBorderColor: color-mix(in srgb, #2d2d2d 85%, transparent);
+    --cardOutlinedBoxShadow: inset 0 0 0 1px color-mix(in srgb, #2d2d2d 85%, transparent);
+    --cardOutlinedHoverBackground: color-mix(in srgb, #1b1b1b 90%, transparent);
+    --cardOutlinedHoverBorderColor: color-mix(in srgb, var(--accentColor) 24%, #2d2d2d);
+    --popoverBackground: color-mix(in srgb, #0e0e0e 95%, transparent);
+    --popoverBorder: 1px solid color-mix(in srgb, #262626 80%, transparent);
+    --popoverBoxShadow: 0 32px 90px color-mix(in srgb, #000 60%, transparent);
 
-    /* Table - Dark */
-    --tableHeaderDivider: 1px solid var(--separatorColor);
-    --tableCellBorder: 1px solid var(--separatorColor);
-    --tableCellBorderWidth: 1px;
-    --tableCellBorderStyle: solid;
-    --tableBackgroundColor: var(--windowBackgroundColor);
-    --tableBorderColor: var(--separatorColor);
-    --tableHeaderBackgroundColor: var(--backgroundSecondary);
-    --tableHeaderBorder: 1px solid var(--separatorColor);
-    --tableRowBackgroundColor: var(--windowBackgroundColor);
-    --tableRowAlternateBackgroundColor: var(--vercelGray800);
+    --tableHeaderBackgroundColor: color-mix(in srgb, #111111 95%, transparent);
+    --tableRowBackgroundColor: color-mix(in srgb, #080808 96%, transparent);
+    --tableRowAlternateBackgroundColor: color-mix(in srgb, #101010 92%, transparent);
 
-    /* Dialog - Dark */
-    --dialogBackground: var(--vercelGray800);
-
-    /* Navigation - Dark */
-    --tabBarBackground: var(--windowBackgroundColor);
-    --tabItemBackground-selected: rgba(59, 130, 246, 0.2);
-
-    /* Sidebar - Dark */
-    --sidebarBackground: var(--backgroundSecondary);
-    --sidebarItemHoverBackground: var(--vercelGray700);
-    --sidebarItemSelectedBackground: rgba(59, 130, 246, 0.2);
-
-    /* Checkbox - Dark */
-    --checkboxBackground: var(--vercelGray800);
-    --checkboxBorder: 1px solid var(--vercelGray600);
-
-    /* Shadows - Dark */
-    --shadowColor: rgba(0, 0, 0, 0.3);
-    --boxShadowSmall: 0 1px 2px 0 rgba(0, 0, 0, 0.2);
-    --boxShadowMedium: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-    --boxShadowLarge: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    --dialogBackground: color-mix(in srgb, #0f0f0f 92%, transparent);
+    --dialogBoxShadow: 0 40px 120px color-mix(in srgb, #000 65%, transparent);
   }
 }
 
-/* Vercel-specific component overrides */
-:root {
-  font-feature-settings:
-    "rlig" 1,
-    "calt" 1;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
-}
-
-/* Focus styles for accessibility */
-*:focus-visible {
-  outline: 2px solid var(--accentColor);
-  outline-offset: 2px;
-}
-
-/* Scrollbar styling */
-::-webkit-scrollbar {
+/* Scrollbar Styling */
+body ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
+  background: var(--scrollBarBackgroundColor);
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+body ::-webkit-scrollbar-thumb {
+  background: var(--scrollBarThumbColor);
+  border-radius: 8px;
 }
 
-::-webkit-scrollbar-thumb {
-  background: var(--vercelGray300);
-  border-radius: 4px;
+body ::-webkit-scrollbar-thumb:hover {
+  background: var(--activeScrollBarThumbColor);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: var(--vercelGray400);
-}
-
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-thumb {
-    background: var(--vercelGray600);
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--vercelGray500);
+@media (prefers-contrast: high) {
+  :root {
+    --controlBorder: 2px solid currentColor;
+    --inputBorder: 2px solid currentColor;
+    --controlFocusBoxShadow: 0 0 0 3px var(--keyboardFocusIndicatorColor);
+    --inputFocusBoxShadow: 0 0 0 3px var(--keyboardFocusIndicatorColor);
   }
 }
 
-/* Animation and transitions */
-* {
-  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --animationDuration: 0ms;
+  }
 }
