@@ -22,12 +22,13 @@ The following themes are available in `public/styles/`:
 8. **iOS 12** (`ios12.css`) - iOS design language with rounded corners and translucent effects
 9. **Linear** (`linear.css`) - Linear app-inspired modern design
 10. **macOS 12** (`macOS12.css`) - macOS Big Sur/Monterey design system with system colors and blur effects
-11. **Material Design** (`material-design.css`) - Google's Material Design system
-12. **OpenAI** (`openai.css`) - OpenAI's clean interface styling
-13. **Vercel** (`vercel.css`) - Clean, modern development-focused theme
-14. **Windows XP** (`windows-xp.css`) - Classic Windows XP styling
-15. **Windows 11** (`windows11.css`) - Windows 11 Fluent Design system
-16. **Windows 98** (`windows98.css`) - Retro Windows 98 styling
+11. **Naver LINE** (`naver-line.css`) - LINE's friendly brand styling with bright greens, rounded controls, and conversational surfaces
+12. **Material Design** (`material-design.css`) - Google's Material Design system
+13. **OpenAI** (`openai.css`) - OpenAI's clean interface styling
+14. **Vercel** (`vercel.css`) - Clean, modern development-focused theme
+15. **Windows XP** (`windows-xp.css`) - Classic Windows XP styling
+16. **Windows 11** (`windows11.css`) - Windows 11 Fluent Design system
+17. **Windows 98** (`windows98.css`) - Retro Windows 98 styling
 
 ### Core Design Token Categories
 
@@ -523,5 +524,20 @@ For a complete, up-to-date list of all available tokens, refer to the individual
 5. **Layout**: Spacing, sizing, elevation
 6. **Components**: Component-specific styling tokens
 7. **Effects**: Animations, filters, visual effects
+
+## Token Coverage CLI
+
+Use the design token coverage helper to audit how completely each theme implements the shared token set:
+
+```bash
+npm run token:coverage
+```
+
+Pass additional flags after `--`:
+
+- `--baseline=<file>` – compare every theme against a canonical stylesheet (for example `macOS12.css`).
+- `--missingLimit=<n>` – preview at most `n` missing tokens per theme (`0` shows the full list).
+- `--no-missing` – only print the summary table.
+- `--format=<table|csv|json>` – switch output mode; combine with `--output=report.csv` to persist results.
 
 This design token system ensures visual consistency while allowing for extensive customization and theming across different platforms and use cases.
