@@ -88,18 +88,18 @@ export const themes: ThemeMetadata[] = [
     "category": "Apple"
   },
   {
-    "value": "naver-line",
-    "label": "Naver LINE",
-    "file": "/tanuki-ui/styles/naver-line.css",
-    "description": "LINE's friendly brand styling with bright greens, rounded controls, and conversational surfaces",
-    "category": "Communication"
-  },
-  {
     "value": "material-design",
     "label": "Material Design",
     "file": "/tanuki-ui/styles/material-design.css",
     "description": "Google's Material Design system with elevation layers and dynamic color palette",
     "category": "Google"
+  },
+  {
+    "value": "naver-line",
+    "label": "Naver LINE",
+    "file": "/tanuki-ui/styles/naver-line.css",
+    "description": "Inspired by LY Corporation's LINE brand with crisp white surfaces, bright green accents, and friendly messaging vibes",
+    "category": "Communication"
   },
   {
     "value": "openai",
@@ -112,7 +112,7 @@ export const themes: ThemeMetadata[] = [
     "value": "vercel",
     "label": "Vercel",
     "file": "/tanuki-ui/styles/vercel.css",
-    "description": "Clean modern development-focused design with crisp typography and minimal visual elements",
+    "description": "Geist-based palette with official neutral/brand tokens and typography updates",
     "category": "Developer"
   },
   {
