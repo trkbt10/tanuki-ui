@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Input, type InputProps } from '../elements/Input';
-import styles from '../inspector/InspectorPanel.module.css';
+import { Input, type InputProps } from '../../elements/Input';
+import styles from '../InspectorPanel.module.css';
 
 export interface InspectorInputProps extends InputProps {}
 
@@ -12,4 +12,3 @@ export const InspectorInput = React.forwardRef<HTMLInputElement, InspectorInputP
 );
 
 InspectorInput.displayName = 'InspectorInput';
-

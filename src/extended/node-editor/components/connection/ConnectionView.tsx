@@ -301,6 +301,8 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
       toPort,
       fromNode,
       toNode,
+      fromPosition,
+      toPosition,
       isSelected,
       isHovered,
       isAdjacentToSelectedNode,

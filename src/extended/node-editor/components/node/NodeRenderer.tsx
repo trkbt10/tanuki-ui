@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Node, NodeId, Port } from "../../types/core";
 import { NodeDragHandler } from "./NodeDragHandler";
-import { classNames } from "../elements";
 import { createMemoizedComponent, areNodesEqual } from "../../utils/memoization";
 import styles from "./NodeRenderer.module.css";
 import { NodeView } from "./NodeView";
@@ -76,15 +75,13 @@ const NodeRendererComponent: React.FC<NodeRendererProps> = ({
     <NodeDragHandler nodeId={node.id}>
       {({ onPointerDown, isDragging: isCurrentlyDragging }) => (
         <div
-          className={classNames(
-            styles.nodeWrapper,
-            isCurrentlyDragging && styles.dragging
-          )}
+          className={styles.nodeWrapper}
           style={{
             transform: `translate(${actualPosition.x}px, ${actualPosition.y}px)`,
             zIndex: isCurrentlyDragging ? 1000 : isGroup ? 1 : 10,
           }}
           data-node-id={node.id}
+          data-dragging={isCurrentlyDragging}
         >
           <NodeComponent
             node={node}

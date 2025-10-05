@@ -6,7 +6,7 @@ import { hasGroupBehavior } from "../types/behaviors";
 import { Node, NodeId } from "../types/core";
 import { getNodeIcon } from "../utils/nodeUtils";
 import { CloseIcon, classNames, LockIcon, UnlockIcon } from "./elements";
-import { PropertySection } from "./parts";
+import { PropertySection } from "./inspector/parts";
 import styles from "./NodeTreeList.module.css";
 import { useI18n } from "../i18n";
 

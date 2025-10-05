@@ -1,0 +1,33 @@
+import * as React from "react";
+import { Input } from "../../elements/Input";
+import styles from "./InspectorParts.module.css";
+
+export interface InspectorNumberInputProps {
+  value: number;
+  onChange: (value: number) => void;
+  label: string;
+  id?: string;
+  name?: string;
+  "aria-label"?: string;
+}
+
+export const InspectorNumberInput = React.memo<InspectorNumberInputProps>(
+  ({ value, onChange, label, id, name, "aria-label": ariaLabel }) => {
+    return (
+      <div className={styles.numberInputContainer}>
+        <span className={styles.numberInputLabel}>{label}</span>
+        <Input
+          type="number"
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value))}
+          className={styles.numberInput}
+          id={id}
+          name={name}
+          aria-label={ariaLabel}
+        />
+      </div>
+    );
+  }
+);
+
+InspectorNumberInput.displayName = "InspectorNumberInput";

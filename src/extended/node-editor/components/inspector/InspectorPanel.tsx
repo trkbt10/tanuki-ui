@@ -7,7 +7,7 @@ import { NodeTreeList } from "../NodeTreeList";
 import { HistoryPanel } from "./HistoryPanel";
 import { TabNav } from "../TabNav";
 import { classNames, Input, Label, H4, SwitchInput } from "../elements";
-import { PropertySection } from "../parts";
+import { PropertySection } from "./parts";
 import styles from "./InspectorPanel.module.css";
 import { useI18n } from "../../i18n";
 

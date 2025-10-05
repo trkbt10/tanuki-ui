@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "../inspector/InspectorPanel.module.css";
+import styles from "../InspectorPanel.module.css";
 
 export interface InspectorLabelProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -12,4 +12,3 @@ export const InspectorLabel: React.FC<InspectorLabelProps> = ({ children, classN
 };
 
 InspectorLabel.displayName = "InspectorLabel";
-

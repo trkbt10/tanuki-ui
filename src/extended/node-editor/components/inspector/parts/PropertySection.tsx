@@ -1,6 +1,6 @@
 import * as React from "react";
-import { H4 } from "../elements";
-import inspectorStyles from "../inspector/InspectorPanel.module.css";
+import { H4 } from "../../elements";
+import inspectorStyles from "../InspectorPanel.module.css";
 
 export interface PropertySectionProps {
   title: string;

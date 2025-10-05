@@ -1,7 +1,5 @@
 export { StatusSection, statusSectionStyles } from "./StatusSection";
 export type { StatusSectionProps } from "./StatusSection";
-export { PropertySection } from "./PropertySection";
-export type { PropertySectionProps } from "./PropertySection";
 
 export { FloatingContainer } from "./FloatingContainer";
 export type { FloatingContainerProps } from "./FloatingContainer";
@@ -18,16 +16,5 @@ export type { SelectionBoxProps } from "./SelectionBox";
 export { SelectionOverlay } from "./SelectionOverlay";
 export type { SelectionOverlayProps } from "./SelectionOverlay";
 
-export { PortView } from "../connection/ports/PortView";
-export type { PortViewProps } from "../connection/ports/PortView";
-
 export { ConstraintViolationDisplay } from "./ConstraintViolationDisplay";
 export type { ConstraintViolationDisplayProps } from "./ConstraintViolationDisplay";
-export { InspectorLabel } from "./InspectorLabel";
-export type { InspectorLabelProps } from "./InspectorLabel";
-export { InspectorButton } from "./InspectorButton";
-export type { InspectorButtonProps } from "./InspectorButton";
-export { InspectorInput } from "./InspectorInput";
-export type { InspectorInputProps } from "./InspectorInput";
-export { InspectorTextarea } from "./InspectorTextarea";
-export type { InspectorTextareaProps } from "./InspectorTextarea";

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { NodeEditor } from "../NodeEditor";
-import { createNodeDefinition, toUntypedDefinition } from "../types/NodeDefinition";
+import { createNodeDefinition, toUntypedDefinition, type ConnectionRenderContext } from "../types/NodeDefinition";
 import type { NodeEditorData } from "../types/core";
 
 /**
@@ -46,8 +46,11 @@ const customPortRenderer = (context: any, defaultRender: () => React.ReactElemen
 };
 
 // Custom connection renderer example - animated dashed line
-const customConnectionRenderer = (context: any, defaultRender: () => React.ReactElement) => {
-  const { fromPort, isSelected, isHovered } = context;
+const customConnectionRenderer = (
+  context: ConnectionRenderContext,
+  defaultRender: () => React.ReactElement
+) => {
+  const { fromPort, fromPosition, toPosition, isSelected, isHovered } = context;
 
   // Define colors for different data types
   const colorMap: Record<string, string> = {
@@ -59,12 +62,27 @@ const customConnectionRenderer = (context: any, defaultRender: () => React.React
 
   const color = colorMap[fromPort.dataType || ""] || "#999";
   const strokeWidth = isSelected || isHovered ? 3 : 2;
+  const distance = Math.hypot(toPosition.x - fromPosition.x, toPosition.y - fromPosition.y) || 1;
+  const glowStrength = Math.min(distance / 120, 1);
 
   // For demonstration, we'll wrap the default renderer with custom styling
   // In a real implementation, you'd build the SVG from scratch
   return (
-    <g style={{ filter: isSelected ? `drop-shadow(0 0 4px ${color})` : "none" }}>
+    <g
+      style={{
+        filter: isSelected ? `drop-shadow(0 0 ${4 + glowStrength * 4}px ${color})` : "none",
+      }}
+    >
       {defaultRender()}
+      <circle
+        cx={toPosition.x}
+        cy={toPosition.y}
+        r={4 + glowStrength * 4}
+        fill={color}
+        fillOpacity={0.2}
+        stroke={color}
+        strokeWidth={strokeWidth / 2}
+      />
     </g>
   );
 };

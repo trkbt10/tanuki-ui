@@ -5,20 +5,16 @@ import { useNodeEditor } from "../../contexts/node-editor";
 import { useNodeDefinition } from "../../contexts/NodeDefinitionContext";
 import { useExternalDataRef } from "../../contexts/ExternalDataContext";
 import { useExternalData } from "../../hooks/useExternalData";
-import { DefaultNodeRenderer } from "./renderers/DefaultRenderers";
-import { classNames } from "../elements";
 import styles from "./NodeView.module.css";
-import { isPortConnectable } from "../../utils/nodeLayerHelpers";
 import type { ConnectablePortsResult } from "../../utils/connectablePortPlanner";
 import { ResizeHandle } from "../parts/ResizeHandle";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeResize } from "../../hooks/useNodeResize";
 import { useGroupManagement } from "../../hooks/useGroupManagement";
-import { PortView } from "../connection/ports/PortView";
-import { useOptionalRenderers } from "../../contexts/RendererContext";
-import { LockIcon } from "../elements";
-import { useI18n } from "../../i18n";
 import { hasAppearanceBehavior, hasGroupBehavior } from "../../types/behaviors";
+import { getReadableTextColor, applyOpacity } from "../../utils/colorUtils";
+import { NodeBodyRenderer } from "./NodeBodyRenderer";
+import { NodePortsRenderer } from "./NodePortsRenderer";
 
 export interface CustomNodeRendererProps {
   node: Node;
@@ -81,9 +77,6 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
   const nodeDefinition = useNodeDefinition(node.type);
   const externalDataRef = useExternalDataRef(node.id);
   const externalDataState = useExternalData(node, externalDataRef);
-  const renderers = useOptionalRenderers();
-  const PortComponent = renderers?.port ?? PortView;
-  const { t } = useI18n();
 
   // Reference to the DOM element for direct transform updates
   const nodeRef = React.useRef<HTMLDivElement>(null);
@@ -147,25 +140,6 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
     }
     return baseSize;
   }, [node.size, isResizing, nodeResize, node.id]);
-
-  // Get visual style class based on node state
-  const visualStyleClass = React.useMemo(() => {
-    const visualState = node.data.visualState;
-    switch (visualState) {
-      case "info":
-        return styles.nodeInfo;
-      case "success":
-        return styles.nodeSuccess;
-      case "warning":
-        return styles.nodeWarning;
-      case "error":
-        return styles.nodeError;
-      case "disabled":
-        return styles.nodeDisabled;
-      default:
-        return null;
-    }
-  }, [node.data.visualState]);
 
   // Memoized event handlers
   const handleTitleDoubleClick = React.useCallback(
@@ -272,6 +246,9 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
     return Object.entries(affectedChildNodes).some(([groupId, childIds]) => childIds.includes(node.id));
   }, [actionState.dragState, node.id]);
 
+  // Get ports for this node
+  const ports = React.useMemo(() => getNodePorts(node.id) || [], [getNodePorts, node.id]);
+
   // Handle pointer down on node
   const handleNodePointerDown = React.useCallback(
     (e: React.PointerEvent) => {
@@ -302,61 +279,18 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
     ? (node.data as Record<string, unknown>).groupOpacity as number
     : undefined;
 
-  function parseColorToRGB(input: string): { r: number; g: number; b: number } | null {
-    const hex = input.trim();
-    const hexMatch = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/.exec(hex);
-    if (hexMatch) {
-      let v = hexMatch[1];
-      if (v.length === 3) v = v.split("").map((c) => c + c).join("");
-      const num = parseInt(v, 16);
-      return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
-    }
-    const rgbMatch = /^rgba?\(([^)]+)\)$/.exec(input);
-    if (rgbMatch) {
-      const parts = rgbMatch[1].split(",").map((p) => p.trim());
-      const r = Number(parts[0]);
-      const g = Number(parts[1]);
-      const b = Number(parts[2]);
-      if ([r, g, b].every((n) => Number.isFinite(n))) return { r, g, b };
-    }
-    return null;
-  }
-
-  function getReadableTextColor(bg: string | undefined): string | undefined {
-    if (!bg) return undefined;
-    const rgb = parseColorToRGB(bg);
-    if (!rgb) return undefined;
-    // Relative luminance
-    const srgb = [rgb.r, rgb.g, rgb.b].map((v) => v / 255).map((v) => (v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4)));
-    const L = 0.2126 * srgb[0] + 0.7152 * srgb[1] + 0.0722 * srgb[2];
-    return L > 0.5 ? "#111111" : "#ffffff";
-  }
-
   const groupTextColor = isGroup ? getReadableTextColor(groupBackground) : undefined;
   const backgroundWithOpacity = React.useMemo(() => {
     if (!isGroup) return undefined;
     if (!groupBackground) return undefined;
     if (typeof groupOpacity !== "number") return groupBackground;
-    const rgb = parseColorToRGB(groupBackground);
-    if (!rgb) return groupBackground;
-    const alpha = Math.min(1, Math.max(0, groupOpacity));
-    return `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${alpha})`;
+    return applyOpacity(groupBackground, groupOpacity);
   }, [isGroup, groupBackground, groupOpacity]);
 
   return (
     <div
       ref={nodeRef}
-      className={classNames(
-        styles.nodeView,
-        isAppearanceBehavior && styles.plainNode,
-        isGroup && styles.groupNode,
-        isGroup && hasChildren && styles.groupHasChildren,
-        isSelected && styles.selected,
-        (isDragging || isChildDragging) && styles.dragging,
-        isResizing && styles.resizing,
-        node.locked && styles.locked,
-        visualStyleClass || undefined
-      )}
+      className={styles.nodeView}
       style={{
         width: size.width,
         height: size.height,
@@ -367,111 +301,47 @@ const NodeViewComponent: React.FC<NodeViewProps> = ({
       onPointerDown={handleNodePointerDown}
       onContextMenu={(e) => onContextMenu(e, node.id)}
       data-node-id={node.id}
+      data-selected={isSelected}
+      data-dragging={isDragging || isChildDragging}
+      data-resizing={isResizing}
+      data-locked={node.locked}
+      data-visual-state={node.data.visualState || undefined}
+      data-is-group={isGroup}
+      data-has-children={hasChildren}
+      data-plain-node={isAppearanceBehavior}
     >
-      {useCustomRenderer && nodeDefinition?.renderNode ? (
-        <div className={styles.customNodeContent}>{nodeDefinition.renderNode(customRenderProps)}</div>
-      ) : (
-        <>
-          <div
-            className={classNames(
-              styles.nodeHeader,
-              nodeDefinition?.interactive && !isSelected && styles.interactiveDragHandle
-            )}
-            data-drag-handle={nodeDefinition?.interactive ? "true" : "false"}
-          >
-            {node.locked && (
-              <span className={styles.lockIcon}>
-                <LockIcon size={12} />
-              </span>
-            )}
-            {isEditing(node.id, "title") ? (
-              <input
-                id={`node-title-${node.id}`}
-                name="nodeTitle"
-                className={styles.nodeTitleInput}
-                type="text"
-                value={editingState.currentValue}
-                onChange={handleEditingChange}
-                onKeyDown={handleEditingKeyDown}
-                onBlur={handleEditingBlur}
-                autoFocus
-                onClick={(e) => e.stopPropagation()}
-                aria-label="Node title"
-              />
-            ) : (
-              <span className={styles.nodeTitle} onDoubleClick={handleTitleDoubleClick} style={groupTextColor ? { color: groupTextColor } : undefined}>
-                {node.data.title && node.data.title.trim().length > 0 ? node.data.title : t("untitled")}
-              </span>
-            )}
-          </div>
+      <NodeBodyRenderer
+        node={node}
+        isSelected={isSelected}
+        nodeDefinition={nodeDefinition}
+        useCustomRenderer={useCustomRenderer}
+        customRenderProps={customRenderProps}
+        isEditing={isEditing(node.id, "title")}
+        editingValue={editingState.currentValue}
+        isGroup={isGroup}
+        groupChildrenCount={groupChildren.length}
+        groupTextColor={groupTextColor}
+        onTitleDoubleClick={handleTitleDoubleClick}
+        onEditingChange={handleEditingChange}
+        onEditingKeyDown={handleEditingKeyDown}
+        onEditingBlur={handleEditingBlur}
+      />
 
-          <div className={styles.nodeContent}>
-            {isGroup ? (
-              <GroupContent node={node} childCount={groupChildren.length} />
-            ) : (
-              node.data.content || "Empty node"
-            )}
-          </div>
-        </>
-      )}
-
-      {/* Render ports */}
-      {(() => {
-        const ports = getNodePorts(node.id);
-        if (!ports || ports.length === 0) return null;
-
-        const portsByPosition = ports.reduce((acc: Record<string, Port[]>, port: Port) => {
-          if (!acc[port.position]) {
-            acc[port.position] = [];
-          }
-          acc[port.position].push(port);
-          return acc;
-        }, {} as Record<string, Port[]>);
-
-        return (
-          <div className={styles.nodePorts}>
-            {ports.map((port: Port) => {
-              const connectable = isPortConnectable(port, connectablePorts);
-              return (
-                <PortComponent
-                  key={port.id}
-                  port={port}
-                  onPointerDown={onPortPointerDown}
-                  onPointerUp={onPortPointerUp}
-                  onPointerEnter={onPortPointerEnter}
-                  onPointerLeave={onPortPointerLeave}
-                  isConnecting={actionState.connectionDragState?.fromPort.id === port.id}
-                  isConnectable={connectable}
-                  isCandidate={actionState.connectionDragState?.candidatePort?.id === port.id}
-                  isHovered={hoveredPort?.id === port.id}
-                  isConnected={connectedPorts?.has(port.id)}
-                />
-              );
-            })}
-          </div>
-        );
-      })()}
+      <NodePortsRenderer
+        ports={ports}
+        onPortPointerDown={onPortPointerDown}
+        onPortPointerUp={onPortPointerUp}
+        onPortPointerEnter={onPortPointerEnter}
+        onPortPointerLeave={onPortPointerLeave}
+        hoveredPort={hoveredPort}
+        connectedPorts={connectedPorts}
+        connectablePorts={connectablePorts}
+      />
 
       {/* Render resize handle when selected and not locked */}
       {isSelected && !node.locked && (
         <ResizeHandle position="se" onResizeStart={handleResizeStart} isResizing={currentResizeHandle === "se"} isVisible={true} />
       )}
-    </div>
-  );
-};
-
-const GroupContent: React.FC<{ node: Node; childCount: number }> = ({ node, childCount }) => {
-  if (!node.expanded) {
-    return (
-      <div className={styles.groupCollapsed}>
-        {childCount > 0 ? `${childCount} nodes - Click to expand` : "Empty group - Drop nodes here"}
-      </div>
-    );
-  }
-
-  return (
-    <div className={styles.groupExpanded}>
-      {childCount > 0 ? `Contains ${childCount} nodes` : "Empty group - Drop nodes here"}
     </div>
   );
 };

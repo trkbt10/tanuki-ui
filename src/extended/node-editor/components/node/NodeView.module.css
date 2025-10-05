@@ -18,14 +18,14 @@
 }
 
 /* Locked nodes should not be visually highlighted beyond the icon */
-.nodeView.locked {}
+.nodeView[data-locked="true"] {}
 
-.nodeView.selected {
+.nodeView[data-selected="true"] {
   border-color: var(--accentColor, #0066cc);
   box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
 }
 
-.nodeView.dragging {
+.nodeView[data-dragging="true"] {
   opacity: 0.8;
   cursor: grabbing;
   z-index: 1000;
@@ -44,17 +44,17 @@
   box-sizing: border-box;
 }
 
-.interactiveDragHandle {
+.nodeView:not([data-selected="true"]) .nodeHeader[data-interactive="true"] {
   cursor: move;
   background-color: var(--tableHeaderBackgroundColorHover, #e5e5e5);
   transition: background-color 0.2s ease;
 }
 
-.interactiveDragHandle:hover {
+.nodeView:not([data-selected="true"]) .nodeHeader[data-interactive="true"]:hover {
   background-color: var(--tableHeaderBackgroundColorActive, #d8d8d8);
 }
 
-.interactiveDragHandle::before {
+.nodeView:not([data-selected="true"]) .nodeHeader[data-interactive="true"]::before {
   content: "⋮⋮";
   position: absolute;
   left: 4px;
@@ -85,7 +85,7 @@
   background-color: var(--hoverBackground, rgba(0, 0, 0, 0.05));
 }
 
-.interactiveDragHandle .nodeTitle {
+.nodeView:not([data-selected="true"]) .nodeHeader[data-interactive="true"] .nodeTitle {
   padding-left: 20px;
 }
 
@@ -118,7 +118,7 @@
   box-sizing: border-box;
 }
 
-.groupNode {
+.nodeView[data-is-group="true"] {
   /* Subdued, token-driven appearance */
   background-color: var(
     --groupNodeBackground,
@@ -131,7 +131,7 @@
   z-index: 1;
 }
 
-.groupNode.groupHasChildren {
+.nodeView[data-is-group="true"][data-has-children="true"] {
   border-color: var(
     --groupNodeActiveColor,
     color-mix(in srgb, var(--accentColor, #0066cc) 45%, var(--dividerColor, rgba(0, 0, 0, 0.12)))
@@ -143,46 +143,37 @@
 }
 
 /* Tone down the header for group nodes */
-.groupNode .nodeHeader {
+.nodeView[data-is-group="true"] .nodeHeader {
   background-color: transparent;
   border-bottom: none;
 }
 
-.groupNode .nodeTitle {
+.nodeView[data-is-group="true"] .nodeTitle {
   color: var(--secondaryLabelColor, #666);
   font-weight: 500;
 }
 
-.groupCollapsed {
-  color: var(--secondaryLabelColor, #666);
-  font-style: italic;
-}
-
-.groupExpanded {
-  color: var(--textColor, #000);
-}
-
-.nodeInfo {
+.nodeView[data-visual-state="info"] {
   border-color: var(--accentColor, #0066cc);
   background-color: rgba(0, 102, 204, 0.05);
 }
 
-.nodeSuccess {
+.nodeView[data-visual-state="success"] {
   border-color: var(--successColor, #34c759);
   background-color: rgba(52, 199, 89, 0.05);
 }
 
-.nodeWarning {
+.nodeView[data-visual-state="warning"] {
   border-color: var(--warningColor, #ff9500);
   background-color: rgba(255, 149, 0, 0.05);
 }
 
-.nodeError {
+.nodeView[data-visual-state="error"] {
   border-color: var(--cautionColor, #ff3b30);
   background-color: rgba(255, 59, 48, 0.05);
 }
 
-.nodeDisabled {
+.nodeView[data-visual-state="disabled"] {
   opacity: 0.5;
   pointer-events: none;
 }
@@ -202,11 +193,11 @@
   position: relative;
 }
 
-/* Placeholder class to keep API parity */
-.resizing {}
+/* Placeholder for resizing state */
+.nodeView[data-resizing="true"] {}
 
 /* Decoration-less node appearance for label-like nodes */
-.plainNode {
+.nodeView[data-plain-node="true"] {
   background-color: transparent;
   border: none;
   box-shadow: none;
@@ -214,10 +205,10 @@
   min-height: unset;
 }
 
-.plainNode.selected,
-.plainNode:hover,
-.plainNode.locked,
-.plainNode.dragging {
+.nodeView[data-plain-node="true"][data-selected="true"],
+.nodeView[data-plain-node="true"]:hover,
+.nodeView[data-plain-node="true"][data-locked="true"],
+.nodeView[data-plain-node="true"][data-dragging="true"] {
   box-shadow: none;
   border: none;
 }

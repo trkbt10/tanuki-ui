@@ -1,9 +1,16 @@
 import * as React from "react";
 import type { NodeRenderProps, InspectorRenderProps } from "../../../types/NodeDefinition";
 import type { Node } from "../../../types/core";
-import { Input, Textarea } from "../../elements";
 import editorStyles from "../../../NodeEditor.module.css";
-import { PropertySection, InspectorLabel, InspectorButton } from "../../parts";
+import {
+  PropertySection,
+  InspectorLabel,
+  InspectorButton,
+  InspectorInput,
+  InspectorTextarea,
+  InspectorNumberInput,
+  InspectorCheckbox,
+} from "../../inspector/parts";
 import { useI18n } from "../../../i18n";
 import alignmentStyles from "./AlignmentControls.module.css";
 import defaultStyles from "./DefaultRenderers.module.css";
@@ -45,102 +52,6 @@ export const DefaultNodeRenderer: React.FC<NodeRenderProps> = ({ node, isSelecte
     </div>
   );
 };
-
-// Memoized input component to prevent re-renders
-const InspectorInput = React.memo<{
-  value: string;
-  onChange: (value: string) => void;
-  style?: React.CSSProperties;
-  className?: string;
-  type?: string;
-  placeholder?: string;
-  id?: string;
-  name?: string;
-  "aria-label"?: string;
-}>(({ value, onChange, style, className, type = "text", placeholder, id, name, "aria-label": ariaLabel }) => (
-  <Input
-    type={type}
-    value={value}
-    onChange={(e) => onChange(e.target.value)}
-    style={style}
-    className={className}
-    placeholder={placeholder}
-    id={id}
-    name={name}
-    aria-label={ariaLabel}
-  />
-));
-InspectorInput.displayName = "InspectorInput";
-
-// Memoized textarea component
-const InspectorTextarea = React.memo<{
-  value: string;
-  onChange: (value: string) => void;
-  style?: React.CSSProperties;
-  className?: string;
-  id?: string;
-  name?: string;
-  "aria-label"?: string;
-}>(({ value, onChange, style, className, id, name, "aria-label": ariaLabel }) => (
-  <Textarea
-    value={value}
-    onChange={(e) => onChange(e.target.value)}
-    style={style}
-    className={className}
-    id={id}
-    name={name}
-    aria-label={ariaLabel}
-  />
-));
-InspectorTextarea.displayName = "InspectorTextarea";
-
-// Memoized compact number input component with label
-const InspectorNumberInput = React.memo<{
-  value: number;
-  onChange: (value: number) => void;
-  label: string;
-  id?: string;
-  name?: string;
-  "aria-label"?: string;
-}>(({ value, onChange, label, id, name, "aria-label": ariaLabel }) => {
-  return (
-    <div className={defaultStyles.numberInputContainer}>
-      <span className={defaultStyles.numberInputLabel}>{label}</span>
-      <Input
-        type="number"
-        value={value}
-        onChange={(e) => onChange(Number(e.target.value))}
-        className={defaultStyles.numberInput}
-        id={id}
-        name={name}
-        aria-label={ariaLabel}
-      />
-    </div>
-  );
-});
-InspectorNumberInput.displayName = "InspectorNumberInput";
-
-// Memoized checkbox component
-const InspectorCheckbox = React.memo<{
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-  label: string;
-  name?: string;
-}>(({ checked, onChange, label, name }) => {
-  const onChangeRef = React.useRef(onChange);
-  onChangeRef.current = onChange;
-  const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    onChangeRef.current(e.target.checked);
-  }, []);
-  const id = React.useId();
-  return (
-    <label htmlFor={id} className={defaultStyles.checkboxContainer}>
-      <input type="checkbox" checked={checked} onChange={handleChange} id={id} name={name ?? ""} />
-      <span className={defaultStyles.checkboxText}>{label}</span>
-    </label>
-  );
-});
-InspectorCheckbox.displayName = "InspectorCheckbox";
 
 // Alignment component for selected nodes
 const AlignmentControls = React.memo<{
@@ -287,7 +198,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
             id={`node-${node.id}-title`}
             name="nodeTitle"
             value={node.data.title || ""}
-            onChange={handleTitleChange}
+            onChange={(e) => handleTitleChange(e.target.value)}
             className={editorStyles.inspectorInput}
           />
         </div>
@@ -299,7 +210,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
               id={`node-${node.id}-content`}
               name="nodeContent"
               value={String(node.data.content) || ""}
-              onChange={handleContentChange}
+              onChange={(e) => handleContentChange(e.target.value)}
               className={editorStyles.inspectorTextarea}
             />
           </div>

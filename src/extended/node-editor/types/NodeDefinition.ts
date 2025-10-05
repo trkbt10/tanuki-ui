@@ -141,6 +141,10 @@ export interface ConnectionRenderContext {
   fromNode: Node;
   /** The target node */
   toNode: Node;
+  /** Absolute position of the source port */
+  fromPosition: { x: number; y: number };
+  /** Absolute position of the target port */
+  toPosition: { x: number; y: number };
   /** Whether this connection is selected */
   isSelected: boolean;
   /** Whether this connection is hovered */

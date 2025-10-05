@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { NodeRenderProps, InspectorRenderProps } from "../../../types/NodeDefinition";
 import type { LabelNodeDataMap, LabelNodeData } from "../../../types/nodes/label";
-import { PropertySection, InspectorLabel, InspectorInput, InspectorTextarea } from "../../parts";
+import { PropertySection, InspectorLabel, InspectorInput, InspectorTextarea } from "../../inspector/parts";
 import editorStyles from "../../../NodeEditor.module.css";
 import { useI18n } from "../../../i18n";
 import styles from "./LabelNode.module.css";
