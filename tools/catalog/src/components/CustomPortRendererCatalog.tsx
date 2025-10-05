@@ -41,7 +41,9 @@ const customPortRenderer = (context: PortRenderContext, defaultRender: () => Rea
         border: `2px solid ${isConnected ? color : "#fff"}`,
         boxShadow: isHovered ? `0 0 8px ${color}` : "none",
         transition: "all 0.2s",
-        cursor: "pointer",
+        cursor: "crosshair",
+        pointerEvents: "all", // IMPORTANT: Required for drag interactions
+        zIndex: 10,
       }}
       title={port.label}
       onPointerDown={handlers.onPointerDown}
@@ -209,40 +211,80 @@ const videoProcessorNode = toUntypedDefinition(
   })
 );
 
-// Sample data
+// Sample data - arranged to demonstrate different data type connections
 const initialData: NodeEditorData = {
   nodes: {
-    "node-1": {
-      id: "node-1",
+    // Data sources (left side)
+    "node-data-1": {
+      id: "node-data-1",
       type: "data-source",
-      position: { x: 100, y: 100 },
-      data: { title: "Data Source" },
+      position: { x: 80, y: 100 },
+      data: { title: "Data Source 1" },
     },
-    "node-2": {
-      id: "node-2",
+    "node-data-2": {
+      id: "node-data-2",
+      type: "data-source",
+      position: { x: 80, y: 250 },
+      data: { title: "Data Source 2" },
+    },
+
+    // Processors (middle)
+    "node-image-1": {
+      id: "node-image-1",
       type: "image-processor",
-      position: { x: 400, y: 80 },
+      position: { x: 380, y: 50 },
       data: { title: "Image Processor" },
     },
-    "node-3": {
-      id: "node-3",
+    "node-audio-1": {
+      id: "node-audio-1",
       type: "audio-processor",
-      position: { x: 400, y: 250 },
+      position: { x: 380, y: 220 },
       data: { title: "Audio Processor" },
     },
-    "node-4": {
-      id: "node-4",
+    "node-video-1": {
+      id: "node-video-1",
       type: "video-processor",
-      position: { x: 700, y: 150 },
+      position: { x: 380, y: 380 },
       data: { title: "Video Processor" },
+    },
+
+    // More processors (right side)
+    "node-image-2": {
+      id: "node-image-2",
+      type: "image-processor",
+      position: { x: 700, y: 100 },
+      data: { title: "Image Output" },
+    },
+    "node-audio-2": {
+      id: "node-audio-2",
+      type: "audio-processor",
+      position: { x: 700, y: 280 },
+      data: { title: "Audio Output" },
     },
   },
   connections: {
-    "conn-1": {
-      id: "conn-1",
-      fromNodeId: "node-1",
+    // Image connection (blue)
+    "conn-image-1": {
+      id: "conn-image-1",
+      fromNodeId: "node-image-1",
+      fromPortId: "output-image",
+      toNodeId: "node-image-2",
+      toPortId: "input-image",
+    },
+    // Audio connection (orange)
+    "conn-audio-1": {
+      id: "conn-audio-1",
+      fromNodeId: "node-audio-1",
+      fromPortId: "output-audio",
+      toNodeId: "node-audio-2",
+      toPortId: "input-audio",
+    },
+    // Data connection (green)
+    "conn-data-1": {
+      id: "conn-data-1",
+      fromNodeId: "node-data-1",
       fromPortId: "output",
-      toNodeId: "node-2",
+      toNodeId: "node-image-1",
       toPortId: "input-image",
     },
   },
@@ -278,7 +320,7 @@ const CustomPortRendererCatalog: React.FC = () => {
               <div className={styles.exampleHeader}>
                 <H3 className={styles.exampleTitle}>カスタムポートレンダラーのデモ</H3>
                 <P className={styles.exampleDescription}>
-                  ノードを接続して、ポートと接続線の色が変化することを確認してください。
+                  データタイプ別に色分けされたポートを試してください。緑（data）、青（image）、オレンジ（audio）、紫（video）の4種類があります。ノードを接続して、ポートと接続線の色が変化することを確認してください。
                 </P>
               </div>
               <div className={styles.singleColumnContent}>
@@ -350,6 +392,9 @@ const CustomPortRendererCatalog: React.FC = () => {
         border: \`2px solid \${isConnected ? color : "#fff"}\`,
         boxShadow: isHovered ? \`0 0 8px \${color}\` : "none",
         transition: "all 0.2s",
+        cursor: "crosshair",
+        pointerEvents: "all", // 重要: ドラッグ操作に必要
+        zIndex: 10,
       }}
       onPointerDown={handlers.onPointerDown}
       onPointerUp={handlers.onPointerUp}
@@ -549,6 +594,64 @@ const CustomPortRendererCatalog: React.FC = () => {
               </div>
               <P className={styles.testCardBody}>
                 defaultRender() を呼び出すことで、デフォルトのレンダリングをラップしたり、条件に応じて切り替えたりできます。
+              </P>
+            </div>
+          </div>
+        </Section>
+
+        <Section className={styles.section}>
+          <div className={styles.sectionIntro}>
+            <H2>重要な注意事項</H2>
+            <P>カスタムポートレンダラーを実装する際は、以下の点に注意してください。</P>
+          </div>
+
+          <div className={styles.testGrid}>
+            <div className={styles.testCard}>
+              <div className={styles.testCardHeader}>
+                <H3 className={styles.testCardTitle}>pointer-events: all</H3>
+              </div>
+              <P className={styles.testCardBody}>
+                ポートのドラッグ操作を可能にするため、<Code>pointerEvents: "all"</Code> を必ず設定してください。これがないと、接続線を引くことができません。
+              </P>
+            </div>
+            <div className={styles.testCard}>
+              <div className={styles.testCardHeader}>
+                <H3 className={styles.testCardTitle}>data-* 属性</H3>
+              </div>
+              <P className={styles.testCardBody}>
+                <Code>data-port-id</Code>, <Code>data-port-type</Code>, <Code>data-node-id</Code> の3つの属性は必須です。これらはポートの識別とインタラクションに使用されます。
+              </P>
+            </div>
+            <div className={styles.testCard}>
+              <div className={styles.testCardHeader}>
+                <H3 className={styles.testCardTitle}>イベントハンドラー</H3>
+              </div>
+              <P className={styles.testCardBody}>
+                context.handlers から取得したイベントハンドラーをすべて設定してください。これらは接続の作成、ホバー状態の管理などに必要です。
+              </P>
+            </div>
+            <div className={styles.testCard}>
+              <div className={styles.testCardHeader}>
+                <H3 className={styles.testCardTitle}>position 情報</H3>
+              </div>
+              <P className={styles.testCardBody}>
+                context.position を使用して、ポートを正しい位置に配置してください。transform プロパティも適用することを忘れないでください。
+              </P>
+            </div>
+            <div className={styles.testCard}>
+              <div className={styles.testCardHeader}>
+                <H3 className={styles.testCardTitle}>z-index とカーソル</H3>
+              </div>
+              <P className={styles.testCardBody}>
+                ポートが他の要素の上に表示されるよう <Code>zIndex: 10</Code> を設定し、カーソルは <Code>cursor: "crosshair"</Code> が推奨です。
+              </P>
+            </div>
+            <div className={styles.testCard}>
+              <div className={styles.testCardHeader}>
+                <H3 className={styles.testCardTitle}>position: absolute</H3>
+              </div>
+              <P className={styles.testCardBody}>
+                ポートは絶対配置（<Code>position: "absolute"</Code>）である必要があります。context.position の値を left, top に設定してください。
               </P>
             </div>
           </div>

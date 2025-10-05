@@ -25,7 +25,8 @@
 .exampleGrid {
   display: grid;
   gap: 24px;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  /* Full width for node editor examples */
+  grid-template-columns: 1fr;
 }
 
 .exampleCard {
@@ -49,13 +50,11 @@
 }
 
 .singleColumnContent {
-  composes: exampleContent from "./ExampleCardLayout.module.css";
-}
-
-@media (min-width: 960px) {
-  .singleColumnContent {
-    grid-template-columns: minmax(0, 1fr);
-  }
+  display: grid;
+  gap: var(--exampleCardContentGap, calc(var(--cardPadding, 16px) + 8px));
+  align-items: flex-start;
+  /* Always full width, no 2-column layout */
+  grid-template-columns: 1fr;
 }
 
 .scenarioPreview {
@@ -85,7 +84,9 @@
   border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.12));
   background: var(--windowBackgroundColor, #ffffff);
   overflow: hidden;
-  height: 600px;
+  /* Larger height for better visibility */
+  height: 800px;
+  min-height: 600px;
 }
 
 .editorSurfaceInner {
@@ -146,6 +147,7 @@
   }
 
   .editorSurface {
-    height: 520px;
+    height: 600px;
+    min-height: 480px;
   }
 }
