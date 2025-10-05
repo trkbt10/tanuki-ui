@@ -33,4 +33,7 @@
   --node-editor-inspector-font-size-meta: 0.6875rem;
   --node-editor-inspector-line-height-meta: 1.3;
 
+  /* Canvas grid - using textColor at 20% opacity */
+  --node-editor-grid-color: var(--textColor);
+  --node-editor-grid-opacity: 0.2;
 }

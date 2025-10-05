@@ -47,6 +47,7 @@ export {
   createNodeDataUpdater,
   asOriginalNodeRender,
   asOriginalInspectorRender,
+  toUntypedDefinition,
 } from "./types/NodeDefinition";
 
 // Context providers (for advanced usage)
@@ -103,11 +104,7 @@ export { calculateNodeDragOffsets, getDraggedNodesBounds } from "./utils/dragUti
 export { createPortToNodeMap, createParentToChildrenMap, createConnectionLookupMaps, SpatialGrid } from "./utils/lookupUtils";
 
 // Port position utilities
-export {
-  computeNodePortPositions,
-  computeAllPortPositions,
-  updatePortPositions,
-} from "./utils/computePortPositions";
+export { computeNodePortPositions, computeAllPortPositions, updatePortPositions } from "./utils/computePortPositions";
 
 export type {
   PortPosition,
@@ -121,12 +118,7 @@ export type {
 export { DEFAULT_PORT_POSITION_CONFIG } from "./types/portPosition";
 
 // Port position context
-export {
-  PortPositionProvider,
-  usePortPositions,
-  usePortPosition,
-  useNodePortPositions,
-} from "./contexts/PortPositionContext";
+export { PortPositionProvider, usePortPositions, usePortPosition, useNodePortPositions } from "./contexts/PortPositionContext";
 export type { PortPositionContextValue, PortPositionProviderProps } from "./contexts/PortPositionContext";
 
 // Settings system

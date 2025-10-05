@@ -25,6 +25,11 @@
   z-index: 0;
 }
 
+.gridLine {
+  stroke: var(--node-editor-grid-color);
+  opacity: var(--node-editor-grid-opacity);
+}
+
 .canvas {
   position: absolute;
   width: 100%;

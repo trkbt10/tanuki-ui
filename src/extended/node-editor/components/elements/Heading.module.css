@@ -1,6 +1,6 @@
 .heading {
   margin: 0;
-  font-family: var(--themeLabelFontFamily, inherit);
+  font-family: var(--themeLabelFontFamily);
   line-height: 1.2;
 }
 
@@ -31,8 +31,8 @@
 
 /* Custom sizes */
 .heading[data-size="compact"] {
-  font-size: var(--node-editor-inspector-font-size-title, 0.7rem);
-  line-height: var(--node-editor-inspector-line-height-title, 1.2);
+  font-size: var(--node-editor-inspector-font-size-title);
+  line-height: var(--node-editor-inspector-line-height-title);
   letter-spacing: 0.04em;
 }
 
@@ -83,13 +83,13 @@
 
 /* Colors */
 .heading[data-color="primary"] {
-  color: var(--textColor, #000000);
+  color: var(--textColor);
 }
 
 .heading[data-color="secondary"] {
-  color: var(--secondaryLabelColor, #666666);
+  color: var(--secondaryLabelColor);
 }
 
 .heading[data-color="muted"] {
-  color: var(--tertiaryLabelColor, #9ca3af);
+  color: var(--tertiaryLabelColor);
 }

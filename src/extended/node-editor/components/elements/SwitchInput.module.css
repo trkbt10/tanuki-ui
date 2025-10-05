@@ -1,7 +1,7 @@
 .switchContainer {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--node-editor-space-sm);
 }
 
 .switch {
@@ -14,7 +14,7 @@
 }
 
 .switch:focus {
-  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.25);
+  box-shadow: 0 0 0 3px var(--keyboardFocusIndicatorColor);
 }
 
 .switch[data-disabled="true"] {
@@ -26,25 +26,25 @@
   position: relative;
   border-radius: 999px;
   transition: all 0.2s ease;
-  background-color: var(--inputBorderColor, rgba(0, 0, 0, 0.08));
+  background-color: var(--cardBorderColor);
 }
 
 .switch[data-checked="true"] .track {
-  background-color: var(--accentColor, #0066cc);
+  background-color: var(--accentColor);
 }
 
 .switch[data-disabled="true"][data-checked="true"] .track {
-  background-color: var(--tertiaryLabelColor, #9ca3af);
+  background-color: var(--tertiaryLabelColor);
 }
 
 .thumb {
   position: absolute;
   top: 2px;
   left: 2px;
-  background-color: var(--controlBackground, #ffffff);
+  background-color: var(--controlBackground);
   border-radius: 50%;
   transition: all 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--cardBoxShadow);
 }
 
 /* Sizes */
@@ -91,13 +91,13 @@
 }
 
 .switchLabel {
-  font-size: 14px;
-  color: var(--textColor, #000000);
+  font-size: var(--node-editor-inspector-font-size-body);
+  color: var(--textColor);
   cursor: pointer;
   user-select: none;
 }
 
 .switchLabel[data-disabled="true"] {
-  color: var(--tertiaryLabelColor, #9ca3af);
+  color: var(--tertiaryLabelColor);
   cursor: not-allowed;
 }

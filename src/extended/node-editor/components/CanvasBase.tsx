@@ -43,7 +43,7 @@ export const CanvasBase: React.FC<CanvasBaseProps> = ({ children, className, sho
     return (
       <defs>
         <pattern id="grid" width={scaledSize} height={scaledSize} patternUnits="userSpaceOnUse" x={offsetX} y={offsetY}>
-          <path d={`M ${scaledSize} 0 L 0 0 0 ${scaledSize}`} fill="none" stroke=" #e0e0e0" strokeWidth="1" opacity="0.5" />
+          <path d={`M ${scaledSize} 0 L 0 0 0 ${scaledSize}`} fill="none" strokeWidth="1" className={styles.gridLine} />
         </pattern>
       </defs>
     );
