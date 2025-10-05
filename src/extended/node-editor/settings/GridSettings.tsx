@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useNodeCanvas } from "../contexts/NodeCanvasContext";
-import { Input, Label, SwitchInput } from "../components/elements";
+import { Label, SwitchInput } from "../components/elements";
 import { useI18n } from "../i18n";
-import styles from "./EditorSettingsPanel.module.css";
+import { SettingsField, SettingsInput } from "./components";
 
 /**
  * Grid settings component
@@ -13,7 +13,7 @@ export const GridSettings: React.FC = () => {
 
   return (
     <>
-      <div className={styles.settingsField}>
+      <SettingsField>
         <SwitchInput
           id="grid-show"
           checked={canvasState.gridSettings.showGrid}
@@ -21,8 +21,8 @@ export const GridSettings: React.FC = () => {
           label={t("inspectorShowGrid")}
           size="medium"
         />
-      </div>
-      <div className={styles.settingsField}>
+      </SettingsField>
+      <SettingsField>
         <SwitchInput
           id="grid-snap"
           checked={canvasState.gridSettings.snapToGrid}
@@ -30,15 +30,14 @@ export const GridSettings: React.FC = () => {
           label={t("inspectorSnapToGrid")}
           size="medium"
         />
-      </div>
-      <div className={styles.settingsField}>
+      </SettingsField>
+      <SettingsField>
         <Label htmlFor="grid-size">
           {t("inspectorGridSize")}:
-          <Input
+          <SettingsInput
             id="grid-size"
             name="gridSize"
             type="number"
-            className={styles.settingsInput}
             value={canvasState.gridSettings.size}
             min={10}
             max={100}
@@ -56,15 +55,14 @@ export const GridSettings: React.FC = () => {
             aria-label="Grid size in pixels"
           />
         </Label>
-      </div>
-      <div className={styles.settingsField}>
+      </SettingsField>
+      <SettingsField>
         <Label htmlFor="snap-threshold">
           {t("inspectorSnapThreshold")}:
-          <Input
+          <SettingsInput
             id="snap-threshold"
             name="snapThreshold"
             type="number"
-            className={styles.settingsInput}
             value={canvasState.gridSettings.snapThreshold}
             min={1}
             max={20}
@@ -82,7 +80,7 @@ export const GridSettings: React.FC = () => {
             aria-label="Snap threshold in pixels"
           />
         </Label>
-      </div>
+      </SettingsField>
     </>
   );
 };

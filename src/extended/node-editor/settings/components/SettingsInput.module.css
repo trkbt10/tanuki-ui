@@ -1,9 +1,3 @@
-.settingsField {
-  display: flex;
-  flex-direction: column;
-  gap: var(--node-editor-inspector-field-gap);
-}
-
 .settingsInput {
   width: 100%;
   padding: var(--node-editor-inspector-input-padding);

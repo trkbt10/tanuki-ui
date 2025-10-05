@@ -1,8 +1,8 @@
 import * as React from "react";
 import { useNodeEditor } from "../contexts/node-editor";
-import { Input, Label, SwitchInput } from "../components/elements";
+import { Label, SwitchInput } from "../components/elements";
 import { useI18n } from "../i18n";
-import styles from "./EditorSettingsPanel.module.css";
+import { SettingsField, SettingsInput } from "./components";
 
 /**
  * General editor settings component
@@ -42,7 +42,7 @@ export const GeneralSettings: React.FC = () => {
 
   return (
     <>
-      <div className={styles.settingsField}>
+      <SettingsField>
         <SwitchInput
           id="auto-save"
           checked={settings.autoSave}
@@ -51,15 +51,14 @@ export const GeneralSettings: React.FC = () => {
           size="medium"
           disabled={!settingsWritable}
         />
-      </div>
-      <div className={styles.settingsField}>
+      </SettingsField>
+      <SettingsField>
         <Label htmlFor="auto-save-interval">
           {t("inspectorAutoSaveInterval")}
-          <Input
+          <SettingsInput
             id="auto-save-interval"
             name="autoSaveInterval"
             type="number"
-            className={styles.settingsInput}
             value={autoSaveIntervalInput}
             min={5}
             max={3600}
@@ -70,7 +69,7 @@ export const GeneralSettings: React.FC = () => {
             aria-label="Auto-save interval in seconds"
           />
         </Label>
-      </div>
+      </SettingsField>
     </>
   );
 };
