@@ -1,22 +1,22 @@
 .tabNav {
   display: flex;
   gap: 0;
-  padding: 0;
-  background: var(--tableHeaderBackgroundColor, #f0f0f0);
-  border-radius: 6px;
+  padding: var(--segmentControlPadding);
+  background: var(--segmentControlBackground);
+  border-radius: var(--segmentControlBorderRadius);
   overflow: hidden;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--segmentControlBoxShadow);
 }
 
 .tabButton {
   flex: 1;
-  padding: var(--node-editor-inspector-space-xs) var(--node-editor-inspector-space-sm);
+  padding: var(--segmentControlSegmentPadding);
   background: transparent;
   border: none;
   font-size: var(--node-editor-inspector-font-size-meta);
   line-height: var(--node-editor-inspector-line-height-meta);
   font-weight: 500;
-  color: var(--secondaryLabelColor, #666);
+  color: var(--secondaryLabelColor);
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
@@ -27,22 +27,22 @@
   box-sizing: border-box;
 }
 
-.tabButton:first-child { border-radius: 6px 0 0 6px; }
-.tabButton:last-child { border-radius: 0 6px 6px 0; }
-.tabButton:only-child { border-radius: 6px; }
+.tabButton:first-child { border-radius: var(--segmentControlBorderRadius) 0 0 var(--segmentControlBorderRadius); }
+.tabButton:last-child { border-radius: 0 var(--segmentControlBorderRadius) var(--segmentControlBorderRadius) 0; }
+.tabButton:only-child { border-radius: var(--segmentControlBorderRadius); }
 
 .tabButton:hover {
-  color: var(--labelColor, #000);
-  background: var(--controlHoverBackground, #e8e8e8);
+  color: var(--labelColor);
+  background: var(--controlHoverBackground);
 }
 
 .tabButtonActive {
-  color: var(--controlTextColor--primary, #ffffff);
-  background: var(--accentColor, #007AFF);
-  box-shadow: 0 1px 3px rgba(0, 122, 255, 0.3);
+  color: var(--controlTextColor--primary);
+  background: var(--segmentControlBackgroundColor);
+  box-shadow: var(--segmentControlIndicatorBoxShadow);
 }
 
 .tabButtonActive:hover {
-  background: var(--accentColor, #007AFF);
-  color: var(--controlTextColor--primary, #ffffff);
+  background: var(--segmentControlBackgroundColor);
+  color: var(--controlTextColor--primary);
 }

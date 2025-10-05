@@ -51,8 +51,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className, tabs:
 
   const tabs = providedTabs ?? defaultTabs;
   const rawActiveTabIndex = actionState.inspectorActiveTab ?? 0;
-  const boundedActiveTabIndex =
-    tabs.length === 0 ? -1 : Math.min(Math.max(rawActiveTabIndex, 0), tabs.length - 1);
+  const boundedActiveTabIndex = tabs.length === 0 ? -1 : Math.min(Math.max(rawActiveTabIndex, 0), tabs.length - 1);
 
   React.useEffect(() => {
     if (tabs.length === 0) {
@@ -76,11 +75,7 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className, tabs:
     <div className={classNames(styles.inspectorPanel, className)}>
       {tabs.length > 0 && (
         <div className={styles.inspectorHeader}>
-          <TabNav
-            tabs={tabs.map((tab) => tab.label)}
-            activeTabIndex={boundedActiveTabIndex}
-            onTabChange={setActiveTabIndex}
-          />
+          <TabNav tabs={tabs.map((tab) => tab.label)} activeTabIndex={boundedActiveTabIndex} onTabChange={setActiveTabIndex} />
         </div>
       )}
 
@@ -102,13 +97,10 @@ export const InspectorPropertiesTab: React.FC = () => {
   const { state: actionState } = useEditorActionState();
   const { t } = useI18n();
 
-  const selectedNode =
-    actionState.selectedNodeIds.length > 0 ? nodeEditorState.nodes[actionState.selectedNodeIds[0]] : null;
+  const selectedNode = actionState.selectedNodeIds.length > 0 ? nodeEditorState.nodes[actionState.selectedNodeIds[0]] : null;
 
   const selectedConnection =
-    actionState.selectedConnectionIds.length > 0
-      ? nodeEditorState.connections[actionState.selectedConnectionIds[0]]
-      : null;
+    actionState.selectedConnectionIds.length > 0 ? nodeEditorState.connections[actionState.selectedConnectionIds[0]] : null;
 
   return (
     <>

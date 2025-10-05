@@ -33,10 +33,14 @@ export const DefaultNodeRenderer: React.FC<NodeRenderProps> = ({ node, isSelecte
         defaultStyles.defaultNodeRenderer,
         isSelected ? defaultStyles.defaultNodeRendererSelected : "",
         isDragging ? defaultStyles.defaultNodeRendererDragging : defaultStyles.defaultNodeRendererNotDragging,
-      ].filter(Boolean).join(" ")}
+      ]
+        .filter(Boolean)
+        .join(" ")}
       onDoubleClick={onStartEdit}
     >
-      <h3 className={defaultStyles.nodeTitle}>{node.data.title && node.data.title.trim().length > 0 ? node.data.title : t("untitled")}</h3>
+      <h3 className={defaultStyles.nodeTitle}>
+        {node.data.title && node.data.title.trim().length > 0 ? node.data.title : t("untitled")}
+      </h3>
       {node.data.content && <p className={defaultStyles.nodeContent}>{String(node.data.content)}</p>}
     </div>
   );
@@ -78,7 +82,15 @@ const InspectorTextarea = React.memo<{
   name?: string;
   "aria-label"?: string;
 }>(({ value, onChange, style, className, id, name, "aria-label": ariaLabel }) => (
-  <Textarea value={value} onChange={(e) => onChange(e.target.value)} style={style} className={className} id={id} name={name} aria-label={ariaLabel} />
+  <Textarea
+    value={value}
+    onChange={(e) => onChange(e.target.value)}
+    style={style}
+    className={className}
+    id={id}
+    name={name}
+    aria-label={ariaLabel}
+  />
 ));
 InspectorTextarea.displayName = "InspectorTextarea";
 
@@ -113,14 +125,21 @@ const InspectorCheckbox = React.memo<{
   checked: boolean;
   onChange: (checked: boolean) => void;
   label: string;
-  id?: string;
   name?: string;
-}>(({ checked, onChange, label, id, name }) => (
-  <label htmlFor={id} className={defaultStyles.checkboxContainer}>
-    <input type="checkbox" checked={checked} onChange={(e) => onChange(e.target.checked)} id={id} name={name} />
-    <span className={defaultStyles.checkboxText}>{label}</span>
-  </label>
-));
+}>(({ checked, onChange, label, name }) => {
+  const onChangeRef = React.useRef(onChange);
+  onChangeRef.current = onChange;
+  const handleChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    onChangeRef.current(e.target.checked);
+  }, []);
+  const id = React.useId();
+  return (
+    <label htmlFor={id} className={defaultStyles.checkboxContainer}>
+      <input type="checkbox" checked={checked} onChange={handleChange} id={id} name={name ?? ""} />
+      <span className={defaultStyles.checkboxText}>{label}</span>
+    </label>
+  );
+});
 InspectorCheckbox.displayName = "InspectorCheckbox";
 
 // Alignment component for selected nodes
@@ -261,12 +280,9 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
     );
 
     return (
-      <PropertySection title={t("inspectorNodeProperties")}> 
-
+      <PropertySection title={t("inspectorNodeProperties")}>
         <div>
-          <InspectorLabel>
-            {t("fieldTitle") || "Title"}
-          </InspectorLabel>
+          <InspectorLabel>{t("fieldTitle") || "Title"}</InspectorLabel>
           <InspectorInput
             id={`node-${node.id}-title`}
             name="nodeTitle"
@@ -278,9 +294,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
 
         {node.data.content !== undefined && (
           <div>
-            <InspectorLabel>
-              {t("fieldContent") || "Content"}
-            </InspectorLabel>
+            <InspectorLabel>{t("fieldContent") || "Content"}</InspectorLabel>
             <InspectorTextarea
               id={`node-${node.id}-content`}
               name="nodeContent"
@@ -345,9 +359,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
 
         <div>
           <InspectorLabel>Type</InspectorLabel>
-          <div className={editorStyles.inspectorReadOnlyField}>
-            {node.type}
-          </div>
+          <div className={editorStyles.inspectorReadOnlyField}>{node.type}</div>
         </div>
 
         {/* Group-specific inspector UI is rendered outside this section by NodeInspector */}
@@ -369,9 +381,10 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
             };
 
             const handleCopy = () => {
-              const selected = actionState.selectedNodeIds.length > 0 && actionState.selectedNodeIds.includes(node.id)
-                ? actionState.selectedNodeIds
-                : [node.id];
+              const selected =
+                actionState.selectedNodeIds.length > 0 && actionState.selectedNodeIds.includes(node.id)
+                  ? actionState.selectedNodeIds
+                  : [node.id];
               const nodes = selected
                 .map((id) => editorState.nodes[id])
                 .filter(Boolean)
@@ -379,14 +392,20 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
               const selSet = new Set(selected);
               const connections = Object.values(editorState.connections)
                 .filter((c) => selSet.has(c.fromNodeId) && selSet.has(c.toNodeId))
-                .map((c) => ({ fromNodeId: c.fromNodeId, fromPortId: c.fromPortId, toNodeId: c.toNodeId, toPortId: c.toPortId }));
+                .map((c) => ({
+                  fromNodeId: c.fromNodeId,
+                  fromPortId: c.fromPortId,
+                  toNodeId: c.toNodeId,
+                  toPortId: c.toPortId,
+                }));
               setClipboard({ nodes, connections });
             };
 
             const handleCut = () => {
-              const selected = actionState.selectedNodeIds.length > 0 && actionState.selectedNodeIds.includes(node.id)
-                ? actionState.selectedNodeIds
-                : [node.id];
+              const selected =
+                actionState.selectedNodeIds.length > 0 && actionState.selectedNodeIds.includes(node.id)
+                  ? actionState.selectedNodeIds
+                  : [node.id];
               const nodes = selected
                 .map((id) => editorState.nodes[id])
                 .filter(Boolean)
@@ -394,7 +413,12 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
               const selSet = new Set(selected);
               const connections = Object.values(editorState.connections)
                 .filter((c) => selSet.has(c.fromNodeId) && selSet.has(c.toNodeId))
-                .map((c) => ({ fromNodeId: c.fromNodeId, fromPortId: c.fromPortId, toNodeId: c.toNodeId, toPortId: c.toPortId }));
+                .map((c) => ({
+                  fromNodeId: c.fromNodeId,
+                  fromPortId: c.fromPortId,
+                  toNodeId: c.toNodeId,
+                  toPortId: c.toPortId,
+                }));
               setClipboard({ nodes, connections });
               selected.forEach((id) => editorActions.deleteNode(id));
               actionDispatch(actionActions.clearSelection());
