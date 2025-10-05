@@ -1,6 +1,6 @@
 import React, { type ReactNode, type ReactElement } from "react";
 import { isLabelNodeRenderProps, createTypeGuard, isLabelInspectorProps, createInspectorTypeGuard } from "./typeGuards";
-import type { Node, NodeId, Port, Connection, NodeEditorData, NodeData } from "./core";
+import type { Node, NodeId, Port, Connection, ConnectionId, NodeEditorData, NodeData } from "./core";
 import type { BuiltinNodeDataMap } from "./builtin";
 
 /**
@@ -91,6 +91,69 @@ export interface InspectorRenderProps<TNodeType extends string = string, TNodeDa
 }
 
 /**
+ * Context provided to port render functions
+ */
+export interface PortRenderContext {
+  /** The port being rendered */
+  port: Port;
+  /** The node that owns this port */
+  node: Node;
+  /** All nodes in the editor */
+  allNodes: Record<NodeId, Node>;
+  /** All connections in the editor */
+  allConnections: Record<ConnectionId, Connection>;
+  /** Whether a connection is being dragged */
+  isConnecting: boolean;
+  /** Whether this port can accept the current connection */
+  isConnectable: boolean;
+  /** Whether this port is a candidate for the current connection */
+  isCandidate: boolean;
+  /** Whether this port is hovered */
+  isHovered: boolean;
+  /** Whether this port has any connections */
+  isConnected: boolean;
+  /** Port position information */
+  position?: {
+    x: number;
+    y: number;
+    transform?: string;
+  };
+  /** Event handlers */
+  handlers: {
+    onPointerDown: (e: React.PointerEvent) => void;
+    onPointerUp: (e: React.PointerEvent) => void;
+    onPointerEnter: (e: React.PointerEvent) => void;
+    onPointerLeave: (e: React.PointerEvent) => void;
+  };
+}
+
+/**
+ * Context provided to connection render functions
+ */
+export interface ConnectionRenderContext {
+  /** The connection being rendered */
+  connection: Connection;
+  /** The source port */
+  fromPort: Port;
+  /** The target port */
+  toPort: Port;
+  /** The source node */
+  fromNode: Node;
+  /** The target node */
+  toNode: Node;
+  /** Whether this connection is selected */
+  isSelected: boolean;
+  /** Whether this connection is hovered */
+  isHovered: boolean;
+  /** Whether this connection touches a selected node */
+  isAdjacentToSelectedNode: boolean;
+  /** Whether this connection is being dragged */
+  isDragging?: boolean;
+  /** Drag progress (0-1) for visual feedback */
+  dragProgress?: number;
+}
+
+/**
  * Port configuration for a node type
  */
 export interface PortDefinition {
@@ -108,6 +171,28 @@ export interface PortDefinition {
   required?: boolean;
   /** Maximum number of connections (default: 1 for input, unlimited for output) */
   maxConnections?: number | "unlimited";
+
+  /**
+   * Custom port renderer (complete control over port appearance)
+   * @param context - Rendering context with port state and editor state
+   * @param defaultRender - Function to render the default port appearance
+   * @returns React element to render
+   */
+  renderPort?: (
+    context: PortRenderContext,
+    defaultRender: () => ReactElement
+  ) => ReactElement;
+
+  /**
+   * Custom connection renderer (complete control over connection appearance)
+   * @param context - Rendering context with connection state and editor state
+   * @param defaultRender - Function to render the default connection appearance
+   * @returns React element to render (should be SVG)
+   */
+  renderConnection?: (
+    context: ConnectionRenderContext,
+    defaultRender: () => ReactElement
+  ) => ReactElement;
 }
 
 /**

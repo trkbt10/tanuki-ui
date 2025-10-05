@@ -2,6 +2,8 @@ import * as React from "react";
 import type { Connection, Node, Port } from "../../types/core";
 import { calculateBezierPath, calculateBezierControlPoints, cubicBezierPoint, cubicBezierTangent } from "./utils/connectionUtils";
 import { useDynamicConnectionPoint } from "../../hooks/usePortPosition";
+import { useNodeDefinition } from "../../contexts/NodeDefinitionContext";
+import type { ConnectionRenderContext } from "../../types/NodeDefinition";
 import { classNames } from "../elements";
 import styles from "./ConnectionView.module.css";
 
@@ -143,8 +145,21 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
     onPointerLeave?.(e, connection.id);
   };
 
-  return (
-    <g
+  // Get node definitions to check for custom connection renderer
+  const fromNodeDefinition = useNodeDefinition(fromNode.type);
+  const toNodeDefinition = useNodeDefinition(toNode.type);
+
+  // Find port definitions
+  const fromPortDefinition = fromNodeDefinition?.ports?.find((p) => p.id === fromPort.id);
+  const toPortDefinition = toNodeDefinition?.ports?.find((p) => p.id === toPort.id);
+
+  // Prefer fromPort's renderer, fallback to toPort's renderer
+  const customRenderer = fromPortDefinition?.renderConnection || toPortDefinition?.renderConnection;
+
+  // Default render function
+  const defaultRender = React.useCallback(
+    () => (
+      <g
       className={classNames(
         styles.connectionGroup,
         isSelected && styles.connectionSelected,
@@ -259,7 +274,45 @@ const ConnectionViewComponent: React.FC<ConnectionViewProps> = ({
         vectorEffect="non-scaling-stroke"
       />
     </g>
+    ),
+    [
+      connection.id,
+      pathData,
+      midAndAngle,
+      stripesActive,
+      colorActive,
+      strokeColor,
+      isSelected,
+      isHovered,
+      isDragging,
+      handlePointerDown,
+      handlePointerEnter,
+      handlePointerLeave,
+      onContextMenu,
+    ]
   );
+
+  // Check if there's a custom renderer
+  if (customRenderer) {
+    // Build context for custom renderer
+    const context: ConnectionRenderContext = {
+      connection,
+      fromPort,
+      toPort,
+      fromNode,
+      toNode,
+      isSelected,
+      isHovered,
+      isAdjacentToSelectedNode,
+      isDragging,
+      dragProgress,
+    };
+
+    return customRenderer(context, defaultRender);
+  }
+
+  // Use default rendering
+  return defaultRender();
 };
 
 // Custom comparison function for memo

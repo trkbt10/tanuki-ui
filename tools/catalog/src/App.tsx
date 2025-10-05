@@ -11,6 +11,7 @@ import ResizerCatalog from "./components/ResizerCatalog";
 import TabBarCatalog from "./components/TabBarCatalog";
 import DrawerCatalog from "./components/DrawerCatalog";
 import NodeEditorCatalog from "./components/NodeEditorCatalog";
+import CustomPortRendererCatalog from "./components/CustomPortRendererCatalog";
 import CategoryPage from "./components/CategoryPage";
 import Sidebar from "./components/Sidebar";
 
@@ -37,6 +38,7 @@ function App() {
             <Route path="/component/bars/TabBar" element={<TabBarCatalog />} />
             <Route path="/component/other/Drawer" element={<DrawerCatalog />} />
             <Route path="/component/extended/NodeEditor" element={<NodeEditorCatalog />} />
+            <Route path="/component/extended/NodeEditor/custom-port-renderer" element={<CustomPortRendererCatalog />} />
             <Route path="/component/:category" element={<CategoryPage />} />
             <Route path="/component/:category/:name" element={<ComponentView />} />
           </Routes>

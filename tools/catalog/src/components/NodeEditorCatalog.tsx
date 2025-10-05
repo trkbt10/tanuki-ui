@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { Link } from "react-router";
 import {
   Article,
   Main,
@@ -182,6 +183,31 @@ const NodeEditorCatalog: React.FC = () => {
                   </Small>
                   <pre className={styles.dataDump}>{JSON.stringify(editorData, null, 2)}</pre>
                 </div>
+              </div>
+            </div>
+          </div>
+        </Section>
+
+        <Section className={styles.section}>
+          <div className={styles.sectionIntro}>
+            <H2>詳細なデモとドキュメント</H2>
+            <P>特定の機能に焦点を当てた詳細なデモページも用意しています。</P>
+          </div>
+
+          <div className={styles.testGrid}>
+            <div className={styles.testCard}>
+              <div className={styles.testCardHeader}>
+                <H3 className={styles.testCardTitle}>カスタムポートレンダラー</H3>
+              </div>
+              <P className={styles.testCardBody}>
+                PortDefinition の renderPort と renderConnection を使って、ポートと接続線の見た目を完全にカスタマイズする方法を詳しく解説しています。
+              </P>
+              <div style={{ marginTop: "12px" }}>
+                <Link to="/component/extended/NodeEditor/custom-port-renderer">
+                  <Button variant="primary" size="small">
+                    詳細を見る →
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
