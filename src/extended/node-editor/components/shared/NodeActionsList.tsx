@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./ContextActionMenu.module.css";
+import styles from "./NodeActionsList.module.css";
 import { DuplicateIcon, CopyIcon, CutIcon, PasteIcon, DeleteIcon } from "../elements/icons";
 import { useI18n } from "../../i18n";
 import { useNodeEditorActions } from "../../hooks/useNodeEditorActions";
@@ -11,7 +11,6 @@ import { getClipboard, setClipboard } from "../../utils/clipboard";
 
 export interface NodeActionsListProps {
   targetNodeId: string;
-  className?: string;
   // Optional: called after an action completes (to close menus etc.)
   onAction?: () => void;
   includeDuplicate?: boolean;
@@ -23,7 +22,6 @@ export interface NodeActionsListProps {
 
 export const NodeActionsList: React.FC<NodeActionsListProps> = ({
   targetNodeId,
-  className,
   onAction,
   includeDuplicate = true,
   includeCopy = true,
@@ -114,33 +112,33 @@ export const NodeActionsList: React.FC<NodeActionsListProps> = ({
   }, [editorActions, targetNodeId, onAction]);
 
   return (
-    <ul className={[styles.menuList, className].filter(Boolean).join(" ")}> 
+    <>
       {includeDuplicate && (
-        <li className={styles.menuItem} onClick={handleDuplicate}>
+        <li className={styles.actionItem} onClick={handleDuplicate}>
           <DuplicateIcon size={14} /> {t("contextMenuDuplicateNode")}
         </li>
       )}
       {includeCopy && (
-        <li className={styles.menuItem} onClick={handleCopy}>
+        <li className={styles.actionItem} onClick={handleCopy}>
           <CopyIcon size={14} /> {t("copy")}
         </li>
       )}
       {includeCut && (
-        <li className={styles.menuItem} onClick={handleCut}>
+        <li className={styles.actionItem} onClick={handleCut}>
           <CutIcon size={14} /> {t("cut")}
         </li>
       )}
       {includePaste && (
-        <li className={styles.menuItem} onClick={handlePaste}>
+        <li className={styles.actionItem} onClick={handlePaste}>
           <PasteIcon size={14} /> {t("paste")}
         </li>
       )}
       {includeDelete && (
-        <li className={[styles.menuItem, styles.menuItemDanger].join(" ")} onClick={handleDelete}>
+        <li className={[styles.actionItem, styles.actionItemDanger].join(" ")} onClick={handleDelete}>
           <DeleteIcon size={14} /> {t("contextMenuDeleteNode")}
         </li>
       )}
-    </ul>
+    </>
   );
 };
 

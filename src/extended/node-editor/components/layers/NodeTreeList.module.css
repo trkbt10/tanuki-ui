@@ -9,8 +9,8 @@
 .nodeCount {
   font-size: var(--node-editor-inspector-font-size-meta);
   line-height: var(--node-editor-inspector-line-height-meta);
-  font-weight: 500;
-  color: var(--secondaryLabelColor, rgba(0, 0, 0, 0.5));
+  font-weight: var(--node-editor-inspector-font-weight-medium);
+  color: var(--secondaryLabelColor);
 }
 
 .nodeTreeListBody {
@@ -25,82 +25,87 @@
   flex: 1;
   overflow-y: auto;
   padding: var(--node-editor-inspector-space-xs) 0;
+  box-sizing: border-box;
 }
 
 .emptyState {
   padding: var(--node-editor-inspector-space-xl) var(--node-editor-inspector-space-lg);
   text-align: center;
-  color: var(--tertiaryLabelColor, rgba(0, 0, 0, 0.3));
+  color: var(--tertiaryLabelColor);
   font-size: var(--node-editor-inspector-font-size-body);
   line-height: var(--node-editor-inspector-line-height-body);
+  box-sizing: border-box;
 }
 
 .treeItem {
   display: flex;
   align-items: center;
-  height: 28px;
+  height: var(--node-editor-tree-item-height);
   padding: 0 var(--node-editor-inspector-space-sm);
   cursor: pointer;
   user-select: none;
-  transition: background-color 0.15s ease;
+  transition: background-color var(--node-editor-transition-duration) ease;
   position: relative;
+  box-sizing: border-box;
 }
 
 .treeItem:hover {
-  background: var(--quaternarySystemFillColor, rgba(0, 0, 0, 0.04));
+  background: var(--quaternarySystemFillColor);
 }
 
-.treeItem.selected {
-  background: var(--accentColor, #007AFF);
-  color: white;
+.treeItem[data-selected="true"] {
+  background: var(--accentColor);
+  color: var(--selectedTextColor);
 }
 
-.treeItem.selected .nodeName {
-  color: white;
+.treeItem[data-selected="true"] .nodeName {
+  color: var(--selectedTextColor);
 }
 
-.treeItem.selected .nodeIcon {
-  filter: brightness(1.2);
+.treeItem[data-selected="true"] .nodeIcon {
+  filter: brightness(var(--node-editor-icon-selected-brightness));
 }
 
 .expandButton {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  width: var(--node-editor-control-button-size-sm);
+  height: var(--node-editor-control-button-size-sm);
   padding: 0;
   margin-right: var(--node-editor-inspector-space-xs);
   background: transparent;
   border: none;
   cursor: pointer;
-  color: var(--secondaryLabelColor, rgba(0, 0, 0, 0.5));
+  color: var(--secondaryLabelColor);
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .expandButton:hover {
-  color: var(--labelColor, #000);
+  color: var(--labelColor);
 }
 
-.treeItem.selected .expandButton {
-  color: rgba(255, 255, 255, 0.8);
+.treeItem[data-selected="true"] .expandButton {
+  color: var(--node-editor-selected-secondary-color);
 }
 
-.treeItem.selected .expandButton:hover {
-  color: white;
+.treeItem[data-selected="true"] .expandButton:hover {
+  color: var(--selectedTextColor);
 }
 
 .nodeIcon {
-  font-size: 14px;
+  font-size: var(--node-editor-icon-size-sm);
   margin-right: var(--node-editor-inspector-space-sm);
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .nodeName {
   flex: 1;
   font-size: var(--node-editor-inspector-font-size-body);
   line-height: var(--node-editor-inspector-line-height-body);
-  color: var(--labelColor, #000);
+  color: var(--labelColor);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -112,21 +117,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: var(--node-editor-control-button-size);
+  height: var(--node-editor-control-button-size);
   padding: 0;
   margin-left: var(--node-editor-inspector-space-xs);
   background: transparent;
   border: none;
   cursor: pointer;
-  color: var(--secondaryLabelColor, rgba(0, 0, 0, 0.5));
+  color: var(--secondaryLabelColor);
   opacity: 0;
-  transition: opacity 0.15s ease;
+  transition: opacity var(--node-editor-transition-duration) ease;
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .deleteButton {
-  color: var(--cautionColor, #ff3b30);
+  color: var(--cautionColor);
 }
 
 .treeItem:hover .visibilityButton,
@@ -136,60 +142,64 @@
 }
 
 .visibilityButton:hover {
-  color: var(--labelColor, #000);
+  color: var(--labelColor);
 }
 
 .deleteButton:hover {
-  color: var(--cautionColor, #ff3b30);
-  background: rgba(255, 59, 48, 0.1);
-  border-radius: 3px;
+  color: var(--cautionColor);
+  background: var(--node-editor-caution-hover-background);
+  border-radius: var(--node-editor-border-radius-xs);
+  box-sizing: border-box;
 }
 
-.treeItem.selected .visibilityButton,
-.treeItem.selected .lockButton,
-.treeItem.selected .deleteButton {
-  color: rgba(255, 255, 255, 0.8);
+.treeItem[data-selected="true"] .visibilityButton,
+.treeItem[data-selected="true"] .lockButton,
+.treeItem[data-selected="true"] .deleteButton {
+  color: var(--node-editor-selected-secondary-color);
 }
 
-.treeItem.selected .visibilityButton:hover,
-.treeItem.selected .lockButton:hover {
-  color: white;
+.treeItem[data-selected="true"] .visibilityButton:hover,
+.treeItem[data-selected="true"] .lockButton:hover {
+  color: var(--selectedTextColor);
 }
 
-.treeItem.selected .deleteButton:hover {
-  color: white;
-  background: rgba(255, 255, 255, 0.2);
+.treeItem[data-selected="true"] .deleteButton:hover {
+  color: var(--selectedTextColor);
+  background: var(--node-editor-selected-hover-background);
+  box-sizing: border-box;
 }
 
 /* Indentation for nested items */
 .treeItem[style*="padding-left: 24px"] {
-  border-left: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.1));
-  margin-left: 16px;
+  border-left: var(--node-editor-border-width) solid var(--separatorColor);
+  margin-left: var(--node-editor-tree-indent);
+  box-sizing: border-box;
 }
 
 /* Drag and Drop styles */
-.dragging {
-  opacity: 0.5;
+[data-dragging="true"] {
+  opacity: var(--node-editor-dragging-opacity);
   cursor: move;
 }
 
-.treeItem.dragOverInside {
-  background: var(--accentColor, #007AFF);
-  color: white;
+.treeItem[data-drag-over-inside="true"] {
+  background: var(--accentColor);
+  color: var(--selectedTextColor);
 }
 
-.treeItem.dragOverInside .nodeName,
-.treeItem.dragOverInside .expandButton,
-.treeItem.dragOverInside .visibilityButton {
-  color: white;
+.treeItem[data-drag-over-inside="true"] .nodeName,
+.treeItem[data-drag-over-inside="true"] .expandButton,
+.treeItem[data-drag-over-inside="true"] .visibilityButton {
+  color: var(--selectedTextColor);
 }
 
 .dropIndicator {
-  height: 2px;
-  background: var(--accentColor, #007AFF);
+  height: var(--node-editor-drop-indicator-height);
+  background: var(--accentColor);
   margin: var(--node-editor-inspector-space-xs) 0;
-  border-radius: 1px;
-  animation: dropIndicatorPulse 0.5s ease-in-out infinite;
+  border-radius: var(--node-editor-border-radius-xxs);
+  animation: dropIndicatorPulse var(--node-editor-animation-duration) ease-in-out infinite;
+  box-sizing: border-box;
 }
 
 @keyframes dropIndicatorPulse {
@@ -200,64 +210,64 @@
   }
 
   50% {
-    opacity: 0.6;
+    opacity: var(--node-editor-pulse-min-opacity);
   }
 }
 
 /* Dark mode support */
 @media (prefers-color-scheme: dark) {
   .nodeTreeList {
-    background: var(--controlBackground, #1e1e1e);
+    background: var(--controlBackground);
   }
 
   .header {
-    background: var(--controlBackground, #2a2a2a);
-    border-bottom-color: var(--separatorColor, rgba(255, 255, 255, 0.1));
+    background: var(--controlBackground);
+    border-bottom-color: var(--separatorColor);
   }
 
   .title {
-    color: var(--labelColor, #fff);
+    color: var(--labelColor);
   }
 
   .nodeCount {
-    color: var(--secondaryLabelColor, rgba(255, 255, 255, 0.5));
+    color: var(--secondaryLabelColor);
   }
 
   .emptyState {
-    color: var(--tertiaryLabelColor, rgba(255, 255, 255, 0.3));
+    color: var(--tertiaryLabelColor);
   }
 
   .treeItem:hover {
-    background: var(--quaternarySystemFillColor, rgba(255, 255, 255, 0.04));
+    background: var(--quaternarySystemFillColor);
   }
 
   .nodeName {
-    color: var(--labelColor, #fff);
+    color: var(--labelColor);
   }
 
   .expandButton {
-    color: var(--secondaryLabelColor, rgba(255, 255, 255, 0.5));
+    color: var(--secondaryLabelColor);
   }
 
   .expandButton:hover {
-    color: var(--labelColor, #fff);
+    color: var(--labelColor);
   }
 
   .visibilityButton,
   .deleteButton {
-    color: var(--secondaryLabelColor, rgba(255, 255, 255, 0.5));
+    color: var(--secondaryLabelColor);
   }
 
   .visibilityButton:hover {
-    color: var(--labelColor, #fff);
+    color: var(--labelColor);
   }
 
   .deleteButton:hover {
-    color: var(--cautionColor, #ff453a);
-    background: rgba(255, 69, 58, 0.1);
+    color: var(--cautionColor);
+    background: var(--node-editor-caution-hover-background);
   }
 
   .treeItem[style*="padding-left: 24px"] {
-    border-left-color: var(--separatorColor, rgba(255, 255, 255, 0.1));
+    border-left-color: var(--separatorColor);
   }
 }

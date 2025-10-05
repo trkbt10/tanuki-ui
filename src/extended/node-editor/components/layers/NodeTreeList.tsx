@@ -163,7 +163,10 @@ const NodeTreeItem: React.FC<NodeTreeItemProps> = ({
         <div className={styles.dropIndicator} style={{ marginLeft: `${level * 16 + 8}px` }} />
       )}
       <div
-        className={`${styles.treeItem} ${isSelected ? styles.selected : ""} ${isDragging ? styles.dragging : ""} ${isDragOver && dragOverPosition === "inside" ? styles.dragOverInside : ""}`}
+        className={styles.treeItem}
+        data-selected={isSelected}
+        data-dragging={isDragging}
+        data-drag-over-inside={isDragOver && dragOverPosition === "inside"}
         style={{ paddingLeft: `${level * 16 + 8}px` }}
         onClick={handleClick}
         draggable

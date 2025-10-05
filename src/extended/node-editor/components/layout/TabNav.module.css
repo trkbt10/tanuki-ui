@@ -27,9 +27,17 @@
   box-sizing: border-box;
 }
 
-.tabButton:first-child { border-radius: var(--segmentControlBorderRadius) 0 0 var(--segmentControlBorderRadius); }
-.tabButton:last-child { border-radius: 0 var(--segmentControlBorderRadius) var(--segmentControlBorderRadius) 0; }
-.tabButton:only-child { border-radius: var(--segmentControlBorderRadius); }
+.tabButton:first-child {
+  border-radius: var(--segmentControlBorderRadius) 0 0 var(--segmentControlBorderRadius);
+}
+
+.tabButton:last-child {
+  border-radius: 0 var(--segmentControlBorderRadius) var(--segmentControlBorderRadius) 0;
+}
+
+.tabButton:only-child {
+  border-radius: var(--segmentControlBorderRadius);
+}
 
 .tabButton:hover {
   color: var(--labelColor);
@@ -37,12 +45,11 @@
 }
 
 .tabButtonActive {
-  color: var(--controlTextColor--primary);
-  background: var(--segmentControlBackgroundColor);
-  box-shadow: var(--segmentControlIndicatorBoxShadow);
+  background: var(--selectedContentBackgroundColor);
+  color: var(--unemphasizedSelectedContentBackgroundColor);
 }
 
 .tabButtonActive:hover {
-  background: var(--segmentControlBackgroundColor);
-  color: var(--controlTextColor--primary);
+  background: var(--selectedContentBackgroundColor);
+  color: var(--unemphasizedSelectedContentBackgroundColor);
 }

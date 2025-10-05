@@ -124,12 +124,10 @@
 }
 
 .categoryHeader:hover {
-  background: var(--controlHoverBackground, rgba(0, 0, 0, 0.05));
-  color: var(--textColor);
+  filter: brightness(0.95);
 }
 
 .selectedCategory {
-  background: var(--selectedContentBackgroundColor);
   border-bottom-color: var(--accentColor);
 }
 
@@ -157,10 +155,13 @@
 }
 
 .nodeItem:hover {
-  background: var(--controlHoverBackground, rgba(0, 0, 0, 0.05));
+  color: var(--unemphasizedSelectedContentBackgroundColor);
+  background: var(--selectedContentBackgroundColor);
+  filter: brightness(0.95);
 }
 
 .selectedNode {
+  color: var(--unemphasizedSelectedContentBackgroundColor);
   background: var(--selectedContentBackgroundColor);
 }
 
@@ -192,14 +193,14 @@
 .nodeName {
   font-size: var(--node-editor-inspector-font-size-body);
   font-weight: 500;
-  color: var(--textColor);
+  color: inherit;
   margin-bottom: 2px;
   line-height: 1.3;
 }
 
 .nodeDescription {
   font-size: var(--node-editor-inspector-font-size-meta);
-  color: var(--secondaryLabelColor);
+  color: inherit;
   line-height: 1.3;
   overflow: hidden;
   text-overflow: ellipsis;
