@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Node, Connection, NodeId, ConnectionId } from "../types/core";
+import type { NodeDefinition } from "../types/NodeDefinition";
+import { nodeHasGroupBehavior } from "../types/behaviors";
 
 /**
  * Custom equality function for nodes that ignores position changes during drag
@@ -63,17 +65,19 @@ export function areConnectionsEqual(
 /**
  * Memoized sorted nodes calculation
  */
-export function useSortedNodes(nodes: Record<NodeId, Node>): Node[] {
+export function useSortedNodes(nodes: Record<NodeId, Node>, nodeDefinitions: NodeDefinition[]): Node[] {
   return React.useMemo(() => {
     return Object.values(nodes).sort((a, b) => {
       // Groups go to back
-      if (a.type === "group" && b.type !== "group") return -1;
-      if (a.type !== "group" && b.type === "group") return 1;
+      const aIsGroup = nodeHasGroupBehavior(a, nodeDefinitions);
+      const bIsGroup = nodeHasGroupBehavior(b, nodeDefinitions);
+      if (aIsGroup && !bIsGroup) return -1;
+      if (!aIsGroup && bIsGroup) return 1;
 
       // Within same type, sort by ID for stable ordering
       return a.id.localeCompare(b.id);
     });
-  }, [nodes]);
+  }, [nodes, nodeDefinitions]);
 }
 
 /**

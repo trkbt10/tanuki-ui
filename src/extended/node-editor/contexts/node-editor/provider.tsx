@@ -52,7 +52,14 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
     };
   }, [initialState]);
 
-  const [internalState, internalDispatch] = React.useReducer(nodeEditorReducer, initialData);
+  const nodeDefinitions = React.useMemo(() => registry?.getAll() || [], [registry]);
+
+  const reducerWithDefinitions = React.useCallback(
+    (state: NodeEditorData, action: any) => nodeEditorReducer(state, action, nodeDefinitions),
+    [nodeDefinitions]
+  );
+
+  const [internalState, internalDispatch] = React.useReducer(reducerWithDefinitions, initialData);
   const state = controlledData || internalState;
   // Keep latest state and IO handlers in refs to avoid unstable callbacks/effects
   const stateRef = React.useRef(state);
@@ -63,17 +70,19 @@ export const NodeEditorProvider: React.FC<NodeEditorProviderProps> = ({
   onSaveRef.current = onSave;
   const onLoadRef = React.useRef(onLoad);
   onLoadRef.current = onLoad;
+  const nodeDefinitionsRef = React.useRef(nodeDefinitions);
+  nodeDefinitionsRef.current = nodeDefinitions;
 
   // Stable dispatch that doesn't recreate per state change to reduce re-renders
   const dispatch: React.Dispatch<any> = React.useCallback(
     (action) => {
       if (controlledData) {
-        const newState = nodeEditorReducer(stateRef.current, action);
+        const newState = nodeEditorReducer(stateRef.current, action, nodeDefinitionsRef.current);
         onDataChangeRef.current?.(newState);
         return;
       }
       // Uncontrolled: dispatch internally and notify external listener with computed next state
-      const nextState = nodeEditorReducer(stateRef.current, action);
+      const nextState = nodeEditorReducer(stateRef.current, action, nodeDefinitionsRef.current);
       internalDispatch(action);
       onDataChangeRef.current?.(nextState);
     },

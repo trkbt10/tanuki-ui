@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useNodeEditor } from "../contexts/node-editor";
 import { useEditorActionState } from "../contexts/EditorActionStateContext";
+import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
 import type { NodeId, Node } from "../types/core";
 import {
   updateGroupMembership,
@@ -40,18 +41,22 @@ export interface UseGroupManagementResult {
 export const useGroupManagement = (options: UseGroupManagementOptions = {}): UseGroupManagementResult => {
   const { state, dispatch, actions } = useNodeEditor();
   const { state: actionState } = useEditorActionState();
+  const nodeDefinitions = useNodeDefinitionList();
   const { autoUpdateMembership = true, membershipUpdateDelay = 100 } = options;
 
   // Debounced membership update
   const updateMembershipTimeoutRef = React.useRef<number | undefined>(undefined);
   const nodesRef = React.useRef(state.nodes);
   nodesRef.current = state.nodes;
+  const nodeDefinitionsRef = React.useRef(nodeDefinitions);
+  nodeDefinitionsRef.current = nodeDefinitions;
+
   const updateAllGroupMembership = React.useCallback(() => {
-    const updates = updateGroupMembership(nodesRef.current);
+    const updates = updateGroupMembership(nodesRef.current, nodeDefinitionsRef.current);
     if (Object.keys(updates).length > 0) {
       dispatch(actions.updateGroupMembership(updates));
     }
-  }, []);
+  }, [dispatch, actions]);
 
   // Auto-update membership when nodes change position (but not during drag)
   React.useEffect(() => {
@@ -98,7 +103,7 @@ export const useGroupManagement = (options: UseGroupManagementOptions = {}): Use
   }, []);
 
   const getGroupDescendantNodes = React.useCallback((groupId: NodeId): Node[] => {
-    return getGroupDescendants(groupId, nodesRef.current);
+    return getGroupDescendants(groupId, nodesRef.current, nodeDefinitionsRef.current);
   }, []);
 
   const moveGroupWithChildren = React.useCallback(
@@ -109,7 +114,7 @@ export const useGroupManagement = (options: UseGroupManagementOptions = {}): Use
   );
 
   const isValidGroupMoveCheck = React.useCallback((groupId: NodeId, newPosition: { x: number; y: number }): boolean => {
-    return isValidGroupMove(groupId, newPosition, nodesRef.current);
+    return isValidGroupMove(groupId, newPosition, nodesRef.current, nodeDefinitionsRef.current);
   }, []);
 
   return {

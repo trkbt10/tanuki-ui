@@ -1,6 +1,8 @@
 import type { Node, NodeId } from "../types/core";
+import type { NodeDefinition } from "../types/NodeDefinition";
 import { getNodeBoundingBox, doRectanglesIntersect, isRectangleInsideAnother, type BoundingBox } from "./boundingBoxUtils";
 import { createParentToChildrenMap } from "./lookupUtils";
+import { nodeHasGroupBehavior } from "../types/behaviors";
 
 // Keep GroupBounds for backwards compatibility
 export interface GroupBounds {
@@ -39,26 +41,34 @@ export const getNodeBounds = (node: Node): GroupBounds => {
 /**
  * Check if a node is completely inside a group's bounds
  */
-export const isNodeInsideGroup = (node: Node, groupNode: Node): boolean => {
+export const isNodeInsideGroup = (
+  node: Node,
+  groupNode: Node,
+  nodeDefinitions: NodeDefinition[]
+): boolean => {
   if (node.id === groupNode.id) return false; // Node cannot be inside itself
-  if (node.type === "group") return false; // Groups cannot be inside other groups for now
-  
+  if (nodeHasGroupBehavior(node, nodeDefinitions)) return false; // Groups cannot be inside other groups for now
+
   const nodeBounds = getNodeBoundingBox(node);
   const groupBounds = getNodeBoundingBox(groupNode);
-  
+
   return isRectangleInsideAnother(nodeBounds, groupBounds);
 };
 
 /**
  * Check if a node overlaps with a group's bounds (for visual feedback)
  */
-export const isNodeOverlappingGroup = (node: Node, groupNode: Node): boolean => {
+export const isNodeOverlappingGroup = (
+  node: Node,
+  groupNode: Node,
+  nodeDefinitions: NodeDefinition[]
+): boolean => {
   if (node.id === groupNode.id) return false;
-  if (node.type === "group") return false;
-  
+  if (nodeHasGroupBehavior(node, nodeDefinitions)) return false;
+
   const nodeBounds = getNodeBoundingBox(node);
   const groupBounds = getNodeBoundingBox(groupNode);
-  
+
   return doRectanglesIntersect(nodeBounds, groupBounds);
 };
 
@@ -68,25 +78,26 @@ export const isNodeOverlappingGroup = (node: Node, groupNode: Node): boolean => 
  */
 export const findContainingGroup = (
   node: Node,
-  allNodes: Record<NodeId, Node>
+  allNodes: Record<NodeId, Node>,
+  nodeDefinitions: NodeDefinition[]
 ): NodeId | null => {
-  const groupNodes = Object.values(allNodes).filter(n => n.type === "group");
-  
+  const groupNodes = Object.values(allNodes).filter(n => nodeHasGroupBehavior(n, nodeDefinitions));
+
   let containingGroup: Node | null = null;
   let smallestArea = Infinity;
-  
+
   for (const groupNode of groupNodes) {
-    if (isNodeInsideGroup(node, groupNode)) {
+    if (isNodeInsideGroup(node, groupNode, nodeDefinitions)) {
       const groupBounds = getNodeBoundingBox(groupNode);
       const area = groupBounds.width * groupBounds.height;
-      
+
       if (area < smallestArea) {
         smallestArea = area;
         containingGroup = groupNode;
       }
     }
   }
-  
+
   return containingGroup?.id || null;
 };
 
@@ -116,19 +127,20 @@ export const getGroupChildren = (
  */
 export const getGroupDescendants = (
   groupId: NodeId,
-  allNodes: Record<NodeId, Node>
+  allNodes: Record<NodeId, Node>,
+  nodeDefinitions: NodeDefinition[]
 ): Node[] => {
   const descendants: Node[] = [];
   const toProcess = [groupId];
-  
+
   while (toProcess.length > 0) {
     const currentId = toProcess.pop()!;
     const children = getGroupChildren(currentId, allNodes);
-    
+
     descendants.push(...children);
-    toProcess.push(...children.filter(n => n.type === "group").map(n => n.id));
+    toProcess.push(...children.filter(n => nodeHasGroupBehavior(n, nodeDefinitions)).map(n => n.id));
   }
-  
+
   return descendants;
 };
 
@@ -148,23 +160,24 @@ export const calculateChildOffset = (
  * Update group membership based on current node positions
  */
 export const updateGroupMembership = (
-  allNodes: Record<NodeId, Node>
+  allNodes: Record<NodeId, Node>,
+  nodeDefinitions: NodeDefinition[]
 ): Record<NodeId, Partial<Node>> => {
   const updates: Record<NodeId, Partial<Node>> = {};
-  
+
   // Get all non-group nodes
-  const regularNodes = Object.values(allNodes).filter(n => n.type !== "group");
-  
+  const regularNodes = Object.values(allNodes).filter(n => !nodeHasGroupBehavior(n, nodeDefinitions));
+
   for (const node of regularNodes) {
-    const newParentId = findContainingGroup(node, allNodes);
-    
+    const newParentId = findContainingGroup(node, allNodes, nodeDefinitions);
+
     if (node.parentId !== newParentId) {
       updates[node.id] = {
         parentId: newParentId || undefined,
       };
     }
   }
-  
+
   return updates;
 };
 
@@ -210,15 +223,16 @@ export const getRelativePosition = (
 export const isValidGroupMove = (
   groupId: NodeId,
   newPosition: { x: number; y: number },
-  allNodes: Record<NodeId, Node>
+  allNodes: Record<NodeId, Node>,
+  nodeDefinitions: NodeDefinition[]
 ): boolean => {
   // For now, we don't allow groups to be nested inside other groups
   // This can be extended later if needed
   const groupNode = allNodes[groupId];
-  if (!groupNode || groupNode.type !== "group") return true;
-  
+  if (!groupNode || !nodeHasGroupBehavior(groupNode, nodeDefinitions)) return true;
+
   const tempNode = { ...groupNode, position: newPosition };
-  const containingGroup = findContainingGroup(tempNode, allNodes);
-  
+  const containingGroup = findContainingGroup(tempNode, allNodes, nodeDefinitions);
+
   return containingGroup === null;
 };

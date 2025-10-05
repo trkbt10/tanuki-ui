@@ -4,6 +4,8 @@ import { usePointerDrag } from "../../hooks/usePointerDrag";
 import { useNodeEditor } from "../../contexts/node-editor";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
+import { useNodeDefinitionList } from "../../contexts/NodeDefinitionContext";
+import { nodeHasGroupBehavior } from "../../types/behaviors";
 
 export interface NodeDragHandlerProps {
   nodeId: NodeId;
@@ -24,6 +26,7 @@ export const NodeDragHandler: React.FC<NodeDragHandlerProps> = ({
   const { state: nodeEditorState, actions, dispatch } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { state: canvasState } = useNodeCanvas();
+  const nodeDefinitions = useNodeDefinitionList();
 
   const node = nodeEditorState.nodes[nodeId];
   const isDragging = actionState.dragState?.nodeIds.includes(nodeId) || false;
@@ -40,7 +43,7 @@ export const NodeDragHandler: React.FC<NodeDragHandlerProps> = ({
 
     selectedNodes.forEach(draggedId => {
       const draggedNode = nodeEditorState.nodes[draggedId];
-      if (draggedNode?.type === "group") {
+      if (draggedNode && nodeHasGroupBehavior(draggedNode, nodeDefinitions)) {
         const childIds = Object.values(nodeEditorState.nodes)
           .filter(n => n.parentId === draggedId)
           .map(n => n.id);
@@ -63,7 +66,7 @@ export const NodeDragHandler: React.FC<NodeDragHandlerProps> = ({
       initialPositions,
       affectedChildNodes,
     };
-  }, [nodeId, nodeEditorState.nodes, actionState.selectedNodeIds]);
+  }, [nodeId, nodeEditorState.nodes, actionState.selectedNodeIds, nodeDefinitions]);
 
   const handleDragStart = React.useCallback((event: PointerEvent, data: ReturnType<typeof createDragData>) => {
     // Select node if not already selected

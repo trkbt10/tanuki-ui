@@ -1,4 +1,5 @@
 import type { NodeDefinition } from "./NodeDefinition";
+import type { Node } from "./core";
 
 // Built-in node behaviors
 export type NodeBehavior = "appearance" | "node" | "group";
@@ -24,4 +25,15 @@ export function hasGroupBehavior(def?: NodeDefinition | null): boolean {
 
 export function hasAppearanceBehavior(def?: NodeDefinition | null): boolean {
   return getBehaviors(def).includes("appearance");
+}
+
+/**
+ * Check if a node has group behavior based on its definition
+ */
+export function nodeHasGroupBehavior(
+  node: Node,
+  nodeDefinitions: NodeDefinition[]
+): boolean {
+  const def = nodeDefinitions.find(d => d.type === node.type);
+  return hasGroupBehavior(def);
 }

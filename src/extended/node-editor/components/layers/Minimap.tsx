@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useNodeEditor } from "../../contexts/node-editor";
 import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
+import { useNodeDefinitionList } from "../../contexts/NodeDefinitionContext";
 import styles from "./Minimap.module.css";
 import { NodeMapRenderer } from "./NodeMapRenderer";
 
@@ -25,6 +26,7 @@ export const Minimap: React.FC<MinimapProps> = ({
 }) => {
   const { state } = useNodeEditor();
   const { state: canvasState, dispatch: canvasDispatch, actions: canvasActions, canvasRef: editorCanvasRef } = useNodeCanvas();
+  const nodeDefinitions = useNodeDefinitionList();
   const canvasRef = React.useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = React.useState(false);
   const [dragStart, setDragStart] = React.useState<{ x: number; y: number; viewportOffset: { x: number; y: number } } | null>(null);
@@ -270,6 +272,7 @@ export const Minimap: React.FC<MinimapProps> = ({
           height={height - 30}
           padding={{ top: 10, left: 10, right: 10, bottom: 10 }}
           filterHidden
+          nodeDefinitions={nodeDefinitions}
         />
 
         {/* Render viewport indicator */}

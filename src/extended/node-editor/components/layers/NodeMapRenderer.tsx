@@ -1,5 +1,7 @@
 import * as React from "react";
 import type { Node, Connection } from "../../types/core";
+import type { NodeDefinition } from "../../types/NodeDefinition";
+import { nodeHasGroupBehavior } from "../../types/behaviors";
 import styles from "./Minimap.module.css";
 
 export interface NodeMapRendererProps {
@@ -10,6 +12,7 @@ export interface NodeMapRendererProps {
   padding?: number | { top?: number; right?: number; bottom?: number; left?: number };
   filterHidden?: boolean;
   className?: string;
+  nodeDefinitions?: NodeDefinition[];
 }
 
 export const NodeMapRenderer: React.FC<NodeMapRendererProps> = ({
@@ -20,6 +23,7 @@ export const NodeMapRenderer: React.FC<NodeMapRendererProps> = ({
   padding = 10,
   filterHidden = true,
   className,
+  nodeDefinitions = [],
 }) => {
   const pad = React.useMemo(() => {
     if (typeof padding === "number") return { top: padding, right: padding, bottom: padding, left: padding };
@@ -87,7 +91,8 @@ export const NodeMapRenderer: React.FC<NodeMapRendererProps> = ({
         const p = worldToView(n.position.x, n.position.y);
         const w = Math.max(2, (n.size?.width || 150) * scale);
         const h = Math.max(2, (n.size?.height || 100) * scale);
-        const className = `${styles.minimapNode} ${n.type === "group" ? styles.minimapGroupNode : ""}`;
+        const isGroup = nodeHasGroupBehavior(n, nodeDefinitions);
+        const className = `${styles.minimapNode} ${isGroup ? styles.minimapGroupNode : ""}`;
         return <div key={n.id} className={className} style={{ left: p.x, top: p.y, width: w, height: h }} />;
       })}
     </div>

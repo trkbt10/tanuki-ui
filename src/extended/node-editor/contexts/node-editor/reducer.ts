@@ -1,7 +1,13 @@
 import type { Node, NodeEditorData, NodeId, Position } from "../../types/core";
 import type { NodeEditorAction } from "./actions";
+import type { NodeDefinition } from "../../types/NodeDefinition";
+import { nodeHasGroupBehavior } from "../../types/behaviors";
 
-export const nodeEditorReducer = (state: NodeEditorData, action: NodeEditorAction): NodeEditorData => {
+export const nodeEditorReducer = (
+  state: NodeEditorData,
+  action: NodeEditorAction,
+  nodeDefinitions: NodeDefinition[] = []
+): NodeEditorData => {
   switch (action.type) {
     case "ADD_NODE": {
       const id = generateId();
@@ -21,7 +27,7 @@ export const nodeEditorReducer = (state: NodeEditorData, action: NodeEditorActio
       // If a group node toggles visibility or lock, propagate to descendants
       const propagateVisibility = Object.prototype.hasOwnProperty.call(updates, 'visible');
       const propagateLock = Object.prototype.hasOwnProperty.call(updates, 'locked');
-      if ((propagateVisibility || propagateLock) && node.type === 'group') {
+      if ((propagateVisibility || propagateLock) && nodeHasGroupBehavior(node, nodeDefinitions)) {
         const targetVisible = propagateVisibility ? (updates as any).visible as boolean | undefined : undefined;
         const targetLocked = propagateLock ? (updates as any).locked as boolean | undefined : undefined;
 
@@ -107,7 +113,7 @@ export const nodeEditorReducer = (state: NodeEditorData, action: NodeEditorActio
             createdAt: Date.now(),
           },
         };
-        if (duplicatedNode.type === "group") duplicatedNode.children = [];
+        if (nodeHasGroupBehavior(duplicatedNode, nodeDefinitions)) duplicatedNode.children = [];
         newNodes[newId] = duplicatedNode;
       });
       return { ...state, nodes: newNodes, lastDuplicatedNodeIds: duplicatedNodeIds };
@@ -139,7 +145,7 @@ export const nodeEditorReducer = (state: NodeEditorData, action: NodeEditorActio
     case "UNGROUP_NODE": {
       const { groupId } = action.payload;
       const group = state.nodes[groupId];
-      if (!group || group.type !== "group") return state;
+      if (!group || !nodeHasGroupBehavior(group, nodeDefinitions)) return state;
       const { [groupId]: _deleted, ...remainingNodes } = state.nodes;
       return { ...state, nodes: remainingNodes };
     }

@@ -6,6 +6,8 @@ import { createMemoizedComponent, areNodesEqual } from "../../utils/memoization"
 import styles from "./NodeRenderer.module.css";
 import { NodeView } from "./NodeView";
 import { useOptionalRenderers } from "../../contexts/RendererContext";
+import { useNodeDefinitionList } from "../../contexts/NodeDefinitionContext";
+import { nodeHasGroupBehavior } from "../../types/behaviors";
 
 export interface CustomNodeRendererProps {
   node: Node;
@@ -45,6 +47,8 @@ const NodeRendererComponent: React.FC<NodeRendererProps> = ({
 }) => {
   const renderers = useOptionalRenderers();
   const NodeComponent = renderers?.node ?? NodeView;
+  const nodeDefinitions = useNodeDefinitionList();
+
   // Calculate actual position including drag offset
   const actualPosition = React.useMemo(() => ({
     x: node.position.x + dragOffset.x,
@@ -66,6 +70,8 @@ const NodeRendererComponent: React.FC<NodeRendererProps> = ({
     onNodeContextMenu?.(e, node.id);
   }, [node.id, onNodeContextMenu]);
 
+  const isGroup = nodeHasGroupBehavior(node, nodeDefinitions);
+
   return (
     <NodeDragHandler nodeId={node.id}>
       {({ onPointerDown, isDragging: isCurrentlyDragging }) => (
@@ -76,7 +82,7 @@ const NodeRendererComponent: React.FC<NodeRendererProps> = ({
           )}
           style={{
             transform: `translate(${actualPosition.x}px, ${actualPosition.y}px)`,
-            zIndex: isCurrentlyDragging ? 1000 : node.type === "group" ? 1 : 10,
+            zIndex: isCurrentlyDragging ? 1000 : isGroup ? 1 : 10,
           }}
           data-node-id={node.id}
         >

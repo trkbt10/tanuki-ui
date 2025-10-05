@@ -2,7 +2,7 @@ import * as React from "react";
 import { classNames } from "../elements";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
-import { useNodeDefinitions } from "../../contexts/NodeDefinitionContext";
+import { useNodeDefinitions, useNodeDefinitionList } from "../../contexts/NodeDefinitionContext";
 import { useNodeEditor } from "../../contexts/node-editor";
 import { useGroupManagement } from "../../hooks/useGroupManagement";
 import { useNodeResize } from "../../hooks/useNodeResize";
@@ -49,6 +49,7 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
 
   // Helper to get node definition
   const getNodeDef = useNodeDefinitions();
+  const nodeDefinitions = useNodeDefinitionList();
 
   // Initialize hooks
   const nodeResize = useNodeResize({
@@ -160,7 +161,8 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
       const { initialPositions, affectedChildNodes } = collectInitialPositions(
         nodesToDrag,
         nodeEditorState.nodes,
-        groupManager.getGroupChildren
+        groupManager.getGroupChildren,
+        nodeDefinitions
       );
 
       actionDispatch(actionActions.startNodeDrag(nodesToDrag, startPosition, initialPositions, affectedChildNodes));
@@ -458,7 +460,8 @@ export const NodeLayer: React.FC<NodeLayerProps> = ({ className, doubleClickToEd
         nodeEditorState.nodes,
         snappedPositions,
         initialPositions,
-        groupManager.moveGroupWithChildren
+        groupManager.moveGroupWithChildren,
+        nodeDefinitions
       );
 
       if (Object.keys(finalPositions).length > 0) {

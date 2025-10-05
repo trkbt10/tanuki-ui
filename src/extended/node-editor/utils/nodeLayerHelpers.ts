@@ -2,6 +2,7 @@ import type { Port, Node, Connection, GridSettings } from "../types/core";
 import type { NodeDefinition } from "../types/NodeDefinition";
 import { canConnectPorts } from "./connectionValidation";
 import type { ConnectablePortsResult } from "./connectablePortPlanner";
+import { nodeHasGroupBehavior } from "../types/behaviors";
 
 /**
  * Check if a port has any connections
@@ -134,7 +135,8 @@ export function isValidReconnection(
 export function collectInitialPositions(
   nodeIds: string[],
   nodes: Record<string, Node>,
-  getGroupChildren: (groupId: string) => Node[]
+  getGroupChildren: (groupId: string) => Node[],
+  nodeDefinitions: NodeDefinition[]
 ): {
   initialPositions: Record<string, { x: number; y: number }>;
   affectedChildNodes: Record<string, string[]>;
@@ -147,7 +149,7 @@ export function collectInitialPositions(
     if (node) {
       initialPositions[id] = { ...node.position };
 
-      if (node.type === "group") {
+      if (nodeHasGroupBehavior(node, nodeDefinitions)) {
         const children = getGroupChildren(id);
         affectedChildNodes[id] = children.map((child) => child.id);
 
@@ -275,11 +277,12 @@ export function handleGroupMovement(
   nodes: Record<string, Node>,
   snappedPositions: Record<string, { x: number; y: number }>,
   initialPositions: Record<string, { x: number; y: number }>,
-  moveGroupWithChildren: (groupId: string, delta: { x: number; y: number }) => void
+  moveGroupWithChildren: (groupId: string, delta: { x: number; y: number }) => void,
+  nodeDefinitions: NodeDefinition[]
 ): Record<string, { x: number; y: number }> {
   const groupsToMove = nodeIds.filter((nodeId) => {
     const node = nodes[nodeId];
-    return node && node.type === "group";
+    return node && nodeHasGroupBehavior(node, nodeDefinitions);
   });
 
   if (groupsToMove.length === 0) {
@@ -303,7 +306,7 @@ export function handleGroupMovement(
   const nonGroupPositions: Record<string, { x: number; y: number }> = {};
   nodeIds.forEach((nodeId) => {
     const node = nodes[nodeId];
-    if (node && node.type !== "group" && snappedPositions[nodeId]) {
+    if (node && !nodeHasGroupBehavior(node, nodeDefinitions) && snappedPositions[nodeId]) {
       nonGroupPositions[nodeId] = snappedPositions[nodeId];
     }
   });

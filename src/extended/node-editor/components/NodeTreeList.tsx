@@ -346,6 +346,7 @@ export interface NodeTreeListProps {
 export const NodeTreeList: React.FC<NodeTreeListProps> = ({ className }) => {
   const { state: editorState, dispatch: editorDispatch, actions: editorActions } = useNodeEditor();
   const { dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
+  const nodeDefinitions = useNodeDefinitionList();
   const { t } = useI18n();
   
   const [dragState, setDragState] = React.useState<DragState>({
@@ -362,8 +363,10 @@ export const NodeTreeList: React.FC<NodeTreeListProps> = ({ className }) => {
   // Sort root nodes: groups first, then by explicit order, then title
   const sortedRootNodes = React.useMemo(() => {
     return [...rootNodes].sort((a, b) => {
-      if (a.type === "group" && b.type !== "group") return -1;
-      if (a.type !== "group" && b.type === "group") return 1;
+      const aIsGroup = hasGroupBehavior(nodeDefinitions.find(d => d.type === a.type));
+      const bIsGroup = hasGroupBehavior(nodeDefinitions.find(d => d.type === b.type));
+      if (aIsGroup && !bIsGroup) return -1;
+      if (!aIsGroup && bIsGroup) return 1;
       const ao = typeof a.order === 'number' ? a.order : Number.POSITIVE_INFINITY;
       const bo = typeof b.order === 'number' ? b.order : Number.POSITIVE_INFINITY;
       if (ao !== bo) return ao - bo;
@@ -371,7 +374,7 @@ export const NodeTreeList: React.FC<NodeTreeListProps> = ({ className }) => {
       const titleB = (b.data?.title && b.data.title.trim().length > 0) ? b.data.title : t("untitled");
       return titleA.localeCompare(titleB);
     });
-  }, [rootNodes, t]);
+  }, [rootNodes, t, nodeDefinitions]);
   
   const handleDeselectAll = React.useCallback(() => {
     actionDispatch(actionActions.clearSelection());
@@ -424,7 +427,9 @@ export const NodeTreeList: React.FC<NodeTreeListProps> = ({ className }) => {
       });
     };
 
-    if (position === "inside" && targetNode.type === "group") {
+    const targetIsGroup = hasGroupBehavior(nodeDefinitions.find(d => d.type === targetNode.type));
+
+    if (position === "inside" && targetIsGroup) {
       // Drop inside a group, append at end and expand group
       reorderSiblings(targetNodeId);
       if (!targetNode.expanded) {
