@@ -24,8 +24,4 @@ import { LabelNodeDefinition } from "./label";
  * Array of all default node definitions
  * Use this when you need to register all built-in node types
  */
-export const defaultNodeDefinitions = [
-  StandardNodeDefinition,
-  GroupNodeDefinition,
-  LabelNodeDefinition,
-] as const;
+export const defaultNodeDefinitions = [GroupNodeDefinition, LabelNodeDefinition] as const;
