@@ -41,11 +41,7 @@ export const getNodeBounds = (node: Node): GroupBounds => {
 /**
  * Check if a node is completely inside a group's bounds
  */
-export const isNodeInsideGroup = (
-  node: Node,
-  groupNode: Node,
-  nodeDefinitions: NodeDefinition[]
-): boolean => {
+export const isNodeInsideGroup = (node: Node, groupNode: Node, nodeDefinitions: NodeDefinition[]): boolean => {
   if (node.id === groupNode.id) return false; // Node cannot be inside itself
   if (nodeHasGroupBehavior(node, nodeDefinitions)) return false; // Groups cannot be inside other groups for now
 
@@ -58,11 +54,7 @@ export const isNodeInsideGroup = (
 /**
  * Check if a node overlaps with a group's bounds (for visual feedback)
  */
-export const isNodeOverlappingGroup = (
-  node: Node,
-  groupNode: Node,
-  nodeDefinitions: NodeDefinition[]
-): boolean => {
+export const isNodeOverlappingGroup = (node: Node, groupNode: Node, nodeDefinitions: NodeDefinition[]): boolean => {
   if (node.id === groupNode.id) return false;
   if (nodeHasGroupBehavior(node, nodeDefinitions)) return false;
 
@@ -81,7 +73,7 @@ export const findContainingGroup = (
   allNodes: Record<NodeId, Node>,
   nodeDefinitions: NodeDefinition[]
 ): NodeId | null => {
-  const groupNodes = Object.values(allNodes).filter(n => nodeHasGroupBehavior(n, nodeDefinitions));
+  const groupNodes = Object.values(allNodes).filter((n) => nodeHasGroupBehavior(n, nodeDefinitions));
 
   let containingGroup: Node | null = null;
   let smallestArea = Infinity;
@@ -108,18 +100,15 @@ let lastNodesReference: Record<NodeId, Node> | null = null;
 /**
  * Get all nodes that are children of a group (optimized with caching)
  */
-export const getGroupChildren = (
-  groupId: NodeId,
-  allNodes: Record<NodeId, Node>
-): Node[] => {
+export const getGroupChildren = (groupId: NodeId, allNodes: Record<NodeId, Node>): Node[] => {
   // Rebuild cache if nodes reference changed
   if (lastNodesReference !== allNodes) {
     childrenMapCache = createParentToChildrenMap(allNodes);
     lastNodesReference = allNodes;
   }
-  
+
   const childIds = childrenMapCache?.get(groupId) || [];
-  return childIds.map(id => allNodes[id]).filter(Boolean);
+  return childIds.map((id) => allNodes[id]).filter(Boolean);
 };
 
 /**
@@ -138,7 +127,7 @@ export const getGroupDescendants = (
     const children = getGroupChildren(currentId, allNodes);
 
     descendants.push(...children);
-    toProcess.push(...children.filter(n => nodeHasGroupBehavior(n, nodeDefinitions)).map(n => n.id));
+    toProcess.push(...children.filter((n) => nodeHasGroupBehavior(n, nodeDefinitions)).map((n) => n.id));
   }
 
   return descendants;
@@ -166,7 +155,7 @@ export const updateGroupMembership = (
   const updates: Record<NodeId, Partial<Node>> = {};
 
   // Get all non-group nodes
-  const regularNodes = Object.values(allNodes).filter(n => !nodeHasGroupBehavior(n, nodeDefinitions));
+  const regularNodes = Object.values(allNodes).filter((n) => !nodeHasGroupBehavior(n, nodeDefinitions));
 
   for (const node of regularNodes) {
     const newParentId = findContainingGroup(node, allNodes, nodeDefinitions);
@@ -184,33 +173,27 @@ export const updateGroupMembership = (
 /**
  * Get the root position of a node (accounting for group hierarchy)
  */
-export const getAbsolutePosition = (
-  node: Node,
-  allNodes: Record<NodeId, Node>
-): { x: number; y: number } => {
+export const getAbsolutePosition = (node: Node, allNodes: Record<NodeId, Node>): { x: number; y: number } => {
   let position = { ...node.position };
   let currentNode = node;
-  
+
   // Walk up the parent chain
   while (currentNode.parentId) {
     const parent = allNodes[currentNode.parentId];
     if (!parent) break;
-    
+
     position.x += parent.position.x;
     position.y += parent.position.y;
     currentNode = parent;
   }
-  
+
   return position;
 };
 
 /**
  * Convert absolute position to relative position within a group
  */
-export const getRelativePosition = (
-  absolutePosition: { x: number; y: number },
-  groupNode: Node
-): { x: number; y: number } => {
+export const getRelativePosition = (absolutePosition: { x: number; y: number }, groupNode: Node): { x: number; y: number } => {
   return {
     x: absolutePosition.x - groupNode.position.x,
     y: absolutePosition.y - groupNode.position.y,
