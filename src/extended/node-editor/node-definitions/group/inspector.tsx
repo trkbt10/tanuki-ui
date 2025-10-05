@@ -1,11 +1,11 @@
 import * as React from "react";
-import type { InspectorRenderProps } from "../../../types/NodeDefinition";
-import { Input } from "../../elements";
-import { InspectorLabel, InspectorButton } from "../../inspector/parts";
-import { useI18n } from "../../../i18n";
-import styles from "../../inspector/InspectorPanel.module.css";
+import type { InspectorRenderProps } from "../../types/NodeDefinition";
+import { Input } from "../../components/elements";
+import { InspectorLabel, InspectorButton } from "../../components/inspector/parts";
+import { useI18n } from "../../i18n";
+import styles from "../../components/inspector/InspectorPanel.module.css";
 
-export function GroupInspector({ node, onUpdateNode }: InspectorRenderProps<"group">): React.ReactElement {
+export function GroupInspectorRenderer({ node, onUpdateNode }: InspectorRenderProps<"group">): React.ReactElement {
   const { t } = useI18n();
   const groupBackground = typeof node.data.groupBackground === "string" ? node.data.groupBackground : "#000000";
   const groupOpacity = typeof (node.data as Record<string, unknown>).groupOpacity === "number" ? (node.data as Record<string, unknown>).groupOpacity as number : 1;
@@ -48,3 +48,5 @@ export function GroupInspector({ node, onUpdateNode }: InspectorRenderProps<"gro
     </div>
   );
 }
+
+GroupInspectorRenderer.displayName = "GroupInspectorRenderer";

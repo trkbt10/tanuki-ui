@@ -8,7 +8,7 @@ import {
   AlignBottomIcon,
   DistributeHorizontalIcon,
   DistributeVerticalIcon,
-} from "../elements";
+} from "../elements/icons";
 
 export type AlignmentActionType =
   | "align-left"

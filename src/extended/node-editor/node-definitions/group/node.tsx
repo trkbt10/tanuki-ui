@@ -1,13 +1,13 @@
 import * as React from "react";
-import type { Node } from "../../../types/core";
-import styles from "./GroupNode.module.css";
+import type { Node } from "../../types/core";
+import styles from "./group.module.css";
 
 export interface GroupContentProps {
   node: Node;
   childCount: number;
 }
 
-export const GroupContent: React.FC<GroupContentProps> = ({ node, childCount }) => {
+export const GroupNodeRenderer: React.FC<GroupContentProps> = ({ node, childCount }) => {
   if (!node.expanded) {
     return (
       <div className={styles.groupCollapsed}>
@@ -22,3 +22,5 @@ export const GroupContent: React.FC<GroupContentProps> = ({ node, childCount }) 
     </div>
   );
 };
+
+GroupNodeRenderer.displayName = "GroupNodeRenderer";

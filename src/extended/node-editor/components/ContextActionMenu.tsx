@@ -2,7 +2,7 @@ import * as React from "react";
 import { classNames, calculateContextMenuPosition, getViewportInfo } from "./elements";
 import { EditIcon, PlusIcon, PasteIcon } from "./elements/icons";
 import styles from "./ContextActionMenu.module.css";
-import alignmentStyles from "./node/renderers/AlignmentControls.module.css";
+import alignmentStyles from "../node-definitions/standard/AlignmentControls.module.css";
 import {
   ALIGNMENT_ACTIONS,
   ALIGNMENT_GROUPS,

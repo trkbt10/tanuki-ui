@@ -1,7 +1,6 @@
 import React, { type ReactNode, type ReactElement } from "react";
 import { isLabelNodeRenderProps, createTypeGuard, isLabelInspectorProps, createInspectorTypeGuard } from "./typeGuards";
 import type { Node, NodeId, Port, Connection, ConnectionId, NodeEditorData, NodeData } from "./core";
-import type { BuiltinNodeDataMap } from "./builtin";
 
 /**
  * Base node data type map interface
@@ -355,120 +354,8 @@ export function createNodeDefinitionRegistry<TNodeDataTypeMap = NodeDataTypeMap>
   };
 }
 
-/**
- * Example node definition (for documentation and reference only).
- * Not included in default registrations.
- */
-export const ExampleNodeDefinition: NodeDefinition<"standard"> = {
-  type: "standard",
-  displayName: "Standard Node",
-  description: "A basic node with customizable properties",
-  category: "Basic",
-  defaultData: {
-    title: "New Node",
-    content: "",
-  },
-  defaultSize: { width: 200, height: 100 },
-  ports: [
-    {
-      id: "input",
-      type: "input",
-      label: "Input",
-      position: "left",
-    },
-    {
-      id: "output",
-      type: "output",
-      label: "Output",
-      position: "right",
-    },
-  ],
-};
-
-/**
- * Group node definition
- */
-import { GroupInspector } from "../components/node/renderers/GroupInspector";
-export const GroupNodeDefinition: NodeDefinition<"group"> = {
-  type: "group",
-  displayName: "Group",
-  description: "A container node that can hold other nodes",
-  category: "Structure",
-  defaultData: {
-    title: "Group",
-  },
-  defaultSize: { width: 300, height: 200 },
-  supportsChildren: true,
-  behaviors: ["node", "group"],
-  visualState: "info",
-};
-
-/**
- * Label node definition (decoration-less, no connections)
- */
-import { LabelNodeRenderer, LabelNodeInspector } from "../components/node/renderers/LabelNode";
-import type { LabelNodeDataMap } from "./nodes/label";
-
-export const LabelNodeDefinition: NodeDefinition<"label", LabelNodeDataMap> = {
-  type: "label",
-  displayName: "Label",
-  description: "A decoration-less text label with optional subtitle and caption",
-  icon: "📝",
-  category: "Structure",
-  defaultData: {
-    title: "Title",
-    subtitle: "Subtitle",
-    caption: "",
-  },
-  // Provide a compact default size; content may exceed if long
-  defaultSize: { width: 220, height: 72 },
-  // No ports for a pure label
-  ports: [],
-  behaviors: ["appearance"],
-  renderNode: LabelNodeRenderer,
-  renderInspector: LabelNodeInspector,
-};
-
-/**
- * Multi-input node definition for testing multiple input ports
- */
-export const MultiInputNodeDefinition: NodeDefinition = {
-  type: "multi-input",
-  displayName: "Multi Input Node",
-  description: "A node with multiple input ports for testing",
-  category: "Processing",
-  defaultData: {
-    title: "Multi Input",
-    content: "Processes multiple inputs",
-  },
-  defaultSize: { width: 180, height: 120 },
-  ports: [
-    {
-      id: "input1",
-      type: "input",
-      label: "Input 1",
-      position: "left",
-    },
-    {
-      id: "input2",
-      type: "input",
-      label: "Input 2",
-      position: "left",
-    },
-    {
-      id: "input3",
-      type: "input",
-      label: "Input 3",
-      position: "left",
-    },
-    {
-      id: "output",
-      type: "output",
-      label: "Output",
-      position: "right",
-    },
-  ],
-};
+// Import type for compatibility helpers
+import type { LabelNodeDataMap } from "../node-definitions/label/types";
 
 /**
  * Helper function to create a type-safe node definition
@@ -534,20 +421,20 @@ export function toUntypedDefinition<TNodeType extends string, TMap = NodeDataTyp
 ): NodeDefinition<string, NodeDataTypeMap> {
   const type = def.type as string;
   const typedRenderNode = def.renderNode as unknown as
-    | ((props: NodeRenderProps<TNodeType, NodeDataTypeMap & BuiltinNodeDataMap>) => ReactElement)
+    | ((props: NodeRenderProps<TNodeType, NodeDataTypeMap & LabelNodeDataMap>) => ReactElement)
     | undefined;
   const typedLabelRenderNode = def.renderNode as unknown as
     | ((props: NodeRenderProps<"label", LabelNodeDataMap>) => ReactElement)
     | undefined;
   const typedRenderInspector = def.renderInspector as unknown as
-    | ((props: InspectorRenderProps<TNodeType, NodeDataTypeMap & BuiltinNodeDataMap>) => ReactElement)
+    | ((props: InspectorRenderProps<TNodeType, NodeDataTypeMap & LabelNodeDataMap>) => ReactElement)
     | undefined;
   const typedLabelRenderInspector = def.renderInspector as unknown as
     | ((props: InspectorRenderProps<"label", LabelNodeDataMap>) => ReactElement)
     | undefined;
 
   const wrapRenderNode = typedRenderNode
-    ? (props: NodeRenderProps<string, NodeDataTypeMap & BuiltinNodeDataMap>) => {
+    ? (props: NodeRenderProps<string, NodeDataTypeMap & LabelNodeDataMap>) => {
         if (type === "label") {
           if (isLabelNodeRenderProps(props) && typedLabelRenderNode) return typedLabelRenderNode(props);
         } else {
@@ -559,7 +446,7 @@ export function toUntypedDefinition<TNodeType extends string, TMap = NodeDataTyp
     : undefined;
 
   const wrapRenderInspector = typedRenderInspector
-    ? (props: InspectorRenderProps<string, NodeDataTypeMap & BuiltinNodeDataMap>) => {
+    ? (props: InspectorRenderProps<string, NodeDataTypeMap & LabelNodeDataMap>) => {
         if (type === "label") {
           if (isLabelInspectorProps(props) && typedLabelRenderInspector) return typedLabelRenderInspector(props);
         } else {

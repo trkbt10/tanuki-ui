@@ -128,16 +128,15 @@
 }
 
 .categoryHeader:hover {
-  background: var(--controlHoverBackground);
+  background: var(--controlHoverBackground, rgba(0, 0, 0, 0.05));
   color: var(--textColor);
 }
 
 .selectedCategory {
-  background: var(--selectedContentBackgroundColor) !important;
-  opacity: 0.1;
-  color: var(--accentColor) !important;
+  background: var(--selectedContentBackgroundColor);
   border-bottom-color: var(--accentColor);
 }
+
 
 .categoryName {
   flex: 1;
@@ -167,13 +166,13 @@
 /* Removed decorative overlay */
 
 .nodeItem:hover {
-  background: var(--controlHoverBackground);
+  background: var(--controlHoverBackground, rgba(0, 0, 0, 0.05));
 }
 
 .selectedNode {
-  background: var(--selectedContentBackgroundColor) !important;
-  opacity: 0.1;
+  background: var(--selectedContentBackgroundColor);
 }
+
 
 .disabledNode {
   opacity: 0.5;

@@ -13,7 +13,7 @@
 .canvasContainer.spacePanning.panning { cursor: grabbing; }
 
 .canvasContainer.boxSelecting,
-.canvasContainer.boxSelecting .canvas { cursor: crosshair !important; }
+.canvasContainer.boxSelecting .canvas { cursor: crosshair; }
 
 .gridSvg {
   position: absolute;

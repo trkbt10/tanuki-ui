@@ -3,12 +3,11 @@ import {
   NodeDefinition,
   NodeDefinitionRegistry,
   createNodeDefinitionRegistry,
-  GroupNodeDefinition,
-  LabelNodeDefinition,
   type NodeDataTypeMap,
 } from "../types/NodeDefinition";
 import { toUntypedDefinition } from "../types/NodeDefinition";
 import { isDefinitionForCombinedMap } from "../types/typeGuards";
+import { StandardNodeDefinition, GroupNodeDefinition, LabelNodeDefinition } from "../node-definitions";
 
 /**
  * Context value for node definitions
@@ -45,6 +44,7 @@ export const NodeDefinitionProvider = <TNodeDataTypeMap = {}>({
 
     // Register default definitions if requested
     if (includeDefaults) {
+      if (isDefinitionForCombinedMap(StandardNodeDefinition)) reg.register(toUntypedDefinition(StandardNodeDefinition));
       if (isDefinitionForCombinedMap(GroupNodeDefinition)) reg.register(toUntypedDefinition(GroupNodeDefinition));
       if (isDefinitionForCombinedMap(LabelNodeDefinition)) reg.register(toUntypedDefinition(LabelNodeDefinition));
     }

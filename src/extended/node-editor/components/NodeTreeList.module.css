@@ -173,15 +173,15 @@
   cursor: move;
 }
 
-.dragOverInside {
-  background: var(--accentColor, #007AFF) !important;
-  color: white !important;
+.treeItem.dragOverInside {
+  background: var(--accentColor, #007AFF);
+  color: white;
 }
 
-.dragOverInside .nodeName,
-.dragOverInside .expandButton,
-.dragOverInside .visibilityButton {
-  color: white !important;
+.treeItem.dragOverInside .nodeName,
+.treeItem.dragOverInside .expandButton,
+.treeItem.dragOverInside .visibilityButton {
+  color: white;
 }
 
 .dropIndicator {

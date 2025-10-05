@@ -1,20 +1,19 @@
-.defaultNodeRenderer {
+.standardNodeRenderer {
   padding: var(--node-editor-inspector-space-md);
   border-radius: var(--cardBorderRadius);
   background-color: var(--controlBackground);
 }
 
-.defaultNodeRendererSelected {
+.standardNodeRendererSelected {
   background-color: var(--selectedContentBackgroundColor);
-  opacity: 0.05;
 }
 
-.defaultNodeRendererDragging {
+.standardNodeRendererDragging {
   opacity: 0.7;
   cursor: grabbing;
 }
 
-.defaultNodeRendererNotDragging {
+.standardNodeRendererNotDragging {
   cursor: grab;
 }
 

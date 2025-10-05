@@ -470,8 +470,8 @@
 .inspectorInput,
 .inspectorTextarea {
   width: 100%;
-  padding: 3px .25em !important;
-  border: var(--inputBorder, 1px solid #c8c8c8) !important;
+  padding: 3px .25em;
+  border: var(--inputBorder, 1px solid #c8c8c8);
   border-radius: 4px;
   font-size: 12px;
   background: var(--controlBackground, #ffffff);
@@ -501,8 +501,8 @@
 .inspectorNumberInput {
   flex: 1;
   /* Compact padding for small width usability */
-  padding: 3px .25em !important;
-  border: var(--inputBorder, 1px solid #c8c8c8) !important;
+  padding: 3px .25em;
+  border: var(--inputBorder, 1px solid #c8c8c8);
   border-radius: 4px;
   font-size: 12px;
   background: var(--controlBackground, #ffffff);
@@ -736,7 +736,7 @@
 /* Disable all transitions during drag operations for smooth experience */
 .nodeView.dragging,
 .nodeView.dragging * {
-  transition: none !important;
+  transition: none;
 }
 
 /* Status bar saving indicator */

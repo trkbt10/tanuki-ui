@@ -2,7 +2,7 @@ import * as React from "react";
 import type { Node } from "../../types/core";
 import type { NodeDefinition } from "../../types/NodeDefinition";
 import type { CustomNodeRendererProps } from "./NodeView";
-import { GroupContent } from "./renderers/GroupNode";
+import { GroupNodeRenderer as GroupContent } from "../../node-definitions/group/node";
 import { LockIcon } from "../elements";
 import { useI18n } from "../../i18n";
 import styles from "./NodeView.module.css";

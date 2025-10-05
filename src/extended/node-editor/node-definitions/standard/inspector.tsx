@@ -1,7 +1,7 @@
 import * as React from "react";
-import type { NodeRenderProps, InspectorRenderProps } from "../../../types/NodeDefinition";
-import type { Node } from "../../../types/core";
-import editorStyles from "../../../NodeEditor.module.css";
+import type { InspectorRenderProps } from "../../types/NodeDefinition";
+import type { Node } from "../../types/core";
+import editorStyles from "../../NodeEditor.module.css";
 import {
   PropertySection,
   InspectorLabel,
@@ -10,48 +10,24 @@ import {
   InspectorTextarea,
   InspectorNumberInput,
   InspectorCheckbox,
-} from "../../inspector/parts";
-import { useI18n } from "../../../i18n";
+} from "../../components/inspector/parts";
+import { useI18n } from "../../i18n";
 import alignmentStyles from "./AlignmentControls.module.css";
-import defaultStyles from "./DefaultRenderers.module.css";
+import styles from "./standard.module.css";
 import {
   ALIGNMENT_ACTIONS,
   ALIGNMENT_GROUPS,
   type AlignmentActionConfig,
   type AlignmentActionGroup,
   type AlignmentActionType,
-} from "../../shared/alignmentActions";
-import { useNodeEditorActions } from "../../../hooks/useNodeEditorActions";
-import { useEditorActionState } from "../../../contexts/EditorActionStateContext";
-import { useNodeEditor } from "../../../contexts/node-editor";
-import { useNodeDefinitionList } from "../../../contexts/NodeDefinitionContext";
-import { canAddNodeType, countNodesByType } from "../../../utils/nodeTypeLimits";
-import { getClipboard, setClipboard } from "../../../utils/clipboard";
-import { DuplicateIcon, CopyIcon, CutIcon, DeleteIcon } from "../../elements/icons";
-
-/**
- * Default node renderer
- */
-export const DefaultNodeRenderer: React.FC<NodeRenderProps> = ({ node, isSelected, isDragging, isEditing, onStartEdit }) => {
-  const { t } = useI18n();
-  return (
-    <div
-      className={[
-        defaultStyles.defaultNodeRenderer,
-        isSelected ? defaultStyles.defaultNodeRendererSelected : "",
-        isDragging ? defaultStyles.defaultNodeRendererDragging : defaultStyles.defaultNodeRendererNotDragging,
-      ]
-        .filter(Boolean)
-        .join(" ")}
-      onDoubleClick={onStartEdit}
-    >
-      <h3 className={defaultStyles.nodeTitle}>
-        {node.data.title && node.data.title.trim().length > 0 ? node.data.title : t("untitled")}
-      </h3>
-      {node.data.content && <p className={defaultStyles.nodeContent}>{String(node.data.content)}</p>}
-    </div>
-  );
-};
+} from "../../components/shared/alignmentActions";
+import { useNodeEditorActions } from "../../hooks/useNodeEditorActions";
+import { useEditorActionState } from "../../contexts/EditorActionStateContext";
+import { useNodeEditor } from "../../contexts/node-editor";
+import { useNodeDefinitionList } from "../../contexts/NodeDefinitionContext";
+import { canAddNodeType, countNodesByType } from "../../utils/nodeTypeLimits";
+import { getClipboard, setClipboard } from "../../utils/clipboard";
+import { DuplicateIcon, CopyIcon, CutIcon, DeleteIcon } from "../../components/elements/icons";
 
 // Alignment component for selected nodes
 const AlignmentControls = React.memo<{
@@ -108,10 +84,9 @@ interface ExtendedInspectorRenderProps extends InspectorRenderProps {
 }
 
 /**
- * Default inspector renderer with optimized performance
+ * Standard inspector renderer with optimized performance
  */
-export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = React.memo(
-  ({ node, onUpdateNode, onDeleteNode, selectedNodes = [], onAlignNodes }) => {
+export function StandardInspectorRenderer({ node, onUpdateNode, onDeleteNode, selectedNodes = [], onAlignNodes }: ExtendedInspectorRenderProps): React.ReactElement {
     const { t } = useI18n();
     // Memoized update handlers
     const handleTitleChange = React.useCallback(
@@ -179,8 +154,6 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
       },
       [onUpdateNode]
     );
-
-    // no-op placeholders removed (group-specific controls are handled by custom inspector outside)
 
     const handleAlignment = React.useCallback(
       (alignmentType: AlignmentActionType) => {
@@ -262,7 +235,7 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
           <InspectorLabel>
             {t("inspectorLocked")} / {t("inspectorVisible")}
           </InspectorLabel>
-          <div className={defaultStyles.groupInspectorOptions}>
+          <div className={styles.groupInspectorOptions}>
             <InspectorCheckbox checked={node.locked || false} onChange={handleLockedChange} label={t("inspectorLocked")} />
             <InspectorCheckbox checked={node.visible !== false} onChange={handleVisibleChange} label={t("inspectorVisible")} />
           </div>
@@ -273,10 +246,8 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
           <div className={editorStyles.inspectorReadOnlyField}>{node.type}</div>
         </div>
 
-        {/* Group-specific inspector UI is rendered outside this section by NodeInspector */}
-
         <InspectorLabel>{t("inspectorActions") || "Actions"}</InspectorLabel>
-        <div className={defaultStyles.inspectorActions}>
+        <div className={styles.inspectorActions}>
           {(() => {
             const editorActions = useNodeEditorActions();
             const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
@@ -367,7 +338,4 @@ export const DefaultInspectorRenderer: React.FC<ExtendedInspectorRenderProps> = 
         </div>
       </PropertySection>
     );
-  }
-);
-
-DefaultInspectorRenderer.displayName = "DefaultInspectorRenderer";
+}
