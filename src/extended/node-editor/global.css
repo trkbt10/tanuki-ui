@@ -36,4 +36,8 @@
   /* Canvas grid - using textColor at 20% opacity */
   --node-editor-grid-color: var(--textColor);
   --node-editor-grid-opacity: 0.2;
+
+  /* Inspector shadows */
+  --node-editor-inspector-shadow: -2px 0 0.5em rgba(0, 0, 0, 0.1);
+  --node-editor-inspector-header-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }

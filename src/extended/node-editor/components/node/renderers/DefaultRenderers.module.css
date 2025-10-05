@@ -1,11 +1,12 @@
 .defaultNodeRenderer {
   padding: var(--node-editor-inspector-space-md);
-  border-radius: 8px;
-  background-color: var(--controlBackground, #ffffff);
+  border-radius: var(--cardBorderRadius);
+  background-color: var(--controlBackground);
 }
 
 .defaultNodeRendererSelected {
-  background-color: var(--groupNodeActiveBackground, rgba(0, 102, 204, 0.05));
+  background-color: var(--selectedContentBackgroundColor);
+  opacity: 0.05;
 }
 
 .defaultNodeRendererDragging {
@@ -19,14 +20,14 @@
 
 .nodeTitle {
   margin: 0;
-  font-size: 14px;
+  font-size: var(--node-editor-inspector-font-size-body);
   font-weight: 600;
 }
 
 .nodeContent {
   margin: var(--node-editor-inspector-space-xs) 0 0;
-  font-size: 12px;
-  color: var(--secondaryLabelColor, #666);
+  font-size: var(--node-editor-inspector-font-size-meta);
+  color: var(--secondaryLabelColor);
 }
 
 .inspectorContainer {
@@ -37,16 +38,16 @@
   width: 100%;
   padding: var(--node-editor-inspector-space-xs) var(--node-editor-inspector-space-sm);
   border: var(--inputBorder);
-  border-radius: 4px;
-  font-size: 13px;
+  border-radius: var(--controlBorderRadius);
+  font-size: var(--node-editor-inspector-font-size-body);
 }
 
 .inspectorTextarea {
   width: 100%;
   padding: var(--node-editor-inspector-space-xs) var(--node-editor-inspector-space-sm);
   border: var(--inputBorder);
-  border-radius: 4px;
-  font-size: 13px;
+  border-radius: var(--controlBorderRadius);
+  font-size: var(--node-editor-inspector-font-size-body);
   min-height: 60px;
   resize: vertical;
 }
@@ -54,9 +55,9 @@
 .inspectorLabel {
   display: block;
   margin-bottom: var(--node-editor-inspector-field-gap);
-  font-size: 12px;
+  font-size: var(--node-editor-inspector-font-size-meta);
   font-weight: 500;
-  color: var(--secondaryLabelColor, #666);
+  color: var(--secondaryLabelColor);
 }
 
 .numberInputContainer {
@@ -64,9 +65,9 @@
   grid-template-columns: auto 1fr;
   align-items: center;
   gap: var(--node-editor-inspector-space-xs);
-  background-color: var(--controlBackground, #ffffff);
+  background-color: var(--controlBackground);
   border: var(--inputBorder);
-  border-radius: 6px;
+  border-radius: var(--controlBorderRadius);
   padding: calc(var(--node-editor-inspector-space-xs) + 2px) var(--node-editor-inspector-space-sm);
   font-size: var(--node-editor-inspector-font-size-body);
   line-height: var(--node-editor-inspector-line-height-body);
@@ -76,12 +77,12 @@
 }
 
 .numberInputContainer:focus-within {
-  border-color: var(--accentColor, #0066cc);
-  box-shadow: 0 0 0 1px rgba(0, 102, 204, 0.15);
+  border-color: var(--accentColor);
+  box-shadow: 0 0 0 3px var(--keyboardFocusIndicatorColor);
 }
 
 .numberInputLabel {
-  color: var(--secondaryLabelColor, #666);
+  color: var(--secondaryLabelColor);
   font-size: var(--node-editor-inspector-font-size-meta);
   line-height: var(--node-editor-inspector-line-height-meta);
   font-weight: 500;
@@ -150,8 +151,8 @@
 
 .typeDisplay {
   padding: var(--node-editor-inspector-space-xs) var(--node-editor-inspector-space-sm);
-  background-color: var(--tertiarySystemBackground, #f5f5f5);
-  border-radius: 4px;
+  background-color: var(--cardFilledBackground);
+  border-radius: var(--controlBorderRadius);
   font-size: var(--node-editor-inspector-font-size-body);
   line-height: var(--node-editor-inspector-line-height-body);
 }
@@ -164,12 +165,12 @@
 
 .deleteButton {
   padding: var(--node-editor-inspector-space-sm) var(--node-editor-inspector-space-lg);
-  background-color: var(--cautionColor, #ff3b30);
-  color: var(--controlTextOnAccent, #fff);
+  background-color: var(--cautionColor);
+  color: var(--selectedMenuItemTextColor);
   border: none;
-  border-radius: 4px;
+  border-radius: var(--controlBorderRadius);
   cursor: pointer;
-  font-size: 13px;
+  font-size: var(--node-editor-inspector-font-size-body);
   width: 100%;
 }
 
