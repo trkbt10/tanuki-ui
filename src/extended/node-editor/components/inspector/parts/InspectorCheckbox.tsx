@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./InspectorParts.module.css";
+import styles from "./InspectorCheckbox.module.css";
 
 export interface InspectorCheckboxProps {
   checked: boolean;
@@ -17,9 +17,9 @@ export const InspectorCheckbox = React.memo<InspectorCheckboxProps>(
     }, []);
     const id = React.useId();
     return (
-      <label htmlFor={id} className={styles.checkboxContainer}>
+      <label htmlFor={id} className={styles.container}>
         <input type="checkbox" checked={checked} onChange={handleChange} id={id} name={name ?? ""} />
-        <span className={styles.checkboxText}>{label}</span>
+        <span className={styles.text}>{label}</span>
       </label>
     );
   }

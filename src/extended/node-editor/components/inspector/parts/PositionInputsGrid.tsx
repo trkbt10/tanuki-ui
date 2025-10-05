@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "./InspectorParts.module.css";
+import styles from "./PositionInputsGrid.module.css";
 
 export interface PositionInputsGridProps {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ export interface PositionInputsGridProps {
  * Grid container for position and size inputs
  */
 export const PositionInputsGrid: React.FC<PositionInputsGridProps> = ({ children }) => {
-  return <div className={styles.positionInputsGrid}>{children}</div>;
+  return <div className={styles.grid}>{children}</div>;
 };
 
 PositionInputsGrid.displayName = "PositionInputsGrid";
