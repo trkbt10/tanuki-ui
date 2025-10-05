@@ -154,15 +154,18 @@
   box-sizing: border-box;
 }
 
-.nodeItem:hover {
-  color: var(--unemphasizedSelectedContentBackgroundColor);
-  background: var(--selectedContentBackgroundColor);
-  filter: brightness(0.95);
+.nodeItem:not(.selectedNode):hover {
+  background: color-mix(in srgb, var(--selectedControlColor) 80%, transparent);
 }
 
 .selectedNode {
-  color: var(--unemphasizedSelectedContentBackgroundColor);
-  background: var(--selectedContentBackgroundColor);
+  color: var(--selectedControlTextColor);
+  background: var(--selectedControlColor);
+}
+
+.selectedNode:hover {
+  color: var(--selectedControlTextColor);
+  background: var(--selectedControlColor);
 }
 
 

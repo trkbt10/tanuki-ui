@@ -39,17 +39,17 @@
   border-radius: var(--segmentControlBorderRadius);
 }
 
-.tabButton:hover {
+.tabButton:not(.tabButtonActive):hover {
+  background: color-mix(in srgb, var(--selectedControlColor) 80%, transparent);
   color: var(--labelColor);
-  background: var(--controlHoverBackground);
 }
 
 .tabButtonActive {
-  background: var(--selectedContentBackgroundColor);
-  color: var(--unemphasizedSelectedContentBackgroundColor);
+  background: var(--selectedControlColor);
+  color: var(--selectedControlTextColor);
 }
 
 .tabButtonActive:hover {
-  background: var(--selectedContentBackgroundColor);
-  color: var(--unemphasizedSelectedContentBackgroundColor);
+  background: var(--selectedControlColor);
+  color: var(--selectedControlTextColor);
 }

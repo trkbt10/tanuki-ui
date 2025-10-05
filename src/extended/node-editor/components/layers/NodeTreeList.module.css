@@ -49,17 +49,17 @@
   box-sizing: border-box;
 }
 
-.treeItem:hover {
-  background: var(--quaternarySystemFillColor);
+.treeItem:not([data-selected="true"]):hover {
+  background: color-mix(in srgb, var(--selectedControlColor) 80%, transparent);
 }
 
 .treeItem[data-selected="true"] {
-  background: var(--accentColor);
-  color: var(--selectedTextColor);
+  background: var(--selectedControlColor);
+  color: var(--selectedControlTextColor);
 }
 
 .treeItem[data-selected="true"] .nodeName {
-  color: var(--selectedTextColor);
+  color: var(--selectedControlTextColor);
 }
 
 .treeItem[data-selected="true"] .nodeIcon {
@@ -87,11 +87,11 @@
 }
 
 .treeItem[data-selected="true"] .expandButton {
-  color: var(--node-editor-selected-secondary-color);
+  color: color-mix(in srgb, var(--selectedControlTextColor) 70%, transparent);
 }
 
 .treeItem[data-selected="true"] .expandButton:hover {
-  color: var(--selectedTextColor);
+  color: var(--selectedControlTextColor);
 }
 
 .nodeIcon {
@@ -155,17 +155,17 @@
 .treeItem[data-selected="true"] .visibilityButton,
 .treeItem[data-selected="true"] .lockButton,
 .treeItem[data-selected="true"] .deleteButton {
-  color: var(--node-editor-selected-secondary-color);
+  color: color-mix(in srgb, var(--selectedControlTextColor) 70%, transparent);
 }
 
 .treeItem[data-selected="true"] .visibilityButton:hover,
 .treeItem[data-selected="true"] .lockButton:hover {
-  color: var(--selectedTextColor);
+  color: var(--selectedControlTextColor);
 }
 
 .treeItem[data-selected="true"] .deleteButton:hover {
-  color: var(--selectedTextColor);
-  background: var(--node-editor-selected-hover-background);
+  color: var(--selectedControlTextColor);
+  background: color-mix(in srgb, var(--selectedControlTextColor) 15%, transparent);
   box-sizing: border-box;
 }
 
@@ -183,14 +183,14 @@
 }
 
 .treeItem[data-drag-over-inside="true"] {
-  background: var(--accentColor);
-  color: var(--selectedTextColor);
+  background: var(--selectedControlColor);
+  color: var(--selectedControlTextColor);
 }
 
 .treeItem[data-drag-over-inside="true"] .nodeName,
 .treeItem[data-drag-over-inside="true"] .expandButton,
 .treeItem[data-drag-over-inside="true"] .visibilityButton {
-  color: var(--selectedTextColor);
+  color: var(--selectedControlTextColor);
 }
 
 .dropIndicator {
@@ -237,8 +237,8 @@
     color: var(--tertiaryLabelColor);
   }
 
-  .treeItem:hover {
-    background: var(--quaternarySystemFillColor);
+  .treeItem:not([data-selected="true"]):hover {
+    background: color-mix(in srgb, var(--selectedControlColor) 80%, transparent);
   }
 
   .nodeName {
