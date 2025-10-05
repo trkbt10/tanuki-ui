@@ -58,8 +58,11 @@ const customPortRenderer = (context: PortRenderContext, defaultRender: () => Rea
 };
 
 // Custom connection renderer example - styled based on data type
-const customConnectionRenderer = (context: ConnectionRenderContext, defaultRender: () => React.ReactElement) => {
-  const { fromPort, isSelected, isHovered } = context;
+const customConnectionRenderer = (
+  context: ConnectionRenderContext,
+  defaultRender: () => React.ReactElement
+) => {
+  const { fromPort, fromPosition, toPosition, isSelected, isHovered } = context;
 
   // Define colors for different data types
   const colorMap: Record<string, string> = {
@@ -70,10 +73,24 @@ const customConnectionRenderer = (context: ConnectionRenderContext, defaultRende
   };
 
   const color = colorMap[fromPort.dataType || ""] || "#999";
+  const distance = Math.hypot(toPosition.x - fromPosition.x, toPosition.y - fromPosition.y) || 1;
+  const glowStrength = Math.min(distance / 120, 1);
+  const pulseRadius = 4 + glowStrength * 4;
 
   return (
-    <g style={{ filter: isSelected || isHovered ? `drop-shadow(0 0 4px ${color})` : "none" }}>
+    <g
+      style={{ filter: isSelected || isHovered ? `drop-shadow(0 0 ${4 + glowStrength * 4}px ${color})` : "none" }}
+    >
       {defaultRender()}
+      <circle
+        cx={toPosition.x}
+        cy={toPosition.y}
+        r={pulseRadius}
+        fill={color}
+        fillOpacity={0.2}
+        stroke={color}
+        strokeWidth={isSelected || isHovered ? 1.5 : 1}
+      />
     </g>
   );
 };
@@ -420,7 +437,13 @@ const CustomPortRendererCatalog: React.FC = () => {
               <div className={styles.singleColumnContent}>
                 <Pre>
                   {`const customConnectionRenderer = (context, defaultRender) => {
-  const { fromPort, isSelected, isHovered } = context;
+  const {
+    fromPort,
+    fromPosition,
+    toPosition,
+    isSelected,
+    isHovered,
+  } = context;
 
   const colorMap = {
     data: "#4CAF50",
@@ -430,15 +453,27 @@ const CustomPortRendererCatalog: React.FC = () => {
   };
 
   const color = colorMap[fromPort.dataType] || "#999";
+  const distance = Math.hypot(
+    toPosition.x - fromPosition.x,
+    toPosition.y - fromPosition.y,
+  ) || 1;
+  const glowStrength = Math.min(distance / 120, 1);
 
-  // デフォルトレンダラーをラップしてフィルターを追加
   return (
     <g style={{
       filter: isSelected || isHovered
-        ? \`drop-shadow(0 0 4px \${color})\`
-        : "none"
+        ? \`drop-shadow(0 0 \${4 + glowStrength * 4}px \${color})\`
+        : "none",
     }}>
       {defaultRender()}
+      <circle
+        cx={toPosition.x}
+        cy={toPosition.y}
+        r={4 + glowStrength * 4}
+        fill={color}
+        fillOpacity={0.2}
+        stroke={color}
+      />
     </g>
   );
 };`}
@@ -529,6 +564,8 @@ const CustomPortRendererCatalog: React.FC = () => {
   toPort: Port;                  // 終了ポート
   fromNode: Node;                // 開始ノード
   toNode: Node;                  // 終了ノード
+  fromPosition: { x: number; y: number }; // 開始ポート位置
+  toPosition: { x: number; y: number };   // 終了ポート位置
   isSelected: boolean;           // 選択中かどうか
   isHovered: boolean;            // ホバー中かどうか
   isAdjacentToSelectedNode: boolean; // 選択ノードに隣接しているか
