@@ -1,25 +1,25 @@
 import * as React from "react";
-import { classNames, calculateContextMenuPosition, getViewportInfo } from "./elements";
-import { EditIcon, PlusIcon, PasteIcon } from "./elements/icons";
+import { classNames, calculateContextMenuPosition, getViewportInfo } from "../elements";
+import { EditIcon, PlusIcon, PasteIcon } from "../elements/icons";
 import styles from "./ContextActionMenu.module.css";
-import alignmentStyles from "../node-definitions/standard/AlignmentControls.module.css";
+import alignmentStyles from "../controls/alignments/AlignmentControls.module.css";
 import {
   ALIGNMENT_ACTIONS,
   ALIGNMENT_GROUPS,
+  calculateAlignmentPositions,
   type AlignmentActionConfig,
   type AlignmentActionGroup,
   type AlignmentActionType,
-} from "./shared/alignmentActions";
-import type { Position, Node } from "../types/core";
-import { useNodeEditorActions } from "../hooks/useNodeEditorActions";
-import { useEditorActionState } from "../contexts/EditorActionStateContext";
-import { useI18n } from "../i18n";
-import { useNodeEditor } from "../contexts/node-editor";
-import { useNodeDefinitionList } from "../contexts/NodeDefinitionContext";
-import { canAddNodeType, countNodesByType } from "../utils/nodeTypeLimits";
-import { getClipboard, setClipboard } from "../utils/clipboard";
-import { calculateAlignmentPositions } from "../utils/alignmentUtils";
-import { NodeActionsList } from "./shared/NodeActionsList";
+} from "../controls/alignments";
+import type { Position, Node } from "../../types/core";
+import { useNodeEditorActions } from "../../hooks/useNodeEditorActions";
+import { useEditorActionState } from "../../contexts/EditorActionStateContext";
+import { useI18n } from "../../i18n";
+import { useNodeEditor } from "../../contexts/node-editor";
+import { useNodeDefinitionList } from "../../contexts/NodeDefinitionContext";
+import { canAddNodeType, countNodesByType } from "../../utils/nodeTypeLimits";
+import { getClipboard, setClipboard } from "../../utils/clipboard";
+import { NodeActionsList } from "./NodeActionsList";
 
 export type ContextTarget =
   | { type: "node"; id: string }

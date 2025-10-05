@@ -1,4 +1,4 @@
-import type { NodeData } from "../core";
+import type { NodeData } from "../../types/core";
 
 export interface LabelNodeData extends NodeData {
   title?: string;

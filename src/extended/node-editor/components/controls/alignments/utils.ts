@@ -1,4 +1,4 @@
-import type { Node, Position } from "../types/core";
+import type { Node, Position } from "../../../types/core";
 
 /**
  * Calculate bounding box for a node
@@ -110,16 +110,16 @@ export function calculateAlignmentPositions(
 
     case "distribute-horizontal": {
       if (nodes.length < 3) break;
-      
+
       // Sort nodes by X position
       const sortedBounds = bounds.sort((a, b) => a.bounds.left - b.bounds.left);
       const leftmost = sortedBounds[0];
       const rightmost = sortedBounds[sortedBounds.length - 1];
-      
+
       // Calculate spacing between centers
       const totalWidth = rightmost.bounds.left - leftmost.bounds.left;
       const spacing = totalWidth / (sortedBounds.length - 1);
-      
+
       // Distribute nodes evenly
       sortedBounds.forEach(({ node }, index) => {
         if (index === 0 || index === sortedBounds.length - 1) {
@@ -135,16 +135,16 @@ export function calculateAlignmentPositions(
 
     case "distribute-vertical": {
       if (nodes.length < 3) break;
-      
+
       // Sort nodes by Y position
       const sortedBounds = bounds.sort((a, b) => a.bounds.top - b.bounds.top);
       const topmost = sortedBounds[0];
       const bottommost = sortedBounds[sortedBounds.length - 1];
-      
+
       // Calculate spacing between centers
       const totalHeight = bottommost.bounds.top - topmost.bounds.top;
       const spacing = totalHeight / (sortedBounds.length - 1);
-      
+
       // Distribute nodes evenly
       sortedBounds.forEach(({ node }, index) => {
         if (index === 0 || index === sortedBounds.length - 1) {

@@ -1,13 +1,13 @@
 import * as React from "react";
-import { 
-  migrateNodeData, 
+import {
+  migrateNodeData,
   validateMigratedData,
   needsMigration,
   type MigrationResult,
-  type VersionedNodeEditorData 
-} from "../utils/dataMigration";
-import { useNodeDefinitions } from "../contexts/NodeDefinitionContext";
-import { Button, Dialog } from "./elements";
+  type VersionedNodeEditorData
+} from "../../utils/dataMigration";
+import { useNodeDefinitions } from "../../contexts/NodeDefinitionContext";
+import { Button, Dialog } from "../elements";
 import styles from "./DataMigrationDialog.module.css";
 
 export interface DataMigrationDialogProps {

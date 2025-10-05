@@ -71,9 +71,9 @@ export { Minimap, DebugOverlay, GridToolbox, NodeMapRenderer } from "./component
 export type { MinimapProps, DebugOverlayProps, GridToolboxProps, NodeMapRendererProps } from "./components/layers";
 
 // UI components
-export { NodeEditorToolbar } from "./components/elements/NodeEditorToolbar";
-export { FloatingContainer } from "./components/parts/FloatingContainer";
-export { ColumnLayout } from "./components/ColumnLayout";
+export { NodeEditorToolbar } from "./components/layout/NodeEditorToolbar";
+export { FloatingContainer } from "./components/shared/FloatingContainer";
+export { ColumnLayout } from "./components/layout/ColumnLayout";
 export {
   InspectorPanel,
   InspectorLayersTab,
@@ -82,9 +82,9 @@ export {
   InspectorSettingsTab,
 } from "./components/inspector/InspectorPanel";
 export { NodeInspector } from "./components/inspector/NodeInspector";
-export type { NodeEditorToolbarProps } from "./components/elements/NodeEditorToolbar";
-export type { FloatingContainerProps } from "./components/parts/FloatingContainer";
-export type { ColumnLayoutProps } from "./components/ColumnLayout";
+export type { NodeEditorToolbarProps } from "./components/layout/NodeEditorToolbar";
+export type { FloatingContainerProps } from "./components/shared/FloatingContainer";
+export type { ColumnLayoutProps } from "./components/layout/ColumnLayout";
 export type { InspectorPanelProps, InspectorPanelTabConfig } from "./components/inspector/InspectorPanel";
 export type { NodeInspectorProps } from "./components/inspector/NodeInspector";
 

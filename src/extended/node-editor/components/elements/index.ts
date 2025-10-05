@@ -24,7 +24,7 @@ export {
   type NodeEditorToolbarProps,
   type NodeEditorToolbarGroupProps,
   type NodeEditorToolbarSeparatorProps,
-} from './NodeEditorToolbar';
+} from '../layout/NodeEditorToolbar';
 
 // Icons
 export {

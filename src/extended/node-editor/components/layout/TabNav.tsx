@@ -1,5 +1,5 @@
 import * as React from "react";
-import { classNames } from "./elements";
+import { classNames } from "../elements";
 import styles from "./TabNav.module.css";
 
 export interface TabNavProps {

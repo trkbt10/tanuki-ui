@@ -43,8 +43,6 @@
   box-sizing: border-box;
 }
 
-/* Removed decorative line to simplify design */
-
 .searchInput {
   width: 100%;
   padding: var(--inputPadding);
@@ -99,9 +97,7 @@
   background: var(--controlBackground);
 }
 
-.categoryList {
-  /* Container for all categories */
-}
+/* .categoryList is a container for all categories */
 
 .categoryGroup {
   margin-bottom: 0;
@@ -144,13 +140,10 @@
 
 .nodeCount {
   font-size: var(--node-editor-inspector-font-size-meta);
-  color: var(--secondaryLabelColor);
-  opacity: 0.8;
+  color: var(--tertiaryLabelColor);
 }
 
-.nodeList {
-  /* Container for nodes in a category */
-}
+/* .nodeList is a container for nodes in a category */
 
 .nodeItem {
   padding: var(--node-editor-space-sm) var(--node-editor-space-lg);
@@ -162,8 +155,6 @@
   position: relative;
   box-sizing: border-box;
 }
-
-/* Removed decorative overlay */
 
 .nodeItem:hover {
   background: var(--controlHoverBackground, rgba(0, 0, 0, 0.05));
@@ -241,7 +232,7 @@
 .noResultsIcon {
   font-size: 32px;
   margin-bottom: var(--node-editor-space-sm);
-  opacity: 0.5;
+  color: var(--tertiaryLabelColor);
 }
 
 .searchFooter {

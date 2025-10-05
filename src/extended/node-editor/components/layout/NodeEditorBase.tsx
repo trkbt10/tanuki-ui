@@ -1,6 +1,6 @@
 import * as React from "react";
-import { classNames } from "./elements";
-import { useNodeEditorShortcuts } from "../hooks/useNodeEditorShortcuts";
+import { classNames } from "../elements";
+import { useNodeEditorShortcuts } from "../../hooks/useNodeEditorShortcuts";
 import styles from "./NodeEditorBase.module.css";
 
 interface NodeEditorBaseProps {

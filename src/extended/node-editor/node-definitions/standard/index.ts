@@ -1,6 +1,5 @@
 import type { NodeDefinition } from "../../types/NodeDefinition";
 import { StandardNodeRenderer } from "./node";
-import { StandardInspectorRenderer } from "./inspector";
 
 /**
  * Standard node definition
@@ -32,5 +31,4 @@ export const StandardNodeDefinition: NodeDefinition<"standard"> = {
   ],
   behaviors: ["node"],
   renderNode: StandardNodeRenderer,
-  renderInspector: StandardInspectorRenderer,
 };

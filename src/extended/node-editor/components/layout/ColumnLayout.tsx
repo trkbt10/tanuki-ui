@@ -1,5 +1,5 @@
 import * as React from "react";
-import { HorizontalDivider } from "./parts/HorizontalDivider";
+import { HorizontalDivider } from "./HorizontalDivider";
 import styles from "./ColumnLayout.module.css";
 
 export interface ColumnLayoutProps {

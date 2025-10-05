@@ -1,49 +1,23 @@
-import type { NodeDefinition, NodeRenderProps, InspectorRenderProps, NodeDataTypeMap } from "./NodeDefinition";
-import type { LabelNodeData, LabelNodeDataMap } from "../node-definitions/label/types";
+import type { NodeRenderProps, InspectorRenderProps, NodeDataTypeMap } from "./NodeDefinition";
 
-function isStringOrUndefined(v: unknown): v is string | undefined {
-  return typeof v === "string" || typeof v === "undefined";
-}
-
-export function isLabelNodeData(data: unknown): data is LabelNodeData {
-  if (data == null || typeof data !== "object") return false;
-  const d = data as Record<string, unknown>;
-  return isStringOrUndefined(d.title) && isStringOrUndefined(d.subtitle) && isStringOrUndefined(d.caption);
+/**
+ * Generic type guard factory based on node type (data shape is not validated)
+ * @param type - The node type to check for
+ * @returns A type guard function for node render props
+ */
+export function createTypeGuard<T extends string, TMap extends NodeDataTypeMap = NodeDataTypeMap>(type: T) {
+  return (
+    props: NodeRenderProps<string, TMap>
+  ): props is NodeRenderProps<T, TMap> => props.node.type === type;
 }
 
 /**
- * Runtime guard to validate that a NodeDefinition is compatible with the CombinedMap = (UserMap & LabelNodeDataMap).
- * It validates built-in types that have stricter data contracts (currently: "label").
+ * Generic type guard factory based on node type for inspector props (data shape is not validated)
+ * @param type - The node type to check for
+ * @returns A type guard function for inspector render props
  */
-export function isDefinitionForCombinedMap(def: { type: string; defaultData?: unknown }): boolean {
-  if (def.type === "label") {
-    return isLabelNodeData((def as any).defaultData);
-  }
-  return true;
-}
-
-// Type guard: render props is for label node with correct data shape
-export function isLabelNodeRenderProps(
-  props: NodeRenderProps<string, NodeDataTypeMap & LabelNodeDataMap>
-): props is NodeRenderProps<"label", LabelNodeDataMap> {
-  return props.node.type === "label" && isLabelNodeData(props.node.data);
-}
-
-// Generic type-only guard based on node type (data shape is not validated)
-export function createTypeGuard<T extends string>(type: T) {
+export function createInspectorTypeGuard<T extends string, TMap extends NodeDataTypeMap = NodeDataTypeMap>(type: T) {
   return (
-    props: NodeRenderProps<string, NodeDataTypeMap & LabelNodeDataMap>
-  ): props is NodeRenderProps<T, NodeDataTypeMap & LabelNodeDataMap> => props.node.type === type;
-}
-
-export function isLabelInspectorProps(
-  props: InspectorRenderProps<string, NodeDataTypeMap & LabelNodeDataMap>
-): props is InspectorRenderProps<"label", LabelNodeDataMap> {
-  return props.node.type === "label" && isLabelNodeData(props.node.data);
-}
-
-export function createInspectorTypeGuard<T extends string>(type: T) {
-  return (
-    props: InspectorRenderProps<string, NodeDataTypeMap & LabelNodeDataMap>
-  ): props is InspectorRenderProps<T, NodeDataTypeMap & LabelNodeDataMap> => props.node.type === type;
+    props: InspectorRenderProps<string, TMap>
+  ): props is InspectorRenderProps<T, TMap> => props.node.type === type;
 }

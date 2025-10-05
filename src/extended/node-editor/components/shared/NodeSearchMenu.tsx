@@ -1,8 +1,8 @@
 import * as React from "react";
-import { classNames, calculateContextMenuPosition, getViewportInfo, Input } from "./elements";
-import type { NodeDefinition } from "../types/NodeDefinition";
-import type { Position } from "../types/core";
-import { getNodeIcon } from "../utils/nodeUtils";
+import { classNames, calculateContextMenuPosition, getViewportInfo, Input } from "../elements";
+import type { NodeDefinition } from "../../types/NodeDefinition";
+import type { Position } from "../../types/core";
+import { getNodeIcon } from "../../utils/nodeUtils";
 import styles from "./NodeSearchMenu.module.css";
 
 export interface NodeSearchMenuProps {

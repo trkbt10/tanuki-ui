@@ -5,11 +5,9 @@ import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeDefinition } from "../../contexts/NodeDefinitionContext";
 import { useExternalDataRef } from "../../contexts/ExternalDataContext";
 import { useExternalData } from "../../hooks/useExternalData";
-import { StandardInspectorRenderer as DefaultInspectorRenderer } from "../../node-definitions/standard/inspector";
-import { GroupInspectorRenderer as GroupBehaviorInspector } from "../../node-definitions/group/inspector";
+import { NodeBehaviorInspector, NodeActionsBehaviorInspector, GroupBehaviorInspector } from "./renderers";
 import styles from "./NodeInspector.module.css";
-import { calculateAlignmentPositions } from "../../utils/alignmentUtils";
-import type { AlignmentActionType } from "../shared/alignmentActions";
+import { calculateAlignmentPositions, type AlignmentActionType } from "../controls/alignments";
 
 export interface NodeInspectorProps {
   node: Node;
@@ -87,20 +85,31 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
 
     return (
       <>
-        {/* Group behavior settings when supported by definition */}
-        {nodeDefinition?.supportsChildren && (
-          <div className={styles.customInspectorBlock}>
-            <GroupBehaviorInspector {...inspectorProps} />
-          </div>
-        )}
         {/* Custom inspector (node-specific) */}
         {nodeDefinition?.renderInspector && (
           <div className={styles.customInspectorBlock}>
             {nodeDefinition.renderInspector(inspectorProps)}
           </div>
         )}
-        {/* Default Node Properties */}
-        <DefaultInspectorRenderer {...inspectorProps} />
+
+        {/* Behavior-based inspectors */}
+        {nodeDefinition?.behaviors?.includes("node") && (
+          <div className={styles.customInspectorBlock}>
+            <NodeBehaviorInspector {...inspectorProps} />
+          </div>
+        )}
+
+        {nodeDefinition?.behaviors?.includes("node") && (
+          <div className={styles.customInspectorBlock}>
+            <NodeActionsBehaviorInspector {...inspectorProps} />
+          </div>
+        )}
+
+        {nodeDefinition?.behaviors?.includes("group") && (
+          <div className={styles.customInspectorBlock}>
+            <GroupBehaviorInspector {...inspectorProps} />
+          </div>
+        )}
       </>
     );
   },

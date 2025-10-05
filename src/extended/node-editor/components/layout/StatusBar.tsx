@@ -1,10 +1,10 @@
 import * as React from "react";
-import { useNodeEditor } from "../contexts/node-editor";
-import { useEditorActionState } from "../contexts/EditorActionStateContext";
-import { useNodeCanvas } from "../contexts/NodeCanvasContext";
-import type { SettingsManager } from "../settings/SettingsManager";
-import { classNames } from "./elements";
-import { StatusSection, statusSectionStyles } from "./parts";
+import { useNodeEditor } from "../../contexts/node-editor";
+import { useEditorActionState } from "../../contexts/EditorActionStateContext";
+import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
+import type { SettingsManager } from "../../settings/SettingsManager";
+import { classNames } from "../elements";
+import { StatusSection, statusSectionStyles } from "./StatusSection";
 import styles from "./StatusBar.module.css";
 
 export interface StatusBarProps {

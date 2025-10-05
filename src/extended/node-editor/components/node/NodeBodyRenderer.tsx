@@ -5,7 +5,7 @@ import type { CustomNodeRendererProps } from "./NodeView";
 import { GroupNodeRenderer as GroupContent } from "../../node-definitions/group/node";
 import { LockIcon } from "../elements";
 import { useI18n } from "../../i18n";
-import styles from "./NodeView.module.css";
+import styles from "./NodeBodyRenderer.module.css";
 
 export interface NodeBodyRendererProps {
   node: Node;
@@ -54,7 +54,9 @@ export const NodeBodyRenderer: React.FC<NodeBodyRendererProps> = ({
       <div
         className={styles.nodeHeader}
         data-drag-handle={nodeDefinition?.interactive ? "true" : "false"}
-        data-interactive={nodeDefinition?.interactive}
+        data-interactive={nodeDefinition?.interactive ? "true" : "false"}
+        data-selected={isSelected ? "true" : "false"}
+        data-is-group={isGroup ? "true" : "false"}
       >
         {node.locked && (
           <span className={styles.lockIcon}>
@@ -76,7 +78,12 @@ export const NodeBodyRenderer: React.FC<NodeBodyRendererProps> = ({
             aria-label="Node title"
           />
         ) : (
-          <span className={styles.nodeTitle} onDoubleClick={onTitleDoubleClick} style={groupTextColor ? { color: groupTextColor } : undefined}>
+          <span
+            className={styles.nodeTitle}
+            onDoubleClick={onTitleDoubleClick}
+            style={groupTextColor ? { color: groupTextColor } : undefined}
+            data-is-group={isGroup ? "true" : "false"}
+          >
             {node.data.title && node.data.title.trim().length > 0 ? node.data.title : t("untitled")}
           </span>
         )}

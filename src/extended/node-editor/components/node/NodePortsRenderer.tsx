@@ -5,7 +5,7 @@ import { isPortConnectable } from "../../utils/nodeLayerHelpers";
 import { PortView } from "../connection/ports/PortView";
 import { useOptionalRenderers } from "../../contexts/RendererContext";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
-import styles from "./NodeView.module.css";
+import styles from "./NodePortsRenderer.module.css";
 
 export interface NodePortsRendererProps {
   ports: Port[];

@@ -1,13 +1,13 @@
 import * as React from "react";
-import { NodeId, ConnectionId, Position } from "../types/core";
-import { useNodeEditor } from "../contexts/node-editor";
-import { useEditorActionState } from "../contexts/EditorActionStateContext";
-import { useNodeCanvas } from "../contexts/NodeCanvasContext";
-import { classNames } from "./elements";
-import { getNodeBoundingBox, createBoundingBoxFromCorners, doRectanglesIntersect } from "../utils/boundingBoxUtils";
-import { SpatialGrid } from "../utils/lookupUtils";
+import { NodeId, ConnectionId, Position } from "../../types/core";
+import { useNodeEditor } from "../../contexts/node-editor";
+import { useEditorActionState } from "../../contexts/EditorActionStateContext";
+import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
+import { classNames } from "../elements";
+import { getNodeBoundingBox, createBoundingBoxFromCorners, doRectanglesIntersect } from "../../utils/boundingBoxUtils";
+import { SpatialGrid } from "../../utils/lookupUtils";
 import styles from "./SelectionManager.module.css";
-import { SelectionOverlay } from "./parts";
+import { SelectionOverlay } from "./SelectionOverlay";
 
 export interface SelectionManagerProps {
   children: React.ReactNode;

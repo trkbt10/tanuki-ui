@@ -1,6 +1,5 @@
 import type { NodeDefinition } from "../../types/NodeDefinition";
 import { GroupNodeRenderer } from "./node";
-import { GroupInspectorRenderer } from "./inspector";
 
 /**
  * Group node definition
@@ -18,5 +17,4 @@ export const GroupNodeDefinition: NodeDefinition<"group"> = {
   supportsChildren: true,
   behaviors: ["node", "group"],
   visualState: "info",
-  renderInspector: GroupInspectorRenderer,
 };

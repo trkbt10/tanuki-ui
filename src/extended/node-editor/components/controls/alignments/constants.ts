@@ -1,4 +1,3 @@
-import type { ComponentType } from "react";
 import {
   AlignLeftIcon,
   AlignCenterIcon,
@@ -8,29 +7,17 @@ import {
   AlignBottomIcon,
   DistributeHorizontalIcon,
   DistributeVerticalIcon,
-} from "../elements/icons";
+} from "../../elements/icons";
+import type { AlignmentActionConfig, AlignmentActionGroup } from "./types";
 
-export type AlignmentActionType =
-  | "align-left"
-  | "align-center-horizontal"
-  | "align-right"
-  | "align-top"
-  | "align-center-vertical"
-  | "align-bottom"
-  | "distribute-horizontal"
-  | "distribute-vertical";
-
-export type AlignmentActionGroup = "horizontal" | "vertical";
-
-export interface AlignmentActionConfig {
-  type: AlignmentActionType;
-  icon: ComponentType<{ size?: number }>;
-  title: string;
-  group: AlignmentActionGroup;
-}
-
+/**
+ * Available alignment action groups
+ */
 export const ALIGNMENT_GROUPS: AlignmentActionGroup[] = ["horizontal", "vertical"];
 
+/**
+ * Available alignment actions with their configurations
+ */
 export const ALIGNMENT_ACTIONS: AlignmentActionConfig[] = [
   { type: "align-left", icon: AlignLeftIcon, title: "Align Left", group: "horizontal" },
   { type: "align-center-horizontal", icon: AlignCenterIcon, title: "Align Center Horizontal", group: "horizontal" },

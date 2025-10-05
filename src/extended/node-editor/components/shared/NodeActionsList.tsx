@@ -1,5 +1,5 @@
 import * as React from "react";
-import styles from "../ContextActionMenu.module.css";
+import styles from "./ContextActionMenu.module.css";
 import { DuplicateIcon, CopyIcon, CutIcon, PasteIcon, DeleteIcon } from "../elements/icons";
 import { useI18n } from "../../i18n";
 import { useNodeEditorActions } from "../../hooks/useNodeEditorActions";

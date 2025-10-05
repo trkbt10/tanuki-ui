@@ -1,5 +1,5 @@
 import * as React from "react";
-import { SelectionBox } from "./SelectionBox";
+import { SelectionBox } from "../canvas/SelectionBox";
 import { classNames } from "../elements";
 import styles from "./SelectionOverlay.module.css";
 
