@@ -39,7 +39,7 @@ export interface ExternalDataReference {
  */
 export interface NodeRenderProps<TNodeType extends string = string, TNodeDataTypeMap = NodeDataTypeMap> {
   /** The node data with type-safe data property */
-  node: TNodeType extends keyof TNodeDataTypeMap 
+  node: TNodeType extends keyof TNodeDataTypeMap
     ? Node & {
         type: TNodeType;
         data: TNodeDataTypeMap[TNodeType];
@@ -70,7 +70,7 @@ export interface NodeRenderProps<TNodeType extends string = string, TNodeDataTyp
  */
 export interface InspectorRenderProps<TNodeType extends string = string, TNodeDataTypeMap = NodeDataTypeMap> {
   /** The selected node with type-safe data property */
-  node: TNodeType extends keyof TNodeDataTypeMap 
+  node: TNodeType extends keyof TNodeDataTypeMap
     ? Node & {
         type: TNodeType;
         data: TNodeDataTypeMap[TNodeType];
@@ -178,10 +178,7 @@ export interface PortDefinition {
    * @param defaultRender - Function to render the default port appearance
    * @returns React element to render
    */
-  renderPort?: (
-    context: PortRenderContext,
-    defaultRender: () => ReactElement
-  ) => ReactElement;
+  renderPort?: (context: PortRenderContext, defaultRender: () => ReactElement) => ReactElement;
 
   /**
    * Custom connection renderer (complete control over connection appearance)
@@ -189,10 +186,7 @@ export interface PortDefinition {
    * @param defaultRender - Function to render the default connection appearance
    * @returns React element to render (should be SVG)
    */
-  renderConnection?: (
-    context: ConnectionRenderContext,
-    defaultRender: () => ReactElement
-  ) => ReactElement;
+  renderConnection?: (context: ConnectionRenderContext, defaultRender: () => ReactElement) => ReactElement;
 }
 
 /**
@@ -330,7 +324,6 @@ export interface NodeDefinitionRegistry<TNodeDataTypeMap = NodeDataTypeMap> {
   getByCategory: (category: string) => NodeDefinition<string, TNodeDataTypeMap>[];
 }
 
-
 /**
  * Create a node definition registry
  * @template TNodeDataTypeMap - The node data type map
@@ -353,9 +346,7 @@ export function createNodeDefinitionRegistry<TNodeDataTypeMap = NodeDataTypeMap>
       return Array.from(definitions.values());
     },
     getByCategory(category: string) {
-      return Array.from(definitions.values()).filter(
-        (def) => def.category === category
-      );
+      return Array.from(definitions.values()).filter((def) => def.category === category);
     },
   };
 }
@@ -418,7 +409,8 @@ export const LabelNodeDefinition: NodeDefinition<"label", LabelNodeDataMap> = {
   type: "label",
   displayName: "Label",
   description: "A decoration-less text label with optional subtitle and caption",
-  category: "Basic",
+  icon: "📝",
+  category: "Structure",
   defaultData: {
     title: "Title",
     subtitle: "Subtitle",
@@ -454,14 +446,14 @@ export const MultiInputNodeDefinition: NodeDefinition = {
       position: "left",
     },
     {
-      id: "input2", 
+      id: "input2",
       type: "input",
       label: "Input 2",
       position: "left",
     },
     {
       id: "input3",
-      type: "input", 
+      type: "input",
       label: "Input 3",
       position: "left",
     },
@@ -551,7 +543,7 @@ export function toUntypedDefinition<TNodeType extends string, TMap = NodeDataTyp
     | undefined;
 
   const wrapRenderNode = typedRenderNode
-    ? ((props: NodeRenderProps<string, NodeDataTypeMap & BuiltinNodeDataMap>) => {
+    ? (props: NodeRenderProps<string, NodeDataTypeMap & BuiltinNodeDataMap>) => {
         if (type === "label") {
           if (isLabelNodeRenderProps(props) && typedLabelRenderNode) return typedLabelRenderNode(props);
         } else {
@@ -559,11 +551,11 @@ export function toUntypedDefinition<TNodeType extends string, TMap = NodeDataTyp
           if (guard(props) && typedRenderNode) return typedRenderNode(props);
         }
         return React.createElement(React.Fragment, null);
-      })
+      }
     : undefined;
 
   const wrapRenderInspector = typedRenderInspector
-    ? ((props: InspectorRenderProps<string, NodeDataTypeMap & BuiltinNodeDataMap>) => {
+    ? (props: InspectorRenderProps<string, NodeDataTypeMap & BuiltinNodeDataMap>) => {
         if (type === "label") {
           if (isLabelInspectorProps(props) && typedLabelRenderInspector) return typedLabelRenderInspector(props);
         } else {
@@ -571,7 +563,7 @@ export function toUntypedDefinition<TNodeType extends string, TMap = NodeDataTyp
           if (guard(props) && typedRenderInspector) return typedRenderInspector(props);
         }
         return React.createElement(React.Fragment, null);
-      })
+      }
     : undefined;
 
   const untyped = {
