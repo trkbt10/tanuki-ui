@@ -286,6 +286,7 @@
   --segmentControlBackground: var(--openaiGray100);
   --segmentControlBorderRadius: 8px;
   --segmentControlIndicatorBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --segmentControlIndicatorBorder: 1px solid rgba(0, 0, 0, 0.08);
   --segmentControlIndicatorBackground: var(--windowBackgroundColor);
 
   /* Card */

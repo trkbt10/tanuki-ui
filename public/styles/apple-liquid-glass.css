@@ -446,6 +446,7 @@
     0 1px 3px rgba(0, 0, 0, 0.05),
     0 10px 36px rgba(0, 0, 0, 0.12),
     inset 0 1px 0 var(--liquidGlassSheen);
+  --segmentControlIndicatorBorder: 1px solid rgba(255, 255, 255, 0.3);
   --segmentControlIndicatorBackground: linear-gradient(180deg, rgba(107, 206, 255, 0.46) 0%, rgba(65, 160, 255, 0.28) 100%);
   --segmentControlIndicatorBackdropFilter: var(--liquidGlassBackdropMedium);
   --segmentControlIndicatorFilter: var(--backdropFilterRef);

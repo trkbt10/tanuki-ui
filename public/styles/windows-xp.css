@@ -704,6 +704,7 @@
   --segmentControlBackground: rgba(236, 233, 216, 1);
   --segmentControlBorderRadius: 3px;
   --segmentControlIndicatorBoxShadow: 0 0 0 1px rgba(0, 60, 116, 1);
+  --segmentControlIndicatorBorder: 1px solid rgba(0, 0, 0, 0.1);
 
   /* SelectBox Variables */
   --selectBoxSplitButtonWidth: 17px;

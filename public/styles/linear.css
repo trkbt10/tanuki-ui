@@ -316,6 +316,7 @@
   --segmentControlBackground: var(--linearBgSubtle);
   --segmentControlBorderRadius: 9999px;
   --segmentControlIndicatorBoxShadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  --segmentControlIndicatorBorder: 1px solid var(--linearBorder);
   --segmentControlIndicatorBackground: var(--windowBackgroundColor);
   --segmentControlIndicatorBorderRadius: 9999px;
 

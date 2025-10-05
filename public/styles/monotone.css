@@ -153,6 +153,8 @@
   --controlTextLetterSpacing: -0.5px;
   --controlTextColor: var(--textColor);
   --controlBackground: rgba(255, 255, 255, 1);
+  --controlHoverBackground: rgba(0, 0, 0, 0.05);
+  --controlActiveBackground: rgba(0, 0, 0, 0.1);
 
   /* Button Primary */
   --controlBoxShadow--primary: none;
@@ -246,6 +248,7 @@
   --segmentControlBackground: rgba(0, 0, 0, 0);
   --segmentControlBorderRadius: 0;
   --segmentControlIndicatorBoxShadow: 0 2px 0 0 rgba(0, 0, 0, 0.8);
+  --segmentControlIndicatorBorder: 1px solid rgba(0, 0, 0, 0.02);
 }
 
 :root {

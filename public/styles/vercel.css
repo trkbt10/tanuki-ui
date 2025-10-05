@@ -248,6 +248,7 @@
   --segmentControlSegmentPadding: 4px 12px;
   --segmentControlBoxShadow: inset 0 0 0 1px color-mix(in srgb, var(--geistAccent2) 70%, transparent);
   --segmentControlIndicatorBoxShadow: 0 6px 18px color-mix(in srgb, var(--accentColor) 24%, transparent);
+  --segmentControlIndicatorBorder: 1px solid color-mix(in srgb, var(--geistAccent2) 15%, transparent);
 
   /* Navigation */
   --tabBarBackground: var(--windowBackgroundColor);

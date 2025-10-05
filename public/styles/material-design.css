@@ -355,6 +355,7 @@
   --segmentControlBackground: transparent;
   --segmentControlBorderRadius: 8px;
   --segmentControlIndicatorBoxShadow: none;
+  --segmentControlIndicatorBorder: 1px solid transparent;
   --segmentControlIndicatorBackground: var(--mdSecondaryContainer);
   --segmentControlIndicatorBorderRadius: 8px;
 

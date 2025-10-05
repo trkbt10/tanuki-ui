@@ -393,6 +393,7 @@
   --segmentControlBackground: rgba(0, 0, 0, 0.05);
   --segmentControlBorderRadius: 6px;
   --segmentControlIndicatorBoxShadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  --segmentControlIndicatorBorder: 1px solid rgba(0, 0, 0, 0.08);
 
   /* SelectBox Variables */
   --selectBoxSplitButtonWidth: 35px;
@@ -644,6 +645,7 @@
     --segmentControlBoxShadow: 0 0 0 1px rgba(255, 255, 255, 0.08);
     --segmentControlBackground: rgba(255, 255, 255, 0.05);
     --segmentControlIndicatorBoxShadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+    --segmentControlIndicatorBorder: 1px solid rgba(255, 255, 255, 0.12);
 
     /* Status Bar */
     --statusBarBackground: rgba(40, 40, 40, 1);

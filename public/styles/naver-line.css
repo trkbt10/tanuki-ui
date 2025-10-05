@@ -300,6 +300,7 @@
   --segmentControlBackground: var(--lineNeutral200);
   --segmentControlBorderRadius: 12px;
   --segmentControlIndicatorBoxShadow: 0 10px 24px color-mix(in oklch, var(--lineGreen300) 30%, transparent);
+  --segmentControlIndicatorBorder: 1px solid var(--lineNeutral200);
   --segmentControlIndicatorBackground: var(--windowBackgroundColor);
 
   /* Card */

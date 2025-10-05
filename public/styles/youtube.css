@@ -307,6 +307,7 @@
   --segmentControlBackground: #f0f0f0;
   --segmentControlBorderRadius: var(--youtube-radius-large);
   --segmentControlIndicatorBoxShadow: var(--youtube-shadow-1);
+  --segmentControlIndicatorBorder: 1px solid rgba(0, 0, 0, 0.05);
   --segmentControlIndicatorBackground: var(--youtube-white);
 
   /* YouTube Contextual Menu */

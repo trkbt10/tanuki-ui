@@ -296,6 +296,7 @@
   --segmentControlBackground: rgba(0, 0, 0, 0.05);
   --segmentControlBorderRadius: 0.5rem;
   --segmentControlIndicatorBoxShadow: 0 0 0 0 rgba(0, 0, 0, 0.15), 0 1px 0 0 rgba(0, 0, 0, 0.1);
+  --segmentControlIndicatorBorder: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 @media (prefers-color-scheme: dark) {

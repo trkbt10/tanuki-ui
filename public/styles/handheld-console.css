@@ -283,6 +283,7 @@
   --segmentControlBackground: var(--switchMediumGray);
   --segmentControlBorderRadius: 28px;
   --segmentControlIndicatorBoxShadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --segmentControlIndicatorBorder: 1px solid rgba(0, 0, 0, 0.08);
   --segmentControlIndicatorBackground: var(--switchWhite);
   --segmentControlIndicatorBorderRadius: 24px;
 

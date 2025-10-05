@@ -302,6 +302,7 @@
   --segmentControlBackground: var(--pixel-medium-gray);
   --segmentControlBorderRadius: 0;
   --segmentControlIndicatorBoxShadow: var(--pixel-raised-shadow);
+  --segmentControlIndicatorBorder: 2px solid var(--pixel-black);
   --segmentControlIndicatorBackground: var(--pixel-light-gray);
 
   /* 8-bit Contextual Menu */
