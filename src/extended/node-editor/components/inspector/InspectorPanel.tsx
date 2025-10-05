@@ -7,7 +7,6 @@ import { HistoryPanel } from "./HistoryPanel";
 import { TabNav } from "../layout/TabNav";
 import { classNames, H4 } from "../elements";
 import { PropertySection } from "./parts";
-import { GridSettingsPanel, GeneralSettingsPanel } from "../../settings";
 import styles from "./InspectorPanel.module.css";
 import { useI18n } from "../../i18n";
 
@@ -21,9 +20,10 @@ export interface InspectorPanelTabConfig {
 export interface InspectorPanelProps {
   className?: string;
   tabs?: InspectorPanelTabConfig[];
+  settingsPanels?: InspectorSettingsPanelConfig[];
 }
 
-export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className, tabs: providedTabs }) => {
+export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className, tabs: providedTabs, settingsPanels = [] }) => {
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { t } = useI18n();
 
@@ -43,19 +43,10 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className, tabs:
       {
         id: "settings",
         label: t("inspectorTabSettings") || "Settings",
-        render: () => (
-          <>
-            <PropertySection title={t("inspectorGridSettings")} bodyClassName={styles.settingsSectionBody}>
-              <GridSettingsPanel />
-            </PropertySection>
-            <PropertySection title={t("inspectorGeneralSettings") || "General"} bodyClassName={styles.settingsSectionBody}>
-              <GeneralSettingsPanel />
-            </PropertySection>
-          </>
-        ),
+        render: () => <InspectorSettingsTab panels={settingsPanels} />,
       },
     ],
-    [t]
+    [t, settingsPanels]
   );
 
   const tabs = providedTabs ?? defaultTabs;
@@ -161,4 +152,25 @@ export const InspectorPropertiesTab: React.FC = () => {
 
 export const InspectorHistoryTab: React.FC = () => {
   return <HistoryPanel />;
+};
+
+export interface InspectorSettingsPanelConfig {
+  title: string;
+  component: React.ComponentType;
+}
+
+export interface InspectorSettingsTabProps {
+  panels: InspectorSettingsPanelConfig[];
+}
+
+export const InspectorSettingsTab: React.FC<InspectorSettingsTabProps> = ({ panels }) => {
+  return (
+    <>
+      {panels.map((panel, index) => (
+        <PropertySection key={index} title={panel.title} bodyClassName={styles.settingsSectionBody}>
+          <panel.component />
+        </PropertySection>
+      ))}
+    </>
+  );
 };

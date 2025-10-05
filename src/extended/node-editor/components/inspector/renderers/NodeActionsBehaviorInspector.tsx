@@ -1,7 +1,7 @@
 import * as React from "react";
 import type { InspectorRenderProps } from "../../../types/NodeDefinition";
 import { InspectorLabel, InspectorButton } from "../parts";
-import styles from "./standard.module.css";
+import styles from "./NodeActionsBehaviorInspector.module.css";
 import { useI18n } from "../../../i18n";
 import { useNodeEditorActions } from "../../../hooks/useNodeEditorActions";
 import { useEditorActionState } from "../../../contexts/EditorActionStateContext";
@@ -86,22 +86,30 @@ export function NodeActionsBehaviorInspector({ node }: InspectorRenderProps): Re
   return (
     <div>
       <InspectorLabel>{t("inspectorActions") || "Actions"}</InspectorLabel>
-      <div className={styles.inspectorActions}>
+      <div className={styles.actions}>
         <InspectorButton onClick={handleDuplicate} aria-label={duplicateLabel}>
-          <DuplicateIcon size={14} />
-          <span style={{ marginLeft: 6 }}>{duplicateLabel}</span>
+          <span className={styles.buttonContent}>
+            <DuplicateIcon size={14} />
+            <span>{duplicateLabel}</span>
+          </span>
         </InspectorButton>
         <InspectorButton onClick={handleCopy} aria-label={copyLabel}>
-          <CopyIcon size={14} />
-          <span style={{ marginLeft: 6 }}>{copyLabel}</span>
+          <span className={styles.buttonContent}>
+            <CopyIcon size={14} />
+            <span>{copyLabel}</span>
+          </span>
         </InspectorButton>
         <InspectorButton onClick={handleCut} aria-label={cutLabel}>
-          <CutIcon size={14} />
-          <span style={{ marginLeft: 6 }}>{cutLabel}</span>
+          <span className={styles.buttonContent}>
+            <CutIcon size={14} />
+            <span>{cutLabel}</span>
+          </span>
         </InspectorButton>
         <InspectorButton variant="danger" onClick={handleDelete} aria-label={deleteLabel}>
-          <DeleteIcon size={14} />
-          <span style={{ marginLeft: 6 }}>{deleteLabel}</span>
+          <span className={styles.buttonContent}>
+            <DeleteIcon size={14} />
+            <span>{deleteLabel}</span>
+          </span>
         </InspectorButton>
       </div>
     </div>

@@ -3,7 +3,7 @@ import type { InspectorRenderProps } from "../../../types/NodeDefinition";
 import { Input } from "../../../components/elements";
 import { InspectorLabel, InspectorButton } from "../parts";
 import { useI18n } from "../../../i18n";
-import styles from "../InspectorPanel.module.css";
+import styles from "./GroupBehaviorInspector.module.css";
 
 /**
  * Inspector for "group" behavior
@@ -21,8 +21,8 @@ export function GroupBehaviorInspector({ node, onUpdateNode }: InspectorRenderPr
 
   return (
     <div>
-      <h3 className={styles.inspectorSectionTitle}>{t("inspectorGroupAppearanceTitle") || "Appearance"}</h3>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <h3 className={styles.sectionTitle}>{t("inspectorGroupAppearanceTitle") || "Appearance"}</h3>
+      <div className={styles.colorInputRow}>
         <InspectorLabel>{t("fieldBackground") || "Background"}</InspectorLabel>
         <Input
           id={`node-${node.id}-group-bg`}
@@ -31,13 +31,13 @@ export function GroupBehaviorInspector({ node, onUpdateNode }: InspectorRenderPr
           value={groupBackground}
           onChange={(e) => handleBackground(e.target.value)}
           aria-label="Group background color"
-          style={{ width: 40, padding: 0, height: 24 }}
+          className={styles.colorInput}
         />
         <InspectorButton onClick={handleReset} aria-label="Reset group background">
           Reset
         </InspectorButton>
       </div>
-      <div style={{ display: "grid", gridTemplateColumns: "auto 1fr auto", alignItems: "center", gap: 8 }}>
+      <div className={styles.opacityRow}>
         <InspectorLabel>{t("fieldOpacity") || "Opacity"}</InspectorLabel>
         <input
           type="range"
@@ -47,7 +47,7 @@ export function GroupBehaviorInspector({ node, onUpdateNode }: InspectorRenderPr
           value={groupOpacity}
           onChange={(e) => onUpdateNode({ data: { ...node.data, groupOpacity: Number(e.target.value) } })}
         />
-        <span style={{ minWidth: 36, textAlign: "right" }}>{Math.round(groupOpacity * 100)}%</span>
+        <span className={styles.opacityValue}>{Math.round(groupOpacity * 100)}%</span>
       </div>
     </div>
   );

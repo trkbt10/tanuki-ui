@@ -80,12 +80,12 @@ export {
   InspectorPropertiesTab,
   InspectorHistoryTab,
 } from "./components/inspector/InspectorPanel";
-export { GridSettings, GeneralSettings } from "./settings";
+export { GridSettingsPanel, GeneralSettingsPanel } from "./settings";
 export { NodeInspector } from "./components/inspector/NodeInspector";
 export type { NodeEditorToolbarProps } from "./components/layout/NodeEditorToolbar";
 export type { FloatingContainerProps } from "./components/shared/FloatingContainer";
 export type { ColumnLayoutProps } from "./components/layout/ColumnLayout";
-export type { InspectorPanelProps, InspectorPanelTabConfig } from "./components/inspector/InspectorPanel";
+export type { InspectorPanelProps, InspectorPanelTabConfig, InspectorSettingsPanelConfig } from "./components/inspector/InspectorPanel";
 export type { NodeInspectorProps } from "./components/inspector/NodeInspector";
 
 // Utilities for custom components

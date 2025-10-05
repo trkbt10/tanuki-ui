@@ -18,3 +18,9 @@ export type { InspectorCheckboxProps } from "./InspectorCheckbox";
 
 export { PropertySection } from "./PropertySection";
 export type { PropertySectionProps } from "./PropertySection";
+
+export { PositionInputsGrid } from "./PositionInputsGrid";
+export type { PositionInputsGridProps } from "./PositionInputsGrid";
+
+export { ReadOnlyField } from "./ReadOnlyField";
+export type { ReadOnlyFieldProps } from "./ReadOnlyField";
