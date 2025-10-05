@@ -82,30 +82,34 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
         handleAlignNodes,
       ]
     );
-
+    const behaviors = React.useMemo(() => {
+      const defs = nodeDefinition?.behaviors || [];
+      if (defs.length <= 0) {
+        return ["node"];
+      }
+      return defs;
+    }, [nodeDefinition?.behaviors]);
     return (
       <>
         {/* Custom inspector (node-specific) */}
         {nodeDefinition?.renderInspector && (
-          <div className={styles.customInspectorBlock}>
-            {nodeDefinition.renderInspector(inspectorProps)}
-          </div>
+          <div className={styles.customInspectorBlock}>{nodeDefinition.renderInspector(inspectorProps)}</div>
         )}
 
         {/* Behavior-based inspectors */}
-        {nodeDefinition?.behaviors?.includes("node") && (
+        {behaviors?.includes("node") && (
           <div className={styles.customInspectorBlock}>
             <NodeBehaviorInspector {...inspectorProps} />
           </div>
         )}
 
-        {nodeDefinition?.behaviors?.includes("node") && (
+        {behaviors?.includes("node") && (
           <div className={styles.customInspectorBlock}>
             <NodeActionsBehaviorInspector {...inspectorProps} />
           </div>
         )}
 
-        {nodeDefinition?.behaviors?.includes("group") && (
+        {behaviors?.includes("group") && (
           <div className={styles.customInspectorBlock}>
             <GroupBehaviorInspector {...inspectorProps} />
           </div>

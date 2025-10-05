@@ -79,8 +79,8 @@ export {
   InspectorLayersTab,
   InspectorPropertiesTab,
   InspectorHistoryTab,
-  InspectorSettingsTab,
 } from "./components/inspector/InspectorPanel";
+export { GridSettings, GeneralSettings } from "./settings";
 export { NodeInspector } from "./components/inspector/NodeInspector";
 export type { NodeEditorToolbarProps } from "./components/layout/NodeEditorToolbar";
 export type { FloatingContainerProps } from "./components/shared/FloatingContainer";

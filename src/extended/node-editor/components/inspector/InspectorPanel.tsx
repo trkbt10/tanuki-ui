@@ -1,13 +1,13 @@
 import * as React from "react";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeEditor } from "../../contexts/node-editor";
-import { useNodeCanvas } from "../../contexts/NodeCanvasContext";
 import { NodeInspector } from "./NodeInspector";
 import { NodeTreeList } from "../layers/NodeTreeList";
 import { HistoryPanel } from "./HistoryPanel";
 import { TabNav } from "../layout/TabNav";
-import { classNames, Input, Label, H4, SwitchInput } from "../elements";
+import { classNames, H4 } from "../elements";
 import { PropertySection } from "./parts";
+import { GridSettings, GeneralSettings } from "../../settings";
 import styles from "./InspectorPanel.module.css";
 import { useI18n } from "../../i18n";
 
@@ -43,7 +43,16 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className, tabs:
       {
         id: "settings",
         label: t("inspectorTabSettings") || "Settings",
-        render: () => <InspectorSettingsTab />,
+        render: () => (
+          <>
+            <PropertySection title={t("inspectorGridSettings")} bodyClassName={styles.settingsSectionBody}>
+              <GridSettings />
+            </PropertySection>
+            <PropertySection title={t("inspectorGeneralSettings") || "General"} bodyClassName={styles.settingsSectionBody}>
+              <GeneralSettings />
+            </PropertySection>
+          </>
+        ),
       },
     ],
     [t]
@@ -152,148 +161,4 @@ export const InspectorPropertiesTab: React.FC = () => {
 
 export const InspectorHistoryTab: React.FC = () => {
   return <HistoryPanel />;
-};
-
-export const InspectorSettingsTab: React.FC = () => {
-  const { state: canvasState, dispatch: canvasDispatch, actions: canvasActions } = useNodeCanvas();
-  const { settings, settingsManager, updateSetting } = useNodeEditor();
-  const { t } = useI18n();
-  const [autoSaveIntervalInput, setAutoSaveIntervalInput] = React.useState<string>(() =>
-    String(settings.autoSaveInterval ?? 30)
-  );
-
-  React.useEffect(() => {
-    setAutoSaveIntervalInput(String(settings.autoSaveInterval ?? 30));
-  }, [settings.autoSaveInterval]);
-
-  const handleAutoSaveToggle = React.useCallback(
-    (enabled: boolean) => {
-      updateSetting("general.autoSave", enabled);
-    },
-    [updateSetting]
-  );
-
-  const handleAutoSaveIntervalChange = React.useCallback((value: string) => {
-    setAutoSaveIntervalInput(value);
-  }, []);
-
-  const handleAutoSaveIntervalBlur = React.useCallback(() => {
-    const interval = parseInt(autoSaveIntervalInput, 10);
-    if (!Number.isNaN(interval) && interval >= 5 && interval <= 3600) {
-      updateSetting("general.autoSaveInterval", interval);
-    } else {
-      setAutoSaveIntervalInput(String(settings.autoSaveInterval ?? 30));
-    }
-  }, [autoSaveIntervalInput, settings.autoSaveInterval, updateSetting]);
-
-  const settingsWritable = Boolean(settingsManager);
-
-  return (
-    <>
-      <PropertySection title={t("inspectorGridSettings")} bodyClassName={styles.settingsSectionBody}>
-        <div className={styles.settingsField}>
-          <SwitchInput
-            id="grid-show"
-            checked={canvasState.gridSettings.showGrid}
-            onChange={(checked) => canvasDispatch(canvasActions.updateGridSettings({ showGrid: checked }))}
-            label={t("inspectorShowGrid")}
-            size="medium"
-          />
-        </div>
-        <div className={styles.settingsField}>
-          <SwitchInput
-            id="grid-snap"
-            checked={canvasState.gridSettings.snapToGrid}
-            onChange={(checked) => canvasDispatch(canvasActions.updateGridSettings({ snapToGrid: checked }))}
-            label={t("inspectorSnapToGrid")}
-            size="medium"
-          />
-        </div>
-        <div className={styles.settingsField}>
-          <Label htmlFor="grid-size">
-            {t("inspectorGridSize")}:
-            <Input
-              id="grid-size"
-              name="gridSize"
-              type="number"
-              className={styles.inspectorInput}
-              value={canvasState.gridSettings.size}
-              min={10}
-              max={100}
-              step={5}
-              onChange={(e) => {
-                const size = parseInt(e.target.value, 10);
-                if (!isNaN(size) && size > 0) {
-                  canvasDispatch(
-                    canvasActions.updateGridSettings({
-                      size,
-                    })
-                  );
-                }
-              }}
-              aria-label="Grid size in pixels"
-            />
-          </Label>
-        </div>
-        <div className={styles.settingsField}>
-          <Label htmlFor="snap-threshold">
-            {t("inspectorSnapThreshold")}:
-            <Input
-              id="snap-threshold"
-              name="snapThreshold"
-              type="number"
-              className={styles.inspectorInput}
-              value={canvasState.gridSettings.snapThreshold}
-              min={1}
-              max={20}
-              step={1}
-              onChange={(e) => {
-                const snapThreshold = parseInt(e.target.value, 10);
-                if (!isNaN(snapThreshold) && snapThreshold > 0) {
-                  canvasDispatch(
-                    canvasActions.updateGridSettings({
-                      snapThreshold,
-                    })
-                  );
-                }
-              }}
-              aria-label="Snap threshold in pixels"
-            />
-          </Label>
-        </div>
-      </PropertySection>
-
-      <PropertySection title={t("inspectorGeneralSettings") || "General"} bodyClassName={styles.settingsSectionBody}>
-        <div className={styles.settingsField}>
-          <SwitchInput
-            id="auto-save"
-            checked={settings.autoSave}
-            onChange={handleAutoSaveToggle}
-            label={t("inspectorAutoSave")}
-            size="medium"
-            disabled={!settingsWritable}
-          />
-        </div>
-        <div className={styles.settingsField}>
-          <Label htmlFor="auto-save-interval">
-            {t("inspectorAutoSaveInterval")}
-            <Input
-              id="auto-save-interval"
-              name="autoSaveInterval"
-              type="number"
-              className={styles.inspectorInput}
-              value={autoSaveIntervalInput}
-              min={5}
-              max={3600}
-              step={5}
-              onChange={(e) => handleAutoSaveIntervalChange(e.target.value)}
-              onBlur={handleAutoSaveIntervalBlur}
-              disabled={!settingsWritable}
-              aria-label="Auto-save interval in seconds"
-            />
-          </Label>
-        </div>
-      </PropertySection>
-    </>
-  );
 };
