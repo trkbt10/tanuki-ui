@@ -69,7 +69,7 @@
     "./extended/audio-controls/style.css": "./dist/lib/audio-controls.css",
     "./styles/*.css": "./public/styles/*.css"
   },
-  "version": "1.228.260",
+  "version": "1.229.276",
   "license": "Unlicense",
   "author": "trkbt10 <triplequartet@gmail.com>",
   "homepage": "https://github.com/trkbt10/tanuki-ui#readme",
