@@ -7,7 +7,7 @@ import { SettingsField, SettingsInput } from "./components";
 /**
  * General editor settings component
  */
-export const GeneralSettings: React.FC = () => {
+export const GeneralSettingsPanel: React.FC = () => {
   const { settings, settingsManager, updateSetting } = useNodeEditor();
   const { t } = useI18n();
   const [autoSaveIntervalInput, setAutoSaveIntervalInput] = React.useState<string>(() =>
@@ -74,4 +74,4 @@ export const GeneralSettings: React.FC = () => {
   );
 };
 
-GeneralSettings.displayName = "GeneralSettings";
+GeneralSettingsPanel.displayName = "GeneralSettingsPanel";

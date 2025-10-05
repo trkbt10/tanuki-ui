@@ -7,7 +7,7 @@ import { SettingsField, SettingsInput } from "./components";
 /**
  * Grid settings component
  */
-export const GridSettings: React.FC = () => {
+export const GridSettingsPanel: React.FC = () => {
   const { state: canvasState, dispatch: canvasDispatch, actions: canvasActions } = useNodeCanvas();
   const { t } = useI18n();
 
@@ -85,4 +85,4 @@ export const GridSettings: React.FC = () => {
   );
 };
 
-GridSettings.displayName = "GridSettings";
+GridSettingsPanel.displayName = "GridSettingsPanel";

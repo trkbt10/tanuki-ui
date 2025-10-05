@@ -7,7 +7,7 @@ import { HistoryPanel } from "./HistoryPanel";
 import { TabNav } from "../layout/TabNav";
 import { classNames, H4 } from "../elements";
 import { PropertySection } from "./parts";
-import { GridSettings, GeneralSettings } from "../../settings";
+import { GridSettingsPanel, GeneralSettingsPanel } from "../../settings";
 import styles from "./InspectorPanel.module.css";
 import { useI18n } from "../../i18n";
 
@@ -46,10 +46,10 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className, tabs:
         render: () => (
           <>
             <PropertySection title={t("inspectorGridSettings")} bodyClassName={styles.settingsSectionBody}>
-              <GridSettings />
+              <GridSettingsPanel />
             </PropertySection>
             <PropertySection title={t("inspectorGeneralSettings") || "General"} bodyClassName={styles.settingsSectionBody}>
-              <GeneralSettings />
+              <GeneralSettingsPanel />
             </PropertySection>
           </>
         ),
