@@ -295,14 +295,8 @@
   --controlBackdropFilter--primary: var(--liquidGlassBackdropStrong);
   --controlTextColor--primary: rgba(255, 255, 255, 0.95);
   --controlHoverTextColor--primary: rgba(255, 255, 255, 1);
-  --controlHoverBackground--primary:
-    linear-gradient(180deg,
-      color-mix(in srgb, rgba(255, 255, 255, 0.95) 65%, rgba(0, 122, 255, 0.85) 35%) 0%,
-      color-mix(in srgb, rgba(255, 255, 255, 0.9) 60%, rgba(0, 122, 255, 0.8) 40%) 100%);
-  --controlFocusBackground--primary:
-    linear-gradient(180deg,
-      color-mix(in srgb, rgba(255, 255, 255, 0.96) 55%, rgba(0, 122, 255, 0.9) 45%) 0%,
-      color-mix(in srgb, rgba(255, 255, 255, 0.9) 55%, rgba(0, 122, 255, 0.85) 45%) 100%);
+  --controlHoverBackground--primary: var(--controlBackground--primary);
+  --controlFocusBackground--primary: var(--controlBackground--primary);
   --controlFocusTextColor--primary: rgba(255, 255, 255, 1);
 
   /* Button Secondary - Refined Glass */

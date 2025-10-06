@@ -1,191 +1,244 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { FilterObserver } from "./filter-observer";
+import { useComputedStyle } from "./useComputedStyle";
 
-interface LiquidGlassFilterProps {
-  id?: string;
-  scale?: number;
-  animationDuration?: string;
-}
-
-export function LiquidGlassFilter({
-  id = "liquid-glass-filter",
-  scale = 1.2,
-  animationDuration = "0.3s",
-}: LiquidGlassFilterProps) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [bumpMap, setBumpMap] = useState<string | null>(null);
-  const [animateRipples, setAnimateRipples] = useState(true);
-
-  const generateBumpTexture = (width: number, height: number, curvature: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return "";
-
-    canvas.width = width;
-    canvas.height = height;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) return "";
-
-    const imageData = ctx.createImageData(width, height);
-    const data = imageData.data;
-
-    const centerX = width / 2;
-    const centerY = height / 2;
-    const maxRadius = Math.min(centerX, centerY);
-    const curvatureClamp = Math.min(Math.max(curvature, 0.6), 2.5);
-
-    for (let y = 0; y < height; y++) {
-      for (let x = 0; x < width; x++) {
-        const index = (y * width + x) * 4;
-
-        const normalizedX = (x - centerX) / maxRadius;
-        const normalizedY = (y - centerY) / maxRadius;
-        const radialDistance = Math.sqrt(normalizedX * normalizedX + normalizedY * normalizedY);
-
-        const falloff = Math.max(0, 1 - Math.pow(radialDistance, curvatureClamp * 1.15));
-
-        let heightValue = 0;
-        if (falloff > 0) {
-          const directionalSheen = Math.max(0, 1 - Math.abs(normalizedX * 0.55 + normalizedY * 0.4));
-          const microRipple = Math.max(0, Math.sin((normalizedX + normalizedY) * Math.PI * 0.9) * 0.08);
-          heightValue = Math.min(1, falloff * 0.82 + directionalSheen * 0.28 + microRipple);
-        }
-
-        const intensity = Math.pow(heightValue, 1.1);
-        const channelValue = Math.round(intensity * 255);
-        const alpha = falloff > 0 ? Math.max(0.18, falloff) : 0;
-
-        data[index] = channelValue;
-        data[index + 1] = channelValue;
-        data[index + 2] = channelValue;
-        data[index + 3] = Math.round(alpha * 255);
-      }
+export const LiquidGlassFilter: React.FC = ({ filterPattern = 'url("#liquid-glass-filter")' }: { filterPattern?: string }) => {
+  const [targetElement, setTargetElement] = useState<Set<{ target: Element; key: string }>>(() => new Set());
+  useEffect(() => {
+    const observer = new FilterObserver(filterPattern, (element) => {
+      setTargetElement((prev) => {
+        const newSet = new Set(prev);
+        newSet.add({
+          target: element as Element,
+          key: element instanceof Element && element.id ? element.id : Math.random().toString(36).substr(2, 9),
+        });
+        return newSet;
+      });
+    });
+    const lazy = setTimeout(() => {
+      observer.start();
+    }, 0);
+    return () => {
+      observer.stop();
+      clearTimeout(lazy);
+    };
+  }, [filterPattern]);
+  const canvasDPI = React.useMemo(() => {
+    if (typeof window === "undefined") {
+      return 1;
     }
+    return window.devicePixelRatio ?? 1;
+  }, []);
+  return (
+    <>
+      {Array.from(targetElement).map((item) => {
+        return <LiquidGlassFilterSVG key={item.key} target={item.target} id={item.key} dpi={canvasDPI} />;
+      })}
+    </>
+  );
+};
 
-    ctx.putImageData(imageData, 0, 0);
-    return canvas.toDataURL("image/png");
-  };
+const smoothStep = (a: number, b: number, t: number): number => {
+  t = Math.max(0, Math.min(1, (t - a) / (b - a)));
+  return t * t * (3 - 2 * t);
+};
+
+const length = (x: number, y: number): number => {
+  return Math.sqrt(x * x + y * y);
+};
+
+const roundedRectSDF = (x: number, y: number, width: number, height: number, radius: number): number => {
+  const qx = Math.abs(x) - width + radius;
+  const qy = Math.abs(y) - height + radius;
+  return Math.min(Math.max(qx, qy), 0) + length(Math.max(qx, 0), Math.max(qy, 0)) - radius;
+};
+
+const fragment = (uv: { x: number; y: number }) => {
+  const ix = uv.x - 0.5;
+  const iy = uv.y - 0.5;
+  const distanceToEdge = roundedRectSDF(ix, iy, 0.3, 0.2, 0.6);
+  const displacement = smoothStep(0.8, 0, distanceToEdge - 0.15);
+  const scaled = smoothStep(0, 1, displacement);
+  return { type: "t", x: ix * scaled + 0.5, y: iy * scaled + 0.5 };
+};
+export const LiquidGlassFilterSVG: React.FC<{
+  dpi: number;
+  target: Element;
+  id: string;
+}> = ({ target, id, dpi }) => {
+  const [feDisplacementScale, setFeDisplacementScale] = useState<number>(0);
+
+  const [feImageHref, setFeImageHref] = useState<string | null>(null);
+
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
-    const texture = generateBumpTexture(256, 256, scale);
-    setBumpMap(texture || null);
-  }, [scale]);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) {
-      setAnimateRipples(true);
+    if (dimensions.width === 0 || dimensions.height === 0) {
       return;
     }
 
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const update = () => setAnimateRipples(!mediaQuery.matches);
-    update();
-    mediaQuery.addEventListener("change", update);
+    const w = Math.floor(dimensions.width * dpi);
+    const h = Math.floor(dimensions.height * dpi);
+    const offscreenCanvas = new OffscreenCanvas(w, h);
+    offscreenCanvas.width = w;
+    offscreenCanvas.height = h;
+    const context = offscreenCanvas.getContext("2d");
+    if (!context) {
+      return;
+    }
+    const imageData = context.createImageData(w, h);
 
-    return () => mediaQuery.removeEventListener("change", update);
-  }, []);
+    let maxScale = 0;
+    const rawValues: number[] = [];
 
-  const displacementScale = 18 * scale;
-  const surfaceScale = 3.6 * scale;
+    for (let i = 0; i < imageData.data.length; i += 4) {
+      const x = (i / 4) % w;
+      const y = Math.floor(i / 4 / w);
+      const pos = fragment({ x: x / w, y: y / h });
+      const dx = pos.x * w - x;
+      const dy = pos.y * h - y;
+      maxScale = Math.max(maxScale, Math.abs(dx), Math.abs(dy));
+      rawValues.push(dx, dy);
+    }
+
+    maxScale *= 0.5;
+
+    let index = 0;
+    for (let i = 0; i < imageData.data.length; i += 4) {
+      const r = rawValues[index++] / maxScale + 0.5;
+      const g = rawValues[index++] / maxScale + 0.5;
+      imageData.data[i] = r * 255;
+      imageData.data[i + 1] = g * 255;
+      imageData.data[i + 2] = 0;
+      imageData.data[i + 3] = 255;
+    }
+    context.putImageData(imageData, 0, 0);
+    offscreenCanvas.convertToBlob().then((blob) => {
+      setFeImageHref(URL.createObjectURL(blob));
+    });
+    setFeDisplacementScale(maxScale / dpi);
+  }, [dimensions.width, dimensions.height, dpi]);
+  useEffect(() => {
+    return () => {
+      if (feImageHref?.startsWith("blob:")) {
+        URL.revokeObjectURL(feImageHref);
+      }
+    };
+  }, [feImageHref]);
+  useEffect(() => {
+    if (!target) {
+      return;
+    }
+
+    const updateTargetBounds = () => {
+      const rect = target.getBoundingClientRect();
+
+      setDimensions((prev) => {
+        if (prev.width === rect.width && prev.height === rect.height) {
+          return prev;
+        }
+        return {
+          width: rect.width,
+          height: rect.height,
+        };
+      });
+
+      setPosition((prev) => {
+        if (prev.x === rect.left && prev.y === rect.top) {
+          return prev;
+        }
+        return {
+          x: rect.left,
+          y: rect.top,
+        };
+      });
+    };
+    let rafId: number;
+    const trackPosition = () => {
+      updateTargetBounds();
+      rafId = requestAnimationFrame(trackPosition);
+    };
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateTargetBounds();
+    });
+
+    resizeObserver.observe(target);
+    trackPosition();
+
+    return () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      resizeObserver.disconnect();
+    };
+  }, [target]);
+
+  const style = useComputedStyle(target);
+  const containerStyle: React.CSSProperties = React.useMemo(() => {
+    return {
+      position: "fixed",
+      top: position.y,
+      left: position.x,
+      width: dimensions.width,
+      height: dimensions.height,
+      overflow: "hidden",
+      boxShadow: style?.boxShadow,
+      borderRadius: style?.borderRadius,
+      backdropFilter: `url(#${id}_filter) blur(0.25px) contrast(1.2) brightness(1.05) saturate(1.1)`,
+      zIndex: style?.zIndex,
+      pointerEvents: "none",
+    };
+  }, [position.x, position.y, dimensions.width, dimensions.height, id, style?.borderRadius, style?.boxShadow]);
+  // Don't render if dimensions haven't been set yet
+  if (dimensions.width === 0 || dimensions.height === 0) {
+    return null;
+  }
 
   return (
     <>
-      <canvas ref={canvasRef} style={{ display: "none" }} width={256} height={256} />
-      <svg style={{ position: "absolute", width: 0, height: 0, pointerEvents: "none" }} aria-hidden="true">
+      {/* SVG Filter */}
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="0"
+        height="0"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          pointerEvents: "none",
+          zIndex: 9998,
+        }}
+      >
         <defs>
           <filter
-            id={id}
-            x="-45%"
-            y="-45%"
-            width="190%"
-            height="190%"
-            filterUnits="objectBoundingBox"
+            id={`${id}_filter`}
+            filterUnits="userSpaceOnUse"
             colorInterpolationFilters="sRGB"
+            x="0"
+            y="0"
+            width={dimensions.width.toString()}
+            height={dimensions.height.toString()}
           >
-            <feGaussianBlur in="SourceGraphic" stdDeviation="20" result="baseBlur" />
-            <feColorMatrix
-              in="baseBlur"
-              type="matrix"
-              values="1.08 0 0 0 0  0 1.08 0 0 0  0 0 1.08 0 0  0 0 0 1 0"
-              result="saturated"
+            <feImage
+              id={`${id}_map`}
+              width={dimensions.width.toString()}
+              height={dimensions.height.toString()}
+              xlinkHref={feImageHref || undefined}
             />
-            <feComponentTransfer in="saturated" result="lifted">
-              <feFuncR type="gamma" amplitude="1" exponent="0.92" offset="0.015" />
-              <feFuncG type="gamma" amplitude="1" exponent="0.92" offset="0.015" />
-              <feFuncB type="gamma" amplitude="1" exponent="0.92" offset="0.02" />
-              <feFuncA type="gamma" amplitude="1" exponent="1" offset="0" />
-            </feComponentTransfer>
-            <feTurbulence type="fractalNoise" baseFrequency="0.7 0.9" numOctaves="2" seed="28" result="ripples">
-              {animateRipples && (
-                <animate
-                  attributeName="baseFrequency"
-                  dur={animationDuration}
-                  values="0.6 0.85;0.88 1.1;0.6 0.85"
-                  repeatCount="indefinite"
-                />
-              )}
-            </feTurbulence>
-            <feGaussianBlur in="ripples" stdDeviation="0.45" result="softRipples" />
             <feDisplacementMap
-              in="lifted"
-              in2="softRipples"
-              scale={displacementScale}
+              in="SourceGraphic"
+              in2={`${id}_map`}
               xChannelSelector="R"
               yChannelSelector="G"
-              result="refracted"
-            >
-              {animateRipples && (
-                <animate
-                  attributeName="scale"
-                  dur={animationDuration}
-                  values={`${displacementScale};${displacementScale * 1.18};${displacementScale}`}
-                  repeatCount="indefinite"
-                />
-              )}
-            </feDisplacementMap>
-            <feGaussianBlur in="SourceAlpha" stdDeviation="2.6" result="edgeBlur" />
-            <feColorMatrix
-              in="edgeBlur"
-              type="matrix"
-              values="0 0 0 0 0.14  0 0 0 0 0.18  0 0 0 0 0.22  0 0 0 0.55 0"
-              result="edgeTint"
+              scale={feDisplacementScale}
             />
-            {bumpMap && (
-              <>
-                <feImage xlinkHref={bumpMap} preserveAspectRatio="xMidYMid slice" result="bump" />
-                <feGaussianBlur in="bump" stdDeviation="1.15" result="softBump" />
-                <feSpecularLighting
-                  in="softBump"
-                  surfaceScale={surfaceScale}
-                  specularConstant="0.9"
-                  specularExponent="34"
-                  lightingColor="#ffffff"
-                  result="specular"
-                >
-                  <fePointLight x="-160" y="-220" z="600" />
-                </feSpecularLighting>
-                <feComposite in="specular" in2="SourceAlpha" operator="in" result="highlight" />
-                <feBlend in="highlight" in2="edgeTint" mode="screen" result="glaze" />
-              </>
-            )}
-            <feFlood floodColor="#ffffff" floodOpacity="0.05" result="sheenFill" />
-            <feComposite in="sheenFill" in2="SourceAlpha" operator="in" result="sheen" />
-            <feBlend in={bumpMap ? "glaze" : "edgeTint"} in2="refracted" mode="overlay" result="layeredGlass" />
-            <feBlend in="layeredGlass" in2="sheen" mode="screen" result="withSheen" />
-            <feComposite in="withSheen" in2="SourceAlpha" operator="in" result="finalGlass" />
-            <feColorMatrix in="finalGlass" type="saturate" values="1.08" />
           </filter>
         </defs>
       </svg>
+
+      <div style={containerStyle} />
     </>
   );
-}
-
-// Hook for easy integration with existing components
-export function useLiquidGlass(filterId: string = "liquid-glass-filter") {
-  return {
-    style: {
-      backdropFilter: `url(#${filterId}) blur(20px)`,
-      WebkitBackdropFilter: `url(#${filterId}) blur(20px)`,
-    },
-    className: "liquid-glass-element",
-  };
-}
+};
