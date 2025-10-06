@@ -2,7 +2,7 @@ import type { Node, NodeId } from "../types/core";
 import type { NodeDefinition } from "../types/NodeDefinition";
 import { getNodeBoundingBox, doRectanglesIntersect, isRectangleInsideAnother, type BoundingBox } from "./boundingBoxUtils";
 import { createParentToChildrenMap } from "./lookupUtils";
-import { nodeHasGroupBehavior } from "../types/behaviors";
+import { nodeHasGroupBehavior, getGroupBehaviorOptions } from "../types/behaviors";
 
 // Keep GroupBounds for backwards compatibility
 export interface GroupBounds {
@@ -65,15 +65,31 @@ export const isNodeOverlappingGroup = (node: Node, groupNode: Node, nodeDefiniti
 };
 
 /**
+ * Check if autoGroup is enabled for a specific group node
+ */
+export const isAutoGroupEnabled = (
+  groupNode: Node,
+  nodeDefinitions: NodeDefinition[]
+): boolean => {
+  const def = nodeDefinitions.find(d => d.type === groupNode.type);
+  const options = getGroupBehaviorOptions(def);
+  return options?.autoGroup ?? false;
+};
+
+/**
  * Find which group (if any) a node should belong to
  * Returns the most specific (smallest) group that completely contains the node
+ * Only considers groups with autoGroup enabled
  */
 export const findContainingGroup = (
   node: Node,
   allNodes: Record<NodeId, Node>,
   nodeDefinitions: NodeDefinition[]
 ): NodeId | null => {
-  const groupNodes = Object.values(allNodes).filter((n) => nodeHasGroupBehavior(n, nodeDefinitions));
+  const groupNodes = Object.values(allNodes).filter((n) => {
+    if (!nodeHasGroupBehavior(n, nodeDefinitions)) return false;
+    return isAutoGroupEnabled(n, nodeDefinitions);
+  });
 
   let containingGroup: Node | null = null;
   let smallestArea = Infinity;

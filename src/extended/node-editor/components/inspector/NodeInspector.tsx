@@ -8,6 +8,7 @@ import { useExternalData } from "../../hooks/useExternalData";
 import { NodeBehaviorInspector, NodeActionsBehaviorInspector, GroupBehaviorInspector } from "./renderers";
 import styles from "./NodeInspector.module.css";
 import { calculateAlignmentPositions, type AlignmentActionType } from "../controls/alignments";
+import { getBehaviors, behaviorArrayIncludes } from "../../types/behaviors";
 
 export interface NodeInspectorProps {
   node: Node;
@@ -83,12 +84,8 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
       ]
     );
     const behaviors = React.useMemo(() => {
-      const defs = nodeDefinition?.behaviors || [];
-      if (defs.length <= 0) {
-        return ["node"];
-      }
-      return defs;
-    }, [nodeDefinition?.behaviors]);
+      return getBehaviors(nodeDefinition);
+    }, [nodeDefinition]);
     return (
       <>
         {/* Custom inspector (node-specific) */}
@@ -97,19 +94,19 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
         )}
 
         {/* Behavior-based inspectors */}
-        {behaviors?.includes("node") && (
+        {behaviorArrayIncludes(behaviors, "node") && (
           <div className={styles.customInspectorBlock}>
             <NodeBehaviorInspector {...inspectorProps} />
           </div>
         )}
 
-        {behaviors?.includes("node") && (
+        {behaviorArrayIncludes(behaviors, "node") && (
           <div className={styles.customInspectorBlock}>
             <NodeActionsBehaviorInspector {...inspectorProps} />
           </div>
         )}
 
-        {behaviors?.includes("group") && (
+        {behaviorArrayIncludes(behaviors, "group") && (
           <div className={styles.customInspectorBlock}>
             <GroupBehaviorInspector {...inspectorProps} />
           </div>

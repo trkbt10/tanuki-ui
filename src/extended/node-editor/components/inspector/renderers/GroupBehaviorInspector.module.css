@@ -5,6 +5,17 @@
   color: var(--labelColor);
 }
 
+.checkboxRow {
+  display: flex;
+  align-items: center;
+  gap: var(--node-editor-inspector-space-sm);
+  margin-bottom: var(--node-editor-inspector-space-lg);
+}
+
+.checkboxRow input[type="checkbox"] {
+  cursor: pointer;
+}
+
 .colorInputRow {
   display: flex;
   align-items: center;

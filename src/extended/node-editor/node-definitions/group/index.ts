@@ -14,7 +14,6 @@ export const GroupNodeDefinition: NodeDefinition<"group"> = {
     title: "Group",
   },
   defaultSize: { width: 300, height: 200 },
-  supportsChildren: true,
-  behaviors: ["node", "group"],
+  behaviors: ["node", { type: "group", autoGroup: true } as const],
   visualState: "info",
 };

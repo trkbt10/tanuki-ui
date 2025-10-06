@@ -1,5 +1,6 @@
 import React, { type ReactNode, type ReactElement } from "react";
 import type { Node, NodeId, Port, Connection, ConnectionId, NodeEditorData, NodeData } from "./core";
+import type { NodeBehavior } from "./behaviors";
 
 /**
  * Base node data type map interface
@@ -282,13 +283,8 @@ export interface NodeDefinition<TNodeType extends string = string, TNodeDataType
   defaultSize?: { width: number; height: number };
   /** Port definitions */
   ports?: PortDefinition[];
-  /**
-   * Whether this node type supports children (group nodes).
-   * @deprecated Use `behaviors?: ('appearance' | 'node' | 'group')[]` and include 'group' instead.
-   */
-  supportsChildren?: boolean;
   /** Behaviors that this node exhibits (appearance/node/group). Defaults to ['node'] */
-  behaviors?: ("appearance" | "node" | "group")[];
+  behaviors?: NodeBehavior[];
   /** When true, node can only be moved by dragging title or when multi-selected */
   interactive?: boolean;
   /** Custom render function for the node */
