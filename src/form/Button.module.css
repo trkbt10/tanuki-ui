@@ -33,7 +33,7 @@
   filter: var(--controlBackgroundFilter);
 }
 
-.button > * {
+.button>* {
   pointer-events: none;
 }
 

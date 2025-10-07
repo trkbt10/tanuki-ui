@@ -92,6 +92,7 @@
   min-width: 0;
 }
 
+
 .listItemLabelArea {
   display: flex;
   align-items: center;
@@ -103,7 +104,7 @@
   outline: none;
   font: inherit;
   width: 100%;
-  color: var(--controlTextColor);
+  color: var(--sidebarListItemTextColor, var(--controlTextColor));
   padding: 6px;
   box-sizing: border-box;
   border-radius: var(--sidebarListItemBorderRadius);
@@ -116,10 +117,6 @@
 .listItem[data-selected="true"]>.listItemLabelArea {
   position: relative;
   background: var(--selectedSidebarListItemBackground);
-}
-
-.listItem:active .listItemLabel,
-.listItem[data-selected="true"] .listItemLabel {
   color: var(--selectedSidebarListItemTextColor, var(--sidebarListItemTextColor));
 }
 
@@ -127,7 +124,7 @@
   display: block;
   font: var(--sidebarListItemFont);
   letter-spacing: 0;
-  color: var(--sidebarListItemTextColor);
+  color: inherit;
   box-sizing: border-box;
 }
 
