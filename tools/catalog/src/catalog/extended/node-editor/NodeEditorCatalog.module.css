@@ -1,0 +1,55 @@
+.scenarioPreview {
+  composes: examplePreview from "../../../components/ExampleCardLayout.module.css";
+  gap: var(--examplePreviewGap, 20px);
+}
+
+.scenarioControls {
+  display: grid;
+  gap: 16px;
+}
+
+.inlineControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.indicator {
+  margin: 0;
+  color: var(--secondaryLabelColor, #4b5563);
+}
+
+.dataPreview {
+  composes: examplePreview from "../../../components/ExampleCardLayout.module.css";
+  gap: var(--examplePreviewGap, 16px);
+}
+
+.datasetSummary {
+  margin: 0;
+  color: var(--secondaryLabelColor, #4b5563);
+}
+
+.dataDump {
+  margin: 0;
+  background: var(--windowBackgroundColor, #ffffff);
+  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
+  border-radius: var(--controlBorderRadius, 8px);
+  padding: 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  overflow: auto;
+  max-height: 320px;
+}
+
+.demoContainer {
+  display: grid;
+  gap: 32px;
+}
+
+.demoSection {
+  border-radius: var(--cardBorderRadius, 12px);
+  border: 1px solid var(--separatorColor, rgba(0, 0, 0, 0.08));
+  overflow: hidden;
+  background: var(--windowBackgroundColor, #ffffff);
+}

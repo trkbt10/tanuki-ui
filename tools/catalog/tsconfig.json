@@ -3,12 +3,10 @@
   "compilerOptions": {
     "moduleResolution": "bundler",
     "module": "esnext",
-    "baseUrl": "."
+    "paths": {
+      "tanuki-ui": ["../../src/index.tsx"],
+      "tanuki-ui/*": ["../../src/*"]
+    }
   },
-  "include": [
-    "src/**/*",
-    "*.ts",
-    "*.tsx",
-    "*.mjs"
-  ]
+  "include": ["src/**/*", "*.ts", "*.tsx", "*.mjs"]
 }

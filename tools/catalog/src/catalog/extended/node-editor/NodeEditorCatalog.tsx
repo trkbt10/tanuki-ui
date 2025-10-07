@@ -1,11 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router";
 import {
-  Article,
-  Main,
-  Section,
   H2,
-  H3,
   P,
   Small,
   Button,
@@ -17,10 +13,25 @@ import {
   testDataSets,
   scenarioNodeDefinitions,
   MathEvaluatorContext,
-} from "../test-scenarios";
-import type { FeaturesNodeDataTypeMap } from "../test-scenarios/features/types";
+} from "../../../test-scenarios";
+import type { FeaturesNodeDataTypeMap } from "../../../test-scenarios/features/types";
+import {
+  PageLayout,
+  Main,
+  Section,
+  SectionIntro,
+  ExampleGrid,
+  ExampleCard,
+  ExampleHeader,
+  SingleColumnContent,
+  TestGrid,
+  TestCard,
+  TestCardHeader,
+  TestCardBody,
+  EditorSurface,
+  PageHeader,
+} from "./parts";
 import styles from "./NodeEditorCatalog.module.css";
-import CatalogPageHeader from "./CatalogPageHeader";
 
 type ScenarioKey = keyof typeof testDataSets;
 
@@ -101,33 +112,30 @@ const NodeEditorCatalog: React.FC = () => {
   };
 
   return (
-    <Article className={styles.page}>
-      <CatalogPageHeader
-        title="NodeEditor Catalog"
+    <PageLayout>
+      <PageHeader
+        title="NodeEditor Overview"
         lead="NodeEditor はノードベースのビジュアルプログラミング環境を構築するための拡張コンポーネントです。シナリオ別に操作性や API を確認できるよう、代表的なテストデータを用意しています。"
         helperText="シナリオを切り替えると初期データとノード定義が更新されます。必要に応じて初期値へのリセットやキャンバスクリアも可能です。"
-        align="start"
       />
 
-      <Main className={styles.main}>
-        <Section className={styles.section}>
-          <div className={styles.sectionIntro}>
+      <Main>
+        <Section>
+          <SectionIntro>
             <H2>シナリオ選択</H2>
             <P>
               利用目的に応じてテストシナリオを切り替えられます。演算ノード向けのコンテキストやカスタムレンダラーなど、NodeEditor の
               拡張ポイントを含むケースも用意しています。
             </P>
-          </div>
+          </SectionIntro>
 
-          <div className={styles.exampleGrid}>
-            <div className={styles.exampleCard}>
-              <div className={styles.exampleHeader}>
-                <H3 className={styles.exampleTitle}>テストデータをダイナミックに入れ替える</H3>
-                <P className={styles.exampleDescription}>
-                  シナリオを切り替えるとノード定義と初期データが同時に更新され、異なるユースケースを素早く検証できます。
-                </P>
-              </div>
-              <div className={styles.singleColumnContent}>
+          <ExampleGrid>
+            <ExampleCard>
+              <ExampleHeader
+                title="テストデータをダイナミックに入れ替える"
+                description="シナリオを切り替えるとノード定義と初期データが同時に更新され、異なるユースケースを素早く検証できます。"
+              />
+              <SingleColumnContent>
                 <div className={styles.scenarioPreview}>
                   <div className={styles.scenarioControls}>
                     <div className={styles.inlineControls}>
@@ -151,103 +159,104 @@ const NodeEditorCatalog: React.FC = () => {
                     </div>
                     <Small className={styles.indicator}>{scenarioDescriptions[selectedScenario]}</Small>
                   </div>
-                  <div className={styles.editorSurface}>
-                    <div className={styles.editorSurfaceInner}>{renderEditor()}</div>
-                  </div>
+                  <EditorSurface>{renderEditor()}</EditorSurface>
                 </div>
-              </div>
-            </div>
-          </div>
+              </SingleColumnContent>
+            </ExampleCard>
+          </ExampleGrid>
         </Section>
 
-        <Section className={styles.section}>
-          <div className={styles.sectionIntro}>
+        <Section>
+          <SectionIntro>
             <H2>現在のデータ</H2>
             <P>
               編集結果は `NodeEditorData` 形式で管理されます。ノード数や接続数と併せて、中身を確認できるようダンプを表示しています。
             </P>
-          </div>
+          </SectionIntro>
 
-          <div className={styles.exampleGrid}>
-            <div className={styles.exampleCard}>
-              <div className={styles.exampleHeader}>
-                <H3 className={styles.exampleTitle}>NodeEditorData のスナップショット</H3>
-                <P className={styles.exampleDescription}>
-                  現在のノードと接続を確認しながら、シナリオの差分や API 連携をテストできます。
-                </P>
-              </div>
-              <div className={styles.singleColumnContent}>
+          <ExampleGrid>
+            <ExampleCard>
+              <ExampleHeader
+                title="NodeEditorData のスナップショット"
+                description="現在のノードと接続を確認しながら、シナリオの差分や API 連携をテストできます。"
+              />
+              <SingleColumnContent>
                 <div className={styles.dataPreview}>
                   <Small className={styles.datasetSummary}>
                     ノード数: {Object.keys(editorData.nodes).length} / 接続数: {Object.keys(editorData.connections).length}
                   </Small>
                   <pre className={styles.dataDump}>{JSON.stringify(editorData, null, 2)}</pre>
                 </div>
-              </div>
-            </div>
-          </div>
+              </SingleColumnContent>
+            </ExampleCard>
+          </ExampleGrid>
         </Section>
 
-        <Section className={styles.section}>
-          <div className={styles.sectionIntro}>
+        <Section>
+          <SectionIntro>
             <H2>詳細なデモとドキュメント</H2>
             <P>特定の機能に焦点を当てた詳細なデモページも用意しています。</P>
-          </div>
+          </SectionIntro>
 
-          <div className={styles.testGrid}>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>カスタムポートレンダラー</H3>
-              </div>
-              <P className={styles.testCardBody}>
+          <TestGrid>
+            <TestCard>
+              <TestCardHeader title="カスタムポートレンダラー" />
+              <TestCardBody>
                 PortDefinition の renderPort と renderConnection を使って、ポートと接続線の見た目を完全にカスタマイズする方法を詳しく解説しています。
-              </P>
+              </TestCardBody>
               <div style={{ marginTop: "12px" }}>
-                <Link to="/component/extended/NodeEditor/custom-port-renderer">
+                <Link to="/component/extended/NodeEditor/custom-port">
                   <Button variant="primary" size="small">
-                    詳細を見る →
+                    デモを見る →
                   </Button>
                 </Link>
               </div>
-            </div>
-          </div>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="フローティングサイドバー" />
+              <TestCardBody>
+                サイドバーをキャンバス上にオーバーレイ表示させるフローティングモードを試し、幅やオフセットのカスタマイズ方法を確認できます。
+              </TestCardBody>
+              <div style={{ marginTop: "12px" }}>
+                <Link to="/component/extended/NodeEditor/floating-sidebar">
+                  <Button variant="primary" size="small">
+                    デモを見る →
+                  </Button>
+                </Link>
+              </div>
+            </TestCard>
+          </TestGrid>
         </Section>
 
-        <Section className={styles.section}>
-          <div className={styles.sectionIntro}>
+        <Section>
+          <SectionIntro>
             <H2>確認ポイント</H2>
             <P>機能・パフォーマンス・API の 3 つの観点からテスト項目を整理しています。</P>
-          </div>
+          </SectionIntro>
 
-          <div className={styles.testGrid}>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>UI と操作性</H3>
-              </div>
-              <P className={styles.testCardBody}>
+          <TestGrid>
+            <TestCard>
+              <TestCardHeader title="UI と操作性" />
+              <TestCardBody>
                 ノードのドラッグ＆ドロップ、ポート接続、ホバー時のハイライト、キャンバスのパンやズームなど、操作ごとのフィードバックを確認します。
-              </P>
-            </div>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>パフォーマンス</H3>
-              </div>
-              <P className={styles.testCardBody}>
+              </TestCardBody>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="パフォーマンス" />
+              <TestCardBody>
                 大量ノードでの描画、ズーム・パン操作の滑らかさ、ドラッグ中のフレームレートなど、描画負荷を監視します。
-              </P>
-            </div>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>拡張機能と API</H3>
-              </div>
-              <P className={styles.testCardBody}>
+              </TestCardBody>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="拡張機能と API" />
+              <TestCardBody>
                 Math Flow のような文脈付き評価や、Features シナリオのカスタムコンポーネント、データ入出力 API の動作を確認します。
-              </P>
-            </div>
-          </div>
+              </TestCardBody>
+            </TestCard>
+          </TestGrid>
         </Section>
       </Main>
-    </Article>
+    </PageLayout>
   );
 };
 

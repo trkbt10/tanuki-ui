@@ -1,0 +1,107 @@
+.floatingSidebarControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.floatingSidebarStatus {
+  margin: 0 0 0 4px;
+  color: var(--tertiaryLabelColor, rgba(60, 60, 67, 0.6));
+}
+
+.offsetInput {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--secondaryLabelColor, #4b5563);
+}
+
+.offsetInput input {
+  width: 80px;
+}
+
+.floatingSidebarPanel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 16px;
+  gap: 12px;
+  background: transparent;
+  color: var(--labelColor, #1f2933);
+}
+
+.floatingSidebarHeader {
+  display: grid;
+  gap: 4px;
+}
+
+.floatingSidebarTitle {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.floatingSidebarSubtitle {
+  margin: 0;
+  color: var(--tertiaryLabelColor, rgba(60, 60, 67, 0.6));
+}
+
+.floatingSidebarList {
+  display: grid;
+  gap: 8px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.floatingSidebarItem {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--controlBackground, rgba(255, 255, 255, 0.85));
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.floatingSidebarItem:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(17, 17, 17, 0.12);
+}
+
+.floatingSidebarItemActive {
+  border-color: var(--accentColor, rgba(88, 101, 242, 0.5));
+  box-shadow: 0 10px 24px rgba(88, 101, 242, 0.18);
+}
+
+.floatingSidebarIcon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  background: var(--accentColor, rgba(88, 101, 242, 0.12));
+}
+
+.floatingSidebarItemBody {
+  display: grid;
+  gap: 4px;
+}
+
+.floatingSidebarItemTitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: inherit;
+}
+
+.floatingSidebarItemMeta {
+  margin: 0;
+  color: var(--tertiaryLabelColor, rgba(60, 60, 67, 0.6));
+}

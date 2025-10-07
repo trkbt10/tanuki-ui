@@ -2,7 +2,7 @@ import React from 'react';
 import * as TanukiUI from 'tanuki-ui';
 import { ComponentDemo } from '../types';
 import { specialGuides } from '../specialGuides';
-import NodeEditorCatalog from '../../components/NodeEditorCatalog';
+import { NodeEditorCatalog } from '../extended/node-editor';
 
 // Interactive Dialog Components
 const InteractiveDialog: React.FC<{ title: string; content: string }> = ({ title, content }) => {

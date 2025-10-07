@@ -1,11 +1,26 @@
 import React, { useState } from "react";
-import { Article, Main, Section, H2, H3, P, Code, Pre, Button } from "tanuki-ui";
+import { H2, P, Code, Pre, Button } from "tanuki-ui";
 import { NodeEditor } from "tanuki-ui/extended/node-editor";
 import { createNodeDefinition, toUntypedDefinition } from "tanuki-ui/extended/node-editor";
 import type { NodeEditorData } from "tanuki-ui/extended/node-editor";
 import type { PortRenderContext, ConnectionRenderContext } from "tanuki-ui/extended/node-editor";
-import CatalogPageHeader from "./CatalogPageHeader";
-import styles from "./NodeEditorCatalog.module.css";
+import {
+  PageLayout,
+  Main,
+  Section,
+  SectionIntro,
+  ExampleGrid,
+  ExampleCard,
+  ExampleHeader,
+  SingleColumnContent,
+  TestGrid,
+  TestCard,
+  TestCardHeader,
+  TestCardBody,
+  EditorSurface,
+  PageHeader,
+} from "./parts";
+import styles from "./CustomPortRendererCatalog.module.css";
 
 // Custom port renderer example - changes color based on data type
 const customPortRenderer = (context: PortRenderContext, defaultRender: () => React.ReactElement) => {
@@ -315,72 +330,64 @@ const CustomPortRendererCatalog: React.FC = () => {
   };
 
   return (
-    <Article className={styles.page}>
-      <CatalogPageHeader
+    <PageLayout>
+      <PageHeader
         title="Custom Port Renderer"
         lead="PortDefinition に renderPort と renderConnection を実装することで、ポートと接続線の見た目を完全にカスタマイズできます。"
         helperText="この例では、データタイプ（data, image, audio, video）に応じてポートの色とサイズを変更し、接続線にも同じ色を適用しています。"
-        align="start"
       />
 
-      <Main className={styles.main}>
-        <Section className={styles.section}>
-          <div className={styles.sectionIntro}>
+      <Main>
+        <Section>
+          <SectionIntro>
             <H2>デモ</H2>
             <P>
               各ポートは dataType に基づいて色分けされています。ホバー時にはサイズが大きくなり、接続されると境界線の色が変わります。
             </P>
-          </div>
+          </SectionIntro>
 
-          <div className={styles.exampleGrid}>
-            <div className={styles.exampleCard}>
-              <div className={styles.exampleHeader}>
-                <H3 className={styles.exampleTitle}>カスタムポートレンダラーのデモ</H3>
-                <P className={styles.exampleDescription}>
-                  データタイプ別に色分けされたポートを試してください。緑（data）、青（image）、オレンジ（audio）、紫（video）の4種類があります。ノードを接続して、ポートと接続線の色が変化することを確認してください。
-                </P>
-              </div>
-              <div className={styles.singleColumnContent}>
+          <ExampleGrid>
+            <ExampleCard>
+              <ExampleHeader
+                title="カスタムポートレンダラーのデモ"
+                description="データタイプ別に色分けされたポートを試してください。緑（data）、青（image）、オレンジ（audio）、紫（video）の4種類があります。ノードを接続して、ポートと接続線の色が変化することを確認してください。"
+              />
+              <SingleColumnContent>
                 <div className={styles.scenarioPreview}>
                   <div className={styles.scenarioControls}>
                     <Button variant="secondary" onClick={handleReset}>
                       初期状態に戻す
                     </Button>
                   </div>
-                  <div className={styles.editorSurface}>
-                    <div className={styles.editorSurfaceInner}>
-                      <NodeEditor
-                        data={data}
-                        onDataChange={setData}
-                        nodeDefinitions={[dataSourceNode, imageProcessorNode, audioProcessorNode, videoProcessorNode]}
-                      />
-                    </div>
-                  </div>
+                  <EditorSurface>
+                    <NodeEditor
+                      data={data}
+                      onDataChange={setData}
+                      nodeDefinitions={[dataSourceNode, imageProcessorNode, audioProcessorNode, videoProcessorNode]}
+                    />
+                  </EditorSurface>
                 </div>
-              </div>
-            </div>
-          </div>
+              </SingleColumnContent>
+            </ExampleCard>
+          </ExampleGrid>
         </Section>
 
-        <Section className={styles.section}>
-          <div className={styles.sectionIntro}>
+        <Section>
+          <SectionIntro>
             <H2>実装方法</H2>
             <P>
               PortDefinition に <Code>renderPort</Code> と <Code>renderConnection</Code>{" "}
               関数を追加することで、完全なカスタマイズが可能になります。
             </P>
-          </div>
+          </SectionIntro>
 
-          <div className={styles.exampleGrid}>
-            <div className={styles.exampleCard}>
-              <div className={styles.exampleHeader}>
-                <H3 className={styles.exampleTitle}>1. カスタムポートレンダラーの実装</H3>
-                <P className={styles.exampleDescription}>
-                  renderPort 関数は、ポートの状態（isConnected, isHovered など）を含む context
-                  とデフォルトレンダラーを受け取ります。
-                </P>
-              </div>
-              <div className={styles.singleColumnContent}>
+          <ExampleGrid>
+            <ExampleCard>
+              <ExampleHeader
+                title="1. カスタムポートレンダラーの実装"
+                description="renderPort 関数は、ポートの状態（isConnected, isHovered など）を含む context とデフォルトレンダラーを受け取ります。"
+              />
+              <SingleColumnContent>
                 <Pre>
                   {`const customPortRenderer = (context, defaultRender) => {
   const { port, isConnected, isHovered, position, handlers } = context;
@@ -424,17 +431,15 @@ const CustomPortRendererCatalog: React.FC = () => {
   );
 };`}
                 </Pre>
-              </div>
-            </div>
+              </SingleColumnContent>
+            </ExampleCard>
 
-            <div className={styles.exampleCard}>
-              <div className={styles.exampleHeader}>
-                <H3 className={styles.exampleTitle}>2. カスタム接続線レンダラーの実装</H3>
-                <P className={styles.exampleDescription}>
-                  renderConnection 関数は、接続の状態とデフォルトレンダラーを受け取ります。デフォルトをラップすることも、完全に置き換えることも可能です。
-                </P>
-              </div>
-              <div className={styles.singleColumnContent}>
+            <ExampleCard>
+              <ExampleHeader
+                title="2. カスタム接続線レンダラーの実装"
+                description="renderConnection 関数は、接続の状態とデフォルトレンダラーを受け取ります。デフォルトをラップすることも、完全に置き換えることも可能です。"
+              />
+              <SingleColumnContent>
                 <Pre>
                   {`const customConnectionRenderer = (context, defaultRender) => {
   const {
@@ -478,17 +483,15 @@ const CustomPortRendererCatalog: React.FC = () => {
   );
 };`}
                 </Pre>
-              </div>
-            </div>
+              </SingleColumnContent>
+            </ExampleCard>
 
-            <div className={styles.exampleCard}>
-              <div className={styles.exampleHeader}>
-                <H3 className={styles.exampleTitle}>3. PortDefinition への適用</H3>
-                <P className={styles.exampleDescription}>
-                  作成したレンダラーを PortDefinition の ports 配列に追加します。
-                </P>
-              </div>
-              <div className={styles.singleColumnContent}>
+            <ExampleCard>
+              <ExampleHeader
+                title="3. PortDefinition への適用"
+                description="作成したレンダラーを PortDefinition の ports 配列に追加します。"
+              />
+              <SingleColumnContent>
                 <Pre>
                   {`const nodeDefinition = createNodeDefinition({
   type: "image-processor",
@@ -506,24 +509,24 @@ const CustomPortRendererCatalog: React.FC = () => {
   ],
 });`}
                 </Pre>
-              </div>
-            </div>
-          </div>
+              </SingleColumnContent>
+            </ExampleCard>
+          </ExampleGrid>
         </Section>
 
-        <Section className={styles.section}>
-          <div className={styles.sectionIntro}>
+        <Section>
+          <SectionIntro>
             <H2>利用可能なコンテキスト</H2>
             <P>renderPort と renderConnection 関数は、以下の情報を含むコンテキストを受け取ります。</P>
-          </div>
+          </SectionIntro>
 
-          <div className={styles.exampleGrid}>
-            <div className={styles.exampleCard}>
-              <div className={styles.exampleHeader}>
-                <H3 className={styles.exampleTitle}>PortRenderContext</H3>
-                <P className={styles.exampleDescription}>ポートレンダラーに渡されるコンテキスト</P>
-              </div>
-              <div className={styles.singleColumnContent}>
+          <ExampleGrid>
+            <ExampleCard>
+              <ExampleHeader
+                title="PortRenderContext"
+                description="ポートレンダラーに渡されるコンテキスト"
+              />
+              <SingleColumnContent>
                 <Pre>
                   {`interface PortRenderContext {
   port: Port;                    // ポート情報
@@ -548,15 +551,15 @@ const CustomPortRendererCatalog: React.FC = () => {
   };
 }`}
                 </Pre>
-              </div>
-            </div>
+              </SingleColumnContent>
+            </ExampleCard>
 
-            <div className={styles.exampleCard}>
-              <div className={styles.exampleHeader}>
-                <H3 className={styles.exampleTitle}>ConnectionRenderContext</H3>
-                <P className={styles.exampleDescription}>接続線レンダラーに渡されるコンテキスト</P>
-              </div>
-              <div className={styles.singleColumnContent}>
+            <ExampleCard>
+              <ExampleHeader
+                title="ConnectionRenderContext"
+                description="接続線レンダラーに渡されるコンテキスト"
+              />
+              <SingleColumnContent>
                 <Pre>
                   {`interface ConnectionRenderContext {
   connection: Connection;        // 接続情報
@@ -573,128 +576,104 @@ const CustomPortRendererCatalog: React.FC = () => {
   dragProgress?: number;         // ドラッグ進捗 (0-1)
 }`}
                 </Pre>
-              </div>
-            </div>
-          </div>
+              </SingleColumnContent>
+            </ExampleCard>
+          </ExampleGrid>
         </Section>
 
-        <Section className={styles.section}>
-          <div className={styles.sectionIntro}>
+        <Section>
+          <SectionIntro>
             <H2>カスタマイズの例</H2>
             <P>renderPort と renderConnection を使って実現できるカスタマイズの例です。</P>
-          </div>
+          </SectionIntro>
 
-          <div className={styles.testGrid}>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>データタイプ別の色分け</H3>
-              </div>
-              <P className={styles.testCardBody}>
+          <TestGrid>
+            <TestCard>
+              <TestCardHeader title="データタイプ別の色分け" />
+              <TestCardBody>
                 ポートの dataType プロパティに基づいて、ポートと接続線の色を変更できます（この例で実装）。
-              </P>
-            </div>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>状態に応じた表示変更</H3>
-              </div>
-              <P className={styles.testCardBody}>
+              </TestCardBody>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="状態に応じた表示変更" />
+              <TestCardBody>
                 isConnected、isHovered などの状態フラグを使って、ポートのサイズや外観を動的に変更できます。
-              </P>
-            </div>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>カスタムアイコン</H3>
-              </div>
-              <P className={styles.testCardBody}>
+              </TestCardBody>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="カスタムアイコン" />
+              <TestCardBody>
                 ポートに SVG アイコンやテキストを表示したり、ポートの形状を変更（四角、ダイヤモンド、三角など）できます。
-              </P>
-            </div>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>接続線のスタイリング</H3>
-              </div>
-              <P className={styles.testCardBody}>
+              </TestCardBody>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="接続線のスタイリング" />
+              <TestCardBody>
                 点線、破線、アニメーション、グラデーション、矢印の形状など、接続線の見た目を完全にカスタマイズできます。
-              </P>
-            </div>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>コンテキストベースの制御</H3>
-              </div>
-              <P className={styles.testCardBody}>
+              </TestCardBody>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="コンテキストベースの制御" />
+              <TestCardBody>
                 全ノード・接続情報にアクセスできるため、ノード間の距離や接続数に応じた表示制御が可能です。
-              </P>
-            </div>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>デフォルトとの組み合わせ</H3>
-              </div>
-              <P className={styles.testCardBody}>
+              </TestCardBody>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="デフォルトとの組み合わせ" />
+              <TestCardBody>
                 defaultRender() を呼び出すことで、デフォルトのレンダリングをラップしたり、条件に応じて切り替えたりできます。
-              </P>
-            </div>
-          </div>
+              </TestCardBody>
+            </TestCard>
+          </TestGrid>
         </Section>
 
-        <Section className={styles.section}>
-          <div className={styles.sectionIntro}>
+        <Section>
+          <SectionIntro>
             <H2>重要な注意事項</H2>
             <P>カスタムポートレンダラーを実装する際は、以下の点に注意してください。</P>
-          </div>
+          </SectionIntro>
 
-          <div className={styles.testGrid}>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>pointer-events: all</H3>
-              </div>
-              <P className={styles.testCardBody}>
+          <TestGrid>
+            <TestCard>
+              <TestCardHeader title="pointer-events: all" />
+              <TestCardBody>
                 ポートのドラッグ操作を可能にするため、<Code>pointerEvents: "all"</Code> を必ず設定してください。これがないと、接続線を引くことができません。
-              </P>
-            </div>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>data-* 属性</H3>
-              </div>
-              <P className={styles.testCardBody}>
+              </TestCardBody>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="data-* 属性" />
+              <TestCardBody>
                 <Code>data-port-id</Code>, <Code>data-port-type</Code>, <Code>data-node-id</Code> の3つの属性は必須です。これらはポートの識別とインタラクションに使用されます。
-              </P>
-            </div>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>イベントハンドラー</H3>
-              </div>
-              <P className={styles.testCardBody}>
+              </TestCardBody>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="イベントハンドラー" />
+              <TestCardBody>
                 context.handlers から取得したイベントハンドラーをすべて設定してください。これらは接続の作成、ホバー状態の管理などに必要です。
-              </P>
-            </div>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>position 情報</H3>
-              </div>
-              <P className={styles.testCardBody}>
+              </TestCardBody>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="position 情報" />
+              <TestCardBody>
                 context.position を使用して、ポートを正しい位置に配置してください。transform プロパティも適用することを忘れないでください。
-              </P>
-            </div>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>z-index とカーソル</H3>
-              </div>
-              <P className={styles.testCardBody}>
+              </TestCardBody>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="z-index とカーソル" />
+              <TestCardBody>
                 ポートが他の要素の上に表示されるよう <Code>zIndex: 10</Code> を設定し、カーソルは <Code>cursor: "crosshair"</Code> が推奨です。
-              </P>
-            </div>
-            <div className={styles.testCard}>
-              <div className={styles.testCardHeader}>
-                <H3 className={styles.testCardTitle}>position: absolute</H3>
-              </div>
-              <P className={styles.testCardBody}>
+              </TestCardBody>
+            </TestCard>
+            <TestCard>
+              <TestCardHeader title="position: absolute" />
+              <TestCardBody>
                 ポートは絶対配置（<Code>position: "absolute"</Code>）である必要があります。context.position の値を left, top に設定してください。
-              </P>
-            </div>
-          </div>
+              </TestCardBody>
+            </TestCard>
+          </TestGrid>
         </Section>
       </Main>
-    </Article>
+    </PageLayout>
   );
 };
 

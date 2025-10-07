@@ -1,0 +1,34 @@
+.exampleGrid {
+  display: grid;
+  gap: 24px;
+  /* Full width for node editor examples */
+  grid-template-columns: 1fr;
+}
+
+.exampleCard {
+  composes: exampleCard from "../../../../components/ExampleCardLayout.module.css";
+}
+
+.exampleHeader {
+  composes: exampleHeader from "../../../../components/ExampleCardLayout.module.css";
+}
+
+.exampleTitle {
+  composes: exampleTitle from "../../../../components/ExampleCardLayout.module.css";
+}
+
+.exampleDescription {
+  composes: exampleDescription from "../../../../components/ExampleCardLayout.module.css";
+}
+
+.exampleContent {
+  composes: exampleContent from "../../../../components/ExampleCardLayout.module.css";
+}
+
+.singleColumnContent {
+  display: grid;
+  gap: var(--exampleCardContentGap, calc(var(--cardPadding, 16px) + 8px));
+  align-items: flex-start;
+  /* Always full width, no 2-column layout */
+  grid-template-columns: 1fr;
+}

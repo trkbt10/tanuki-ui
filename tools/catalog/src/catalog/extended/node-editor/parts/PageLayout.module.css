@@ -1,0 +1,29 @@
+.page {
+  margin: 0 auto;
+  max-width: 1280px;
+  padding: 32px 24px;
+  display: grid;
+  gap: 32px;
+}
+
+.main {
+  display: grid;
+  gap: 40px;
+}
+
+.section {
+  display: grid;
+  gap: 24px;
+}
+
+.sectionIntro {
+  display: grid;
+  gap: 12px;
+  max-width: 720px;
+}
+
+@media (max-width: 720px) {
+  .page {
+    padding: 24px 16px;
+  }
+}

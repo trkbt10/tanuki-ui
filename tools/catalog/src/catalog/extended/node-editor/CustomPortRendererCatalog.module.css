@@ -1,0 +1,9 @@
+.scenarioPreview {
+  composes: examplePreview from "../../../components/ExampleCardLayout.module.css";
+  gap: var(--examplePreviewGap, 20px);
+}
+
+.scenarioControls {
+  display: grid;
+  gap: 16px;
+}

@@ -1,0 +1,24 @@
+.testGrid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.testCard {
+  composes: exampleCard from "../../../../components/ExampleCardLayout.module.css";
+}
+
+.testCardHeader {
+  composes: exampleHeader from "../../../../components/ExampleCardLayout.module.css";
+}
+
+.testCardTitle {
+  composes: exampleTitle from "../../../../components/ExampleCardLayout.module.css";
+}
+
+.testCardBody {
+  margin: 0;
+  color: var(--secondaryLabelColor, #4b5563);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}

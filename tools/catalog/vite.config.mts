@@ -20,6 +20,7 @@ export default defineConfig({
           "react-vendor": ["react", "react-dom"],
           router: ["react-router"],
           "tanuki-ui-core": ["tanuki-ui"],
+          "tanuki-ui": ["tanuki-ui"],
         },
       },
     },
