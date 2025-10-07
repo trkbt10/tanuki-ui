@@ -8,13 +8,14 @@ import {
   InspectorInput,
   InspectorTextarea,
   InspectorNumberInput,
-  InspectorCheckbox,
   PositionInputsGrid,
   ReadOnlyField,
+  InspectorDefinitionList,
+  InspectorDefinitionItem,
 } from "../parts";
 import { useI18n } from "../../../i18n";
-import styles from "./NodeBehaviorInspector.module.css";
 import { AlignmentControls, type AlignmentActionType } from "../../controls/alignments";
+import { SwitchInput } from "../../elements";
 
 // Extended props for supporting multiple selection alignment
 interface ExtendedInspectorRenderProps extends InspectorRenderProps {
@@ -176,13 +177,24 @@ export function NodeBehaviorInspector({
       </div>
 
       <div>
-        <InspectorLabel>
-          {t("inspectorLocked")} / {t("inspectorVisible")}
-        </InspectorLabel>
-        <div className={styles.options}>
-          <InspectorCheckbox checked={node.locked || false} onChange={handleLockedChange} label={t("inspectorLocked")} />
-          <InspectorCheckbox checked={node.visible !== false} onChange={handleVisibleChange} label={t("inspectorVisible")} />
-        </div>
+        <InspectorDefinitionList>
+          <InspectorDefinitionItem label={t("inspectorLocked") || "Locked"}>
+            <SwitchInput
+              id={`node-${node.id}-locked`}
+              checked={Boolean(node.locked)}
+              onChange={handleLockedChange}
+              size="small"
+            />
+          </InspectorDefinitionItem>
+          <InspectorDefinitionItem label={t("inspectorVisible") || "Visible"}>
+            <SwitchInput
+              id={`node-${node.id}-visible`}
+              checked={node.visible !== false}
+              onChange={handleVisibleChange}
+              size="small"
+            />
+          </InspectorDefinitionItem>
+        </InspectorDefinitionList>
       </div>
 
       <div>

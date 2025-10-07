@@ -55,40 +55,24 @@
 }
 
 .flags {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-md);
   margin-bottom: var(--spacing-lg);
 }
 
-.flag {
+.flagsList {
   padding: var(--spacing-md);
   background: var(--surface-secondary);
   border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
 }
 
-.flagHeader {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--spacing-xs);
+.flagsList :global(dt + dd) {
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--spacing-sm);
 }
 
-.flagHeader label {
-  font-weight: 500;
-  color: var(--text-primary);
-  cursor: pointer;
-}
-
-.flagDescription {
-  margin: 0;
-  font-size: var(--font-size-sm);
-  color: var(--text-secondary);
-  line-height: 1.5;
-}
-
-.flagDescription strong {
-  color: var(--color-warning);
+.flagsList :global(dt:first-of-type + dd) {
+  border-top: none;
+  padding-top: 0;
 }
 
 .currentState {

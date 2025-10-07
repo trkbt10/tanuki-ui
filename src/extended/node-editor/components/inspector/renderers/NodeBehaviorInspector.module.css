@@ -1,6 +1,0 @@
-.options {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: var(--node-editor-inspector-inline-gap);
-}

@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useFeatureFlags, setFeatureFlags, type NodeEditorFeatureFlags } from "../../config/featureFlags";
 import { SwitchInput, Button } from "../elements";
+import { InspectorDefinitionList, InspectorDefinitionItem } from "./parts";
 import styles from "./FeatureFlagsPanel.module.css";
 
 export interface FeatureFlagsPanelProps {
@@ -66,70 +67,56 @@ export const FeatureFlagsPanel: React.FC<FeatureFlagsPanelProps> = ({ className,
         </div>
 
         <div className={styles.flags}>
-          <div className={styles.flag}>
-            <div className={styles.flagHeader}>
-              <label htmlFor="useInferredPortsOnly">
-                Use Inferred Ports Only
-              </label>
+          <InspectorDefinitionList className={styles.flagsList}>
+            <InspectorDefinitionItem
+              label="Use Inferred Ports Only"
+              description={
+                <>
+                  When enabled, ports are exclusively inferred from NodeDefinitions.
+                  Legacy embedded ports are ignored. <strong>Requires reload.</strong>
+                </>
+              }
+            >
               <SwitchInput
                 id="useInferredPortsOnly"
                 checked={localFlags.useInferredPortsOnly}
                 onChange={() => handleToggle("useInferredPortsOnly")}
               />
-            </div>
-            <p className={styles.flagDescription}>
-              When enabled, ports are exclusively inferred from NodeDefinitions.
-              Legacy embedded ports are ignored. <strong>Requires reload.</strong>
-            </p>
-          </div>
+            </InspectorDefinitionItem>
 
-          <div className={styles.flag}>
-            <div className={styles.flagHeader}>
-              <label htmlFor="showMigrationWarnings">
-                Show Migration Warnings
-              </label>
+            <InspectorDefinitionItem
+              label="Show Migration Warnings"
+              description="Display console warnings during data migration."
+            >
               <SwitchInput
                 id="showMigrationWarnings"
                 checked={localFlags.showMigrationWarnings}
                 onChange={() => handleToggle("showMigrationWarnings")}
               />
-            </div>
-            <p className={styles.flagDescription}>
-              Display console warnings during data migration.
-            </p>
-          </div>
+            </InspectorDefinitionItem>
 
-          <div className={styles.flag}>
-            <div className={styles.flagHeader}>
-              <label htmlFor="autoMigrateOnLoad">
-                Auto-Migrate on Load
-              </label>
+            <InspectorDefinitionItem
+              label="Auto-Migrate on Load"
+              description="Automatically migrate old data format when loading."
+            >
               <SwitchInput
                 id="autoMigrateOnLoad"
                 checked={localFlags.autoMigrateOnLoad}
                 onChange={() => handleToggle("autoMigrateOnLoad")}
               />
-            </div>
-            <p className={styles.flagDescription}>
-              Automatically migrate old data format when loading.
-            </p>
-          </div>
+            </InspectorDefinitionItem>
 
-          <div className={styles.flag}>
-            <div className={styles.flagHeader}>
-              <label htmlFor="saveInNewFormat">
-                Save in New Format
-              </label>
+            <InspectorDefinitionItem
+              label="Save in New Format"
+              description="Save data without embedded ports (new format)."
+            >
               <SwitchInput
                 id="saveInNewFormat"
                 checked={localFlags.saveInNewFormat}
                 onChange={() => handleToggle("saveInNewFormat")}
               />
-            </div>
-            <p className={styles.flagDescription}>
-              Save data without embedded ports (new format).
-            </p>
-          </div>
+            </InspectorDefinitionItem>
+          </InspectorDefinitionList>
         </div>
 
         <div className={styles.currentState}>

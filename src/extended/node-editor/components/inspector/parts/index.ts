@@ -13,9 +13,6 @@ export type { InspectorTextareaProps } from "./InspectorTextarea";
 export { InspectorNumberInput } from "./InspectorNumberInput";
 export type { InspectorNumberInputProps } from "./InspectorNumberInput";
 
-export { InspectorCheckbox } from "./InspectorCheckbox";
-export type { InspectorCheckboxProps } from "./InspectorCheckbox";
-
 export { InspectorField } from "./InspectorField";
 export type { InspectorFieldProps } from "./InspectorField";
 
@@ -33,3 +30,6 @@ export type { InspectorSectionTitleProps } from "./InspectorSectionTitle";
 
 export { ReadOnlyField } from "./ReadOnlyField";
 export type { ReadOnlyFieldProps } from "./ReadOnlyField";
+
+export { InspectorDefinitionList, InspectorDefinitionItem } from "./InspectorDefinitionList";
+export type { InspectorDefinitionListProps, InspectorDefinitionItemProps } from "./InspectorDefinitionList";
