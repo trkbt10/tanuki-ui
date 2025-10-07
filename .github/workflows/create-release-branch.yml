@@ -1,10 +1,11 @@
-name: Create Release Branch
+name: Prepare Release Branch
 
 on:
   push:
     branches: [main]
     paths:
       - 'package.json'
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -21,28 +22,39 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Check if version changed
+      - name: Detect version change
         id: check
         run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            NEW_VERSION=$(node -p "require('./package.json').version")
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
+            echo "Manual run: using package.json version $NEW_VERSION"
+            exit 0
+          fi
+
           CURRENT_VERSION=$(node -p "require('./package.json').version")
           PREVIOUS_VERSION=$(git show HEAD~1:package.json | node -p "JSON.parse(require('fs').readFileSync('/dev/stdin', 'utf8')).version")
-          
+
           if [ "$CURRENT_VERSION" != "$PREVIOUS_VERSION" ]; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-            echo "version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "version=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
             echo "Version changed from $PREVIOUS_VERSION to $CURRENT_VERSION"
           else
-            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "No version change detected"
           fi
 
-  create-release-branch:
+  prepare-release-branch:
+    name: Build library and embed catalog
     needs: check-version
     if: needs.check-version.outputs.version-changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -50,7 +62,9 @@ jobs:
           bun-version: latest
 
       - name: Install dependencies
-        run: bun install
+        run: |
+          bun install
+          cd tools/catalog && bun install
 
       - name: Run type check
         run: bun run typecheck:no-stories
@@ -58,11 +72,30 @@ jobs:
       - name: Build library
         run: bun run build
 
-      - name: Create release branch
+      - name: Build catalog site
+        run: cd tools/catalog && bun run build
+
+      - name: Create release branch with catalog
+        env:
+          RELEASE_BRANCH: release/${{ needs.check-version.outputs.new-version }}
+          CATALOG_VERSION: ${{ needs.check-version.outputs.new-version }}
         run: |
-          RELEASE_BRANCH="release/${{ needs.check-version.outputs.new-version }}"
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git checkout -b "$RELEASE_BRANCH"
+          git fetch origin "$RELEASE_BRANCH" || true
+
+          if git show-ref --verify --quiet "refs/remotes/origin/$RELEASE_BRANCH"; then
+            git checkout -B "$RELEASE_BRANCH" "origin/$RELEASE_BRANCH"
+          else
+            git checkout -b "$RELEASE_BRANCH"
+          fi
+
+          rm -rf catalog
+          mkdir -p catalog
+          rsync -a --delete tools/catalog/dist/ catalog/
+          touch catalog/.nojekyll
+
+          git add -A catalog
+          git commit -m "Embed catalog for v$CATALOG_VERSION" || echo "No catalog updates to commit"
           git push origin "$RELEASE_BRANCH"
-          echo "Created release branch: $RELEASE_BRANCH"
+          echo "Prepared $RELEASE_BRANCH with catalog v$CATALOG_VERSION"
