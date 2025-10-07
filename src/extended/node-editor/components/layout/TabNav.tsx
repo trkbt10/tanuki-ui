@@ -15,10 +15,8 @@ export const TabNav: React.FC<TabNavProps> = ({ tabs, activeTabIndex, onTabChang
       {tabs.map((tab, index) => (
         <button
           key={index}
-          className={classNames(
-            styles.tabButton,
-            index === activeTabIndex && styles.tabButtonActive
-          )}
+          className={styles.tabButton}
+          data-active={index === activeTabIndex}
           onClick={() => onTabChange(index)}
           type="button"
         >
