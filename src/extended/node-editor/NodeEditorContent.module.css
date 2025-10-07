@@ -5,9 +5,9 @@
   height: 100%;
   position: relative;
   overflow: hidden;
-  background-color: var(--windowBackgroundColor, #f5f5f5);
+  background-color: var(--windowBackgroundColor);
   user-select: none;
-  padding-bottom: 24px;
+  padding-bottom: var(--node-editor-space-xl);
   /* Space for status bar */
   box-sizing: border-box;
 }
@@ -24,40 +24,40 @@
 
 .node {
   position: absolute;
-  background-color: var(--controlBackground, #ffffff);
+  background-color: var(--controlBackground);
   border: var(--inputBorder);
-  border-radius: .5em;
-  box-shadow: 0 2px .5em rgba(0, 0, 0, 0.1);
+  border-radius: var(--controlBorderRadius);
+  box-shadow: var(--cardBoxShadow);
   min-width: 150px;
   min-height: 50px;
   cursor: move;
-  transition: box-shadow 0.2s;
+  transition: box-shadow var(--node-editor-transition-duration);
 }
 
 .node:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--cardHoverBoxShadow);
 }
 
 /* Locked nodes: no extra visual highlight beyond the icon */
 .node.locked {}
 
 .node.selected {
-  border-color: var(--accentColor, #0066cc);
-  box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
+  border-color: var(--accentColor);
+  box-shadow: var(--cardFocusBoxShadow);
 }
 
 .node.dragging {
-  opacity: 0.8;
+  opacity: var(--node-editor-dragging-opacity);
   cursor: grabbing;
 }
 
 .nodeHeader {
   position: relative;
-  padding: .5em 12px;
-  font-weight: 500;
+  padding: .5em var(--node-editor-space-md);
+  font-weight: var(--node-editor-inspector-font-weight-medium);
   border-bottom: var(--inputBorder);
-  background-color: var(--tableHeaderBackgroundColor, #f0f0f0);
-  border-radius: .5em .5em 0 0;
+  background-color: var(--tableHeaderBackgroundColor);
+  border-radius: var(--controlBorderRadius) var(--controlBorderRadius) 0 0;
   height: 40px;
   display: flex;
   align-items: center;
@@ -66,22 +66,22 @@
 
 .nodeHeader.interactiveDragHandle {
   cursor: move;
-  background-color: var(--tableHeaderBackgroundColorHover, #e5e5e5);
-  transition: background-color 0.2s ease;
+  background-color: var(--tableHeaderBackgroundColorHover);
+  transition: background-color var(--node-editor-transition-duration) ease;
 }
 
 .nodeHeader.interactiveDragHandle:hover {
-  background-color: var(--tableHeaderBackgroundColorActive, #d8d8d8);
+  background-color: var(--tableHeaderBackgroundColorActive);
 }
 
 .nodeHeader.interactiveDragHandle::before {
   content: "⋮⋮";
   position: absolute;
-  left: 4px;
+  left: var(--node-editor-space-xs);
   top: 50%;
   transform: translateY(-50%);
   font-size: 10px;
-  color: var(--secondaryLabelColor, #999);
+  color: var(--secondaryLabelColor);
   opacity: 0.6;
   pointer-events: none;
   letter-spacing: -2px;
@@ -89,11 +89,11 @@
 
 .nodeHeaderInput {
   width: 100%;
-  padding: 4px .5em;
-  border: 1px solid var(--accentColor, #0066cc);
-  border-radius: 4px;
-  background-color: var(--windowBackgroundColor, #ffffff);
-  font-weight: 500;
+  padding: var(--node-editor-space-xs) .5em;
+  border: var(--node-editor-border-width) solid var(--accentColor);
+  border-radius: var(--cardBorderRadius);
+  background-color: var(--windowBackgroundColor);
+  font-weight: var(--node-editor-inspector-font-weight-medium);
   font-size: inherit;
   font-family: inherit;
   outline: none;
@@ -102,23 +102,23 @@
 
 .lockIcon {
   position: absolute;
-  top: 4px;
-  right: 4px;
-  font-size: 12px;
+  top: var(--node-editor-space-xs);
+  right: var(--node-editor-space-xs);
+  font-size: var(--node-editor-inspector-font-size-body);
   opacity: 0.8;
   pointer-events: none;
 }
 
 .nodeContent {
-  padding: 12px;
+  padding: var(--node-editor-space-md);
   box-sizing: border-box;
 }
 
 .groupNode {
-  background-color: color-mix(in srgb, var(--separatorColor, rgba(0, 0, 0, 0.12)) 6%, transparent);
+  background-color: color-mix(in srgb, var(--separatorColor) 6%, transparent);
   border-style: dashed;
-  border-width: 1px;
-  border-color: var(--dividerColor, rgba(0, 0, 0, 0.12));
+  border-width: var(--node-editor-border-width);
+  border-color: var(--dividerColor);
 }
 
 .groupNode.collapsed .nodeContent {
@@ -127,7 +127,7 @@
 
 .groupCollapsed {
   text-align: center;
-  color: var(--secondaryLabelColor, #666);
+  color: var(--secondaryLabelColor);
   font-style: italic;
 }
 
@@ -141,15 +141,15 @@
 
 .toolbar {
   position: absolute;
-  top: 16px;
-  left: 16px;
+  top: var(--node-editor-space-lg);
+  left: var(--node-editor-space-lg);
   display: flex;
   gap: .5em;
-  background-color: var(--controlBackground, #ffffff);
+  background-color: var(--controlBackground);
   border: var(--inputBorder);
-  border-radius: .5em;
+  border-radius: var(--controlBorderRadius);
   padding: .5em;
-  box-shadow: 0 2px .5em rgba(0, 0, 0, 0.1);
+  box-shadow: var(--cardBoxShadow);
   box-sizing: border-box;
 }
 
@@ -157,25 +157,25 @@
 
 .contextMenu {
   position: absolute;
-  background-color: var(--controlBackground, #ffffff);
+  background-color: var(--controlBackground);
   border: var(--inputBorder);
-  border-radius: .5em;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  padding: 4px;
+  border-radius: var(--controlBorderRadius);
+  box-shadow: var(--cardHoverBoxShadow);
+  padding: var(--node-editor-space-xs);
   min-width: 150px;
   box-sizing: border-box;
 }
 
 .contextMenuItem {
-  padding: .5em 12px;
+  padding: .5em var(--node-editor-space-md);
   cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.2s;
+  border-radius: var(--cardBorderRadius);
+  transition: background-color var(--node-editor-transition-duration);
   box-sizing: border-box;
 }
 
 .contextMenuItem:hover {
-  background-color: var(--controlHoverBackground, #f5f5f5);
+  background-color: var(--controlHoverBackground);
 }
 
 .grid {
@@ -214,15 +214,15 @@
 
 .externalDataInfo {
   padding: .5em;
-  background-color: var(--controlHoverBackground, #f5f5f5);
-  border-radius: 4px;
-  font-size: 12px;
+  background-color: var(--controlHoverBackground);
+  border-radius: var(--cardBorderRadius);
+  font-size: var(--node-editor-inspector-font-size-body);
   margin-bottom: .5em;
   box-sizing: border-box;
 }
 
 .externalDataInfo>div {
-  margin-bottom: 4px;
+  margin-bottom: var(--node-editor-space-xs);
 }
 
 /* Drag guides */
@@ -238,26 +238,26 @@
 
 .dragGuide {
   position: absolute;
-  background-color: var(--accentColor, #0066cc);
+  background-color: var(--accentColor);
   pointer-events: none;
   opacity: 0.7;
 }
 
 .dragGuideVertical {
-  width: 1px;
+  width: var(--node-editor-border-width);
   height: 100%;
 }
 
 .dragGuideHorizontal {
   width: 100%;
-  height: 1px;
+  height: var(--node-editor-border-width);
 }
 
 .snapTarget {
   position: absolute;
   width: .5em;
   height: .5em;
-  background-color: var(--accentColor, #0066cc);
+  background-color: var(--accentColor);
   border-radius: 50%;
   transform: translate(-4px, -4px);
   pointer-events: none;
@@ -270,9 +270,9 @@
   background-color: rgba(0, 0, 0, 0.7);
   color: white;
   padding: 2px 6px;
-  border-radius: 4px;
+  border-radius: var(--cardBorderRadius);
   font-size: 10px;
-  font-weight: 500;
+  font-weight: var(--node-editor-inspector-font-weight-medium);
   white-space: nowrap;
   z-index: 1001;
   box-sizing: border-box;
@@ -280,7 +280,7 @@
 
 .distanceLine {
   position: absolute;
-  border-top: 1px dashed var(--secondaryLabelColor, #666);
+  border-top: var(--node-editor-border-width) dashed var(--secondaryLabelColor);
   pointer-events: none;
   opacity: 0.6;
 }
@@ -293,28 +293,28 @@
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background-color: var(--controlBackground, #ffffff);
+  background-color: var(--controlBackground);
   border: 3px solid red;
   /* Temporary: make ports visible */
   cursor: crosshair;
   transition: transform 0.1s ease, box-shadow 0.1s ease;
   z-index: 100;
   /* Increased z-index */
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 var(--node-editor-space-xs) rgba(0, 0, 0, 0.5);
   /* Add shadow for visibility */
 }
 
 .nodePort:hover {
   transform: scale(1.2);
-  border-color: var(--accentColor, #0066cc);
+  border-color: var(--accentColor);
 }
 
 .nodePort.portInput {
-  border-color: var(--nodePortInputColor, #66cc00);
+  border-color: var(--nodePortInputColor);
 }
 
 .nodePort.portOutput {
-  border-color: var(--nodePortOutputColor, #0099ff);
+  border-color: var(--nodePortOutputColor);
 }
 
 .portInner {
@@ -323,29 +323,29 @@
   left: 50%;
   width: .5em;
   height: .5em;
-  background-color: var(--inputBorder, #999);
+  background-color: var(--inputBorder);
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  transition: background-color 0.2s;
+  transition: background-color var(--node-editor-transition-duration);
 }
 
 .nodePort:hover .portInner {
-  background-color: var(--accentColor, #0066cc);
+  background-color: var(--accentColor);
 }
 
 .nodePort.portInput .portInner {
-  background-color: var(--nodePortInputColor, #66cc00);
+  background-color: var(--nodePortInputColor);
 }
 
 .nodePort.portOutput .portInner {
-  background-color: var(--nodePortOutputColor, #0099ff);
+  background-color: var(--nodePortOutputColor);
 }
 
 .portLabel {
   position: absolute;
   white-space: nowrap;
-  font-size: 11px;
-  color: var(--secondaryLabelColor, #666);
+  font-size: var(--node-editor-inspector-font-size-meta);
+  color: var(--secondaryLabelColor);
   pointer-events: none;
   user-select: none;
 }
@@ -420,25 +420,25 @@
   border: none;
   border-bottom: 2px solid transparent;
   font-size: 13px;
-  font-weight: 500;
-  color: var(--secondaryLabelColor, #666);
+  font-weight: var(--node-editor-inspector-font-weight-medium);
+  color: var(--secondaryLabelColor);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--node-editor-transition-duration) ease;
 }
 
 .inspectorTab:hover {
-  color: var(--labelColor, #000);
-  background: var(--quaternarySystemFillColor, rgba(0, 0, 0, 0.04));
+  color: var(--labelColor);
+  background: var(--quaternarySystemFillColor);
 }
 
 .inspectorTab.active {
-  color: var(--accentColor, #007AFF);
-  border-bottom-color: var(--accentColor, #007AFF);
+  color: var(--accentColor);
+  border-bottom-color: var(--accentColor);
   background: transparent;
 }
 
 .inspectorTab.active:hover {
-  background: var(--quaternarySystemFillColor, rgba(0, 0, 0, 0.04));
+  background: var(--quaternarySystemFillColor);
 }
 
 .inspectorContentNoPadding {
@@ -447,42 +447,42 @@
 
 
 .inspectorSection h4 {
-  margin: 0 0 12px 0;
-  font-size: 12px;
+  margin: 0 0 var(--node-editor-space-md) 0;
+  font-size: var(--node-editor-inspector-font-size-body);
   font-weight: 600;
-  color: var(--secondaryLabelColor, #666);
+  color: var(--secondaryLabelColor);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .inspectorField {
-  margin-bottom: 12px;
+  margin-bottom: var(--node-editor-space-md);
 }
 
 .inspectorField label {
   display: block;
-  margin-bottom: 4px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--textColor, #000);
+  margin-bottom: var(--node-editor-space-xs);
+  font-size: var(--node-editor-inspector-font-size-body);
+  font-weight: var(--node-editor-inspector-font-weight-medium);
+  color: var(--textColor);
 }
 
 .inspectorInput,
 .inspectorTextarea {
   width: 100%;
   padding: 3px .25em;
-  border: var(--inputBorder, 1px solid #c8c8c8);
-  border-radius: 4px;
-  font-size: 12px;
-  background: var(--controlBackground, #ffffff);
-  color: var(--textColor, #000);
+  border: var(--inputBorder);
+  border-radius: var(--cardBorderRadius);
+  font-size: var(--node-editor-inspector-font-size-body);
+  background: var(--controlBackground);
+  color: var(--textColor);
   box-sizing: border-box;
 }
 
 .inspectorInput:focus,
 .inspectorTextarea:focus {
   outline: none;
-  border-color: var(--accentColor, #007aff);
+  border-color: var(--accentColor);
 }
 
 .inspectorTextarea {
@@ -502,11 +502,11 @@
   flex: 1;
   /* Compact padding for small width usability */
   padding: 3px .25em;
-  border: var(--inputBorder, 1px solid #c8c8c8);
-  border-radius: 4px;
-  font-size: 12px;
-  background: var(--controlBackground, #ffffff);
-  color: var(--textColor, #000);
+  border: var(--inputBorder);
+  border-radius: var(--cardBorderRadius);
+  font-size: var(--node-editor-inspector-font-size-body);
+  background: var(--controlBackground);
+  color: var(--textColor);
   box-sizing: border-box;
   min-width: 0;
   /* Allow shrinking inside flex container */
@@ -514,21 +514,21 @@
 
 .inspectorNumberInput:focus {
   outline: none;
-  border-color: var(--accentColor, #007aff);
+  border-color: var(--accentColor);
 }
 
 .inspectorInput:hover,
 .inspectorTextarea:hover,
 .inspectorNumberInput:hover {
-  border-color: var(--inputBorderHover, #bdbdbd);
+  border-color: var(--inputBorderHover);
 }
 
 /* Unified section title for inspector */
 .inspectorSectionTitle {
-  margin: 0 0 8px 0;
-  font-size: 12px;
+  margin: 0 0 var(--node-editor-space-sm) 0;
+  font-size: var(--node-editor-inspector-font-size-body);
   font-weight: 600;
-  color: var(--secondaryLabelColor, #666);
+  color: var(--secondaryLabelColor);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -536,19 +536,19 @@
 .inspectorReadOnlyField {
   display: block;
   padding: 6px .5em;
-  font-size: 12px;
-  color: var(--secondaryLabelColor, #666);
-  background: var(--tertiarySystemBackground, #f9f9f9);
-  border-radius: 4px;
+  font-size: var(--node-editor-inspector-font-size-body);
+  color: var(--secondaryLabelColor);
+  background: var(--tertiarySystemBackground);
+  border-radius: var(--cardBorderRadius);
   border: var(--inputBorder);
   box-sizing: border-box;
 }
 
 .inspectorEmptyState {
   text-align: center;
-  padding: 32px 16px;
-  color: var(--secondaryLabelColor, #666);
-  font-size: 12px;
+  padding: var(--node-editor-inspector-empty-padding-vertical) var(--node-editor-inspector-empty-padding-horizontal);
+  color: var(--secondaryLabelColor);
+  font-size: var(--node-editor-inspector-font-size-body);
   box-sizing: border-box;
 }
 
@@ -565,9 +565,9 @@
 
 .editorToolbar {
   flex: 0 0 auto;
-  background: var(--controlBackground, #ffffff);
+  background: var(--controlBackground);
   border-bottom: var(--inputBorder);
-  padding: .5em 16px;
+  padding: .5em var(--node-editor-space-lg);
   display: flex;
   align-items: center;
   min-height: 4.5em;
@@ -605,13 +605,13 @@
 }
 
 .loadingIndicator {
-  background-color: var(--controlBackground, #ffffff);
+  background-color: var(--controlBackground);
   border: var(--inputBorder);
-  border-radius: .5em;
-  padding: 16px 32px;
+  border-radius: var(--controlBorderRadius);
+  padding: var(--node-editor-space-lg) var(--node-editor-space-xxl);
   font-size: 14px;
-  color: var(--controlTextColor, #000000);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  color: var(--controlTextColor);
+  box-shadow: var(--cardHoverBoxShadow);
   box-sizing: border-box;
 }
 
@@ -632,7 +632,7 @@
   z-index: 15;
   pointer-events: all;
   /* Corner-specific border radius - only bottom-right is rounded */
-  border-radius: 0 0 4px 0;
+  border-radius: 0 0 var(--cardBorderRadius) 0;
 }
 
 /* Show handle when node is hovered or selected */
@@ -643,14 +643,14 @@
 
 /* Accent color fill on hover */
 .resizeHandle:hover {
-  background-color: var(--accentColor, #007aff);
+  background-color: var(--accentColor);
   opacity: 1;
   transform: scale(1.1);
 }
 
 /* Active state during resize */
 .resizeHandleActive {
-  background-color: var(--accentColor, #007aff);
+  background-color: var(--accentColor);
   opacity: 1;
   transform: scale(1.1);
 }
@@ -659,40 +659,40 @@
 /* Minimap Styles */
 .minimapContainer {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: var(--node-editor-space-lg);
+  right: var(--node-editor-space-lg);
   z-index: 100;
   pointer-events: all;
 }
 
 .minimap {
   width: 200px;
-  background: var(--controlBackground, rgba(255, 255, 255, 0.9));
+  background: var(--controlBackground);
   border: var(--inputBorder);
-  border-radius: .5em;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: var(--controlBorderRadius);
+  box-shadow: var(--cardHoverBoxShadow);
   backdrop-filter: blur(.5em);
   overflow: hidden;
 }
 
 .minimapTitle {
-  padding: .5em 12px;
-  background: var(--tableHeaderBackgroundColor, #f0f0f0);
-  font-size: 12px;
+  padding: .5em var(--node-editor-space-md);
+  background: var(--tableHeaderBackgroundColor);
+  font-size: var(--node-editor-inspector-font-size-body);
   font-weight: 600;
-  color: var(--textColor, #000);
+  color: var(--textColor);
   border-bottom: var(--inputBorder);
 }
 
 .minimapContent {
-  padding: 12px;
+  padding: var(--node-editor-space-md);
 }
 
 .minimapViewport,
 .minimapNodes {
-  font-size: 11px;
-  color: var(--secondaryLabelColor, #666);
-  margin-bottom: 4px;
+  font-size: var(--node-editor-inspector-font-size-meta);
+  color: var(--secondaryLabelColor);
+  margin-bottom: var(--node-editor-space-xs);
 }
 
 .minimapViewport:last-child,
@@ -702,33 +702,33 @@
 
 /* Theme-specific styles */
 .darkTheme {
-  background-color: var(--darkBackgroundColor, #1e1e1e);
-  color: var(--darkTextColor, #ffffff);
+  background-color: var(--darkBackgroundColor);
+  color: var(--darkTextColor);
 }
 
 .darkTheme .minimap {
-  background: var(--darkControlBackground, rgba(42, 42, 42, 0.9));
-  border-color: var(--darkInputBorder, #444);
+  background: var(--darkControlBackground);
+  border-color: var(--darkInputBorder);
 }
 
 .darkTheme .minimapTitle {
-  background: var(--darkTableHeaderBackground, #333);
-  color: var(--darkTextColor, #ffffff);
-  border-bottom-color: var(--darkInputBorder, #444);
+  background: var(--darkTableHeaderBackground);
+  color: var(--darkTextColor);
+  border-bottom-color: var(--darkInputBorder);
 }
 
 .darkTheme .minimapViewport,
 .darkTheme .minimapNodes {
-  color: var(--darkSecondaryTextColor, #ccc);
+  color: var(--darkSecondaryTextColor);
 }
 
 /* Smooth animations - selective only for non-performance critical elements */
 .smoothAnimations .statusSection {
-  transition: opacity 0.2s ease;
+  transition: opacity var(--node-editor-transition-duration) ease;
 }
 
 .smoothAnimations .minimap {
-  transition: opacity 0.2s ease;
+  transition: opacity var(--node-editor-transition-duration) ease;
 }
 
 /* Remove all transform transitions to prevent janky movement */
