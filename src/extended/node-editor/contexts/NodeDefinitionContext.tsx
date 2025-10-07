@@ -44,7 +44,7 @@ export const NodeDefinitionProvider = <TNodeDataTypeMap = {}>({
     // Register default definitions if requested
     if (includeDefaults) {
       defaultNodeDefinitions.forEach((def) => {
-        reg.register(toUntypedDefinition(def));
+        reg.register(toUntypedDefinition(def as any));
       });
     }
 

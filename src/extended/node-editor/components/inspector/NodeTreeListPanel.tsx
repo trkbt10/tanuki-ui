@@ -6,8 +6,8 @@ import { hasGroupBehavior } from "../../types/behaviors";
 import { Node, NodeId } from "../../types/core";
 import { getNodeIcon } from "../../utils/nodeUtils";
 import { CloseIcon, classNames, LockIcon, UnlockIcon } from "../elements";
-import { PropertySection } from "../inspector/parts";
-import styles from "./NodeTreeList.module.css";
+import { PropertySection } from "./parts";
+import styles from "./NodeTreeListPanel.module.css";
 import { useI18n } from "../../i18n";
 
 interface DragState {
@@ -351,11 +351,11 @@ const ConnectedNodeTreeItem: React.FC<ConnectedNodeTreeItemProps> = ({
   );
 };
 
-export interface NodeTreeListProps {
+export interface NodeTreeListPanelProps {
   className?: string;
 }
 
-export const NodeTreeList: React.FC<NodeTreeListProps> = ({ className }) => {
+export const NodeTreeListPanel: React.FC<NodeTreeListPanelProps> = ({ className }) => {
   const { state: editorState, dispatch: editorDispatch, actions: editorActions } = useNodeEditor();
   const { dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const nodeDefinitions = useNodeDefinitionList();

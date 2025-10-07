@@ -15,6 +15,7 @@ import { I18nProvider, type I18nMessages, type Locale } from "./i18n";
 import { NodeEditorContent } from "./NodeEditorContent";
 import type { SettingsManager } from "./settings/SettingsManager";
 import type { ExternalDataReference, NodeDefinition } from "./types/NodeDefinition";
+import type { GridLayoutConfig, LayerDefinition } from "./types/panels";
 import { type PortPositionBehavior } from "./types/portPosition";
 import type { NodeEditorRendererOverrides } from "./types/renderers";
 
@@ -33,36 +34,12 @@ export interface NodeEditorProps<TNodeDataTypeMap = {}> {
   includeDefaultDefinitions?: boolean;
   /** External data references for nodes */
   externalDataRefs?: Record<string, ExternalDataReference>;
-  /** Custom overlay layers (e.g., minimap, debugging tools) */
-  overlayLayers?: React.ReactNode[];
-  /** Custom background layers (e.g., custom grid, guides) */
-  backgroundLayers?: React.ReactNode[];
-  /** Custom UI overlay layers (fixed position, non-interactive, for UI elements) */
-  uiOverlayLayers?: React.ReactNode[];
   /** Settings manager instance */
   settingsManager?: SettingsManager;
-  /** Custom toolbar content */
-  toolbar?: React.ReactNode;
-  /** Content for left sidebar (optional) */
-  leftSidebar?: React.ReactNode;
-  /** Content for right sidebar (optional) */
-  rightSidebar?: React.ReactNode;
-  /** Initial width of left sidebar in pixels */
-  leftSidebarInitialWidth?: number;
-  /** Initial width of right sidebar in pixels */
-  rightSidebarInitialWidth?: number;
-  /** Minimum width of left sidebar in pixels */
-  leftSidebarMinWidth?: number;
-  /** Minimum width of right sidebar in pixels */
-  rightSidebarMinWidth?: number;
-  /** Maximum width of left sidebar in pixels */
-  leftSidebarMaxWidth?: number;
-  /** Maximum width of right sidebar in pixels */
-  rightSidebarMaxWidth?: number;
-  /** Callback when left sidebar width changes */
-  onLeftSidebarWidthChange?: (width: number) => void;
-  /** Callback when right sidebar width changes */
-  onRightSidebarWidthChange?: (width: number) => void;
+  /** Grid layout configuration */
+  gridConfig?: GridLayoutConfig;
+  /** Grid layer definitions */
+  gridLayers?: LayerDefinition[];
   // i18n options
   locale?: Locale;
   fallbackLocale?: Locale;
@@ -71,8 +48,6 @@ export interface NodeEditorProps<TNodeDataTypeMap = {}> {
   autoSaveEnabled?: boolean;
   /** Override: auto-save interval in seconds */
   autoSaveInterval?: number;
-  /** Override: show/hide status bar regardless of settings */
-  showStatusBar?: boolean;
   /** Maximum number of history entries to keep */
   historyMaxEntries?: number;
   /** Renderer overrides for core editor visuals */
@@ -95,27 +70,14 @@ export function NodeEditor<TNodeDataTypeMap = {}>({
   nodeDefinitions,
   includeDefaultDefinitions = true,
   externalDataRefs,
-  overlayLayers,
-  backgroundLayers,
-  uiOverlayLayers,
   settingsManager,
-  toolbar,
-  leftSidebar,
-  rightSidebar,
-  leftSidebarInitialWidth,
-  rightSidebarInitialWidth,
-  leftSidebarMinWidth,
-  rightSidebarMinWidth,
-  leftSidebarMaxWidth,
-  rightSidebarMaxWidth,
-  onLeftSidebarWidthChange,
-  onRightSidebarWidthChange,
+  gridConfig,
+  gridLayers,
   locale,
   fallbackLocale,
   messagesOverride,
   autoSaveEnabled,
   autoSaveInterval,
-  showStatusBar,
   historyMaxEntries = 40,
   renderers,
   portPositionBehavior,
@@ -151,24 +113,11 @@ export function NodeEditor<TNodeDataTypeMap = {}>({
                       <KeyboardShortcutProvider>
                         <NodeEditorContent
                           className={className}
-                          overlayLayers={overlayLayers}
-                          backgroundLayers={backgroundLayers}
-                          uiOverlayLayers={uiOverlayLayers}
                           settingsManager={settingsManager}
-                          toolbar={toolbar}
                           autoSaveEnabled={autoSaveEnabled}
                           autoSaveInterval={autoSaveInterval}
-                          showStatusBarOverride={showStatusBar}
-                          leftSidebar={leftSidebar}
-                          rightSidebar={rightSidebar}
-                          leftSidebarInitialWidth={leftSidebarInitialWidth}
-                          rightSidebarInitialWidth={rightSidebarInitialWidth}
-                          leftSidebarMinWidth={leftSidebarMinWidth}
-                          rightSidebarMinWidth={rightSidebarMinWidth}
-                          leftSidebarMaxWidth={leftSidebarMaxWidth}
-                          rightSidebarMaxWidth={rightSidebarMaxWidth}
-                          onLeftSidebarWidthChange={onLeftSidebarWidthChange}
-                          onRightSidebarWidthChange={onRightSidebarWidthChange}
+                          gridConfig={gridConfig}
+                          gridLayers={gridLayers}
                           portPositionBehavior={portPositionBehavior}
                         />
                       </KeyboardShortcutProvider>

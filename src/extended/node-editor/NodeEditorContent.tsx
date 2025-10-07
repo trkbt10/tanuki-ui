@@ -1,23 +1,21 @@
 import * as React from "react";
-import { CanvasBase } from "./components/canvas/CanvasBase";
-import { ConnectionLayer } from "./components/connection/ConnectionLayer";
 import { classNames } from "./components/elements";
-import { InspectorPanel } from "./components/inspector/InspectorPanel";
-import { ColumnLayout } from "./components/layout/ColumnLayout";
+import { GridLayout } from "./components/layout/GridLayout";
 import { NodeEditorBase } from "./components/layout/NodeEditorBase";
-import { StatusBar } from "./components/layout/StatusBar";
-import { NodeLayer } from "./components/node/NodeLayer";
 import { ContextActionMenu } from "./components/shared/ContextActionMenu";
 import { NodeSearchMenu } from "./components/shared/NodeSearchMenu";
+import { defaultEditorGridConfig, defaultEditorGridLayers } from "./config/defaultLayout";
 import { useEditorActionState } from "./contexts/EditorActionStateContext";
 import { useNodeEditor } from "./contexts/node-editor";
 import { useNodeCanvas } from "./contexts/NodeCanvasContext";
 import { useNodeDefinitionList } from "./contexts/NodeDefinitionContext";
+import { NodeEditorSettingsProvider } from "./contexts/NodeEditorSettingsContext";
 import { PortPositionProvider } from "./contexts/PortPositionContext";
 import { useSettings } from "./hooks/useSettings";
 import styles from "./NodeEditorContent.module.css";
 import type { SettingsManager } from "./settings/SettingsManager";
 import type { Port as CorePort } from "./types/core";
+import type { GridLayoutConfig, LayerDefinition } from "./types/panels";
 import {
   DEFAULT_PORT_POSITION_CONFIG,
   type EditorPortPositions,
@@ -31,47 +29,15 @@ import { canAddNodeType, countNodesByType, getDisabledNodeTypes } from "./utils/
 
 export const NodeEditorContent: React.FC<{
   className?: string;
-  overlayLayers?: React.ReactNode[];
-  backgroundLayers?: React.ReactNode[];
-  uiOverlayLayers?: React.ReactNode[];
   settingsManager?: SettingsManager;
-  toolbar?: React.ReactNode;
   autoSaveEnabled?: boolean;
   autoSaveInterval?: number;
-  showStatusBarOverride?: boolean;
-  leftSidebar?: React.ReactNode;
-  rightSidebar?: React.ReactNode;
-  leftSidebarInitialWidth?: number;
-  rightSidebarInitialWidth?: number;
-  leftSidebarMinWidth?: number;
-  rightSidebarMinWidth?: number;
-  leftSidebarMaxWidth?: number;
-  rightSidebarMaxWidth?: number;
-  onLeftSidebarWidthChange?: (width: number) => void;
-  onRightSidebarWidthChange?: (width: number) => void;
   portPositionBehavior?: PortPositionBehavior;
-}> = ({
-  className,
-  overlayLayers,
-  backgroundLayers,
-  uiOverlayLayers,
-  settingsManager,
-  toolbar,
-  autoSaveEnabled,
-  autoSaveInterval,
-  showStatusBarOverride,
-  leftSidebar,
-  rightSidebar,
-  leftSidebarInitialWidth,
-  rightSidebarInitialWidth,
-  leftSidebarMinWidth,
-  rightSidebarMinWidth,
-  leftSidebarMaxWidth,
-  rightSidebarMaxWidth,
-  onLeftSidebarWidthChange,
-  onRightSidebarWidthChange,
-  portPositionBehavior,
-}) => {
+  /** Grid layout configuration */
+  gridConfig?: GridLayoutConfig;
+  /** Grid layer definitions */
+  gridLayers?: LayerDefinition[];
+}> = ({ className, settingsManager, autoSaveEnabled, autoSaveInterval, portPositionBehavior, gridConfig, gridLayers }) => {
   const { state: editorState, handleSave, dispatch, actions, isLoading, isSaving, getNodePorts } = useNodeEditor();
   const { state: actionState, dispatch: actionDispatch, actions: actionActions } = useEditorActionState();
   const { utils } = useNodeCanvas();
@@ -192,23 +158,11 @@ export const NodeEditorContent: React.FC<{
 
   // Use settings hook for clean state management
   const settings = useSettings(settingsManager);
-  const {
-    showGrid,
-    showMinimap,
-    showStatusBar,
-    theme,
-    smoothAnimations,
-    doubleClickToEdit,
-    fontSize,
-    gridSize,
-    gridOpacity,
-    canvasBackground,
-  } = settings;
+  const { theme, smoothAnimations, fontSize, gridSize, gridOpacity, canvasBackground } = settings;
   const settingsAutoSave = settings.autoSave;
   const settingsAutoSaveInterval = settings.autoSaveInterval;
   const effectiveAutoSave = autoSaveEnabled ?? settingsAutoSave;
   const effectiveAutoSaveInterval = autoSaveInterval ?? settingsAutoSaveInterval ?? 30;
-  const effectiveShowStatusBar = showStatusBarOverride ?? showStatusBar;
   // Apply settings-based CSS custom properties
   const editorStyles = React.useMemo(
     () =>
@@ -343,9 +297,40 @@ export const NodeEditorContent: React.FC<{
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [handleSave, actionDispatch, actionActions]);
 
-  // Determine sidebar content
-  const leftSidebarContent = leftSidebar;
-  const rightSidebarContent = rightSidebar === undefined ? <InspectorPanel /> : rightSidebar;
+  // Track grid changes to force GridLayout re-render when needed
+  const gridLayoutVersionRef = React.useRef(0);
+  const prevGridConfigRef = React.useRef(gridConfig);
+  const prevGridLayersRef = React.useRef(gridLayers);
+
+  React.useEffect(() => {
+    if (prevGridConfigRef.current !== gridConfig || prevGridLayersRef.current !== gridLayers) {
+      gridLayoutVersionRef.current++;
+      prevGridConfigRef.current = gridConfig;
+      prevGridLayersRef.current = gridLayers;
+    }
+  }, [gridConfig, gridLayers]);
+
+  // Use provided grid config/layers or build default
+  const effectiveGridConfig = React.useMemo((): GridLayoutConfig => {
+    if (gridConfig) {
+      return gridConfig;
+    }
+
+    // No gridConfig provided - use default layout with status bar and resizable inspector
+    return defaultEditorGridConfig;
+  }, [gridConfig]);
+
+  const effectiveGridLayers = React.useMemo((): LayerDefinition[] => {
+    if (gridLayers) {
+      return gridLayers;
+    }
+
+    // No gridLayers provided - use default layers
+    return defaultEditorGridLayers;
+  }, [gridLayers]);
+
+  // Generate unique key for GridLayout to force re-render when grid changes
+  const gridLayoutKey = gridConfig || gridLayers ? `custom-${gridLayoutVersionRef.current}` : "default";
 
   return (
     <NodeEditorBase
@@ -353,48 +338,23 @@ export const NodeEditorContent: React.FC<{
       style={editorStyles}
       data-theme={theme}
     >
-      <div className={styles.editorLayout}>
-        {/* Top toolbar */}
-        {toolbar && <div className={styles.editorToolbar}>{toolbar}</div>}
+      <NodeEditorSettingsProvider
+        settingsManager={settingsManager}
+        settings={settings}
+        isSaving={isSaving}
+        autoSaveEnabled={effectiveAutoSave}
+        autoSaveInterval={effectiveAutoSaveInterval}
+      >
+        <PortPositionProvider portPositions={portPositions} behavior={portPositionBehavior} config={portPositionConfig}>
+          <GridLayout
+            key={gridLayoutKey}
+            config={effectiveGridConfig}
+            layers={effectiveGridLayers}
+            className={styles.gridLayoutContainer}
+          />
+        </PortPositionProvider>
+      </NodeEditorSettingsProvider>
 
-        <div className={styles.editorContent}>
-          <ColumnLayout
-            leftSidebar={leftSidebarContent}
-            rightSidebar={rightSidebarContent}
-            leftSidebarInitialWidth={leftSidebarInitialWidth}
-            rightSidebarInitialWidth={rightSidebarInitialWidth}
-            leftSidebarMinWidth={leftSidebarMinWidth}
-            rightSidebarMinWidth={rightSidebarMinWidth}
-            leftSidebarMaxWidth={leftSidebarMaxWidth}
-            rightSidebarMaxWidth={rightSidebarMaxWidth}
-            onLeftSidebarWidthChange={onLeftSidebarWidthChange}
-            onRightSidebarWidthChange={onRightSidebarWidthChange}
-          >
-            <div className={styles.editorMain}>
-              <CanvasBase showGrid={showGrid}>
-                <PortPositionProvider portPositions={portPositions} behavior={portPositionBehavior} config={portPositionConfig}>
-                  {/* Background layers render behind everything */}
-                  {backgroundLayers?.map((layer, index) => (
-                    <React.Fragment key={`background-layer-${index}`}>{layer}</React.Fragment>
-                  ))}
-
-                  <ConnectionLayer />
-                  <NodeLayer doubleClickToEdit={doubleClickToEdit} />
-
-                  {/* Overlay layers render on top of everything */}
-                  {overlayLayers?.map((layer, index) => (
-                    <React.Fragment key={`overlay-layer-${index}`}>{layer}</React.Fragment>
-                  ))}
-                </PortPositionProvider>
-              </CanvasBase>
-
-              {effectiveShowStatusBar && (
-                <StatusBar autoSave={effectiveAutoSave} isSaving={isSaving} settingsManager={settingsManager} />
-              )}
-            </div>
-          </ColumnLayout>
-        </div>
-      </div>
       {/* Loading/Saving indicators */}
       {(isLoading || isSaving) && (
         <div className={styles.loadingOverlay}>
@@ -434,15 +394,6 @@ export const NodeEditorContent: React.FC<{
           visible={true}
           onClose={() => actionDispatch(actionActions.hideContextMenu())}
         />
-      )}
-
-      {/* UI Overlay Layers - Fixed position, non-interactive, for UI customization */}
-      {uiOverlayLayers && uiOverlayLayers.length > 0 && (
-        <div className={styles.uiOverlayContainer}>
-          {uiOverlayLayers.map((layer, index) => (
-            <React.Fragment key={`ui-overlay-layer-${index}`}>{layer}</React.Fragment>
-          ))}
-        </div>
       )}
     </NodeEditorBase>
   );

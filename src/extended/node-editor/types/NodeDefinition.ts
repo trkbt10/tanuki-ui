@@ -287,9 +287,19 @@ export interface NodeDefinition<TNodeType extends string = string, TNodeDataType
   behaviors?: NodeBehavior[];
   /** When true, node can only be moved by dragging title or when multi-selected */
   interactive?: boolean;
-  /** Custom render function for the node */
+  /**
+   * Custom render function for the node.
+   * If the function name starts with an uppercase letter (React component convention),
+   * it will be invoked as a JSX component, allowing the use of React hooks.
+   * Otherwise, it will be called as a regular function for backwards compatibility.
+   */
   renderNode?: (props: NodeRenderProps<TNodeType, TNodeDataTypeMap>) => ReactElement;
-  /** Custom render function for the inspector panel */
+  /**
+   * Custom render function for the inspector panel.
+   * If the function name starts with an uppercase letter (React component convention),
+   * it will be invoked as a JSX component, allowing the use of React hooks.
+   * Otherwise, it will be called as a regular function for backwards compatibility.
+   */
   renderInspector?: (props: InspectorRenderProps<TNodeType, TNodeDataTypeMap>) => ReactElement;
   /** External data loader */
   loadExternalData?: (ref: ExternalDataReference) => unknown | Promise<unknown>;

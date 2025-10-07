@@ -60,6 +60,8 @@ export {
   NodeCanvasProvider,
   HistoryProvider,
   KeyboardShortcutProvider,
+  NodeEditorSettingsProvider,
+  useNodeEditorSettings,
 } from "./contexts";
 
 // Hooks for custom layers and components
@@ -71,8 +73,16 @@ export { Minimap, DebugOverlay, GridToolbox, NodeMapRenderer } from "./component
 export type { MinimapProps, DebugOverlayProps, GridToolboxProps, NodeMapRendererProps } from "./components/layers";
 
 // UI components
+export { NodeCanvas } from "./components/canvas/NodeCanvas";
+export { StatusBar } from "./components/layout/StatusBar";
 export { NodeEditorToolbar } from "./components/layout/NodeEditorToolbar";
 export { FloatingContainer } from "./components/shared/FloatingContainer";
+export { GridLayout } from "./components/layout/GridLayout";
+/** @deprecated Use GridLayout instead */
+export { EditorPanelLayout } from "./components/layout/EditorPanelLayout";
+/** @deprecated Use GridLayout instead */
+export { FloatingPanel } from "./components/layout/FloatingPanel";
+/** @deprecated Use GridLayout instead */
 export { ColumnLayout } from "./components/layout/ColumnLayout";
 export {
   InspectorPanel,
@@ -82,11 +92,39 @@ export {
 } from "./components/inspector/InspectorPanel";
 export { GridSettingsPanel, GeneralSettingsPanel } from "./settings";
 export { NodeInspector } from "./components/inspector/NodeInspector";
+export type { NodeCanvasProps } from "./components/canvas/NodeCanvas";
 export type { NodeEditorToolbarProps } from "./components/layout/NodeEditorToolbar";
 export type { FloatingContainerProps } from "./components/shared/FloatingContainer";
+export type { GridLayoutProps } from "./components/layout/GridLayout";
+/** @deprecated Use GridLayoutProps instead */
+export type { EditorPanelLayoutProps } from "./components/layout/EditorPanelLayout";
+/** @deprecated Use GridLayoutProps instead */
+export type { FloatingPanelProps } from "./components/layout/FloatingPanel";
+/** @deprecated Use GridLayoutProps instead */
 export type { ColumnLayoutProps } from "./components/layout/ColumnLayout";
-export type { InspectorPanelProps, InspectorPanelTabConfig, InspectorSettingsPanelConfig } from "./components/inspector/InspectorPanel";
+export type {
+  InspectorPanelProps,
+  InspectorPanelTabConfig,
+  InspectorSettingsPanelConfig,
+} from "./components/inspector/InspectorPanel";
 export type { NodeInspectorProps } from "./components/inspector/NodeInspector";
+
+// Layout system types
+export type {
+  // New grid-based layout system
+  EditorGridLayout,
+  GridLayoutConfig,
+  GridTrack,
+  LayerDefinition,
+  LayerPositionMode,
+  // Legacy panel system (deprecated)
+  PanelPosition,
+  PanelDefinition,
+  EditorPanelsConfig,
+} from "./types/panels";
+
+// Layout system constants
+export { defaultEditorGridConfig, defaultEditorGridLayers } from "./config/defaultLayout";
 
 // Utilities for custom components
 export {

@@ -1,0 +1,44 @@
+.floatingPanel {
+  position: absolute;
+  background-color: var(--color-surface-primary, #ffffff);
+  border: 1px solid var(--color-border-primary, #e0e0e0);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  user-select: none;
+}
+
+.floatingPanel.dragging {
+  opacity: 0.9;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.floatingPanel.resizing {
+  opacity: 0.9;
+}
+
+.content {
+  flex: 1;
+  overflow: auto;
+  user-select: text;
+}
+
+.resizeHandle {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  cursor: nwse-resize;
+  color: var(--color-text-tertiary, #999);
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  user-select: none;
+}
+
+.resizeHandle:hover {
+  color: var(--color-text-secondary, #666);
+}

@@ -741,7 +741,7 @@
 
 /* Status bar saving indicator */
 .statusSaving {
-  color: var(--accentColor, #007aff);
+  color: var(--accentColor);
   font-weight: 600;
 }
 

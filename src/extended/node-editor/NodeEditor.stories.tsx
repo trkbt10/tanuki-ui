@@ -78,9 +78,7 @@ export const WithConnections: Story = {
 };
 
 export const Empty: Story = {
-  args: {
-    rightSidebar: null,
-  },
+  args: {},
 };
 
 export const WithSaveLoad: Story = {

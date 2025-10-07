@@ -8,7 +8,6 @@ describe("NodeEditor autoSave override", () => {
     render(
       <NodeEditor
         autoSaveEnabled={false}
-        rightSidebar={null}
         initialData={{ nodes: {}, connections: {} }}
       />
     );

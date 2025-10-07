@@ -86,11 +86,37 @@ export const NodeInspector: React.FC<NodeInspectorProps> = React.memo(
     const behaviors = React.useMemo(() => {
       return getBehaviors(nodeDefinition);
     }, [nodeDefinition]);
+
+    // Check if a function is likely a React component (by naming convention)
+    const isReactComponent = React.useCallback((fn: Function): boolean => {
+      // React components should start with an uppercase letter
+      return /^[A-Z]/.test(fn.name || '');
+    }, []);
+
+    // Render custom inspector with proper component handling
+    const customInspectorElement = React.useMemo(() => {
+      if (!nodeDefinition?.renderInspector) return null;
+
+      const renderFn = nodeDefinition.renderInspector;
+
+      // If it looks like a React component (starts with uppercase), use as JSX
+      // This allows hooks to work correctly
+      if (isReactComponent(renderFn)) {
+        const CustomInspector = renderFn;
+        return <CustomInspector {...inspectorProps} />;
+      }
+
+      // Otherwise, call as a regular function (legacy support)
+      return renderFn(inspectorProps);
+    }, [nodeDefinition?.renderInspector, inspectorProps, isReactComponent]);
+
     return (
       <>
         {/* Custom inspector (node-specific) */}
-        {nodeDefinition?.renderInspector && (
-          <div className={styles.customInspectorBlock}>{nodeDefinition.renderInspector(inspectorProps)}</div>
+        {customInspectorElement && (
+          <div className={styles.customInspectorBlock}>
+            {customInspectorElement}
+          </div>
         )}
 
         {/* Behavior-based inspectors */}

@@ -1,8 +1,8 @@
 import * as React from "react";
 import type { InspectorRenderProps } from "../../types/NodeDefinition";
 import type { LabelNodeDataMap, LabelNodeData } from "./types";
-import { PropertySection, InspectorLabel, InspectorInput, InspectorTextarea } from "../../components/inspector/parts";
-import editorStyles from "../../NodeEditor.module.css";
+import { PropertySection, InspectorInput, InspectorTextarea, InspectorDefinitionList, InspectorDefinitionItem } from "../../components/inspector/parts";
+import editorStyles from "../../NodeEditorContent.module.css";
 import { useI18n } from "../../i18n";
 
 export function LabelInspectorRenderer({ node, onUpdateNode }: InspectorRenderProps<"label", LabelNodeDataMap>): React.ReactElement {
@@ -17,21 +17,17 @@ export function LabelInspectorRenderer({ node, onUpdateNode }: InspectorRenderPr
   return (
     <>
       <PropertySection title="Label">
-        <div style={{ display: "grid", gap: 8 }}>
-          <div>
-            <InspectorLabel>Title</InspectorLabel>
+        <InspectorDefinitionList>
+          <InspectorDefinitionItem label="Title">
             <InspectorInput id="label-title" name="labelTitle" placeholder={t("labelTitlePlaceholder") || "Title"} value={data.title || ""} onChange={(e) => updateField("title")(e.target.value)} />
-          </div>
-          <div>
-            <InspectorLabel>Subtitle</InspectorLabel>
+          </InspectorDefinitionItem>
+          <InspectorDefinitionItem label="Subtitle">
             <InspectorInput id="label-subtitle" name="labelSubtitle" placeholder={t("labelSubtitlePlaceholder") || "Subtitle"} value={data.subtitle || ""} onChange={(e) => updateField("subtitle")(e.target.value)} />
-          </div>
-          <div>
-            <InspectorLabel>Caption</InspectorLabel>
+          </InspectorDefinitionItem>
+          <InspectorDefinitionItem label="Caption">
             <InspectorTextarea id="label-caption" name="labelCaption" placeholder={t("labelCaptionPlaceholder") || "Caption"} value={data.caption || ""} onChange={(e) => updateField("caption")(e.target.value)} />
-          </div>
-          <div>
-            <InspectorLabel>Alignment</InspectorLabel>
+          </InspectorDefinitionItem>
+          <InspectorDefinitionItem label="Alignment">
             <select
               id="label-align"
               className={editorStyles.inspectorInput}
@@ -42,9 +38,8 @@ export function LabelInspectorRenderer({ node, onUpdateNode }: InspectorRenderPr
               <option value="center">Center</option>
               <option value="right">Right</option>
             </select>
-          </div>
-          <div>
-            <InspectorLabel>Wrap</InspectorLabel>
+          </InspectorDefinitionItem>
+          <InspectorDefinitionItem label="Wrap">
             <select
               id="label-wrap"
               value={data.wrap ?? 'normal'}
@@ -55,19 +50,15 @@ export function LabelInspectorRenderer({ node, onUpdateNode }: InspectorRenderPr
               <option value="nowrap">No wrap</option>
               <option value="balance">Balance</option>
             </select>
-          </div>
-          <div>
-            <label style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <input
-                type="checkbox"
-                checked={data.ellipsis === true}
-                onChange={(e) => onUpdateNode({ data: { ...data, ellipsis: e.target.checked } })}
-              />
-              <span>Ellipsis (title)</span>
-            </label>
-          </div>
-          <div>
-            <InspectorLabel>{t("fieldTextColor") || "Text Color"}</InspectorLabel>
+          </InspectorDefinitionItem>
+          <InspectorDefinitionItem label="Ellipsis (title)">
+            <input
+              type="checkbox"
+              checked={data.ellipsis === true}
+              onChange={(e) => onUpdateNode({ data: { ...data, ellipsis: e.target.checked } })}
+            />
+          </InspectorDefinitionItem>
+          <InspectorDefinitionItem label={t("fieldTextColor") || "Text Color"}>
             <input
               type="color"
               value={typeof data.textColor === 'string' ? data.textColor : '#111111'}
@@ -76,8 +67,8 @@ export function LabelInspectorRenderer({ node, onUpdateNode }: InspectorRenderPr
               style={{ width: 40, padding: 0, height: 24 }}
               aria-label="Label text color"
             />
-          </div>
-        </div>
+          </InspectorDefinitionItem>
+        </InspectorDefinitionList>
       </PropertySection>
     </>
   );

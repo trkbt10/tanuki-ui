@@ -10,6 +10,7 @@
   flex-direction: column;
   overflow: hidden;
   box-shadow: var(--node-editor-inspector-shadow);
+  box-sizing: border-box;
 }
 
 .inspectorHeader {
@@ -34,6 +35,7 @@
 .settingsSectionBody {
   gap: var(--node-editor-inspector-space-sm);
   padding-top: var(--node-editor-inspector-space-sm);
+  box-sizing: border-box;
 }
 
 .settingsField {
@@ -60,6 +62,7 @@
     var(--node-editor-inspector-header-padding-bottom);
   margin-bottom: var(--node-editor-inspector-space-xs);
   border-bottom: 1px solid var(--separatorColor);
+  box-sizing: border-box;
 }
 
 .sectionHeaderMeta {

@@ -56,10 +56,23 @@ describe("NodeEditor", () => {
     expect(node).toBeTruthy();
   });
 
-  test("should show toolbar", () => {
-    // Pass a custom toolbar to test
+  test("should show toolbar with gridConfig and gridLayers", () => {
+    // Pass a custom toolbar via gridConfig and gridLayers
     const customToolbar = <div role="toolbar">Custom Toolbar</div>;
-    render(<NodeEditor initialData={mockInitialState} toolbar={customToolbar} />);
+    const gridConfig = {
+      areas: [["toolbar"], ["canvas"]],
+      rows: [{ size: "auto" }, { size: "1fr" }],
+      columns: [{ size: "1fr" }],
+      gap: "0",
+    };
+    const gridLayers = [
+      {
+        id: "toolbar",
+        component: customToolbar,
+        gridArea: "toolbar",
+      },
+    ];
+    render(<NodeEditor initialData={mockInitialState} gridConfig={gridConfig} gridLayers={gridLayers} />);
 
     // Check if toolbar exists
     const toolbar = screen.getByRole("toolbar");
@@ -79,13 +92,20 @@ describe("NodeEditor", () => {
     expect(layersTabs.length).toBeGreaterThan(0);
   });
 
-  test("should hide inspector when rightSidebar is null", () => {
-    render(<NodeEditor initialData={mockInitialState} rightSidebar={null} />);
+  test("should hide inspector with custom gridConfig", () => {
+    const gridConfig = {
+      areas: [["canvas"]],
+      rows: [{ size: "1fr" }],
+      columns: [{ size: "1fr" }],
+      gap: "0",
+    };
+    const gridLayers: any[] = [];
+    render(<NodeEditor initialData={mockInitialState} gridConfig={gridConfig} gridLayers={gridLayers} />);
 
     // Check if Properties tab doesn't exist
     const propertiesTab = screen.queryByText("Properties");
     expect(propertiesTab).toBeFalsy();
-    
+
     // Check if Layers tab also doesn't exist
     const layersTab = screen.queryByText("Layers");
     expect(layersTab).toBeFalsy();

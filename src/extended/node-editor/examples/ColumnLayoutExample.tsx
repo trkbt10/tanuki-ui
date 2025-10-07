@@ -1,98 +1,119 @@
 import * as React from "react";
-import { NodeEditor, InspectorPanel } from "../index";
+import { NodeEditor, InspectorPanel, NodeCanvas, StatusBar, type GridLayoutConfig, type LayerDefinition } from "../index";
 
-// Example component demonstrating the new column layout system
-export const ColumnLayoutExample: React.FC = () => {
-  const [leftSidebarWidth, setLeftSidebarWidth] = React.useState(250);
-  const [rightSidebarWidth, setRightSidebarWidth] = React.useState(280);
-
-  // Example left sidebar content
-  const leftSidebar = (
-    <div style={{ padding: "16px" }}>
-      <h3>Project Explorer</h3>
-      <ul style={{ listStyle: "none", padding: 0 }}>
-        <li style={{ padding: "4px 0" }}>📁 Components</li>
-        <li style={{ padding: "4px 0", paddingLeft: "16px" }}>📄 Button.tsx</li>
-        <li style={{ padding: "4px 0", paddingLeft: "16px" }}>📄 Input.tsx</li>
-        <li style={{ padding: "4px 0" }}>📁 Utils</li>
-        <li style={{ padding: "4px 0", paddingLeft: "16px" }}>📄 helpers.ts</li>
-      </ul>
-    </div>
-  );
-
-  // Custom right sidebar content (or use default inspector)
-  const rightSidebar = (
-    <InspectorPanel />
-  );
-
+// Example: Default layout (canvas + inspector)
+export const DefaultLayoutExample: React.FC = () => {
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
-      <NodeEditor
-        // New 3-column layout props
-        leftSidebar={leftSidebar}
-        rightSidebar={rightSidebar}
-        leftSidebarInitialWidth={leftSidebarWidth}
-        rightSidebarInitialWidth={rightSidebarWidth}
-        leftSidebarMinWidth={200}
-        rightSidebarMinWidth={250}
-        leftSidebarMaxWidth={500}
-        rightSidebarMaxWidth={600}
-        onLeftSidebarWidthChange={setLeftSidebarWidth}
-        onRightSidebarWidthChange={setRightSidebarWidth}
-        // Use rightSidebar prop instead of deprecated showInspector
-      />
+      {/* No gridConfig/gridLayers specified - uses default canvas + inspector (300px, resizable) */}
+      <NodeEditor />
     </div>
   );
 };
 
-// Example with only right sidebar (2-column layout)
-export const TwoColumnExample: React.FC = () => {
+// Example: Custom inspector width (wider, resizable)
+export const CustomInspectorWidthExample: React.FC = () => {
+  const gridConfig: GridLayoutConfig = {
+    areas: [["canvas", "inspector"]],
+    rows: [{ size: "1fr" }],
+    columns: [
+      { size: "1fr" },
+      { size: "400px", resizable: true, minSize: 300, maxSize: 600 }, // Wider resizable inspector
+    ],
+    gap: "0",
+  };
+
+  const gridLayers: LayerDefinition[] = [
+    {
+      id: "canvas",
+      component: <NodeCanvas />,
+      gridArea: "canvas",
+    },
+    {
+      id: "inspector",
+      component: <InspectorPanel />,
+      gridArea: "inspector",
+    },
+  ];
+
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
-      <NodeEditor
-        rightSidebar={<InspectorPanel />}
-        rightSidebarInitialWidth={300}
-      />
+      <NodeEditor gridConfig={gridConfig} gridLayers={gridLayers} />
     </div>
   );
 };
 
-// Example with only left sidebar (2-column layout)
-export const LeftSidebarExample: React.FC = () => {
-  const leftSidebar = (
-    <div style={{ padding: "16px" }}>
-      <h3>Node Library</h3>
-      <div style={{ marginBottom: "8px" }}>
-        <button style={{ width: "100%", padding: "8px", marginBottom: "4px" }}>
-          🔵 Process Node
-        </button>
-        <button style={{ width: "100%", padding: "8px", marginBottom: "4px" }}>
-          🟢 Input Node
-        </button>
-        <button style={{ width: "100%", padding: "8px", marginBottom: "4px" }}>
-          🔴 Output Node
-        </button>
-      </div>
-    </div>
-  );
+// Example: Canvas only (no inspector)
+export const CanvasOnlyExample: React.FC = () => {
+  const gridConfig: GridLayoutConfig = {
+    areas: [["canvas"]],
+    rows: [{ size: "1fr" }],
+    columns: [{ size: "1fr" }],
+    gap: "0",
+  };
+
+  const gridLayers: LayerDefinition[] = [
+    {
+      id: "canvas",
+      component: <NodeCanvas />,
+      gridArea: "canvas",
+    },
+  ];
 
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
-      <NodeEditor
-        leftSidebar={leftSidebar}
-        leftSidebarInitialWidth={250}
-      />
+      <NodeEditor gridConfig={gridConfig} gridLayers={gridLayers} />
     </div>
   );
 };
 
-// Example with single column (no sidebars)
-export const SingleColumnExample: React.FC = () => {
+// Example: With custom toolbar
+export const WithToolbarExample: React.FC = () => {
+  const toolbar = (
+    <div style={{ padding: "8px 16px", background: "var(--color-bg-secondary, #f5f5f5)", borderBottom: "1px solid var(--color-border, #ddd)" }}>
+      <button>New</button>
+      <button>Save</button>
+      <button>Export</button>
+    </div>
+  );
+
+  const gridConfig: GridLayoutConfig = {
+    areas: [
+      ["toolbar", "toolbar"],
+      ["canvas", "inspector"],
+    ],
+    rows: [{ size: "auto" }, { size: "1fr" }],
+    columns: [
+      { size: "1fr" },
+      { size: "300px", resizable: true, minSize: 200, maxSize: 500 },
+    ],
+    gap: "0",
+  };
+
+  const gridLayers: LayerDefinition[] = [
+    {
+      id: "toolbar",
+      component: toolbar,
+      gridArea: "toolbar",
+      zIndex: 2,
+    },
+    {
+      id: "canvas",
+      component: <NodeCanvas />,
+      gridArea: "canvas",
+      zIndex: 0,
+    },
+    {
+      id: "inspector",
+      component: <InspectorPanel />,
+      gridArea: "inspector",
+      zIndex: 1,
+    },
+  ];
+
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
-      <NodeEditor
-        // No leftSidebar or rightSidebar props = single column layout
-      />
+      <NodeEditor gridConfig={gridConfig} gridLayers={gridLayers} />
     </div>
   );
 };

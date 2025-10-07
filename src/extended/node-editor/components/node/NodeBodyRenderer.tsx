@@ -45,8 +45,32 @@ export const NodeBodyRenderer: React.FC<NodeBodyRendererProps> = ({
 }) => {
   const { t } = useI18n();
 
+  // Check if a function is likely a React component (by naming convention)
+  const isReactComponent = React.useCallback((fn: Function): boolean => {
+    // React components should start with an uppercase letter
+    return /^[A-Z]/.test(fn.name || '');
+  }, []);
+
+  // Use component invocation to properly support React hooks
   if (useCustomRenderer && nodeDefinition?.renderNode) {
-    return <div className={styles.customNodeContent}>{nodeDefinition.renderNode(customRenderProps)}</div>;
+    const renderFn = nodeDefinition.renderNode;
+
+    // If it looks like a React component, use as JSX to support hooks
+    if (isReactComponent(renderFn)) {
+      const CustomNodeRenderer = renderFn;
+      return (
+        <div className={styles.customNodeContent}>
+          <CustomNodeRenderer {...customRenderProps} />
+        </div>
+      );
+    }
+
+    // Otherwise, call as a regular function (legacy support)
+    return (
+      <div className={styles.customNodeContent}>
+        {renderFn(customRenderProps)}
+      </div>
+    );
   }
 
   return (

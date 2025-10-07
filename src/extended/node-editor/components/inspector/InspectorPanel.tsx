@@ -2,7 +2,7 @@ import * as React from "react";
 import { useEditorActionState } from "../../contexts/EditorActionStateContext";
 import { useNodeEditor } from "../../contexts/node-editor";
 import { NodeInspector } from "./NodeInspector";
-import { NodeTreeList } from "../layers/NodeTreeList";
+import { NodeTreeListPanel } from "./NodeTreeListPanel";
 import { HistoryPanel } from "./HistoryPanel";
 import { TabNav } from "../layout/TabNav";
 import { classNames, H4 } from "../elements";
@@ -33,7 +33,6 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className, tabs:
         id: "layers",
         label: t("inspectorTabLayers") || "Layers",
         render: () => <InspectorLayersTab />,
-        contentClassName: styles.inspectorContentNoPadding,
       },
       {
         id: "properties",
@@ -91,7 +90,7 @@ InspectorPanel.displayName = "InspectorPanel";
 export const InspectorLayersTab: React.FC = () => {
   return (
     <InspectorSection>
-      <NodeTreeList />
+      <NodeTreeListPanel />
     </InspectorSection>
   );
 };
