@@ -85,6 +85,95 @@ const FloatingSidebarNodeEditorCatalog: React.FC = () => {
 
   const handleResetData = () => setData(featuresTestData);
 
+  // Memoize InspectorPanel component to prevent recreation on every render
+  const inspectorPanel = React.useMemo(() => <InspectorPanel />, []);
+
+  // Memoize position objects to prevent recreation on every render
+  const leftPosition = React.useMemo(() => ({ left: offset, top: offset }), [offset]);
+  const rightPosition = React.useMemo(() => ({ right: offset, top: offset }), [offset]);
+
+  // Memoize gridConfig to prevent recreation on every render
+  const gridConfig = React.useMemo((): GridLayoutConfig => ({
+    areas: leftMode === "floating" && rightMode === "floating"
+      ? [["canvas"]]
+      : leftMode === "floating"
+      ? [["canvas", "inspector"]]
+      : rightMode === "floating"
+      ? [["library", "canvas"]]
+      : [["library", "canvas", "inspector"]],
+    rows: [{ size: "1fr" }],
+    columns: leftMode === "floating" && rightMode === "floating"
+      ? [{ size: "1fr" }]
+      : leftMode === "floating"
+      ? [
+          { size: "1fr" },
+          { size: "340px", resizable: true, minSize: 280, maxSize: 500 },
+        ]
+      : rightMode === "floating"
+      ? [
+          { size: "320px", resizable: true, minSize: 260, maxSize: 480 },
+          { size: "1fr" },
+        ]
+      : [
+          { size: "320px", resizable: true, minSize: 260, maxSize: 480 },
+          { size: "1fr" },
+          { size: "340px", resizable: true, minSize: 280, maxSize: 500 },
+        ],
+    gap: "0",
+  }), [leftMode, rightMode]);
+
+  // Memoize gridLayers to prevent recreation on every render
+  const gridLayers = React.useMemo((): LayerDefinition[] => {
+    const layers: LayerDefinition[] = [
+      {
+        id: "canvas",
+        component: <NodeCanvas />,
+        gridArea: "canvas",
+        zIndex: 0,
+      },
+    ];
+
+    if (leftMode === "floating") {
+      layers.push({
+        id: "library",
+        component: leftSidebar,
+        positionMode: "absolute" as const,
+        position: leftPosition,
+        width: 320,
+        height: 600,
+        zIndex: 10,
+      });
+    } else {
+      layers.push({
+        id: "library",
+        component: leftSidebar,
+        gridArea: "library",
+        zIndex: 1,
+      });
+    }
+
+    if (rightMode === "floating") {
+      layers.push({
+        id: "inspector",
+        component: inspectorPanel,
+        positionMode: "absolute" as const,
+        position: rightPosition,
+        width: 340,
+        height: 600,
+        zIndex: 10,
+      });
+    } else {
+      layers.push({
+        id: "inspector",
+        component: inspectorPanel,
+        gridArea: "inspector",
+        zIndex: 1,
+      });
+    }
+
+    return layers;
+  }, [leftMode, rightMode, leftSidebar, inspectorPanel, leftPosition, rightPosition]);
+
   return (
     <PageLayout>
       <PageHeader
@@ -146,82 +235,8 @@ const FloatingSidebarNodeEditorCatalog: React.FC = () => {
                     data={data}
                     onDataChange={setData}
                     nodeDefinitions={featuresNodeDefinitions}
-                    gridConfig={{
-                      areas: leftMode === "floating" && rightMode === "floating"
-                        ? [["canvas"]]
-                        : leftMode === "floating"
-                        ? [["canvas", "inspector"]]
-                        : rightMode === "floating"
-                        ? [["library", "canvas"]]
-                        : [["library", "canvas", "inspector"]],
-                      rows: [{ size: "1fr" }],
-                      columns: leftMode === "floating" && rightMode === "floating"
-                        ? [{ size: "1fr" }]
-                        : leftMode === "floating"
-                        ? [
-                            { size: "1fr" },
-                            { size: "340px", resizable: true, minSize: 280, maxSize: 500 },
-                          ]
-                        : rightMode === "floating"
-                        ? [
-                            { size: "320px", resizable: true, minSize: 260, maxSize: 480 },
-                            { size: "1fr" },
-                          ]
-                        : [
-                            { size: "320px", resizable: true, minSize: 260, maxSize: 480 },
-                            { size: "1fr" },
-                            { size: "340px", resizable: true, minSize: 280, maxSize: 500 },
-                          ],
-                      gap: "0",
-                    }}
-                    gridLayers={[
-                      {
-                        id: "canvas",
-                        component: <NodeCanvas />,
-                        gridArea: "canvas",
-                        zIndex: 0,
-                      },
-                      ...(leftMode === "floating"
-                        ? [
-                            {
-                              id: "library",
-                              component: leftSidebar,
-                              positionMode: "absolute" as const,
-                              position: { left: offset, top: offset },
-                              width: 320,
-                              height: 600,
-                              zIndex: 10,
-                            },
-                          ]
-                        : [
-                            {
-                              id: "library",
-                              component: leftSidebar,
-                              gridArea: "library",
-                              zIndex: 1,
-                            },
-                          ]),
-                      ...(rightMode === "floating"
-                        ? [
-                            {
-                              id: "inspector",
-                              component: <InspectorPanel />,
-                              positionMode: "absolute" as const,
-                              position: { right: offset, top: offset },
-                              width: 340,
-                              height: 600,
-                              zIndex: 10,
-                            },
-                          ]
-                        : [
-                            {
-                              id: "inspector",
-                              component: <InspectorPanel />,
-                              gridArea: "inspector",
-                              zIndex: 1,
-                            },
-                          ]),
-                    ]}
+                    gridConfig={gridConfig}
+                    gridLayers={gridLayers}
                   />
                 </EditorSurface>
               </SingleColumnContent>

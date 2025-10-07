@@ -1,14 +1,19 @@
 .tabNav {
   display: flex;
-  gap: .5em;
-  padding: var(--segmentControlPadding);
-  background: var(--segmentControlBackground);
   border-radius: var(--segmentControlBorderRadius);
   overflow: hidden;
+  background: var(--segmentControlBackground);
+  filter: var(--segmentBackgroundFilter);
   box-shadow: var(--segmentControlBoxShadow);
+  padding: var(--segmentControlPadding);
 }
 
 .tabButton {
+  z-index: 2;
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: inherit;
   flex: 1;
   padding: var(--segmentControlSegmentPadding);
   background: var(--segmentControlBackgroundColor);
@@ -16,7 +21,6 @@
   font-size: var(--node-editor-inspector-font-size-meta);
   line-height: var(--node-editor-inspector-line-height-meta);
   font-weight: 500;
-  color: var(--secondaryLabelColor);
   cursor: pointer;
   transition: all 0.2s ease;
   position: relative;
@@ -42,13 +46,11 @@
 
 .tabButton[data-active="true"] {
   background: var(--segmentControlBackgroundColor);
-  color: var(--selectedControlTextColor);
   box-shadow: var(--segmentControlIndicatorBoxShadow);
 }
 
 .tabButton:not([data-active="true"]):hover {
   background: var(--segmentControlBackgroundColor);
-  color: var(--selectedControlTextColor);
 }
 
 .tabButton[data-active="true"]:hover {
