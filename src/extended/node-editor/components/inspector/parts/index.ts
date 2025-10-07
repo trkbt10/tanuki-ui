@@ -16,11 +16,20 @@ export type { InspectorNumberInputProps } from "./InspectorNumberInput";
 export { InspectorCheckbox } from "./InspectorCheckbox";
 export type { InspectorCheckboxProps } from "./InspectorCheckbox";
 
+export { InspectorField } from "./InspectorField";
+export type { InspectorFieldProps } from "./InspectorField";
+
 export { PropertySection } from "./PropertySection";
 export type { PropertySectionProps } from "./PropertySection";
 
 export { PositionInputsGrid } from "./PositionInputsGrid";
 export type { PositionInputsGridProps } from "./PositionInputsGrid";
+
+export { InspectorSection } from "./InspectorSection";
+export type { InspectorSectionProps } from "./InspectorSection";
+
+export { InspectorSectionTitle } from "./InspectorSectionTitle";
+export type { InspectorSectionTitleProps } from "./InspectorSectionTitle";
 
 export { ReadOnlyField } from "./ReadOnlyField";
 export type { ReadOnlyFieldProps } from "./ReadOnlyField";

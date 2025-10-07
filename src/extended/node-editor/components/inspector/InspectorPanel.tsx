@@ -6,7 +6,7 @@ import { NodeTreeList } from "../layers/NodeTreeList";
 import { HistoryPanel } from "./HistoryPanel";
 import { TabNav } from "../layout/TabNav";
 import { classNames, H4 } from "../elements";
-import { PropertySection } from "./parts";
+import { InspectorField, InspectorSection, InspectorSectionTitle, PropertySection } from "./parts";
 import styles from "./InspectorPanel.module.css";
 import { useI18n } from "../../i18n";
 
@@ -89,7 +89,11 @@ export const InspectorPanel: React.FC<InspectorPanelProps> = ({ className, tabs:
 InspectorPanel.displayName = "InspectorPanel";
 
 export const InspectorLayersTab: React.FC = () => {
-  return <NodeTreeList />;
+  return (
+    <InspectorSection>
+      <NodeTreeList />
+    </InspectorSection>
+  );
 };
 
 export const InspectorPropertiesTab: React.FC = () => {
@@ -105,33 +109,31 @@ export const InspectorPropertiesTab: React.FC = () => {
   return (
     <>
       {selectedNode && (
-        <div className={styles.inspectorSection}>
+        <InspectorSection>
           <NodeInspector node={selectedNode} />
-        </div>
+        </InspectorSection>
       )}
 
       {selectedConnection && (
-        <div className={styles.inspectorSection}>
-          <H4 className={styles.inspectorSectionTitle}>{t("inspectorConnectionProperties")}</H4>
-          <div className={styles.inspectorField}>
-            <label>From:</label>
+        <InspectorSection>
+          <InspectorSectionTitle>{t("inspectorConnectionProperties")}</InspectorSectionTitle>
+          <InspectorField label="From:">
             <span className={styles.inspectorReadOnlyField}>
               {(nodeEditorState.nodes[selectedConnection.fromNodeId]?.data.title?.trim()?.length ?? 0) > 0
                 ? nodeEditorState.nodes[selectedConnection.fromNodeId]?.data.title
                 : t("untitled")}
               .{selectedConnection.fromPortId}
             </span>
-          </div>
-          <div className={styles.inspectorField}>
-            <label>To:</label>
+          </InspectorField>
+          <InspectorField label="To:">
             <span className={styles.inspectorReadOnlyField}>
               {(nodeEditorState.nodes[selectedConnection.toNodeId]?.data.title?.trim()?.length ?? 0) > 0
                 ? nodeEditorState.nodes[selectedConnection.toNodeId]?.data.title
                 : t("untitled")}
               .{selectedConnection.toPortId}
             </span>
-          </div>
-        </div>
+          </InspectorField>
+        </InspectorSection>
       )}
 
       {!selectedNode && !selectedConnection && (
@@ -141,10 +143,10 @@ export const InspectorPropertiesTab: React.FC = () => {
       )}
 
       {actionState.selectedNodeIds.length > 1 && (
-        <div className={styles.inspectorSection}>
+        <InspectorSection>
           <H4>{t("inspectorMultipleSelection")}</H4>
           <p>{actionState.selectedNodeIds.length} nodes selected</p>
-        </div>
+        </InspectorSection>
       )}
     </>
   );

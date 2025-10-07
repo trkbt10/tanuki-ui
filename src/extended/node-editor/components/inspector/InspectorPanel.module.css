@@ -31,10 +31,6 @@
   padding: 0;
 }
 
-.inspectorSection {
-  margin-bottom: var(--node-editor-inspector-section-gap);
-}
-
 .settingsSectionBody {
   gap: var(--node-editor-inspector-space-sm);
   padding-top: var(--node-editor-inspector-space-sm);
@@ -78,27 +74,6 @@
   text-transform: none;
 }
 
-.inspectorSection label {
-  display: block;
-  margin-bottom: var(--node-editor-inspector-field-gap);
-  font-size: var(--node-editor-inspector-font-size-body);
-  line-height: var(--node-editor-inspector-line-height-body);
-  color: var(--secondaryLabelColor);
-}
-
-.inspectorField {
-  margin-bottom: var(--node-editor-inspector-section-gap);
-}
-
-.inspectorField label {
-  display: block;
-  margin-bottom: var(--node-editor-inspector-field-gap);
-  font-size: var(--node-editor-inspector-font-size-body);
-  line-height: var(--node-editor-inspector-line-height-body);
-  font-weight: 500;
-  color: var(--textColor);
-}
-
 .inspectorInput,
 .inspectorTextarea {
   width: 100%;
@@ -121,15 +96,6 @@
 .inspectorInput:hover,
 .inspectorTextarea:hover {
   border-color: var(--separatorColor);
-}
-
-.inspectorSectionTitle {
-  margin: 0;
-  color: var(--secondaryLabelColor);
-  text-transform: uppercase;
-  font-size: var(--node-editor-inspector-font-size-title);
-  line-height: var(--node-editor-inspector-line-height-title);
-  letter-spacing: 0.08em;
 }
 
 /* Common small section label for inline groups (e.g., Actions, Alignment) */
